@@ -21,23 +21,11 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "37fb20f1fefea55613b3d874e699a400"
+    "revision": "53ccadadce43e798933c4a71f03e95c5"
   },
   {
-    "url": "about.html",
-    "revision": "23eff714c7b96712633fbc260c080b07"
-  },
-  {
-    "url": "ahza-white.png",
-    "revision": "3c642eba43abc55fb6555dab8d743fcd"
-  },
-  {
-    "url": "android/android1.html",
-    "revision": "49ee1126e5530170ef0fc6ca82b8b8f0"
-  },
-  {
-    "url": "android/index.html",
-    "revision": "99f19e65ae3154e5387fcd77c5f81486"
+    "url": "about/index.html",
+    "revision": "6a3aff541d41a87aeff0e8f95c688baf"
   },
   {
     "url": "assets/css/0.styles.dcae4551.css",
@@ -48,76 +36,136 @@ self.__precacheManifest = [
     "revision": "83621669651b9a3d4bf64d1a670ad856"
   },
   {
-    "url": "assets/js/10.9c533dab.js",
-    "revision": "63c50898d32aad706467c6a559f2b632"
+    "url": "assets/js/10.0a183c01.js",
+    "revision": "ed73c37bb2bd3b10ed5cfea983e95820"
   },
   {
-    "url": "assets/js/11.8663f0af.js",
-    "revision": "8e8d04d5f268e7c13897a1d453a24c4d"
+    "url": "assets/js/11.6e0a09bc.js",
+    "revision": "356aa00e2b543b8336eae28029a02dac"
   },
   {
-    "url": "assets/js/12.2c2b4f72.js",
-    "revision": "84f39645c17ecd371e7eaa3902ee9257"
+    "url": "assets/js/12.6b005727.js",
+    "revision": "689f78e3561caeb2ec6c90626f7bd678"
   },
   {
-    "url": "assets/js/2.b32ead01.js",
-    "revision": "46aa3cfb9e8dda75ebe31b7d20931392"
+    "url": "assets/js/13.da735c33.js",
+    "revision": "9692b0185195640f088434cf0e618f43"
   },
   {
-    "url": "assets/js/3.6cc619bc.js",
-    "revision": "bcdc206559c28fbebc8d531c266d875c"
+    "url": "assets/js/14.56c3d352.js",
+    "revision": "f9e0ca3e2a028a03204a1b8e47a13742"
   },
   {
-    "url": "assets/js/4.035e5b30.js",
-    "revision": "c3e1ade0819bcf6f89daed48c351a9ef"
+    "url": "assets/js/15.73fd8183.js",
+    "revision": "e2cb84ef4e060a3811b9bdbc53169963"
   },
   {
-    "url": "assets/js/5.85640304.js",
-    "revision": "db4450c6bf07c7628a36b092d0ac9ca0"
+    "url": "assets/js/16.d09ff1fc.js",
+    "revision": "fc0ffb57e8c738f33c7d6b3632a96354"
   },
   {
-    "url": "assets/js/6.b10b79e0.js",
-    "revision": "101bd88fa1cc3c5fe1912f069adee8ae"
+    "url": "assets/js/17.4ec2534a.js",
+    "revision": "02b2a8210d4e97745460b507f487886f"
   },
   {
-    "url": "assets/js/7.c9d9e849.js",
-    "revision": "72d7693b7e64da4f090015f726e1f893"
+    "url": "assets/js/2.d187085c.js",
+    "revision": "b29470ef580202dd64eb870c85563cb3"
   },
   {
-    "url": "assets/js/8.66413343.js",
-    "revision": "5b12b2c56c2653350f6a34fb0ae6394d"
+    "url": "assets/js/3.4a239607.js",
+    "revision": "3920006c689fddae3ec7a3050751d79d"
   },
   {
-    "url": "assets/js/9.06f974c6.js",
-    "revision": "fe295bdcbddd2f32a677c0e6a68adb6a"
+    "url": "assets/js/4.ee680b5f.js",
+    "revision": "b4b003328d79cc749be3aa7a84366192"
   },
   {
-    "url": "assets/js/app.8a9adc0b.js",
-    "revision": "3a897f73d0e4064dc8172796c6c0da4c"
+    "url": "assets/js/5.36b225b5.js",
+    "revision": "95bb80dc89a4785c5634f57ea2ddbb7f"
   },
   {
-    "url": "contact.html",
-    "revision": "147c53483fbe20a5c2b9a2a005da5d9f"
+    "url": "assets/js/6.6cb28b21.js",
+    "revision": "1f432a39e152eef5a9f092f7cc13139d"
+  },
+  {
+    "url": "assets/js/7.a63a299a.js",
+    "revision": "e4e65e680cd601a376494c5eb3e63a93"
+  },
+  {
+    "url": "assets/js/8.e2296729.js",
+    "revision": "00e1cc8fbbc87c649ba8da4b876da12e"
+  },
+  {
+    "url": "assets/js/9.a3b90509.js",
+    "revision": "54bf3c113b930b0d87f817cb05d3ee77"
+  },
+  {
+    "url": "assets/js/app.aaf37bc6.js",
+    "revision": "b35b023f1c21d264854bf804a14a499d"
+  },
+  {
+    "url": "bigData/index.html",
+    "revision": "68f0525d3426c4602b5bc66315f9aff8"
+  },
+  {
+    "url": "bigData/web1.html",
+    "revision": "474204749c093b86b409acf6a6f9d7c7"
+  },
+  {
+    "url": "deepLearning/index.html",
+    "revision": "002a789cb30f4cd69d3d8cf815f7080c"
+  },
+  {
+    "url": "deepLearning/web1.html",
+    "revision": "a8944b2288d58b4f0fb1e70cffe8d5e7"
+  },
+  {
+    "url": "frontEnd/index.html",
+    "revision": "35e0521cb8ef2ca780ef83a2cb58fe43"
+  },
+  {
+    "url": "frontEnd/web1.html",
+    "revision": "b82920e2c58b25207349a9151327aa45"
+  },
+  {
+    "url": "img/ahza-white.png",
+    "revision": "3c642eba43abc55fb6555dab8d743fcd"
+  },
+  {
+    "url": "img/localhost.png",
+    "revision": "a86b4177450a76712bb8e7dc0cb8fad8"
+  },
+  {
+    "url": "img/me.jpg",
+    "revision": "503f59be9b5549c306c7844f21ce29d9"
   },
   {
     "url": "index.html",
-    "revision": "2f6710dc252d6f5e4effec172627b5c3"
+    "revision": "30d2b46adda343207d180ea8c2d77dc6"
   },
   {
-    "url": "ios/index.html",
-    "revision": "3cffade211988e69682b7d7271ca9c75"
+    "url": "java/android1.html",
+    "revision": "5b0b254b4a45e980640036d45cb6cef7"
   },
   {
-    "url": "ios/ios1.html",
-    "revision": "28881dc0f041e15dfd0c542b0dd96e1b"
+    "url": "java/index.html",
+    "revision": "b1776910a7d10470692457aba35e2057"
+  },
+  {
+    "url": "spring/index.html",
+    "revision": "a852436b59dcb39778d13c77c9842d84"
+  },
+  {
+    "url": "spring/ios1.html",
+    "revision": "96931dff6a1c9e33283ae4b22580ae7d"
   },
   {
     "url": "web/index.html",
-    "revision": "e088f73d792e24f0f07747c7009ca608"
+    "revision": "bd6809370ac4fcb31706a73bfa1ce5a8"
   },
   {
     "url": "web/web1.html",
-    "revision": "ccb243e61d8771aa56fc661fb9d59c50"
+    "revision": "436ebe65c4c45be149f19917dfd4c013"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
