@@ -21,11 +21,11 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "88c739f9c6eeccbfbf4e66cc05da0caf"
+    "revision": "566309954d7a3b1370dfc8501271d99c"
   },
   {
     "url": "about/index.html",
-    "revision": "7a2b414fa7721f6ed0a7e363a2ca1e7a"
+    "revision": "88a64df87b02e932c7fd1d286e2c77ab"
   },
   {
     "url": "assets/css/0.styles.dcae4551.css",
@@ -84,24 +84,24 @@ self.__precacheManifest = [
     "revision": "6f7afe8b5267ac87b6e2fab60ac03f1a"
   },
   {
-    "url": "assets/js/9.d9bbad85.js",
-    "revision": "958847f53a0c1be7c976360f17ab9f90"
+    "url": "assets/js/9.ad024014.js",
+    "revision": "bba1dd8c76f971f4e02fbe4882d86d86"
   },
   {
-    "url": "assets/js/app.c83d703c.js",
-    "revision": "15e610a3cdc4ee255d51a5a3ccc3e506"
+    "url": "assets/js/app.f32d98e0.js",
+    "revision": "7869594e09c8ab078c6833dc57186793"
   },
   {
     "url": "bigData/index.html",
-    "revision": "01c0ed580a6cc30e9735d7c923c805a0"
+    "revision": "3baa9d64818e7b29bbec088e2109302f"
   },
   {
     "url": "deepLearning/index.html",
-    "revision": "b99cd2af7aa6c97cafb97958be6606f5"
+    "revision": "5f0a3a9afde1431bdd7e573756e6f1ee"
   },
   {
     "url": "frontEnd/index.html",
-    "revision": "a9a49ace9d7a274cfc56f77ea8d1ff41"
+    "revision": "d4383a6ce192c247a0e22ff8eafe5052"
   },
   {
     "url": "img/ahza-white.png",
@@ -125,31 +125,31 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "c6c590a58154abc41f7465b0af8cd907"
+    "revision": "e5b8ee87359e3f7f56152636d94765fc"
   },
   {
     "url": "java/index.html",
-    "revision": "6039f63a6efa6ac9b0ea4492b59ea8bf"
+    "revision": "6150a79eb68c0fa2d768250eac11d728"
   },
   {
     "url": "java/语法.html",
-    "revision": "08b93243d9a9e5558ebe5e52f91a9f90"
+    "revision": "d86eaaf957326b71bb8ea9610d4f170b"
   },
   {
     "url": "kotlin/index.html",
-    "revision": "82702ed410c461dccf4ffd89ee158eae"
+    "revision": "8ad3722d239d1dfd3d1c9f0803d1b60a"
   },
   {
     "url": "spring/index.html",
-    "revision": "56c5f8b27513f017b69f3d61e7af2c31"
+    "revision": "ec523a841ddfc734d9a1c49042407e2a"
   },
   {
     "url": "tittle-tattle/index.html",
-    "revision": "5f111d5b69d8a7614b7a729acc84025c"
+    "revision": "d97d98d5a8d67d0628f518fc27aa0716"
   },
   {
     "url": "web/index.html",
-    "revision": "5fe69c212d17dc185b5206f662456621"
+    "revision": "e1741b66f6fe50c5dcb220169b16e3dd"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
