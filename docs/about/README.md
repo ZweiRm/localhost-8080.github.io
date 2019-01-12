@@ -1,3 +1,8 @@
+---
+editLink: false
+sidebar: false
+---
+
 # 关于我
 ![me](/img/me.jpg)
 ::: tip 我
