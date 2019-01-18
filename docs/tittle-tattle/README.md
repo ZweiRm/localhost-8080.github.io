@@ -1,3 +1,8 @@
+---
+editLink: false
+sidebar: false
+---
+
 # Hello World!
 
 ## 这个博客
