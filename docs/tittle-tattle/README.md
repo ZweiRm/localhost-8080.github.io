@@ -1,6 +1,5 @@
 ---
 editLink: false
-sidebar: false
 ---
 
 # Hello World!

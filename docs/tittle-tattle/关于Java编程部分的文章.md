@@ -1,6 +1,5 @@
 ---
 editLink: false
-sidebar: false
 ---
 
 # 关于 Java 编程部分的文章
