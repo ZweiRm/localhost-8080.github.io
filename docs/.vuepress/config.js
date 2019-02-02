@@ -4,11 +4,20 @@ module.exports = {
     head: [
         ['link', { rel: 'icon', href: '/img/favicon.ico' }]
     ],
+    ga: 'UA-132436049-1',
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',
         repoLabel: '查看源码',
+        docsDir: 'docs',
         editLinks: true,
         editLinkText: '帮助我改善此页面！',
+        lastUpdated: '上次更新',
+        serviceWorker: {
+            updatePopup: { 
+                message: "有文章更新了", 
+                buttonText: "刷新" 
+            }
+        },
         nav: [
             { text: '主页', link: '/' },
             { text: '博文',
@@ -20,6 +29,7 @@ module.exports = {
                 { text: '大数据', link: '/bigData/' },
                 { text: '前端', link: '/frontEnd/' },
                 { text: '深度学习', link: '/deepLearning/' },
+                { text: '软件工程', link: '/softwareEngineering/'},
                 { text: '杂谈', link: '/tittle-tattle/' }
               ] 
             },
@@ -31,48 +41,47 @@ module.exports = {
             '/java/': [
                 '',
                 '语法', 
+                '面向对象',
             ],
 
             '/kotlin/': [
-                "",
+                '',
             ],
 
             '/web/': [
-                "",
+                '',
             ],
 
             '/spring/': [
-                "",
+                '',
             ],
 
             '/bigData/': [
-                "",
+                '',
             ],
             
             '/frontEnd/': [
-                "",
+                '',
             ],
 
             '/deepLearning/': [
-                "",
+                '',
+            ],
+
+            '/softwareEngineering': [
+                '',
             ],
 
             '/tittle-tattle/': [
-                "",
+                '',
+                '关于Java编程部分的文章'
             ],
 
             '/': [
-                '',
+                ''
             ]
         },
-        sidebarDepth: 2,
-        lastUpdated: '上次更新: ',
-        serviceWorker: {
-            updatePopup: { 
-                message: "有新文章更新了", 
-                buttonText: "刷新" 
-            }
-        }
+        sidebarDepth: 2
     },
-    serviceWorker: true,
+    serviceWorker: true
 }
