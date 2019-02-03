@@ -1,6 +1,6 @@
 module.exports = {
     title: '本地煮鸡:8080', 
-    description: '本地煮鸡:8080, 一个博客, 大概会记录一些技术笔记',
+    description: '一个博客, 大概会记录一些技术笔记',
     head: [
         ['link', { rel: 'icon', href: '/img/favicon.ico' }]
     ],
