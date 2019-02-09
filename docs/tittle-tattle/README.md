@@ -13,6 +13,8 @@ editLink: false
 
 + 关于 [Kotlin 编程](/kotlin/)的内容
 
+> ---
+
 + 关于 [Web 技术](/web/)的内容
 
 + 关于 [Spring 技术](/spring/)的内容
@@ -22,6 +24,12 @@ editLink: false
 + 关于[前端技术](/frontEnd/)的内容
 
 + 关于[深度学习技术](/deepLearning/)的内容
+
+> ---
+
++ 关于[软件工程](/softwareEngineering/)的内容
+
+> ---
 
 + [杂谈](/tittle-tattle/)
 

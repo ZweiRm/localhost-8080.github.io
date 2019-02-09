@@ -1,5 +1,7 @@
 ---
 editLink: false
+prev: ./
+next: ./新年快乐！
 ---
 
 # 关于 Java 编程部分的文章
@@ -12,7 +14,7 @@ Java 编程的笔记正在施工中。
 
 [3]李磊,王养廷.面向对象技术及UML教程[M].北京:人民邮电出版社,2010
 
-[4]Oracle.The Java™ Tutorials. https://docs.oracle.com/javase/tutorial/index.html
+[4]Oracle.The Java™ Tutorials. [https://docs.oracle.com/javase/tutorial/index.html](https://docs.oracle.com/javase/tutorial/index.html)
 
 ## 一点点想法
 整理笔记的时候，顺便在构想要写多详细，最后得到了这样的结论:kissing:：  

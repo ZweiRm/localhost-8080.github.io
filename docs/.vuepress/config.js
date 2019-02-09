@@ -74,7 +74,8 @@ module.exports = {
 
             '/tittle-tattle/': [
                 '',
-                '关于Java编程部分的文章'
+                '关于Java编程部分的文章',
+                '新年快乐！'
             ],
 
             '/': [
