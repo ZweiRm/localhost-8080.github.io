@@ -7,7 +7,7 @@
     <meta name="description" content="一个博客, 大概会记录一些技术笔记">
     <link rel="icon" href="/img/favicon.ico">
     
-    <link rel="preload" href="/assets/css/0.styles.dcae4551.css" as="style"><link rel="preload" href="/assets/js/app.f1f25e6c.js" as="script"><link rel="preload" href="/assets/js/9.42c78285.js" as="script"><link rel="preload" href="/assets/js/2.d3e9c765.js" as="script"><link rel="prefetch" href="/assets/js/10.d5899f0c.js"><link rel="prefetch" href="/assets/js/11.248956a3.js"><link rel="prefetch" href="/assets/js/12.efcee083.js"><link rel="prefetch" href="/assets/js/13.e4c93bbb.js"><link rel="prefetch" href="/assets/js/14.73c1f7b0.js"><link rel="prefetch" href="/assets/js/15.58a37d1a.js"><link rel="prefetch" href="/assets/js/16.a1fb2a56.js"><link rel="prefetch" href="/assets/js/17.861df562.js"><link rel="prefetch" href="/assets/js/18.fb514733.js"><link rel="prefetch" href="/assets/js/19.efdec22c.js"><link rel="prefetch" href="/assets/js/3.502e7362.js"><link rel="prefetch" href="/assets/js/4.0de3c30a.js"><link rel="prefetch" href="/assets/js/5.d2502665.js"><link rel="prefetch" href="/assets/js/6.db21117c.js"><link rel="prefetch" href="/assets/js/7.3216b24b.js"><link rel="prefetch" href="/assets/js/8.b9be2a96.js">
+    <link rel="preload" href="/assets/css/0.styles.dcae4551.css" as="style"><link rel="preload" href="/assets/js/app.51ac89f7.js" as="script"><link rel="preload" href="/assets/js/9.5d1a0287.js" as="script"><link rel="preload" href="/assets/js/2.d3e9c765.js" as="script"><link rel="prefetch" href="/assets/js/10.ee0da143.js"><link rel="prefetch" href="/assets/js/11.248956a3.js"><link rel="prefetch" href="/assets/js/12.efcee083.js"><link rel="prefetch" href="/assets/js/13.e4c93bbb.js"><link rel="prefetch" href="/assets/js/14.73c1f7b0.js"><link rel="prefetch" href="/assets/js/15.58a37d1a.js"><link rel="prefetch" href="/assets/js/16.a1fb2a56.js"><link rel="prefetch" href="/assets/js/17.861df562.js"><link rel="prefetch" href="/assets/js/18.fb514733.js"><link rel="prefetch" href="/assets/js/19.efdec22c.js"><link rel="prefetch" href="/assets/js/3.502e7362.js"><link rel="prefetch" href="/assets/js/4.0de3c30a.js"><link rel="prefetch" href="/assets/js/5.d2502665.js"><link rel="prefetch" href="/assets/js/6.db21117c.js"><link rel="prefetch" href="/assets/js/7.3216b24b.js"><link rel="prefetch" href="/assets/js/8.b9be2a96.js">
     <link rel="stylesheet" href="/assets/css/0.styles.dcae4551.css">
   </head>
   <body>
@@ -113,7 +113,32 @@ System<span class="token punctuation">.</span>out<span class="token punctuation"
 
 System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>b<span class="token punctuation">)</span><span class="token punctuation">;</span>
 </code></pre></div><p><strong>Output</strong></p> <div class="language- extra-class"><pre class="language-text"><code>-56
-</code></pre></div><h2 id="运算符"><a href="#运算符" aria-hidden="true" class="header-anchor">#</a> 运算符</h2> <h3 id="算术运算符"><a href="#算术运算符" aria-hidden="true" class="header-anchor">#</a> 算术运算符</h3> <p>包括<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>%</code>、<code>++</code>、<code>--</code>.</p> <div class="warning custom-block"><p class="custom-block-title">注意</p> <ul><li><code>byte</code>类型和<code>short</code>类型运算时会自动提升为<code>int</code>类型</li></ul> <p><strong>Input</strong></p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">byte</span> b1 <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
+</code></pre></div><h4 id="引用类型的强制类型转换"><a href="#引用类型的强制类型转换" aria-hidden="true" class="header-anchor">#</a> 引用类型的强制类型转换</h4> <p>在多态情况下，无法访问子类特有的成员（方法列表已被父类确定），需要进行强制类型转换来实现。<br> <strong>Input</strong></p> <div class="language-java extra-class"><div class="highlight-lines"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><div class="highlighted"> </div><br><br></div><pre class="language-java"><code><span class="token keyword">class</span> <span class="token class-name">Supper</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    <span class="token punctuation">.</span><span class="token punctuation">.</span><span class="token punctuation">.</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mSup_1</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mSup_2</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">class</span> <span class="token class-name">Sub</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token keyword">extends</span> <span class="token class-name">Supper</span> <span class="token punctuation">{</span>
+    <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">mSub</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+        <span class="token comment">// ...</span>
+    <span class="token punctuation">}</span>
+<span class="token punctuation">}</span>
+
+<span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span>String<span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">{</span>
+    Supper supper <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Sub</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 父类引用指向子类对象，向上造型</span>
+    supper<span class="token punctuation">.</span><span class="token function">mSub</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token comment">// 报错，无法访问</span>
+<span class="token punctuation">}</span>
+</code></pre></div><p>将对象强制转换为Sub类型后，即可访问该方法。<br> <strong>Input</strong></p> <div class="language-java extra-class"><pre class="language-java"><code>Sub sub <span class="token operator">=</span> <span class="token punctuation">(</span>Sub<span class="token punctuation">)</span> supper<span class="token punctuation">;</span>
+sub<span class="token punctuation">.</span><span class="token function">mSub</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+</code></pre></div><div class="tip custom-block"><p class="custom-block-title">特别的</p> <ul><li>在进行强制类型转换时，编译器会检查两个类之间是否存在继承关系
+<ul><li><p>若存在继承关系，则编译时会通过，但运行时不一定</p></li> <li><p>若不存在继承关系，编译时会报错</p></li></ul></li></ul></div> <h2 id="运算符"><a href="#运算符" aria-hidden="true" class="header-anchor">#</a> 运算符</h2> <h3 id="算术运算符"><a href="#算术运算符" aria-hidden="true" class="header-anchor">#</a> 算术运算符</h3> <p>包括<code>+</code>、<code>-</code>、<code>*</code>、<code>/</code>、<code>%</code>、<code>++</code>、<code>--</code>.</p> <div class="warning custom-block"><p class="custom-block-title">注意</p> <ul><li><code>byte</code>类型和<code>short</code>类型运算时会自动提升为<code>int</code>类型</li></ul> <p><strong>Input</strong></p> <div class="language-java extra-class"><pre class="language-java"><code><span class="token keyword">byte</span> b1 <span class="token operator">=</span> <span class="token number">3</span><span class="token punctuation">;</span>
 <span class="token keyword">byte</span> b2 <span class="token operator">=</span> <span class="token number">5</span><span class="token punctuation">;</span>
 <span class="token keyword">byte</span> sum <span class="token operator">=</span> b1 <span class="token operator">+</span> b2<span class="token punctuation">;</span>
 
@@ -464,6 +489,6 @@ Ms. Jones
         </a>
         →
       </span></p></div> </div> <!----></div></div>
-    <script src="/assets/js/app.f1f25e6c.js" defer></script><script src="/assets/js/9.42c78285.js" defer></script><script src="/assets/js/2.d3e9c765.js" defer></script>
+    <script src="/assets/js/app.51ac89f7.js" defer></script><script src="/assets/js/9.5d1a0287.js" defer></script><script src="/assets/js/2.d3e9c765.js" defer></script>
   </body>
 </html>
