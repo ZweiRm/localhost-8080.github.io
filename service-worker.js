@@ -21,11 +21,11 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "e9da01098f3beabfafd92b28f953a034"
+    "revision": "46a6ae07de4482f7ae659d1c96d89a91"
   },
   {
     "url": "about/index.html",
-    "revision": "fe710bdb7583e39c817eee60b9dd687c"
+    "revision": "b6454a26b95303a172f19ef45edc1c2d"
   },
   {
     "url": "assets/css/0.styles.dcae4551.css",
@@ -108,24 +108,24 @@ self.__precacheManifest = [
     "revision": "56ac1aaedeaf3d70f0c983fc7f928e63"
   },
   {
-    "url": "assets/js/9.98a4b57d.js",
-    "revision": "360e423aafa14a734a0a76b94360f9d3"
+    "url": "assets/js/9.39f42e0b.js",
+    "revision": "3f2a6263a87fff31e4363d9739ee7064"
   },
   {
-    "url": "assets/js/app.e2ca7533.js",
-    "revision": "a2ca5759050a44217e6319732c85d3ba"
+    "url": "assets/js/app.09e811bc.js",
+    "revision": "809477d33be0d22d685c2113c634d9a4"
   },
   {
     "url": "bigData/index.html",
-    "revision": "d26f80d60068ede074e6117fbf2f5d32"
+    "revision": "8b279c5f7d1f4676c71484011aa4e770"
   },
   {
     "url": "deepLearning/index.html",
-    "revision": "1c442d22b5eaca0c1b5cb41cee1f49e3"
+    "revision": "c793ade5493a36bb688070aa91d1f43b"
   },
   {
     "url": "frontEnd/index.html",
-    "revision": "da7e25f4b227dd027fc92b7ce2ef3af1"
+    "revision": "26b87690fa322353e4a4d974a4d3ac2f"
   },
   {
     "url": "img/ahza-white.png",
@@ -138,6 +138,38 @@ self.__precacheManifest = [
   {
     "url": "img/me.jpg",
     "revision": "503f59be9b5549c306c7844f21ce29d9"
+  },
+  {
+    "url": "img/String_01.jpg",
+    "revision": "11b3982523c6af8894622532eed1a068"
+  },
+  {
+    "url": "img/String_02.jpg",
+    "revision": "4d1449eb96ec89b47f29b1868a7398c6"
+  },
+  {
+    "url": "img/String_03.jpg",
+    "revision": "f6bf942c85e323a3dad1ebad7d6eef9d"
+  },
+  {
+    "url": "img/String_04.jpg",
+    "revision": "775360a6802adb1f6f167d363c9246ea"
+  },
+  {
+    "url": "img/String_05.jpg",
+    "revision": "33787b7a1f680a9b4cac506f314caacb"
+  },
+  {
+    "url": "img/String_06.jpg",
+    "revision": "208c3d93aa4a253aa076fb63b4637484"
+  },
+  {
+    "url": "img/String_07.jpg",
+    "revision": "4c6e51e847a402939a0e2c840237b8e2"
+  },
+  {
+    "url": "img/String_08.jpg",
+    "revision": "6ef630def6c439bf0ecd2e2b2b5bd95d"
   },
   {
     "url": "img/内存管理.jpg",
@@ -169,55 +201,55 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "62aad17988720809f3f10e876f5efeeb"
+    "revision": "d36f7af791c9bebf44bf0efc297cb0dd"
   },
   {
     "url": "java/index.html",
-    "revision": "e6fd817137be59bce2cbcc3d2a669483"
+    "revision": "ae6116ce3b6432336d41c63a84d4a22b"
   },
   {
     "url": "java/应用程序编程接口.html",
-    "revision": "eb5be71958752c01f9a07d7d95b1b162"
+    "revision": "760c5e0be5adb0b70a4860a066a0d9d0"
   },
   {
     "url": "java/语法.html",
-    "revision": "c12d54beb09f04a252638160af293df4"
+    "revision": "acf8ac450c1ee6099ee995a5a62239bc"
   },
   {
     "url": "java/面向对象.html",
-    "revision": "c8eca76e92b07ae9001c7b62518a2536"
+    "revision": "a9956dd4dd79ae968c808336574095b6"
   },
   {
     "url": "kotlin/index.html",
-    "revision": "33ad5a6161cf79cc38319ba329721cf8"
+    "revision": "a2cfc42c70401be01cc96e5426ffae17"
   },
   {
     "url": "softwareEngineering/111.html",
-    "revision": "425b7bfbea94651c2602295e04b2842d"
+    "revision": "38a09ca7af80927ee5f99672f04652b6"
   },
   {
     "url": "softwareEngineering/index.html",
-    "revision": "404cd87f9e27356e90f1923c6971332d"
+    "revision": "364117f9eb05d88a51a2e35dcf1f3c31"
   },
   {
     "url": "spring/index.html",
-    "revision": "81b35f4f623b671258e4f5d169cd0a7e"
+    "revision": "142483b6d09b634d6982a6bea2dd938f"
   },
   {
     "url": "tittle-tattle/index.html",
-    "revision": "474e837e9daaa546926573904408b9b8"
+    "revision": "b9a79bd5e625156365da24a36493246e"
   },
   {
     "url": "tittle-tattle/关于Java编程部分的文章.html",
-    "revision": "d8c040548f0ce58fc40382123535fe1a"
+    "revision": "d78436e38840c8db3c93a7ae2c0e6581"
   },
   {
     "url": "tittle-tattle/新年快乐！.html",
-    "revision": "c992797d1ee9ab89c68a9722014c153a"
+    "revision": "7c63d63bf082dd5a5e4b50bd7e436e5f"
   },
   {
     "url": "web/index.html",
-    "revision": "1704d20bc75c8e740695b8369b4b68c1"
+    "revision": "cce50653796935818da8092586011e93"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
