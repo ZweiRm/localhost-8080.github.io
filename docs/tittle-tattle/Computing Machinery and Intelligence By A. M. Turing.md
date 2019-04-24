@@ -1,3 +1,9 @@
+---
+editLink: false
+prev: ./新年快乐！
+next: false
+---
+
 ### A. M. Turing (1950) Computing Machinery and Intelligence. Mind 49: 433-460.
 ---
 # <p align="center">COMPUTING MACHINERY AND INTELLIGENCE</P>
