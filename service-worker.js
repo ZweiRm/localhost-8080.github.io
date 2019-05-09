@@ -21,11 +21,11 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "07171b0846829b9044b2f66207c7660a"
+    "revision": "a17805c52876119bddf9a834bad85e37"
   },
   {
     "url": "about/index.html",
-    "revision": "af00328201b63c767436a0533c2ed170"
+    "revision": "dafc2ea06d9b73fc4d323fb32b2fa147"
   },
   {
     "url": "assets/css/0.styles.0d19fd84.css",
@@ -60,8 +60,8 @@ self.__precacheManifest = [
     "revision": "4ff84aed44b0099ee667aa4b3596d2a1"
   },
   {
-    "url": "assets/js/16.2412cc13.js",
-    "revision": "db344b08556766dc6a2cc60373b4fda3"
+    "url": "assets/js/16.52af11c6.js",
+    "revision": "cb66577cf8ba2d8de6d9ea1b762feb14"
   },
   {
     "url": "assets/js/17.e28f49e3.js",
@@ -112,20 +112,20 @@ self.__precacheManifest = [
     "revision": "2d764264510cf4d0282231c7e863f672"
   },
   {
-    "url": "assets/js/app.24ab852b.js",
-    "revision": "fc80d9649ad4f4d0d79a669b35e16741"
+    "url": "assets/js/app.17c9fa19.js",
+    "revision": "502cc132c578859b342c3a7b5c645796"
   },
   {
     "url": "bigData/index.html",
-    "revision": "a21add5a5d2c4dee10321450141296c4"
+    "revision": "5a25b4cf939a29367ab298e90a09ec37"
   },
   {
     "url": "deepLearning/index.html",
-    "revision": "ce22d426629368c08396bc95394b0a2c"
+    "revision": "145b4d722df8c3adfa2bb8c6d9f1bf04"
   },
   {
     "url": "frontEnd/index.html",
-    "revision": "a5f4e3a41b8f104abf00431a5676ab89"
+    "revision": "ea4e2ad45d64753693a06c6cd6099dad"
   },
   {
     "url": "img/ahza-white.png",
@@ -201,55 +201,55 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "d920abded45efe7d9344b7b79d89f4ce"
+    "revision": "bcd0c5adfea3260c14a53b4100fce2f7"
   },
   {
     "url": "java/index.html",
-    "revision": "1a7af16d5a0d167e47de5f554053069f"
+    "revision": "107c55e1991f2197358bce7df0e9e44c"
   },
   {
     "url": "java/应用程序编程接口.html",
-    "revision": "3497959d05b96ef41203aeaf74742af4"
+    "revision": "ae4355c3a20c2f13537ff6e7f084483b"
   },
   {
     "url": "java/语法.html",
-    "revision": "984e05c2e0d0cb9739d3777f8ad325cc"
+    "revision": "6892323f5d1481181349e7c101d17e33"
   },
   {
     "url": "java/面向对象.html",
-    "revision": "cf5ab6dd8a459e2693cd6ca2054cb877"
+    "revision": "eb020d28d71c179a6f70fab97f16f64c"
   },
   {
     "url": "kotlin/index.html",
-    "revision": "b944efea2ac8be287f6e2e3a2f1ec955"
+    "revision": "e54892a3e517cc152e80a14396ac483f"
   },
   {
     "url": "softwareEngineering/index.html",
-    "revision": "a88ebadbb10b69fd9e955344f6d730e1"
+    "revision": "012e89e5ab1ee756951934ebd34ad968"
   },
   {
     "url": "spring/index.html",
-    "revision": "99a2f9324b114ac0e02febce5613683f"
+    "revision": "dfb5bfb71c0e064d81507415aa545d3d"
   },
   {
     "url": "tittle-tattle/Computing Machinery and Intelligence By A. M. Turing.html",
-    "revision": "404518b698085876ff7acc10f67f9994"
+    "revision": "11afa324016c0d19dd307f7b2bdc84c2"
   },
   {
     "url": "tittle-tattle/index.html",
-    "revision": "5115202273e9d8695f5920614f80a815"
+    "revision": "9c2981a5cdd6e60677c83a5ecf93d719"
   },
   {
     "url": "tittle-tattle/关于Java编程部分的文章.html",
-    "revision": "611f0c48bb0b9385c05b1e94be2999b3"
+    "revision": "44f672127c6623dcbedf8c766d16b256"
   },
   {
     "url": "tittle-tattle/新年快乐！.html",
-    "revision": "4c6a974127283126fa3353da4623601d"
+    "revision": "214fd0f99e025b75f551b80698d14657"
   },
   {
     "url": "web/index.html",
-    "revision": "5ca04c557daec247531c96c9d50ee9ca"
+    "revision": "1f41ccfb79b4864cc2e8132c0f06e98f"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
