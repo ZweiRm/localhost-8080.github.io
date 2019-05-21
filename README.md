@@ -1,2 +1,2 @@
 # localhost8080
-A personal blog
+A technical blog

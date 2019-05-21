@@ -1,4 +1,14 @@
 {
+  "name": "VuePress",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
+    "deploy": "bash deploy.sh"
+  },
+  "dependencies": {},
   "devDependencies": {
     "vuepress": "^0.14.11"
   }
