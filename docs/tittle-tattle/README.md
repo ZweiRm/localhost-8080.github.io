@@ -9,9 +9,11 @@ editLink: false
 我会逐步将之前记录在 OneNote 上的笔记转移到这个站点，此外可能也会记录一些非技术性的琐碎。(转移周期应该会很长，重构笔记真的好麻烦哦:new_moon_with_face:)
 
 ## 在这里你可以看到
-+ 关于 [Java 编程](/java/)的内容
++ 关于 [Java 程序设计](/java/)的内容
 
-+ 关于 [Kotlin 编程](/kotlin/)的内容
++ 关于 [Kotlin 程序设计](/kotlin/)的内容
+
++ 关于 [C 程序设计](/c/)的内容
 
 > ---
 
