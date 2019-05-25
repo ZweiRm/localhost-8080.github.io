@@ -1,7 +1,3 @@
----
-typora-root-url: ..\.vuepress\public\img
----
-
 # 概述
 ## 关于 C
 
@@ -45,5 +41,6 @@ typora-root-url: ..\.vuepress\public\img
 
 + 子程序包含了**所有自定义函数的实现**，这些函数在`main()`中被调用。特别地，自定义函数可以以任意顺序出现，但通常它们在`main()`之后。
 
-<p style="color: #3eaf7c"><b>* 除<code>main()</code>外，若无必要，其余部分都可以省略。</b></p>
-
+::: warning 注意
+除`main()`外，若无必要，其余部分都可以省略。
+:::
