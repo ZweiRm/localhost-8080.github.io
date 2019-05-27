@@ -27,10 +27,10 @@ module.exports = {
                 { text: 'C', link: '/c/'},
                 { text: 'Web', link: '/web/' },
                 { text: 'Spring', link: '/spring/' },
-                { text: '大数据', link: '/bigData/' },
-                { text: '前端', link: '/frontEnd/' },
-                { text: '深度学习', link: '/deepLearning/' },
-                { text: '软件工程', link: '/softwareEngineering/'},
+                { text: '大数据', link: '/big-data/' },
+                { text: '前端', link: '/front-end/' },
+                { text: '深度学习', link: '/deep-learning/' },
+                { text: '软件工程', link: '/software-engineering/'},
                 { text: '杂谈', link: '/tittle-tattle/' }
               ] 
             },
@@ -63,19 +63,19 @@ module.exports = {
                 '',
             ],
 
-            '/bigData/': [
+            '/big-data/': [
                 '',
             ],
             
-            '/frontEnd/': [
+            '/front-end/': [
                 '',
             ],
 
-            '/deepLearning/': [
+            '/deep-learning/': [
                 '',
             ],
 
-            '/softwareEngineering': [
+            '/software-engineering': [
                 '',
             ],
 
