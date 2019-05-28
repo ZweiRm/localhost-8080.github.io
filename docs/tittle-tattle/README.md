@@ -40,4 +40,4 @@ editLink: false
 哦对了，忘了一个最不重要的内容，那就是关于我的信息。你还可以通过导航栏的[`关于`](/about/)按钮访问关于页面，我会将我的信息和做过的腊鸡项目链接写在上面，欢迎各位指正。`关于`的旁边的按钮可以直接跳转到我的 GitHub 和码云页面，虽然目前里面可能没有什么有意思的东西。
 
 ## 感谢
-感谢你的支持！  
+感谢您的支持！点个赞呗:smirk:~ <a rel="点赞" href="https://github.com/ZweiRm/localhost-8080.github.io"><img alt="GitHub stars" src="https://img.shields.io/github/stars/ZweiRm/localhost-8080.github.io.svg?color=2F835D&logoColor=3EAF7C&style=social"></a>

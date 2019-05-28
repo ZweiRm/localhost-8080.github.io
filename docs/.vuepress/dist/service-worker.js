@@ -21,11 +21,11 @@ importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox
 self.__precacheManifest = [
   {
     "url": "404.html",
-    "revision": "a0c44d6d635a12bb417603f4812819f3"
+    "revision": "e98287372cbaa42a36f358a9e83510c2"
   },
   {
     "url": "about/index.html",
-    "revision": "9d5e2dee51af29cb57daf12898a6bc89"
+    "revision": "21db85b9f27cce062961f22859161533"
   },
   {
     "url": "assets/css/0.styles.3e1d0bd1.css",
@@ -68,8 +68,8 @@ self.__precacheManifest = [
     "revision": "da6e60193ddff6f3f392ca7d6205e532"
   },
   {
-    "url": "assets/js/18.020f4cdc.js",
-    "revision": "c27dabf14eb8a36248052593ac2d5399"
+    "url": "assets/js/18.1fb0c555.js",
+    "revision": "a62bd3ac4245dd0a31cf97920c379b5d"
   },
   {
     "url": "assets/js/19.1e662a76.js",
@@ -92,8 +92,8 @@ self.__precacheManifest = [
     "revision": "f336345b361dd391091a7fe983d17c67"
   },
   {
-    "url": "assets/js/3.6935aa76.js",
-    "revision": "2944a7b766ab6a01402a052f48962f74"
+    "url": "assets/js/3.a41dee41.js",
+    "revision": "6afc22d08633adb2a9f833c8f751c5dd"
   },
   {
     "url": "assets/js/4.ffccad24.js",
@@ -120,28 +120,28 @@ self.__precacheManifest = [
     "revision": "a558b3c1b212b49571cbf61c6f3f61fa"
   },
   {
-    "url": "assets/js/app.d127d2a1.js",
-    "revision": "83d23bc73f2dd9121cce168971168630"
+    "url": "assets/js/app.960d3813.js",
+    "revision": "98b56ad48558c21ddc1d71c1a39afff1"
   },
   {
     "url": "big-data/index.html",
-    "revision": "7945f888f8ed362b3ed66fe0230aa914"
+    "revision": "1da71bc0179bd77796e7c580d2cdbd28"
   },
   {
     "url": "c/index.html",
-    "revision": "5cb548f726f06edcecbb6665c57e9284"
+    "revision": "b3a742210acbcccf3f9ab2681a203832"
   },
   {
     "url": "c/常量、变量与数据类型.html",
-    "revision": "8e8a271c600f050e0ce5b4b64c89c13f"
+    "revision": "4bedd24b46007bf48cd37d3cdd0eb8bd"
   },
   {
     "url": "deep-learning/index.html",
-    "revision": "3a80c8aa6ff9d7e7aa1cf6f34eaedc6e"
+    "revision": "2fab35100e998eb3a17d872838095ab9"
   },
   {
     "url": "front-end/index.html",
-    "revision": "63a56be3750caa004e3ef7b4f408b8e0"
+    "revision": "2ac681dd454d19c2d03233ebf342bc9a"
   },
   {
     "url": "img/ahza-white.png",
@@ -221,55 +221,55 @@ self.__precacheManifest = [
   },
   {
     "url": "index.html",
-    "revision": "9ada0deb9669419fce9179252c5eee4b"
+    "revision": "f531a31551f6ffc49ec8425a697e251a"
   },
   {
     "url": "java/index.html",
-    "revision": "8fecc44c5b4afbd42d98e7623ed17a4c"
+    "revision": "6a512c17be866be0658a1ba4cabc30fa"
   },
   {
     "url": "java/应用程序编程接口.html",
-    "revision": "68f4c8cf7b4ba1c62a14bb8a622a4e6a"
+    "revision": "290625b6bd15193faad6997a71baf3a3"
   },
   {
     "url": "java/语法.html",
-    "revision": "51a4a995234f343853c6647136d8edc3"
+    "revision": "2727d57899c6e00574612a4d9b9cfbb0"
   },
   {
     "url": "java/面向对象.html",
-    "revision": "fd6cbabc142c18fd693bf60b72eeb620"
+    "revision": "a6fc725b83d7042b80e33a8b14f22104"
   },
   {
     "url": "kotlin/index.html",
-    "revision": "03e27c1715d382a277bd98b7375e87bd"
+    "revision": "6de6ba62c1108124cf79a4c0de510fcc"
   },
   {
     "url": "software-engineering/index.html",
-    "revision": "c32b6f56ff34b0db7e4d72a20257a81f"
+    "revision": "0acf27e0554ae1f26752c4ee73e16ac1"
   },
   {
     "url": "spring/index.html",
-    "revision": "93d979f3c2b1a96a74fb2107ee9adb98"
+    "revision": "bc8a3b1011a896947d798ac861c47d94"
   },
   {
     "url": "tittle-tattle/Computing Machinery and Intelligence By A. M. Turing.html",
-    "revision": "0e41b4149325f7b5722e7d2f63a9e085"
+    "revision": "3100f46bfc1892cd6048129e06e99ffc"
   },
   {
     "url": "tittle-tattle/index.html",
-    "revision": "c74f1842b68d0545d34ae6bdc8070c25"
+    "revision": "95dff8f9583bb2ab860ef86feccd462d"
   },
   {
     "url": "tittle-tattle/关于Java编程部分的文章.html",
-    "revision": "21cf8ce0f6a67778ac0ae137bc08658b"
+    "revision": "16567c335143d9f990142a2ef5b70f6f"
   },
   {
     "url": "tittle-tattle/新年快乐！.html",
-    "revision": "c1514e1fec5620cf6947453b693be625"
+    "revision": "c6acd7239e5523a7063cd4a7133aa161"
   },
   {
     "url": "web/index.html",
-    "revision": "d3f09e08eba84c65100388cff94dd5d0"
+    "revision": "958cb39e7b3adbd061e59491a165e634"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
