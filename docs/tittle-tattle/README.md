@@ -21,15 +21,15 @@ editLink: false
 
 + 关于 [Spring 技术](/spring/)的内容
 
-+ 关于[大数据技术](/bigData/)的内容
++ 关于[大数据技术](/big-data/)的内容
 
-+ 关于[前端技术](/frontEnd/)的内容
++ 关于[前端技术](/front-end/)的内容
 
-+ 关于[深度学习技术](/deepLearning/)的内容
++ 关于[深度学习技术](/deep-learning/)的内容
 
 > ---
 
-+ 关于[软件工程](/softwareEngineering/)的内容
++ 关于[软件工程](/software-engineering/)的内容
 
 > ---
 
