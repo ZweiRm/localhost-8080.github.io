@@ -75,8 +75,9 @@ module.exports = {
                 '',
             ],
 
-            '/software-engineering': [
+            '/software-engineering/': [
                 '',
+                '软件过程',
             ],
 
             '/tittle-tattle/': [
