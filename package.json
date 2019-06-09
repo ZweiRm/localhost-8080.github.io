@@ -10,6 +10,6 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "vuepress": "^0.14.11"
+    "vuepress": "^1.0.0"
   }
 }
