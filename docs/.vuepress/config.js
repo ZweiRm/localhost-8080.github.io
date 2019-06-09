@@ -5,6 +5,13 @@ module.exports = {
         ['link', { rel: 'icon', href: '/img/favicon.ico' }]
     ],
     ga: 'UA-132436049-1',
+    markdown: {
+        config: md => {
+            md.use(require('markdown-it-sup'))
+            md.use(require('markdown-it-sub'))
+        }
+    },
+    plugins: ['@vuepress/back-to-top'],
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',
         repoLabel: '查看源码',
