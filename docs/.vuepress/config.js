@@ -5,7 +5,7 @@ module.exports = {
         ['link', { rel: 'icon', href: '/img/favicon.ico' }]
     ],
     markdown: {
-        config: md => {
+        extendMarkdown: md => {
             md.use(require('markdown-it-sup'))
             md.use(require('markdown-it-sub'))
         }
