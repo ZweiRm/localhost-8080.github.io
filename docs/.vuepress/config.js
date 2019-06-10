@@ -4,14 +4,25 @@ module.exports = {
     head: [
         ['link', { rel: 'icon', href: '/img/favicon.ico' }]
     ],
-    ga: 'UA-132436049-1',
     markdown: {
         config: md => {
             md.use(require('markdown-it-sup'))
             md.use(require('markdown-it-sub'))
         }
     },
-    plugins: ['@vuepress/back-to-top'],
+    plugins: {
+        '@vuepress/pwa': {
+            serviceWorker: true,
+            updatePopup: {
+            message: "有文章更新了",
+            buttonText: "刷新"
+            }
+        },
+        '@vuepress/back-to-top': true,
+        '@vuepress/google-analytics': {
+            'ga': 'UA-132436049-1'
+        }
+    },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',
         repoLabel: '查看源码',
@@ -19,12 +30,6 @@ module.exports = {
         editLinks: true,
         editLinkText: '帮助我改善此页面！',
         lastUpdated: '上次更新',
-        serviceWorker: {
-            updatePopup: { 
-                message: "有文章更新了", 
-                buttonText: "刷新" 
-            }
-        },
         nav: [
             { text: '主页', link: '/' },
             { text: '博文',
