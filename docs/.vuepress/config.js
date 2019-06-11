@@ -19,6 +19,9 @@ module.exports = {
             }
         },
         '@vuepress/back-to-top': true,
+        '@vuepress/register-components': {
+            componentsDir: '/components/'
+        },
         '@vuepress/google-analytics': {
             'ga': 'UA-132436049-1'
         }
