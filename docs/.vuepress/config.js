@@ -99,7 +99,8 @@ module.exports = {
                 '',
                 '关于Java编程部分的文章',
                 '新年快乐！',
-                'Computing Machinery and Intelligence By A. M. Turing'
+                'Computing Machinery and Intelligence By A. M. Turing',
+                '学术研究的正确姿势'
             ],
 
             '/': [
