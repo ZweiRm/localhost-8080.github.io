@@ -24,6 +24,12 @@ module.exports = {
         },
         '@vuepress/google-analytics': {
             'ga': 'UA-132436049-1'
+        },
+        'mathjax': {
+            target: 'svg',
+            macros: {
+                '*': '\\times',
+            }
         }
     },
     themeConfig: {
@@ -93,6 +99,11 @@ module.exports = {
             '/software-engineering/': [
                 '',
                 '软件过程',
+            ],
+
+            '/math/': [
+                '',
+                '多元函数微分学'
             ],
 
             '/tittle-tattle/': [

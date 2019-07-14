@@ -8,7 +8,9 @@
     "docs:build": "vuepress build docs",
     "deploy": "bash deploy.sh"
   },
-  "dependencies": {},
+  "dependencies": {
+    "vuepress-plugin-mathjax": "^1.2.8"
+  },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.0.1",
     "@vuepress/plugin-google-analytics": "^1.0.1",
