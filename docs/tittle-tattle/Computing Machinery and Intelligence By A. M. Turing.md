@@ -1,7 +1,7 @@
 ---
 editLink: false
 prev: ./新年快乐！
-next: false
+next: ./学术研究的正确姿势
 ---
 
 ### A. M. Turing (1950) Computing Machinery and Intelligence. Mind 49: 433-460.

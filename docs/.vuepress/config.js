@@ -24,6 +24,12 @@ module.exports = {
         },
         '@vuepress/google-analytics': {
             'ga': 'UA-132436049-1'
+        },
+        'mathjax': {
+            target: 'svg',
+            macros: {
+                '*': '\\times',
+            }
         }
     },
     themeConfig: {
@@ -95,11 +101,17 @@ module.exports = {
                 '软件过程',
             ],
 
+            '/math/': [
+                '',
+                '多元函数微分学'
+            ],
+
             '/tittle-tattle/': [
                 '',
                 '关于Java编程部分的文章',
                 '新年快乐！',
-                'Computing Machinery and Intelligence By A. M. Turing'
+                'Computing Machinery and Intelligence By A. M. Turing',
+                '学术研究的正确姿势'
             ],
 
             '/': [
