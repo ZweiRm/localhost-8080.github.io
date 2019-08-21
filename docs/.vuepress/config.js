@@ -30,7 +30,11 @@ module.exports = {
             macros: {
                 '*': '\\times',
             }
-        }
+        },
+        'sitemap': {
+            hostname: 'https://localhost-8080.io',
+            outFile: 'sitemap.txt',
+          }
     },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',

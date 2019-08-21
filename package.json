@@ -9,7 +9,8 @@
     "deploy": "bash deploy.sh"
   },
   "dependencies": {
-    "vuepress-plugin-mathjax": "^1.2.8"
+    "vuepress-plugin-mathjax": "^1.2.8",
+    "vuepress-plugin-sitemap": "^2.1.2"
   },
   "devDependencies": {
     "@vuepress/plugin-back-to-top": "^1.0.1",
