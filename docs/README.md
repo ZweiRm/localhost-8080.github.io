@@ -4,13 +4,13 @@ heroImage: /img/localhost.png
 actionText: Hello, world! →
 actionLink: /tittle-tattle/
 features:
-- title: 咸鱼
-  details: 网站作者是是十足的咸鱼，同一个世界同一个梦想。我们都想……[物理封口
-- title: 想睡觉
-  details: 一天最美好的事情就是睡觉了，睡到自然醒才是……等等？？？都下午两点半了？？？
-- title: 今天吃什么好呢
-  details: 人生最大的哲理难题就是问自己 “这顿吃什么好呢？” 嗯……今天不太想吃新疆爆肉。
-footer: Copyright © 2018-2019 ahza.xin | localhost-8080.io
+- title: 全面
+  details: 笔记涵盖从计算机科学、软件工程、到各种具体实用技术等多维度内容。
+- title: 简洁
+  details: 笔记力图以简洁的文字和画面表现出各知识的条理关系。
+- title: 实用
+  details: 这不是百科全书，但在全面的基础上尽量展示最可能用到的部分。
+footer: Copyright © 2018-2020 ahza.xin | localhost-8080.io
 ---
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>  

@@ -3,10 +3,25 @@ editLink: false
 sidebar: false
 ---
 
-# 关于我
-![me](/img/me.jpg)
-::: tip 我
-大概是个咸鱼。  
-他们都叫我二毛。  
-预备役程序员。
+# About Me
+::: tip Duo Huang
+BEng in Software Engeneering  
+Graduated from Shanxi Agriculture University  
+
+momg@foxmail.com
+:::
+
+## Projects
+### A Web Based Java Online Judge System
+[Gitee Repository](https://gitee.com/lagee_online_quizing)  
+[OJ Frontend](https://oj.front.ahza.xin/)  
+[OJ Backend](https://oj.back.ahza.xin/)  
+
+### Ahza Health Care Platform for Individuals
+[Github Repository](https://github.com/ZweiRm/ahza_health_mixfront)  
+[Website](https://health.ahza.xin/)
+
+::: warning
+These apps are still in the beta version.  
+Please **DO NOT** use your frequently-used password to register testing account of these apps.
 :::
