@@ -5,8 +5,7 @@ sidebar: false
 
 # About Me
 ::: tip Duo Huang
-BEng in Software Engeneering  
-Graduated from Shanxi Agriculture University  
+BEng in Software Engeneering   
 
 momg@foxmail.com
 :::

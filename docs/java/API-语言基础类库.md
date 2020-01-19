@@ -3,15 +3,10 @@ prev: ./面向对象
 next: false
 ---
 
-# 应用程序编程接口
-## 4.1 概述
-应用程序编程接口 (Application Programming Interface, **API**) 是预先定义的一套代码，用于程序员直接调用来实现其具体需求。  
-> 本章仅展现常用类和其对应常用方法，具体完整信息请查阅[官方文档](https://docs.oracle.com/en/java/javase/11/docs/api/index.html)。
+# API-语言基础类库 (Package `java.lang`)
+## `Object`类
 
-## 4.2 语言基础类库 (Package `java.lang`)
-### 4.2.1 `Object`类
-
-#### 4.2.1.1 基本信息
+### 基本信息
 **Package** java.lang  
 `public class Object`
 
@@ -19,7 +14,7 @@ next: false
 
 + 任何类对象都可以用`Object`类的对象来接收。
 
-#### 4.2.1.2 重要方法
+### 重要方法
 1. `clone()`  
    + 克隆一个对象。  
 
@@ -58,11 +53,10 @@ next: false
    
    4. 判断属性值是否一致
    :::
-> ---
 
-### 4.2.2 `System`类
+## `System`类
 
-#### 4.2.2.1 基本信息
+### 基本信息
 
 **Package** java.lang
 
@@ -72,7 +66,7 @@ next: false
 
 + 它是一个静态类，不能被继承，不能被实例化，所有方法都是静态方法。
 
-#### 4.2.2.2 重要方法
+### 重要方法
 
 1. `static void gc()`
 
@@ -96,12 +90,10 @@ next: false
   将错误提示信息（使用红色字体）输出到显示器（是`PrintStream`类的对象，声明：`static final PrintStream err`）
 :::
 
->---
-
-### 异常
+## 异常
 异常是一套处理和反馈问题的机制。
 
-#### 基本信息
+### 基本信息
 
 **Package** java.lang
 
@@ -111,12 +103,12 @@ next: false
 
 + 错误无法处理，而异常可以处理。
 
-#### `Exception`
+### `Exception`
 **分类**
-+ 编译时异常：编译期出现的异常，要求必须处理，抛出或者捕获。  
++ 编译时异常（或称已检查异常）：编译期出现的异常，要求必须处理，抛出或者捕获。  
   如：`CloneNotSupportedException`和`ParseException`
 
-+ 运行时异常：编译期不报错，但运行时出现。在编译期处理与否均可，往往非语法错误。  
++ 运行时异常（或称未检查异常）：编译期不报错，但运行时出现。在编译期处理与否均可，往往非语法错误。  
   如：`ArithmeticException`、`ArrayIndexOutOfBoundException`、`NullPointerException`、`ClassCastException`和`NumberFormatException`
 
 + 自定义异常：编程者通过继承某个异常类自己编写的异常。  
@@ -126,12 +118,148 @@ next: false
 
 + 编译时异常只能在抛出时捕获
 :::
-### 线程
 
-### 枚举
+::: tip 关于异常捕获
++ 使用多个`catch`来分别捕获不同的异常  
 
-### `String`类
-#### 基本信息
++ 可以捕获一个父类异常，统一处理
+
++ 在一个`catch`语句中，可以使用`|`分割不同的异常来分组处理，避免了写多个`catch`语句<Badge text="> Java SE 7.0"/>    
+
++ 当一个方法声明抛出父类异常时，处理中必须处理父类异常
+
++ 在捕获异常时，需要先捕获子类异常再捕获父类异常
+:::
+
+::: tip 关于 finally
+无论是否发生异常都会执行
+:::
+
+### `Error`
+错误。不应试图捕获的严重问题。无法处理。
+
+## 线程
+### 基本信息
+**Package** java.lang  
+`public class Thread`
+
+### 进程与线程
++ 线程是操作系统中的重要概念之一，是程序运行的基本单元。  
+
++ 进程是线程的集合。每一个进程可以创建一个或多个线程。
+
+### 自定义线程
+线程执行没有顺序性，相互抢占资源。这个抢占过程不只存在于线程执行的开始，而是存在于执行的全过程。在这种抢占模式下，会导致不合常理的情况发生（多线程并发安全问题）。  
+
++ 继承`Thread`类
+  + 在`run()`中重写线程执行逻辑。  
+
+  + 类实例通过`start()`启动线程。
+
++ 实现`Runnable`接口
+  + 重写`run()`。
+
+  + 通过`Thread`类对象启动线程。
+
++ 实现`Callable<T>接口`
+  + 重写`call()`
+
+### 线程同步
+使用`synchronized`关键字来同步多个线程，一定程度上解决线程冲突。  
+
+**同步代码块**  
+``` java
+   synchronized(同步锁 *所有线程可见*) {
+      …
+   }      
+```
+可以传入类字节码，`this`对象，共享资源
+
+**同步方法**  
+   使用`synchronized`修饰方法，此时锁对象为`this`对象。
+
+### 线程通信
+通过等待唤醒机制调节线程之间的执行顺序。  
+
+线程在等待期间存在于线程池中，线程池本质上是一个存储线程的队列。  
+A1 A2 C1 C2 → ()  
+A1(Running)  
+A1 A2 C1 C2 → ()  
+A1(Running, <font color="red">wait()[A1]</font>)  
+A2 C1 C2 → (A1)  
+A2(Running, <font color="red">wait()[A2]</font>)  
+C1 C2 → (A1 A2)  
+C1(Running, <font color="green">notify()[A1]</font>)  
+A1 C1 C2 → (A2)  
+C1(Running, <font color="red">wait()[C1]</font>)  
+A1 C2 → (A2, C1)  
+C2(Running, <font color="red">wait()[C2]</font>)  
+A1 → (A2, C1, C2)  
+A1(Running, <font color="green">notify()[A2]</font>)  
+A1 A2 → (C1, C2)  
+A1(Running, <font color="red">wait()[A1]</font>)  
+A2 → (C1, C2, A1)  
+A2(Running, <font color="red">wait()[A2]</font>)  
+   → (C1, C2, A1, A2)  
+
+`sleep()`需要制定睡眠时间，结束自然恢复。释放执行权，不释放锁对象，在`Thread`类中，为静态方法
+`wait()`可以指定等待时间，也可不指定，此时需要唤醒。释放执行权，释放锁对象。在`Object`类中，为普通方法。必须结合锁使用（两对象相同）。
+
+### 死锁
+**产生原因**  
+多个线程；共享资源过多；锁对象不统一；锁嵌套。  
+
+**避免死锁**  
+统一锁对象、减少锁嵌套。  
+
+**同步与异步**
++ 若某对象在某时间段内只允许一个线程操作即为同步，反之异步。
+
++ 同步一定安全。
+
++ 不安全一定异步。
+
+### 线程状态
+![线程状态](/img/线程状态.png)
++ 阻塞：不执行代码抢占资源
+
++ 冻结：不执行代码，不抢占资源
+
+### 守护线程
++ 守护其他线程的执行，被守护线程结束后，守护线程无论完成与否随之结束
+
++ 只要代码中出现守护线程，程序中的线程只能是守护线程或者被守护线程  
+  若存在多个被守护线程，则最后一个被守护线程为结束标志
+
+### 线程优先级
++ 线程拥有 1-10 共十级优先级 
+
++ 优先级越高，理论上抢到资源的概率越大
+
++ 相邻两个优先级几乎没有差别  
+  相差5级以上，略有差别
+
+## 枚举
+### 基本信息
+**Package** java.lang  
+`public abstract class Enum<E extends Enum<E>>` 
+
++ 取值固定且能一一列举
+
++ 枚举常量必须定义在首行，用`,`隔开，以`;`结尾
+
++ 枚举类中允许定义属性和方法
+
++ 枚举类构造函数默认且只能为私有  
+  可以携带参数，在枚举后添加括号
+
++ 可以定义抽象方法，以匿名内部类的形式实现
+
++ `switch(表达式)`  
+  表达式值新添Enum常量
+
+## `String`类
+### 基本信息
 **Package** java.lang  
 `public final class String`  
 
@@ -141,7 +269,7 @@ next: false
 
 + 字符串是常量，创建后不可更改，但可以被共享。
 
-#### 重要方法
+### 重要方法
 1. `char chatAt()`  
    获取字符串指定下标字符。
 
@@ -274,7 +402,7 @@ next: false
 
 → [关于`Scanner`类](#scanner类)
 
-#### 正则表达式
+### 正则表达式
 正则表达式本质上是**指定匹配**或**筛选规则**的一系列表达式。
 
 **规则**  
@@ -326,8 +454,8 @@ next: false
 + `String`类还提供了其他的验证规则函数，如：`boolean startsWith(String prefix)`用来验证是否由某字符串打头。
 > ---
 
-### 包装类
-#### 基本信息
+## 包装类
+### 基本信息
 对于每种基本数据类型, Java 都提供了与其对应的类。这些类称为包装类。  
 
 | 基本数据类型 | `byte` | `short` | `int`     | `long` | `float` | `double` | `char`      | `boolean` |
@@ -336,11 +464,11 @@ next: false
 
 > `int`和`char`所对应的包装类为单词的全拼。
 
-#### 装箱
+### 装箱
 
 将**基本数据类型转换为对应的引用数据类型对象**的操作。
 
-#### 自动装箱 <Badge text="Java SE 5.0+"/>
+### 自动装箱 <Badge text="Java SE 5.0+"/>
 
 将一个**基本数据类型变量直接赋值给对应的引用数据类型对象**。本质上调用了对应的`valueOf()`。
 
@@ -364,7 +492,7 @@ Integer integer = Integer.valueOf(3);
 故推荐全部使用equals()来规避风险。
 :::
 
-#### 自动拆箱 <Badge text="Java SE 5.0+"/>
+### 自动拆箱 <Badge text="Java SE 5.0+"/>
 
 将一个引用数据类型对象直接赋值给对应基本数据类型变量。本质上调用了对象的`xxxValue()`。
 
@@ -394,14 +522,13 @@ int i = integer.intValue();
 
 :::
 
-> ---
-### `Math`类
-#### 基本信息
+## `Math`类
+### 基本信息
 `Math`类是一个最终类，其构造函数是私有的。
 
 该类提供了一系列静态方法，这些方法实现了基本的数学运算，如三角函数、绝对值、平方根等。
 
-#### 重要方法
+### 重要方法
 1. `static double ceil(double a)`  
    向上取整
 
@@ -420,7 +547,7 @@ int i = integer.intValue();
 6. `static double random()`  
    返回一个随机数 (0.0≤x<1.0)
 
-#### `strictfp`关键字
+### `strictfp`关键字
 
 精确浮点(strict float point)，用于修饰类、接口和方法。
 
@@ -433,66 +560,3 @@ int i = integer.intValue();
 这个类中对基础运算（如加、减、乘、除）提供了方法支持，故，不能使用运算符（如`+`、`-`、`*`、`/`）来进行运算。
 
 :::
-
-> ---
-
-## 工具类库 (Package `java.util`)
-### 日期类
-#### `Date`类
-**基本信息**  
-**Package** java.util  
-`public class Date`  
-
-+ 使用`Date`类对象来表示一个日期。默认创建的对象会获取系统当前时间。  
-
-**重要方法**  
-
-**格式化日期显示**
-+ 将字符串转化为日期对象  
-  使用`SimpleDateFormat`类向上造型，调用其`Date parse(String source)`来转换。  
-  **Input**
-  ```java
-  Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2000-02-01 12:42:15");
-  ```
-
-+ 将日期对象转换为字符串
-  使用`SimpleDateFormat`类向上造型，调用其`StringBuffer format(Date date)`来转换。  
-  **Input**
-  ```java
-  String str = new SimpleDateFormat("yyyy年MM月dd日").format(date);
-  ```
-
-#### `Calendar`类
-**基本信息**  
-**Package** java.util  
-`public abstract class Calendar`  
-
-+ 使用静态方法`static Calendar getInstance()`来获取一个`Calendar`类实例。  
-> ---
-
-### 集合
-
-### `Iterator`接口
-
-### `Collections`类
-
-### `Map`接口
-
-### `Properties`类
-
-### `Scanner`类
-
-### JUC (Package `java.util.concurrent`)
-
-## 输入/输出类库 (Package `java.io`)
-### `File`类
-
-### I/O Stream
-
-## 网络类库 (Package `java.net`)
-### `Socket`类
-
-## 其他特性
-### 断言
-
-### 泛型, 参数化类型
