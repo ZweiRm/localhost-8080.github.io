@@ -1,6 +1,6 @@
 ---
 prev: ./面向对象
-next: false
+next: ./API-工具类库
 ---
 
 # API-语言基础类库 (Package `java.lang`)
@@ -524,6 +524,9 @@ int i = integer.intValue();
 
 ## `Math`类
 ### 基本信息
+**Package** java.lang  
+`public final class Math`
+
 `Math`类是一个最终类，其构造函数是私有的。
 
 该类提供了一系列静态方法，这些方法实现了基本的数学运算，如三角函数、绝对值、平方根等。
