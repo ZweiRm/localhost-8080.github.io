@@ -65,6 +65,15 @@ next: false
 `LinkedList`类
 + 基于链表实现，增删快，查询慢
 + 线程不安全的集合
+![LinkedList](/img/LinkedList.png)
+
+`Vector`类
++ Java 中最早的集合，初始容量是10
++ 内存空间连续
++ 每次扩容1倍
++ 线程安全
++ 使用方法`elements()`来返回枚举
+
 ## `Iterator`接口
 
 ## `Collections`类
