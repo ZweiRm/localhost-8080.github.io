@@ -124,58 +124,403 @@ next: false
 `public interface BlockingQueue<E>`  
 
 **重要实现类**  
-`ArrayBlockingQueue`类  
-是基于数组且有界的阻塞队列。  
+1. `ArrayBlockingQueue`类  
+   是基于数组且有界的阻塞队列。  
 
-​	​	**重要方法**  
-1. `add(object)`  
-   + 非阻塞
-   + 底层调用`offer()`
-   + 添加溢出抛异常`IllegalStateException: Queue full`
-			
-2. `offer(object)`  
-   + 非阻塞
-   + 添加溢出返回`false`
-			
-3. `offer(object, timeout, TimeUnit.xxx)`  
-   + `timeout`期间内一直尝试添加，若超时未添加成功则返回`false`
-				
-4. `put(object)`  
-   + 阻塞
-				
-5. `remove(object)`  
-   + 非阻塞
-   + 队空，不报错
-			
-6. `remove()`  
-   + 非阻塞
-   + 队空则抛异常`NoSuchElementException`
-				
-7. `poll()`  
-   + 非阻塞
-   + 队空返回`null`
-				
-8. `poll(timeout, TimeUnit.xxx)`  
-   + `timeout`期间内一直尝试移除队首，若超时未添加成功则返回`null`
-			
-9. `take(object)`  
-   + 阻塞
-   
+   **重要方法**  
+   1. `add(object)`
+      + 非阻塞
+      + 底层调用`offer()`
+      + 添加溢出抛异常`IllegalStateException: Queue full`  
+          
+   2. `offer(object)`  
+      + 非阻塞
+      + 添加溢出返回`false`
+          
+   3. `offer(object, timeout, TimeUnit.xxx)`  
+      + `timeout`期间内一直尝试添加，若超时未添加成功则返回`false`
+            
+   4. `put(object)`  
+      + 阻塞
+            
+   5. `remove(object)`  
+      + 非阻塞
+      + 队空，不报错
+          
+   6. `remove()`  
+      + 非阻塞
+      + 队空则抛异常`NoSuchElementException`
+            
+   7. `poll()`  
+      + 非阻塞
+      + 队空返回`null`
+            
+   8. `poll(timeout, TimeUnit.xxx)`  
+      + `timeout`期间内一直尝试移除队首，若超时未添加成功则返回`null`
+          
+   9. `take(object)`  
+      + 阻塞
+      
+2. `PriorityBlockingQueue`类  
+   + 无界
+   + 不允许元素为空
+   + 队列中元素对应的类必须实现`Comparable`接口  
+     重写`compareTo()`来进行排序  
+     + 自然排序，升序
+	  + 不保证迭代遍历时的顺序
+     + 保证逐个取出时的顺序
+
+3. `SynchronousQueue`类  
+   只能保存单个元素
+
 ### `BlockingDeque`接口
+**基本信息**  
+`public interface BlockingDeque<E>`  
+
++ 双向队列
++ 继承自`BlockingQueue`
 
 ### `ConcurrentMap`接口
+**基本信息**  
+`public interface ConcurrentMap<K,​V>`  
+
+**重要实现类/接口**  
+1. `ConcurrentHashMap`类  
+   + 映射底层依靠键值对存储数据，默认大小为 16
+	+ 数组的每一个位置维系了一个链表
+	+ 经过一定位运算分布到 16 个桶中  
+     当元素碰撞时，两元素键对比；若相同，则覆盖。不同则生成链。
+   + 加载因子 `0.75f`  
+     避免桶中元素太多影响效率，引入加载因子;  
+     当达到一定规模，如使用到 $0.75*16=12$ 个桶以后时，则对桶的数量扩增。之后重新计算全部哈希码，重新排布（Rehash）
+
+2. `ConcurrentNavigableMap`接口  
+   是一种并发导航映射  
+
+   **重要实现类**  
+   + `ConcurrentSkipListMap`类  
+     跳跃表  
+
+     **重要方法**  
+     + `headMap(String key)`  
+	    从头开始，截取到指定的键之前组成的子map
+				
+	  + `tailMap(String key)`  
+		 从尾开始截取
+					
+	  + `subMap(String fromKey, String toKey)`  
+		 范围截取
+
 
 ### `CountDownLatch`类
+**基本信息**  
+`public class CountDownLatch`
+
++ 递减锁
++ 在构造时传入，线程执行之后`await()`
++ 计数线程全部执行完成（进行 countdown 来递减）之后执行`await()`之后的代码
++ 适合于不同线程进行计数
+
+**实例代码**  
+``` java
+import java.util.concurrent.CountDownLatch;
+
+public class CouuntDownLatchDemo {
+   public static void main(String[] args) throws InterruptedException {
+      CountDownLatch countDownLatch = new CountDownLatch(2);
+      new Thread(new Teacher(countDownLatch)).start();
+      new Thread(new Student(countDownLatch)).start();
+
+      countDownLatch.await();
+
+      System.out.println("上课");
+   }
+}
+
+class Teacher implements Runnable {
+   private CountDownLatch countDownLatch;
+
+   public Teacher(CountDownLatch countDownLatch) {
+      this.countDownLatch = countDownLatch;
+   }
+
+   @Override
+   public void run() {
+      System.out.println("老师进入教室");
+      countDownLatch.countDown();
+   }
+}
+
+class Student implement Runnable {
+   private CountDownLatch countDownLatch;
+
+   public Student(CountDownLatch countDownLatch) {
+      this.countDownLatch = countDownLatch;
+   }
+
+   @Override
+   public void run() {
+      System.out.println("学生进入教室");
+      countDownLatch.countDown();
+   }
+}
+```
 
 ### `CyclicBarrier`类
+**基本信息**  
+`public class CyclicBarrier`  
+
++ 栅栏
++ 在构造时传入，需要阻塞的地方`await()`
++ 没`await()`一次计数减少一次，直到减为 0 放开阻塞
++ 适合于同一线程类产生多个线程计数
+
+**实例代码**  
+``` java
+import java.util.concurrent.CyclicBarrier;
+
+public class CyclicBarrierDemo {
+   public static void main(String[] args) {
+      CyclicBarrier cyclicBarrier = new CyclicBarrier(3);
+      new Thread(new Horse("1"), cyclicBarrier)).start();
+      new Thread(new Horse("2"), cyclicBarrier)).start();
+      new Thread(new Horse("3"), cyclicBarrier)).start();
+
+      System.out.println("开始比赛");
+   }
+}
+
+class Horse implements Runnable {
+   private String name;
+   private CyclicBarrier cyclicBarrier;
+
+   public Horse(String name, CyclicBarrier cyclicBarrier) {
+      this.name = name;
+      this.cyclicBarrier = cyclicBarrier;
+   }
+
+   @Override
+   public void run() {
+      System.out.println(name + "走到出发点");
+      try {
+         cyclicBarrier.await();
+      } catch (InterruptedException | BrokenBarrierException e) {
+         e.printStackTrace();
+      }
+   }
+}
+```
 
 ### `Exchanger`类
+**基本信息**  
+`public class Exchanger<V>`
+
++ 交换机
++ 用与交换两个线程的信息
+
+**实例代码**  
+``` java
+import java.util.concurrent.Exchanger;
+
+public class ExchangerDemo {
+   public static void main(String[] args) {
+      Exchanger<String> exchanger = new Exchanger<>();
+      new Thread(new SpyA(exchanger)).start();
+      new Thread(new SpyB(exchanger)).start();
+   }
+}
+
+class SpyA implements Runnable {
+   private Exchanger<String> exchanger;
+
+   public SpyA(Exchanger<String> exchanger) {
+      this.exchanger = exchanger;
+   }
+
+   @Override
+   public void run() {
+      String msg = "M1";
+      try {
+         String exchange = exchanger.exchange(msg);
+         System.out.println("SpyA 收到 SpyB 的信息：" + exchange);
+      } catch (InterruputedException e) {
+         e.printStackTrace();
+      }
+   }
+}
+
+class SpyB implements Runnable {
+   private Exchanger<String> exchanger;
+
+   public SpyB(Exchanger<String> exchanger) {
+      this.exchanger = exchanger;
+   }
+
+   @Override
+   public void run() {
+      String msg = "M2";
+      try {
+         String exchange = exchanger.exchange(msg);
+         System.out.println("SpyB 收到 SpyA 的信息：" + exchange);
+      } catch (InterruputedException e) {
+         e.printStackTrace();
+      }
+   }
+}
+```
 
 ### `Semaphore`类
+**基本信息**  
+`public class Semaphore`  
+
++ 信号量
++ 用于限制某段代码在某个时间段内最多只能有规定线程书目进入访问
++ 每个线程进入的时候需要进行`acquire()`操作，使得信号量`-1`，知道为`0`
++ 若有新的线程来访问则会在`acquire()`操作阻塞，直到之前的某线程`release()`
+
+**实例代码**  
+``` java
+import java.util.concurrent.Semaphore;
+
+public class SemaphoreDemo {
+   public static void main(String[] args) {
+      Semaphore semaphore = new Semaphore(5);
+
+      for (int i = 0; i < 10; i++) {
+         new Thread(new FileWatching(semaphore)).start();
+      }
+   }
+}
+
+class FileWatching implements Runnable {
+   private Semaphore semaphore;
+
+   public FileWatching(Semaphore semaphore) {
+      this.semaphore = semaphore;
+   }
+
+   @Override
+   public void run() {
+      String name = Thread.currentThread().getName();
+      try {
+         semaphore.acquire(); // 信号量 -1
+         System.out.println(name + "领取到了眼镜开始观影");
+         Thread.sleep(5000);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
+
+      System.out.println(name + "归还眼镜，离开了影院");
+      semaphore.release(); // 信号量 +1
+   }
+}
+```
 
 ### `ExecutorService`接口
+**基本信息**  
+`public interface ExecutorService`  
+
++ 类似线程池，实现线程复用
++ 先交由核心线程处理；若核心线程已满则放入工作队列中；若工作队列满则创建临时线程
+
+**实例代码**  
+``` java
+public class ExcutorServiceDemo {
+   public static void main(String[] args) {
+      // corePoolSize: 核心池大小。线程池中核心线程的数量，创建后不再销毁
+      // maximumPoolSize: 允许存在的最大线程数量
+      // keepAliveTime：存活时间
+      // unit: （存活时间的）单位
+      // workQueue: 工作队列，阻塞式队列。在核心线程都被使用的情况下，新请求会被放在工作队列中
+
+      ExecutorService executorService = new ThreadPoolExcutor(5, 10, 3000, TimeUnit.MILLISECONDS, new ArrayBlockingQueue(10));
+      for(int i = 0; i < 5; i++) {
+         executorService.submit(new Demo()); // 支持Runnable
+         // executorService.execute(new Demo()); 支持Callable/Runnable
+      }
+      executorService.shutdown();
+   }
+}
+
+class Demo implements Runnable {
+   @Override
+   public void run() {
+      System.out.println(Thread.currentThread().getName() + "被处理");
+      try {
+         Thread.sleep(3000);
+      } catch (InterruptedException e) {
+         e.printStackTrace();
+      }
+   }
+}
+```
+
+::: tip 线程池
+`Executor`提供了三种线程池：`CachedThreadPool`、`FixedThreadPool`和`ForkJoinPool`。  
+
++ `CachedThreadPool`
+  + 缓存线程池
+  + 小队列大池
+  + 无核心线程，临时线程存活时间短
+  + 能够较好应用高并发场景
+  + 不适合长任务场景
+  ``` java
+  ExecutorService executorService = Executors.newCachedThreadPool();
+  ```
+
++ `FixedThreadPool`
+  + 大队列小池（传入数目）
+  + 所有线程都为核心线程
+  + 降低服务器的并发压力
+  ``` java
+  ExecutorService executorService = Executors.newFiuxedThreadPool(5);
+  ```
+
++ `ForkJoinPool`
+  + 分叉合并（不推荐使用）
+:::
+
+::: tip Callable 接口
+**基本信息**  
+`public interface Callable<V>`   
+
++ 泛型表示线程执行后的返回值结果
++ `Callable`只能交给线程池处理
+
+**实例代码**  
+``` java
+class CallableDemo implements Callable<String> {
+   @Override
+   public String call() {
+      for (int i = 0; i < 10; i++) {
+         System.out.println(i);
+      }
+      return "SUCCESS";
+   }
+}
+```
+:::
 
 ### 锁与原子操作
++ 锁
+  + 类似`synchronized`机制，但更加灵活
+  + 公平策略与非公平策略
+    + `synchronized`为非公平策略
+    + `Lock`接口  
+      **基本信息**  
+      **Package** java.util.concurrent.locks  
+
+      `public interface Lock`  
+
+      **具体实现类**  
+      `ReentrantLock`类  
+      + 默认为非公平策略，可设置为公平策略
+      + 通过`lock()`上锁，`unlock()`解锁
+  + 读写锁`ReadWriteLock`
+     + 使用时允许多个线程同时使用统一资源，但只允许一个线程对资源进行写操作
+     + 读期间不允许进行写操作，写期间不允许进行读操作
++ 原子操作
+  操作时不允许其他操作
 
 ## `Iterator`接口
 **基本信息**  
