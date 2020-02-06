@@ -48,4 +48,25 @@ editLink: false
 |文章每个标题前都有序号。|笔记整体重构完毕，可能后期会有细微调整。|
 
 ## 感谢
-感谢您的支持！点个赞呗:smirk:~ <a rel="点赞" href="https://github.com/ZweiRm/localhost-8080.github.io"><img alt="GitHub stars" src="https://img.shields.io/github/stars/ZweiRm/localhost-8080.github.io.svg?color=2F835D&logoColor=3EAF7C&style=social"></a>
+感谢您的支持！点个赞呗:smirk:~ <a rel="点赞" href="https://github.com/ZweiRm/localhost-8080.github.io" onclick=like()><img alt="GitHub stars" src="https://img.shields.io/github/stars/ZweiRm/localhost-8080.github.io.svg?color=2F835D&logoColor=3EAF7C&style=social"></a>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-132436049-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-132436049-1');
+  
+</script>
+
+<script type="text/javascript">  
+function like() {
+    gtag('event', 'like', {
+    'event_category': 'like',
+    'event_label': 'like',
+    'value': 1
+    });
+}
+</script>
