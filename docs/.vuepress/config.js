@@ -44,7 +44,10 @@ module.exports = {
         editLinkText: '帮助我改善此页面！',
         lastUpdated: '上次更新',
         nav: [
-            { text: '主页', link: '/' },
+            {
+                text: '主页',
+                link: '/',
+            },
             { text: '博文',
               items: [
                 { text: 'Java', link: '/java/' },
@@ -118,7 +121,7 @@ module.exports = {
                 '关于Java编程部分的文章',
                 '新年快乐！',
                 'Computing Machinery and Intelligence By A. M. Turing',
-                '学术研究的正确姿势'
+                '学术研究的正确姿势',
             ],
 
             '/': [
