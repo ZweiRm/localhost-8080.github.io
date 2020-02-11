@@ -33,7 +33,6 @@ module.exports = {
         },
         'sitemap': {
             hostname: 'https://localhost-8080.io',
-            outFile: 'sitemap.txt',
           }
     },
     themeConfig: {
