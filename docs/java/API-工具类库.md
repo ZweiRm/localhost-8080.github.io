@@ -594,6 +594,13 @@ class CallableDemo implements Callable<String> {
 **Package** java.util  
 `public final class Scanner`
 
+使用`Scanner`可以从控制台读取数据。
+
+``` java
+Scanner sc = new Scanner(System.in);
+String name = sc.nextLine();
+```
+
 ::: warning 注意
 除了`nextLine()`，其余都是以空格为结束符
 :::

@@ -88,6 +88,8 @@ next: ./API-工具类库
 
 + `err`  
   将错误提示信息（使用红色字体）输出到显示器（是`PrintStream`类的对象，声明：`static final PrintStream err`）
+
+*这三个属性都是字节流，见 [I/O Stream](./API-输入输出类库.html/#i-o-stream).
 :::
 
 ## 异常

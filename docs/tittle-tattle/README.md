@@ -50,9 +50,33 @@ editLink: false
 ## 这个域名有点似曾相识？
 假如你之前碰巧访问过[考据癖](http://localhost-8080.com/)站点，你会发现本站和`考据癖`只有顶级域名不同。是的，本站点的域名构思正是起源于这个站点。这里声明本站与`考据癖`没有任何关系。  
 
-2018 年的某天，我正在查阅关于数学家的资料，猛地看到站点的域名是`localhost-8080`，经过几秒思考，甚至笑出了声，这是一个绝妙的域名。我们知道，众多的技术的默认端口都是`8080`，在本地开发测试环境中，使用`localhost:8080`这个 URL 来访问。本地归本地，网络实际环境中这个 URL 只能访问本机而不能访问其他主机，这是由 URL 决定的。所以就引申出了一个笑话：“大家好，我写了个网站，链接是http://localhost:8080/main，欢迎大家访问”。而这个域名反利用这个梗，十分有趣。
+2018 年的某天，我正在查阅关于数学家的资料，猛地看到站点的域名是`localhost-8080`,让我回想起了一个笑话：“大家好，我写了个网站，链接是http://localhost:8080，欢迎大家访问”。而这个域名反利用这个梗，十分有趣。  
 
-`考据癖`是一个很有趣很棒的站点，站长学姐对她感兴趣的各种事情进行了考究，并形成了一篇篇博客。内容丰富、风趣且严谨。本站点借鉴了`考据癖`域名核心词，申请了`.io`顶级域名。希望本站内容也继承`考据癖`站点的好奇与探究精神，不断完善与进步。
+> @xsannyx: OKAY! Time to lift our #starup. Everyone visit http://localhost:8080 and share :)
+
+<span class="heimu">我们知道，众多的技术的默认端口都是 8080 ，在本地开发测试环境中可以使用 localhost:8080 这个 URL 来访问。本地归本地，网络实际环境中这个 URL 只能访问本机而不能访问其他主机，这是由 URL 决定的。</span>
+
+`考据癖`是一个很有趣很棒的站点，站长学姐对她感兴趣的各种事情进行了考究，并形成了一篇篇博客。内容丰富、风趣且严谨。本站点借鉴了`考据癖`域名核心词，注册了`.io`顶级域名。希望本站内容也继承`考据癖`站点的好奇与探究精神，不断完善与进步。
+
+<style>
+p span .heimu,
+p .heimu,
+.heimu,
+.heimu a,
+a .heimu,
+.heimu a.new {
+  background-color: #252525;
+  color: #252525;
+  text-shadow: none
+}
+
+body:not(.heimu_toggle_on) .heimu:hover,
+body:not(.heimu_toggle_on) .heimu:active,
+body:not(.heimu_toggle_on) .heimu.off {
+  transition: color .13s linear;
+  color: #fff
+}
+</style>
 
 ## 感谢
 感谢您的支持！点个赞呗:smirk:~ <a rel="点赞" href="https://github.com/ZweiRm/localhost-8080.github.io" onclick=like()><img alt="GitHub stars" src="https://img.shields.io/github/stars/ZweiRm/localhost-8080.github.io.svg?color=2F835D&logoColor=3EAF7C&style=social"></a>
