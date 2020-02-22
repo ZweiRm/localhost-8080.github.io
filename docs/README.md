@@ -5,7 +5,7 @@ actionText: Hello, world! →
 actionLink: /tittle-tattle/
 meta:
 - name: keywords
-   content: 技术 软件 计算机 Java Web 软件工程 笔记
+  content: 技术 软件 计算机 Java Web 软件工程 笔记
 features:
 - title: 全面
   details: 笔记涵盖从计算机科学、软件工程、到各种具体实用技术等多维度内容。

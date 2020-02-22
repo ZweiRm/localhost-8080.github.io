@@ -20,6 +20,9 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
 我们需要用到的技术：Git, VuePress, Markdown  
 我们需要用到的工具：GitHub, Netlify (可选)  
 
+## 开始前的建议
+在我们正式开始前，我推荐你预先掌握 Git 的基础知识、Markdown 的简单语法和 GitHub 的基本使用方法。
+
 ## 搭建
 ### I. Git 和 GitHub
 1. 新建 Repository  
@@ -120,14 +123,14 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
      actionLink: /tittle-tattle/
      meta:
      - name: keywords
-        content: 技术 软件 计算机 Java Web 软件工程 笔记
+       content: 技术 软件 计算机 Java Web 软件工程 笔记
      features:
      - title: 全面
-        details: 笔记涵盖从计算机科学、软件工程、到各种具体实用技术等多维度内容。
+       details: 笔记涵盖从计算机科学、软件工程、到各种具体实用技术等多维度内容。
      - title: 简洁
-        details: 笔记力图以简洁的文字和画面表现出各知识的条理关系。
+       details: 笔记力图以简洁的文字和画面表现出各知识的条理关系。
      - title: 实用
-        details: 这不是百科全书，但在全面的基础上尽量展示最可能用到的部分。
+       details: 这不是百科全书，但在全面的基础上尽量展示最可能用到的部分。
      footer: Copyright © 2018-2020 ahza.xin | localhost-8080.io
      ---
      ```
@@ -267,12 +270,86 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
 
    当你在编写一篇文章时，每当保存了 `.md` 文件，结果会自动更新在浏览器页面中。  
 
+   当我们完成文章的编写后，我们需要生成静态网页并部署到服务器中，实现互联网访问我们的网站。这里提供两种方法，一个是拥有持续集成功能的 Netlify 方案，一个是手动操作的 GitHub Pages 方案，我们将分为两节描述它们。
+
 ## 部署 - Netlify
+Netlify 提供了一种十分方便的持续集成体验。也就是说，每当你 push 你的新文章到 GitHub 后，Netlify 可以自动帮你生成静态页面文件并部署。但它的缺点也十分明显，由于一些特殊的网络原因，由 Netlify 部署的网站访问速度会极其缓慢甚至无法加载。  
+
+当我们注册好 Netlify 后，对其进行一些简单的配置：
+1. 同步我们的代码到 GitHub  
+   首先通过命令把我们之前写过的所有内容同步到 GitHub 上的远程仓库。  
+   ``` sh
+   git add -A
+   git commit -m 'deploy'
+
+   # 将<USERNAME>/<USERNAME>.github.io.git 修改为你的仓库
+   git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+   ```
+
+2. 创建新网站  
+   + 点击`New site from Git`按钮创建新网站。点击 GitHub 按钮连接我们的项目仓库。  
+     ![Create a new site](/img/newSite.png)
+   + 选择我们的远程仓库
+   + 填写配置信息：Build command, Publish directory  
+     ![Build Options](/img/buildOpt.png)
+   + 点击 `Deploy site` 按钮
+
+ Netlify 还有一些其他的设置，比如域名配置、DNS 配置等，你可以根据需求自行阅读相关说明并进行设置。
 
 ## 部署 - GitHub Pages
+我们可以使用 GitHub 自带的 GitHub Pages 来实现部署，它使用 GitHub 的服务器，一般情况下不会出现复杂的网络问题。  
+
+1. 生成静态网页文件  
+   使用命令来生成文档：  
+   ``` sh
+   yarn docs:build
+   ```
+   将生成在 whatever-you-like.github.io/docs/.vuepress/dist 中的所有文件复制并粘贴到项目文档的根目录（即 whatever-you-like.github.io）中。
+
+2. 同步我们的代码到 GitHub  
+   通过命令把我们之前写过的所有内容同步到 GitHub 上的远程仓库。  
+   ``` sh
+   git add -A
+
+   # 引号中的字符串可以根据实际情况进行修改
+   git commit -m 'deploy'
+
+   # 将<USERNAME>/<USERNAME>.github.io.git 修改为你的仓库
+   git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+   ```
+
+3. 设置 GitHub Pages  
+   进入 GitHub 中，点击我们的项目仓库并点击设置按钮。找到 GitHub Pages 选项，修改设置：`Source` 项选中：master branch，勾选 `Enforce HTTPS`.  
+   ![GitHub Pages](/img/githubPages.png)  
+   如果你拥有自己注册的域名并希望使用在这个网站上，可以将它填写在 `Custom domain` 中。
+
+::: warning 注意
+当你使用本方法来部署你的网页，每当你希望更新你的网站页面时，你都需要手动进行以下操作：  
+1. 使用命令来生成静态页面：  
+   ``` sh
+   yarn docs:build
+   ```
+
+2. 将生成在 whatever-you-like.github.io/docs/.vuepress/dist 中的所有文件复制并粘贴到项目文档的根目录（即 whatever-you-like.github.io）中
+
+3. 使用命令来提交你的代码到 GitHub 远程仓库:
+   ``` sh
+   git add -A
+
+   # 引号中的字符串可以根据实际情况进行修改
+   git commit -m 'deploy'
+
+   # 将<USERNAME>/<USERNAME>.github.io.git 修改为你的仓库
+   git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+   ```
+
+当然你也可以在本地配置 Jenkins 等持续集成方案来实现自动部署，在这篇文章中不再赘述。
+:::
 
 ## 特别注意点
 1. 当编写多篇文章之间的链接时，格式为`[链接文字](./文章名.html/#章节名)`。即比文章内链接多了两项：`./文章名.html`。特别需要注意的是文章名后有 ".html" 的。
+
+2. 推荐使用 IDE 来编写你的文章，比如使用 Visual Studio Code 或者 IntelliJ IDEA 等 IDE. 它们很好的支持了版本控制软件 Git，可以通过相对可视化的操作来简化你在 Git 方面的操作，这会让你日常书写体验变得更好。 
 
 ## 参考文献或资料
 [1]Evan You.[VuePress](https://vuepress.vuejs.org/)  
