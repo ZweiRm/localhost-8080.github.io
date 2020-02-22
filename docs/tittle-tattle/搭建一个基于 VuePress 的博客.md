@@ -1,18 +1,17 @@
 ---
-editLink: false
 prev: ./学术研究的正确姿势
 next: false
 ---
 
 # 搭建一个基于 VuePress 的博客/技术文档网站
 ## 什么是 VuePress?
-VuePress 是一款基于 Vue 的静态网站生成器。它可以将你编写的 Markdown 文档转化为已经渲染好的 HTML 静态页面，这些页面有着良好的 SEO 优化，可以轻松的支持搜索引擎收录；同时页面被浏览时由 Vue 接管而形成单页应用，其他页面按浏览按需加载。 
+VuePress 是一款基于 Vue 的静态网站生成器。它可以将你编写的 Markdown 文档转化为已经渲染好的 HTML 静态页面。这些页面有着良好的 SEO 优化，可以轻松的支持搜索引擎收录；同时页面被浏览时由 Vue 接管而形成单页应用，其他页面按浏览按需加载。 
 
 ## 为什么选 VuePress?
 最重要的一点是：VuePress 对 Vue 技术有着很好的支持。你可以在文档中使用 Vue 的动态组件，这对 Vue 程序员来说十分友好。  
 其次是 VuePress 的默认主题，它的设计初衷是为了提供给编写产品文档的一个解决方案。也就是说，VuePress 生成的静态网页应用的风格看上去是技术文档，而不是传统博客。这更契合程序员的日常阅读习惯，同时可以让我们编写文章时操作简便且富有条理。当然，VuePress 也有官方和第三方主题，可以实现 Hexo 等技术的博客风格，可以按需安装。  
 VuePress 也拥有者丰富的插件库，当你需要评论功能、用 $\LaTeX$ 输入一些公式等，都能找到相关的插件来支持自己的需求。  
-这些是表层上的一些优势。关于 VuePress 和其他类似技术在底层实现和性能方面的对比可以在[官方文档](https://vuepress.vuejs.org/zh/guide/#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF)阅读。
+这些是表层上的一些优势。关于 VuePress 和其他类似技术在底层实现和性能方面的对比可以在[官方文档](https://vuepress.vuejs.org/zh/guide/#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF)中进行阅读。
 
 ## 技术架构
 VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + GitHub Pages 和 VuePress + Netlify 两种部署方案。其中 Netlify 是持续集成的。两种方案都不需要额外的服务器。  
@@ -21,7 +20,7 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
 我们需要用到的工具：GitHub, Netlify (可选)  
 
 ## 开始前的建议
-在我们正式开始前，我推荐你预先掌握 Git 的基础知识、Markdown 的简单语法和 GitHub 的基本使用方法。
+在我们正式开始前，我推荐：预先掌握 Git 的基础知识、Markdown 的简单语法和 GitHub 的基本使用方法、大致阅读 VuePress 官方文档。
 
 ## 搭建
 ### I. Git 和 GitHub
@@ -152,7 +151,7 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
       title: '本地煮鸡:8080',
       description: '一个博客, 大概会记录一些技术笔记',
       head: [
-        ['link', { rel: 'icon', href: '/logo.png' }]
+        ['link', { rel: 'icon', href: '/img/favicon.ico' }]
       ],
       plugins: {
         '@vuepress/pwa': {
@@ -223,13 +222,17 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
     + `themeConfig`  
       配置默认主体。在这个示例中，配置了 Git 仓库和编辑链接、最后更新时间、导航栏、侧边栏（多层嵌套式）。具体设置及使用方法参照：[默认主题配置 | VuePress](https://vuepress.vuejs.org/zh/theme/default-theme-config.html)。  
       ::: warning 注意
-      导航栏和侧边栏和你的 /docs 目录息息相关，二者应当是相互对应的。  
+      + 关于侧边栏  
+        侧边栏的配置和你的 /docs 目录息息相关，二者应当是相互对应的。例如：  
       
-      在这个示例里，导航栏里有一个下拉菜单名为“博文”，它包含 Java 和 Kotlin 两项。在侧边栏设置中，Java 项下有文章《README》（即空字符串）、《语法》、《面向对象》、《应用程序编程接口概述》；在 Kotlin 项下有文章《README》。它们所对应的目录结构在下一小节中展示。  
+        在这个示例配置文件中，`sidebar` 配置了一些文章，它们表达的意思是：Java 项下有文章《README》（即空字符串）、《语法》、《面向对象》、《应用程序编程接口概述》；在 Kotlin 项下有文章《README》。它们所对应的目录结构将在下一小节中展示。  
 
-      由于这里对每篇文章手动设置了侧边栏，所以后面每次当我们需要撰写新的文章时都需要通过调整这个配置来显示正确的侧边栏。  
+        由于这里对每篇文章手动设置了侧边栏，所以后面每次当我们需要撰写新的文章时都需要通过调整这个配置来显示正确的侧边栏。  
 
-      文章分类目录为英文时，为了避免不必要的烦恼推荐写为小写英文，它们将会被映射为 url.  
+        文章分类目录为英文时，为了避免不必要的烦恼推荐写为小写英文，它们将会被映射为 url.  
+
+      + 关于导航栏  
+        一般读者需要通过导航栏来访问具体类目中的文章。在这个示例配置文件中，配置了普通链接，如：`主页`，它所对应的链接是 `/`；嵌套链接，如：`博文`，它还包含了 `Java` 和 `Kotlin` 子项。
       :::
   
    这里只介绍有用且相对必要的配置，其他配置项及配置项的详细信息请参照：[配置 | VuePress](https://vuepress.vuejs.org/zh/config/)。
@@ -352,6 +355,6 @@ Netlify 提供了一种十分方便的持续集成体验。也就是说，每当
 2. 推荐使用 IDE 来编写你的文章，比如使用 Visual Studio Code 或者 IntelliJ IDEA 等 IDE. 它们很好的支持了版本控制软件 Git，可以通过相对可视化的操作来简化你在 Git 方面的操作，这会让你日常书写体验变得更好。 
 
 ## 参考文献或资料
-[1]Evan You.[VuePress](https://vuepress.vuejs.org/)  
-[2]廖雪峰.[廖雪峰的官方网站-Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)  
-[3]destiny0904.[VuePress 入门](https://www.jianshu.com/p/6fa4bfa449ed)
+[1] Evan You.[VuePress](https://vuepress.vuejs.org/)  
+[2] 廖雪峰.[廖雪峰的官方网站-Git教程](https://www.liaoxuefeng.com/wiki/896043488029600)  
+[3] destiny0904.[VuePress 入门](https://www.jianshu.com/p/6fa4bfa449ed)
