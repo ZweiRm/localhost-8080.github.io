@@ -47,7 +47,7 @@ module.exports = {
                 link: '/',
             },
             {
-                text: '博文',
+                text: '笔记',
                 items: [
                     { text: 'Java', link: '/java/' },
                     { text: 'Kotlin', link: '/kotlin/' },
@@ -58,7 +58,7 @@ module.exports = {
                     { text: '前端', link: '/front-end/' },
                     { text: '深度学习', link: '/deep-learning/' },
                     { text: '软件工程', link: '/software-engineering/' },
-                    { text: '杂谈', link: '/tittle-tattle/' }
+                    { text: '杂谈', link: '/hello-world/' }
                 ]
             },
             { text: '关于', link: '/about/' },
@@ -87,6 +87,7 @@ module.exports = {
 
             '/web/': [
                 '',
+                'HTTP'
             ],
 
             '/spring/': [
@@ -115,13 +116,14 @@ module.exports = {
                 '多元函数微分学'
             ],
 
-            '/tittle-tattle/': [
+            '/hello-world/': [
                 '',
                 '关于Java编程部分的文章',
                 '新年快乐！',
                 'Computing Machinery and Intelligence By A. M. Turing',
                 '学术研究的正确姿势',
-                '搭建一个基于 VuePress 的博客'
+                '搭建一个基于 VuePress 的博客',
+                'TODO'
             ],
 
             '/': [

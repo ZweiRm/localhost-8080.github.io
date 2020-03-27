@@ -2,7 +2,7 @@
 home: true
 heroImage: /img/localhost.png
 actionText: Hello, world! →
-actionLink: /tittle-tattle/
+actionLink: /hello-world/
 meta:
 - name: keywords
   content: 技术 软件 计算机 Java Web 软件工程 笔记
