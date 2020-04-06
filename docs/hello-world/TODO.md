@@ -13,3 +13,6 @@ next: false
 + 不同分层策略有什么区别，优劣如何
   + 按功能分
   + 按 MVC 层次分
+
++ 数据层框架 MyBatis, Hibernate 和 SpringData JPA 区别
+  + SpringData JPA 自动生成数据库表和自动生成工具 MBG 通过表反向生成 MyBatis 配置的对比
