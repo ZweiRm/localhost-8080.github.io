@@ -51,7 +51,7 @@ module.exports = {
                 items: [
                     { text: 'Java', link: '/java/' },
                     { text: 'Kotlin', link: '/kotlin/' },
-                    { text: 'C', link: '/c/' },
+                    { text: 'Python', link: '/python/' },
                     { text: 'Web', link: '/web/' },
                     { text: 'Spring', link: '/spring/' },
                     { text: '大数据', link: '/big-data/' },
@@ -78,6 +78,10 @@ module.exports = {
 
             '/kotlin/': [
                 '',
+            ],
+
+            '/python/': [
+                ''
             ],
 
             '/c/': [
