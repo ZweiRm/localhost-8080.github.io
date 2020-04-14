@@ -123,7 +123,6 @@ module.exports = {
             '/hello-world/': [
                 '',
                 '关于Java编程部分的文章',
-                '新年快乐！',
                 'Computing Machinery and Intelligence By A. M. Turing',
                 '学术研究的正确姿势',
                 '搭建一个基于 VuePress 的博客',

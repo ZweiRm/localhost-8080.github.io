@@ -1,6 +1,6 @@
 ---
 editLink: false
-prev: ./新年快乐！
+prev: ./关于Java编程部分的文章
 next: ./学术研究的正确姿势
 ---
 

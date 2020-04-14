@@ -1,6 +1,6 @@
 ---
 prev: ./学术研究的正确姿势
-next: false
+next: ./TODO
 ---
 
 # 搭建一个基于 VuePress 的博客/技术文档网站

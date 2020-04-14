@@ -1,7 +1,7 @@
 ---
 editLink: false
 prev: ./
-next: ./新年快乐！
+next: ./Computing Machinery and Intelligence By A. M. Turing
 ---
 
 # 关于 Java 编程部分的文章
