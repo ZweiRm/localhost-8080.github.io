@@ -13,7 +13,7 @@ editLink: false
 
 + 关于 [Kotlin 程序设计](/kotlin/)的内容
 
-+ 关于 [C 程序设计](/c/)的内容
++ 关于 [Python 程序设计](/python/)的内容
 
 > ---
 
@@ -33,7 +33,7 @@ editLink: false
 
 > ---
 
-+ [杂谈](/tittle-tattle/)
++ [杂谈](/hello-world/)
 
 你可以通过右上角的导航栏 (移动端就是左上角咯:laughing:)中`博文-XXX`来查看这些内容。  
 
