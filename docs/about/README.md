@@ -5,7 +5,8 @@ sidebar: false
 
 # About Me
 ::: tip Duo Huang
-BEng in Software Engeneering   
+BEng in Software Engeneering  
+MSc studying @ HKBU   
 
 momg@foxmail.com
 :::
