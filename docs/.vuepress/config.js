@@ -110,6 +110,10 @@ module.exports = {
                 '',
             ],
 
+            '/quantitative-methods-for-DA-AI/' : [
+                '',
+            ],
+
             '/software-engineering/': [
                 '',
                 '软件过程',
