@@ -1,7 +1,7 @@
 ---
 editLink: false
-prev: ./关于Java编程部分的文章
-next: ./学术研究的正确姿势
+prev: ./about-the-article-of-java
+next: ./the-right-way-doing-research
 ---
 
 ### A. M. Turing (1950) Computing Machinery and Intelligence. Mind 49: 433-460.

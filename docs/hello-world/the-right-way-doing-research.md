@@ -1,7 +1,7 @@
 ---
 editLink: false
-prev: ./Computing Machinery and Intelligence By A. M. Turing
-next: ./搭建一个基于 VuePress 的博客
+prev: ./computing-machinery-and-intelligence
+next: ./building-a-vuepress-powered-blog
 ---
 
 # 学术研究的正确姿势

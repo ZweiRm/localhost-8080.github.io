@@ -1,6 +1,6 @@
 ---
-prev: ./语法
-next: ./应用程序编程接口概述
+prev: ./grammars
+next: ./API-introduction
 ---
 
 # 面向对象

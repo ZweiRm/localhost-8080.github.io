@@ -1,6 +1,6 @@
 ---
-prev: ./面向对象
-next: ./API-工具类库
+prev: ./API-introduction
+next: ./API-util
 ---
 
 # API-语言基础类库 (Package `java.lang`)

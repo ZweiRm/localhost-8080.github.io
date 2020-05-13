@@ -1,5 +1,5 @@
 ---
-prev: ./学术研究的正确姿势
+prev: ./the-right-way-doing-research
 next: ./TODO
 ---
 
@@ -353,10 +353,38 @@ Netlify 提供了一种十分方便的持续集成体验。也就是说，每当
 当然你也可以在本地配置 Jenkins 等持续集成方案来实现自动部署，在这篇文章中不再赘述。
 :::
 
-## 特别注意点
-1. 当编写多篇文章之间的链接时，格式为`[链接文字](./文章名.html/#章节名)`。即比文章内链接多了两项：`./文章名.html`。特别需要注意的是文章名后有 ".html" 的。
+## 你可能会遇到的问题
+1. **Q: 为什么我在两篇文章之间设置了链接，但点击无法访问到？**  
+   A: 当编写多篇文章之间的链接时，格式为`[链接文字](./文章名.html/#章节名)`。即比文章内链接多了两项：`./文章名.html`。特别需要注意的是文章名后有 ".html" 的。  
 
-2. 推荐使用 IDE 来编写你的文章，比如使用 Visual Studio Code 或者 IntelliJ IDEA 等 IDE. 它们很好的支持了版本控制软件 Git，可以通过相对可视化的操作来简化你在 Git 方面的操作，这会让你日常书写体验变得更好。 
+2. **Q: 如何解决每次手动输入 Git 命令的麻烦？**  
+   A: 推荐使用 IDE 来编写你的文章，比如使用 Visual Studio Code 或者 IntelliJ IDEA 等 IDE. 它们很好的支持了版本控制软件 Git，可以通过相对可视化的操作来简化你在 Git 方面的操作，这会让你日常书写体验变得更好。  
+
+3. **Q: 如何修改一部分样式而不使用其他主题或者自己编写主题？**  
+   A: 以修改 `code` 样式字体为例：  
+      1. 在`/.vuepess`文件夹下新建文件夹`/styles`.
+      2. 在`/styles`文件夹下新建文件`index.styl`.
+      3. 编辑`index.styl`，使用 css 语法或者 stylus 语法编写样式。  例如：
+         ``` stylus
+         code, kbd, .line-number
+           font-family "JetBrains Mono", source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace
+         @font-face
+            font-family "JetBrains Mono"
+            src url("/font/JetBrainsMono-Regular.woff")
+         ```
+      ::: tip 此时的<code>/.vuepress</code>目录结构为：
+      ```
+        .vuepress
+        ├── public
+        |   ├── font (用于存放字体文件，这体现在`.styl`文件的`src url("...")`项里)
+        │   └── img
+        ├── config.js
+        └── dist
+      ```
+      :::
+
+4. **Q: 我修改了侧边栏配置，而且确定正确修改了对应的 Markdown 文档的名称，dev 模式也能正确看到文章。但为什么使用 `build` 命令生成网页时不断报错？**  
+   A: 请检查是否修改了 Markdown 文档中 front-matter 的 `prev` 和 `next` 项也正确修改。
 
 ## 参考文献或资料
 [1] Evan You.[VuePress](https://vuepress.vuejs.org/)  

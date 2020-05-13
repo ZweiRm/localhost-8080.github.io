@@ -1,7 +1,7 @@
 ---
 editLink: false
 prev: ./
-next: ./Computing Machinery and Intelligence By A. M. Turing
+next: ./computing-machinery-and-intelligence
 ---
 
 # 关于 Java 编程部分的文章

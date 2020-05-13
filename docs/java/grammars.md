@@ -1,6 +1,6 @@
 ---
 prev: ./
-next: ./面向对象
+next: ./object-oriented
 ---
 
 # 语法

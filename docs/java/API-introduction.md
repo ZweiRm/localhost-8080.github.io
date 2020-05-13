@@ -1,6 +1,6 @@
 ---
-prev: ./面向对象
-next: ./API-语言基础类库
+prev: ./object-oriented
+next: ./API-lang
 ---
 
 # 应用程序编程接口

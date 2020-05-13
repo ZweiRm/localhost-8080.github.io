@@ -1,6 +1,6 @@
 ---
 editLink: false
-prev: ./搭建一个基于 VuePress 的博客
+prev: ./building-a-vuepress-powered-blog
 next: false
 ---
 
