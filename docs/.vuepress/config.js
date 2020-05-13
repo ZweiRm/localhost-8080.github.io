@@ -68,12 +68,12 @@ module.exports = {
         sidebar: {
             '/java/': [
                 '',
-                '语法',
-                '面向对象',
-                '应用程序编程接口概述',
-                'API-语言基础类库',
-                'API-工具类库',
-                'API-输入输出类库'
+                'grammar',
+                'object-oriented',
+                'API-introduction',
+                'API-lang',
+                'API-util',
+                'API-io'
             ],
 
             '/kotlin/': [
@@ -86,7 +86,7 @@ module.exports = {
 
             '/c/': [
                 '',
-                '常量、变量与数据类型',
+                'constant-variable-and-data-type',
             ],
 
             '/web/': [
@@ -110,26 +110,26 @@ module.exports = {
                 '',
             ],
 
-            '/quantitative-methods-for-DA-AI/' : [
+            '/quantitative-methods-for-DA-AI/': [
                 '',
             ],
 
             '/software-engineering/': [
                 '',
-                '软件过程',
+                'software-process',
             ],
 
             '/math/': [
                 '',
-                '多元函数微分学'
+                'multivariate-function-differential'
             ],
 
             '/hello-world/': [
                 '',
-                '关于Java编程部分的文章',
-                'Computing Machinery and Intelligence By A. M. Turing',
-                '学术研究的正确姿势',
-                '搭建一个基于 VuePress 的博客',
+                'about-the-article-of-java',
+                'computing-machinery-and-intelligence',
+                'the-right-way-to-do-research',
+                'building-a-vuepress-powered-blog',
                 'TODO'
             ],
 
