@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>C 概述 | 本地煮鸡:8080</title>
+    <meta name="generator" content="VuePress 1.5.0">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="一个博客, 大概会记录一些技术笔记">
+    <link rel="preload" href="/assets/css/0.styles.c99e36f2.css" as="style"><link rel="preload" href="/assets/js/app.f98eccae.js" as="script"><link rel="preload" href="/assets/js/2.fba6a68c.js" as="script"><link rel="preload" href="/assets/js/10.c233455b.js" as="script"><link rel="preload" href="/assets/js/4.09468943.js" as="script"><link rel="prefetch" href="/assets/js/11.05b548c0.js"><link rel="prefetch" href="/assets/js/12.57d28a79.js"><link rel="prefetch" href="/assets/js/13.01859b09.js"><link rel="prefetch" href="/assets/js/14.8af7e790.js"><link rel="prefetch" href="/assets/js/15.6ac227d1.js"><link rel="prefetch" href="/assets/js/16.bae06020.js"><link rel="prefetch" href="/assets/js/17.448789b7.js"><link rel="prefetch" href="/assets/js/18.aec3df1d.js"><link rel="prefetch" href="/assets/js/19.64307d2e.js"><link rel="prefetch" href="/assets/js/20.ced208fe.js"><link rel="prefetch" href="/assets/js/21.7a786855.js"><link rel="prefetch" href="/assets/js/22.e1a7134b.js"><link rel="prefetch" href="/assets/js/23.ec00ead0.js"><link rel="prefetch" href="/assets/js/24.80b8b3ca.js"><link rel="prefetch" href="/assets/js/25.1dc91667.js"><link rel="prefetch" href="/assets/js/26.c97461f6.js"><link rel="prefetch" href="/assets/js/27.26f72bbe.js"><link rel="prefetch" href="/assets/js/28.9f28bd25.js"><link rel="prefetch" href="/assets/js/29.b79f9bba.js"><link rel="prefetch" href="/assets/js/3.420795b9.js"><link rel="prefetch" href="/assets/js/30.200a9098.js"><link rel="prefetch" href="/assets/js/31.d65610f2.js"><link rel="prefetch" href="/assets/js/32.caf4b69b.js"><link rel="prefetch" href="/assets/js/33.ccdf028b.js"><link rel="prefetch" href="/assets/js/34.69fdcddb.js"><link rel="prefetch" href="/assets/js/35.88e5df53.js"><link rel="prefetch" href="/assets/js/36.12c73702.js"><link rel="prefetch" href="/assets/js/5.7c0ae059.js"><link rel="prefetch" href="/assets/js/6.ade8a31f.js"><link rel="prefetch" href="/assets/js/7.6950feb8.js"><link rel="prefetch" href="/assets/js/8.d727df6d.js"><link rel="prefetch" href="/assets/js/9.7cc75e4f.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.c99e36f2.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">本地煮鸡:8080</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/c/" class="active sidebar-link">C 概述</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/c/#_1-1-关于-c" class="sidebar-link">1.1 关于 C</a></li><li class="sidebar-sub-header"><a href="/c/#_1-2-主要特性" class="sidebar-link">1.2 主要特性</a></li><li class="sidebar-sub-header"><a href="/c/#_1-3-c-程序的基本结构" class="sidebar-link">1.3 C 程序的基本结构</a></li></ul></li><li><a href="/c/constant-variable-and-data-type.html" class="sidebar-link">常量、变量与数据类型</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="c-概述"><a href="#c-概述" class="header-anchor">#</a> C 概述</h1> <h2 id="_1-1-关于-c"><a href="#_1-1-关于-c" class="header-anchor">#</a> 1.1 关于 C</h2> <ul><li><p>C 语言是1972年，在贝尔实验室开发的。
+它在 ALGOL、BCPL 和 B 语言的基础上发展而来，利用了它们的很多概念并增添了数据类型等其他特性。</p></li> <li><p>C 语言与 UNIX 操作系统一起开发，它们有很强的关联性。
+UNIX 操作系统几乎完全用 C 语言编码。</p></li> <li><p>版本变化</p> <ul><li><p>C89<br>
+或称 ANSI C。1989年由 ANSI 发布的第一个 C 语言标准。次年由 ISO 全文批准，给予名称：ISO/IEC 9899。</p></li> <li><p>C99<br>
+1999年，ISO 将 C++ 和 Java 的一些特性加入，发布 ISO/IEC 9899: 1999 标准。</p></li> <li><p>C11<br>
+2011年，ISO 发布新版本的标准：ISO/IEC 9899: 2011.</p></li></ul></li></ul> <h2 id="_1-2-主要特性"><a href="#_1-2-主要特性" class="header-anchor">#</a> 1.2 主要特性</h2> <ul><li>健壮、高效、运行速度快</li> <li>高度可移植</li> <li>适用于结构化程序设计</li> <li>可自我扩展</li></ul> <h2 id="_1-3-c-程序的基本结构"><a href="#_1-3-c-程序的基本结构" class="header-anchor">#</a> 1.3 C 程序的基本结构</h2> <p><img src="/img/C%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84.jpg" alt="C程序的基本结构"></p> <ul><li><p>文档部分<strong>由注释行组成</strong>，给出<strong>程序名称、作者等信息</strong>。</p></li> <li><p>链接部分提供的指令告诉编译器<strong>从系统库中链接哪些函数</strong>。</p></li> <li><p>定义部分定义<strong>所有符号常量</strong>。</p></li> <li><p>全局声明部分<strong>声明了全局变量和自定义函数</strong>。全局变量可以在多个函数中使用；自定义函数声明在前，实现在后。</p></li> <li><p><code>main()</code>是 C 程序的<strong>执行入口</strong>，每个 C 程序必须有一个。其中声明部分用于声明所以将在执行部分中使用的变量。执行部分是具体逻辑语句。</p></li> <li><p>子程序包含了<strong>所有自定义函数的实现</strong>，这些函数在<code>main()</code>中被调用。特别地，自定义函数可以以任意顺序出现，但通常它们在<code>main()</code>之后。</p></li></ul> <div class="custom-block warning"><p class="custom-block-title">注意</p> <p>除<code>main()</code>外，若无必要，其余部分都可以省略。</p></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/ZweiRm/localhost-8080.github.io/edit/master/docs/c/README.md" target="_blank" rel="noopener noreferrer">帮助我改善此页面！</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">7/14/2019, 5:53:11 PM</span></div></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/c/constant-variable-and-data-type.html">
+        常量、变量与数据类型
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.f98eccae.js" defer></script><script src="/assets/js/2.fba6a68c.js" defer></script><script src="/assets/js/10.c233455b.js" defer></script><script src="/assets/js/4.09468943.js" defer></script>
+  </body>
+</html>

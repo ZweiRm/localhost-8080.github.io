@@ -68,12 +68,12 @@ module.exports = {
         sidebar: {
             '/java/': [
                 '',
-                'grammar',
+                'grammars',
                 'object-oriented',
                 'API-introduction',
                 'API-lang',
                 'API-util',
-                'API-io'
+                'API-io',
             ],
 
             '/kotlin/': [
@@ -128,7 +128,7 @@ module.exports = {
                 '',
                 'about-the-article-of-java',
                 'computing-machinery-and-intelligence',
-                'the-right-way-to-do-research',
+                'the-right-way-doing-research',
                 'building-a-vuepress-powered-blog',
                 'TODO'
             ],
