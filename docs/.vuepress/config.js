@@ -81,7 +81,8 @@ module.exports = {
             ],
 
             '/python/': [
-                ''
+                '',
+                'grammar'
             ],
 
             '/c/': [
@@ -108,6 +109,7 @@ module.exports = {
 
             '/deep-learning/': [
                 '',
+                'logistic-regression-as-a-neural-network'
             ],
 
             '/quantitative-methods-for-DA-AI/': [
