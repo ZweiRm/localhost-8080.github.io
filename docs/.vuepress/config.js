@@ -33,7 +33,8 @@ module.exports = {
         },
         'sitemap': {
             hostname: 'https://localhost-8080.io',
-        }
+        },
+        'flowchart': {}
     },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',

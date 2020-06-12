@@ -19,6 +19,7 @@
         "markdown-it-sub": "^1.0.0",
         "markdown-it-sup": "^1.0.0",
         "vue": "^2.6.10",
-        "vuepress": "^1.0.1"
+        "vuepress": "^1.0.1",
+        "vuepress-plugin-flowchart": "^1.4.3"
     }
 }
