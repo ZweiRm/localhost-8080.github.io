@@ -48,11 +48,13 @@ $\hat{y}=w^Tx+b$ (Linear Regression. Will not be worked, $\hat{y}$ is not betwee
 $\hat{y}=\sigma(w^Tx+b)$ (Sigmoid Function, i.e. $\sigma(z)=\frac{1}{1+e^{-z}}$) 
 
 ::: tip About Sigmoid Function
-*The graph of sigmoid function:*  
-<center><img src="/img/sigmoid.jpg" alt="Sigmoid Function"></center>
-<center>[Sigmoid Function]</center>  
+*The graph of sigmoid function*  
+<div align=center><img src="/img/sigmoid.jpg" alt="Sigmoid Function"></div>
+<div align=center>[Sigmoid Function]</div>  
 
 *Features*  
 $\lim \limits_{z \to +\infty} \sigma(z) = 1$  
 $\lim \limits_{z \to -\infty} \sigma(z) = 0$
 :::
+
+## Logistic Regression Cost Function
