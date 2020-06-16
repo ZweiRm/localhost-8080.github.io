@@ -805,10 +805,10 @@ true
             System.out.println(monthString);
         }
     }
-    ```
+```
 
    **Output**
-   ```
+   ``` sh
    August
    ```
    ::: warning 注意
@@ -850,17 +850,20 @@ true
             }
         }
     }
-    ```
-    **Output**
-    ```
+```  
+
+   **Output**  
+    
+``` sh
     August
     September
     October
     November
     December
-    ```
-    + 判定过程按`case`顺序依次判定，但若每个`case`块内都含`break;`语句则`case`顺序不影响结果。
-    :::
+```
+
++ 判定过程按`case`顺序依次判定，但若每个`case`块内都含`break;`语句则`case`顺序不影响结果。
+:::
 
 ### 循环结构
 1. `while`语句  
