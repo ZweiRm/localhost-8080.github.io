@@ -34,7 +34,10 @@ module.exports = {
         'sitemap': {
             hostname: 'https://localhost-8080.io',
         },
-        'flowchart': {}
+        'flowchart': {},
+        'vuepress-plugin-baidu-tongji-analytics': {
+            key: '5344755f0a57ddd063df74878ae8a921'
+        }
     },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',

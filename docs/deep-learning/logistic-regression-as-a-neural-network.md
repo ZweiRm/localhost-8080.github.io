@@ -14,7 +14,7 @@ m_{train}\}$
 + $X=[x^{(1)}, x^{(2)}, ..., x^{(m)}]$  
   Input training example matrix which has $n_x$ rows and $m$ columns. $X\in{\mathbb{R}^{n_x * m}}$.  
   ::: warning
-  It is not a good idea to put training examples $x^{(1)T}, ..., x^{(m)T}$ as row vectors in the matrix $X$. It will cause much more efforts when computing.
+  It is not a good idea to put training examples $x^{(1)\mathrm{T}}, ..., x^{(m)\mathrm{T}}$ as row vectors in the matrix $X$. It will cause much more efforts when computing.
   :::
 
 + $Y=[y^{(1)}, y^{(2)}, ..., y^{(m)}]$  
@@ -45,9 +45,9 @@ $w\in{\mathbb{R}^{n_x}}, b\in{\mathbb{R}}$
 **$w$ stand for weight, which could tell the algorithm where to focus on. $b$ stand for bias, which could make sure that the neuron will be activate meaningfully (i.e. How high the weighted sum needs to be before the neuron starts getting meaningfully active.).*  
 
 *Output*  
-$\hat{y}=w^Tx+b$ (Linear Regression. Will not be worked, $\hat{y}$ is not between 0 and 1.)  
+$\hat{y}=w^\mathrm{T}x+b$ (Linear Regression. Will not be worked, $\hat{y}$ is not between 0 and 1.)  
 
-$\hat{y}=\sigma(w^Tx+b)$ (Sigmoid Function, i.e. $\sigma(z)=\frac{1}{1+e^{-z}}$)  
+$\hat{y}=\sigma(w^\mathrm{T}x+b)$ (Sigmoid Function, i.e. $\sigma(z)=\frac{1}{1+e^{-z}}$)  
 
 ::: tip About Sigmoid Function
 *The graph of sigmoid function*  
@@ -66,21 +66,70 @@ Using a cost function to train the prameters $w$ and $b$ of the logistic regress
 A function used to measure how well the algorithm is doing. (For single training example)  
 
 + Square Error  
-  $$L(\hat{y}, y) =\frac{(\hat{y}-y)^{2}}{2}$$  
+  $$\mathcal{L}(\hat{y}, y) =\frac{(\hat{y}-y)^{2}}{2}$$  
   Not usually use. The optimization problem always becomes non-convex.  Therefore, there will be more than one multiple local optima. It can not using for gradient descent to find the global optimum.
 
 + Cross-Entropy Loss Function  
-  $$L(\hat{y}, y) =-[y \log (\hat{y})+(1-y) \log (1-\hat{y})]$$  
+  $$\mathcal{L}(\hat{y}, y) =-[y \log (\hat{y})+(1-y) \log (1-\hat{y})]$$  
   The lower value of loss function is, the better prediction of algorithm is.  
   
   **[Analyse]**  
-  + If $y=1$, $L(\hat{y}, y)=-\log (\hat{y})$.  
-    When $L$ is small, $\log (\hat{y})$ should be large, and $\hat{y}$ should be large as well but no more than $1$.  
-  + If $y=0$, $L(\hat{y}, y)=-\log (1-\hat{y})$.  
-    When $L$ is small, $log (1-\hat{y})$ should be large, and $\hat{y}$ should be small but no less than $0$.
+  + If $y=1$, $\mathcal{L}(\hat{y}, y)=-\log (\hat{y})$.  
+    When $\mathcal{L}$ is small, $\log (\hat{y})$ should be large, and $\hat{y}$ should be large as well but no more than $1$.  
+  + If $y=0$, $\mathcal{L}(\hat{y}, y)=-\log (1-\hat{y})$.  
+    When $\mathcal{L}$ is small, $log (1-\hat{y})$ should be large, and $\hat{y}$ should be small but no less than $0$.
 
 ### Cost Function 
 A function used to measure how well the algorithm is doing. (For the whole training set)    
 
-$$J(w, b)=\frac{1}{m} \sum_{i=1}^{m}L(\hat{y}^{(i)}, y^{(i)})=-\frac{1}{m} \sum_{i=1}^{m}[y^{(i)} \log (\hat{y}^{(i)})+(1-y^{(i)}) \log (1-\hat{y}^{(i)})]$$  
+$$J(w, b)=\frac{1}{m} \sum_{i=1}^{m}L(\hat{y}^{(i)}, y^{(i)})=-\frac{1}{m} \sum_{i=1}^{m} [y^{(i)} \log (\hat{y}^{(i)})+(1-y^{(i)}) \log (1-\hat{y}^{(i)})]$$  
 Still, the lower value of loss function is, the better prediction of algorithm is.
+
+## Gradient Descent
+A algorithm to train (learn) the parameters $w$ and $b$ on the traning set.  
+Take all the $w$ and $b$ as the parameters, the gradient descent algorithm will find out the global optimum which is the point can having the smallest value of cost function. In another word, gradient descent tells what nudges to all of the weights and biases cause the fastest change to the value of the cost function. (i.e. Which changes to weights matter the most.)  
+
+**[Analyse]**  
+Only analyse the value $J(w)$ and parameter $w$. Assume that the funtion $J(w)$ is a convex function. Repeat this algorithm until the algorithm converges.  
+
+<embed id="gradientDescent" src="/img/gradientDescent.svg"/></br>
+
+**$\alpha$ is the **learning rate**. It controls how big a strep the algorithm take on each iteration.*  
+**When writing code, $\frac{d J(w)}{d w}$ will be defined as `dw`.*  
+
+And for the real cost funtion, the gradient descent will be like:  
+
+<embed id="gradientDescent" src="/img/gradientDescent_real.svg"/></br>
+
+**When writing code, $\frac{\partial J(w, b)}{\partial w}$ will be defined as `dw`, and $\frac{\partial J(w, b)}{\partial b}$ will be defined as `db`.*  
+**Also, a coding convention `dvar` represent the derivative of a final output variable with respect to various intermediate quantities*
+
+## Lgistic Regression Gradient Descent
+**[Analyse]**  
+For a traning example which has two features.  
+
+$z=w^\mathrm{T}x+b$  
+$\hat{y}=a=\sigma(z)$  
+$\mathcal{L}(a, y)=-[y \log (\hat{y})+(1-y) \log (1-\hat{y})]$  
+features: $x_1$ and $x_2$  
+paramters: $w_1$, $w_2$ and $b$  
+
+![Logistic Regression Gradient Descent Computation Graph](/img/LRGDComputationGraph.jpg)  
+
+`da`:  
+<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_da.svg"/></br>
+
+`dz`:  
+<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dz.svg"/></br>
+
+`dw1`:  
+<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw1.svg"/></br>  
+
+`dw2`:  
+<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw2.svg"/></br>  
+
+`db`:  
+<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_db.svg"/></br>  
+
+<embed id="LRGD_da" src="/img/LRGD_repeat.svg"/></br>  
+**In this repeat loop, $dw_1$ means `dw1`, and $dw_22$ means `dw2`, $db$ means `db` as well.*  
