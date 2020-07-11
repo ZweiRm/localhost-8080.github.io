@@ -117,19 +117,26 @@ paramters: $w_1$, $w_2$ and $b$
 ![Logistic Regression Gradient Descent Computation Graph](/img/LRGDComputationGraph.jpg)  
 
 `da`:  
-<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_da.svg"/></br>
+<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_da.svg"/></br>   -->
+$$ \frac{d \mathcal{L}(a, y)}{d a}=-\frac{y}{a}+\frac{1-y}{1-a}$$
 
 `dz`:  
 <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dz.svg"/></br>
 
 `dw1`:  
-<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw1.svg"/></br>  
+<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw1.svg"/></br>   -->
+$$ \frac{d \mathcal{L}(a, y)}{d w_{1}}=x_{1} \cdot d z$$
 
 `dw2`:  
-<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw2.svg"/></br>  
+<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw2.svg"/></br>   -->
+$$ \frac{d \mathcal{L}(a, y)}{d w_{2}}=x_{2} \cdot d z$$
+
 
 `db`:  
-<embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_db.svg"/></br>  
+<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_db.svg"/></br>   -->
+$$ \frac{d \mathcal{L}(a, y)}{d b}=d z$$
 
 <embed id="LRGD_da" src="/img/LRGD_repeat.svg"/></br>  
-**In this repeat loop, $dw_1$ means `dw1`, and $dw_22$ means `dw2`, $db$ means `db` as well.*  
+**In this repeat loop, $dw_1$ means `dw1`, and $dw_2$ means `dw2`, $db$ means `db` as well.*  
+
+### Gradient Descent on m Examples Traning Set
