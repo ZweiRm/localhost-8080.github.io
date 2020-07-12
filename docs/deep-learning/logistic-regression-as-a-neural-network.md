@@ -86,7 +86,7 @@ $$J(w, b)=\frac{1}{m} \sum_{i=1}^{m}L(\hat{y}^{(i)}, y^{(i)})=-\frac{1}{m} \sum_
 Still, the lower value of loss function is, the better prediction of algorithm is.
 
 ## Gradient Descent
-A algorithm to train (learn) the parameters $w$ and $b$ on the traning set.  
+A algorithm to train (learn) the parameters $w$ and $b$ on the training set.
 Take all the $w$ and $b$ as the parameters, the gradient descent algorithm will find out the global optimum which is the point can having the smallest value of cost function. In another word, gradient descent tells what nudges to all of the weights and biases cause the fastest change to the value of the cost function. (i.e. Which changes to weights matter the most.)  
 
 **[Analyse]**  
@@ -104,7 +104,7 @@ And for the real cost function, the gradient descent will be like:
 **When writing code, $\frac{\partial J(w, b)}{\partial w}$ will be defined as `dw`, and $\frac{\partial J(w, b)}{\partial b}$ will be defined as `db`.*  
 **Also, a coding convention `dvar` represent the derivative of a final output variable with respect to various intermediate quantities*
 
-## Lgistic Regression Gradient Descent
+## Logistic Regression Gradient Descent
 **[Analyse]**  
 For a training example which has two features.  
 
@@ -112,7 +112,7 @@ $z=w^\mathrm{T}x+b$
 $\hat{y}=a=\sigma(z)$  
 $\mathcal{L}(a, y)=-[y \log (\hat{y})+(1-y) \log (1-\hat{y})]$  
 features: $x_1$ and $x_2$  
-paramters: $w_1$, $w_2$ and $b$  
+parameters: $w_1$, $w_2$ and $b$
 
 ![Logistic Regression Gradient Descent Computation Graph](/img/LRGDComputationGraph.jpg)  
 
@@ -135,27 +135,27 @@ $$ \frac{\partial \mathcal{L}(a, y)}{\partial b}=d z$$
 <embed id="LRGD_da" src="/img/LRGD_repeat.svg"/></br>  
 **In this repeat loop, $dw_1$ means `dw1`, and $dw_2$ means `dw2`, $db$ means `db` as well.*  
 
-### Gradient Descent on m Examples Traning Set
+### Gradient Descent on m Examples Training Set
 **[Analyse]**  
-For a m training examples traning set, and each training example have two features.  
+For a m training examples training set, and each training example have two features.
 
 $z=w^\mathrm{T}x^{(i)}+b$  
 $\hat{y}^{(i)}=a^{(i)}=\sigma(z)$  
 $J(w,b)=\frac{1}{m} \sum_{i=1}^{m}L(a^{(i)}, y^{(i)})$  
 
 features: $x_1^{(i)}$ and $x_2^{(i)}$  
-paramters: $w_1$, $w_2$ and $b$  
+parameters: $w_1$, $w_2$ and $b$
 
 Overall training set gradient descent with the respect of $w_1$:  
 $$ \frac{\partial J(w, b)}{\partial w_{1}}=\frac{1}{m} \sum_{i=1}^{m} \frac{\partial \mathcal{L}(a, y)}{\partial w_{1}}$$  
 
-For single traning example $(x^{(i)},y^{(i)})$, use the algorithm showed before. Then add up and divided by m to get the overall result:  
+For single training example $(x^{(i)},y^{(i)})$, use the algorithm showed before. Then add up and divided by m to get the overall result:
 ```
 // Initialize
 J = 0;
-dw1 = 0;  // as a cumulator for whole training set
-dw2 = 0;  // as a cumulator for whole training set
-db = 0;  // as a cumulator for whole training set
+dw1 = 0;  // as a accumulator for whole training set
+dw2 = 0;  // as a accumulator for whole training set
+db = 0;  // as a accumulator for whole training set
 
 // Add up
 for(i = 1 to m) {
@@ -178,5 +178,5 @@ db /= m;  // geting the value of dJ/db
 **For every repeat, the `dw1`, `dw2` and `db` should be calculate again.*  
 
 ::: tip
-In the algorithm, there are two for-loop nested (The second for-loop used for calcualate every $w$s and $b$s with the respect to every features). When having a large scale traning set it will run less efficiency. Using vectorization to solve this problem.
+In the algorithm, there are two for-loop nested (The second for-loop used for calculate every $w$s and $b$s with the respect to every features). When having a large scale training set it will run less efficiency. Using vectorization to solve this problem.
 :::
