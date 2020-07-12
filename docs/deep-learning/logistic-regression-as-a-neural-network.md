@@ -60,7 +60,7 @@ $\lim \limits_{z \to -\infty} \sigma(z) = 0$
 :::
 
 ## Logistic Regression Cost Function
-Using a cost function to train the prameters $w$ and $b$ of the logistic regression model.  
+Using a cost function to train the parameters $w$ and $b$ of the logistic regression model.
 
 ### Loss (Error) Function
 A function used to measure how well the algorithm is doing. (For single training example)  
@@ -97,7 +97,7 @@ Only analyse the value $J(w)$ and parameter $w$. Assume that the funtion $J(w)$ 
 **$\alpha$ is the **learning rate**. It controls how big a strep the algorithm take on each iteration.*  
 **When writing code, $\frac{d J(w)}{d w}$ will be defined as `dw`.*  
 
-And for the real cost funtion, the gradient descent will be like:  
+And for the real cost function, the gradient descent will be like:
 
 <embed id="gradientDescent" src="/img/gradientDescent_real.svg"/></br>
 
@@ -106,7 +106,7 @@ And for the real cost funtion, the gradient descent will be like:
 
 ## Lgistic Regression Gradient Descent
 **[Analyse]**  
-For a traning example which has two features.  
+For a training example which has two features.  
 
 $z=w^\mathrm{T}x+b$  
 $\hat{y}=a=\sigma(z)$  
@@ -117,26 +117,66 @@ paramters: $w_1$, $w_2$ and $b$
 ![Logistic Regression Gradient Descent Computation Graph](/img/LRGDComputationGraph.jpg)  
 
 `da`:  
-<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_da.svg"/></br>   -->
-$$ \frac{d \mathcal{L}(a, y)}{d a}=-\frac{y}{a}+\frac{1-y}{1-a}$$
+$$ \frac{\partial \mathcal{L}(a, y)}{\partial a}=-\frac{y}{a}+\frac{1-y}{1-a}$$
 
 `dz`:  
 <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dz.svg"/></br>
 
 `dw1`:  
-<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw1.svg"/></br>   -->
-$$ \frac{d \mathcal{L}(a, y)}{d w_{1}}=x_{1} \cdot d z$$
+$$ \frac{\partial \mathcal{L}(a, y)}{\partial w_{1}}=x_{1} \cdot d z$$
 
 `dw2`:  
-<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_dw2.svg"/></br>   -->
-$$ \frac{d \mathcal{L}(a, y)}{d w_{2}}=x_{2} \cdot d z$$
+$$ \frac{\partial \mathcal{L}(a, y)}{\partial w_{2}}=x_{2} \cdot d z$$
 
 
 `db`:  
-<!-- <embed id="LRGD_da" style="display: block; margin: auto;" src="/img/LRGD_db.svg"/></br>   -->
-$$ \frac{d \mathcal{L}(a, y)}{d b}=d z$$
+$$ \frac{\partial \mathcal{L}(a, y)}{\partial b}=d z$$
 
 <embed id="LRGD_da" src="/img/LRGD_repeat.svg"/></br>  
 **In this repeat loop, $dw_1$ means `dw1`, and $dw_2$ means `dw2`, $db$ means `db` as well.*  
 
 ### Gradient Descent on m Examples Traning Set
+**[Analyse]**  
+For a m training examples traning set, and each training example have two features.  
+
+$z=w^\mathrm{T}x^{(i)}+b$  
+$\hat{y}^{(i)}=a^{(i)}=\sigma(z)$  
+$J(w,b)=\frac{1}{m} \sum_{i=1}^{m}L(a^{(i)}, y^{(i)})$  
+
+features: $x_1^{(i)}$ and $x_2^{(i)}$  
+paramters: $w_1$, $w_2$ and $b$  
+
+Overall training set gradient descent with the respect of $w_1$:  
+$$ \frac{\partial J(w, b)}{\partial w_{1}}=\frac{1}{m} \sum_{i=1}^{m} \frac{\partial \mathcal{L}(a, y)}{\partial w_{1}}$$  
+
+For single traning example $(x^{(i)},y^{(i)})$, use the algorithm showed before. Then add up and divided by m to get the overall result:  
+```
+// Initialize
+J = 0;
+dw1 = 0;  // as a cumulator for whole training set
+dw2 = 0;  // as a cumulator for whole training set
+db = 0;  // as a cumulator for whole training set
+
+// Add up
+for(i = 1 to m) {
+  z(i) = wT x(i) + b;
+  a(i) = σ(z(i));
+  J += -[y(i) log(a(i)) + (1 - y(i)) log(1 - a(i))];
+  dz(i) = a(i) - y(i);
+  dw1 += x1(i) dz(i);
+  dw2 += x2(i) dz(i);
+  db += dz(i);
+}
+
+// Get average
+J /= m;
+dw1 /= m;  // geting the value of dJ/dw1
+dw2 /= m;  // geting the value of dJ/dw2
+db /= m;  // geting the value of dJ/db
+```
+<embed id="LRGD_da" src="/img/LRGD_repeat.svg"/></br>  
+**For every repeat, the `dw1`, `dw2` and `db` should be calculate again.*  
+
+::: tip
+In the algorithm, there are two for-loop nested (The second for-loop used for calcualate every $w$s and $b$s with the respect to every features). When having a large scale traning set it will run less efficiency. Using vectorization to solve this problem.
+:::
