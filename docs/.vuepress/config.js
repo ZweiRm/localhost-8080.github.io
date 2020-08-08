@@ -113,7 +113,8 @@ module.exports = {
 
             '/deep-learning/': [
                 '',
-                'logistic-regression-as-a-neural-network'
+                'logistic-regression-as-a-neural-network',
+                'python-and-vectorization'
             ],
 
             '/quantitative-methods-for-DA-AI/': [

@@ -1,3 +1,8 @@
+---
+prev: ./
+next: ./python-and-vectorization
+---
+
 # Logistic Regression as a Neural Network
 
 ## Notation
