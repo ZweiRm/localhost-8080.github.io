@@ -1,6 +1,6 @@
 ---
 prev: ./the-right-way-doing-research
-next: ./TODO
+next: ./setup-a-server-manually
 ---
 
 # 搭建一个基于 VuePress 的博客/技术文档网站

@@ -1,6 +1,6 @@
 ---
 editLink: false
-prev: ./building-a-vuepress-powered-blog
+prev: ./setup-a-server-manually
 next: false
 ---
 

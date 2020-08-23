@@ -137,6 +137,7 @@ module.exports = {
                 'computing-machinery-and-intelligence',
                 'the-right-way-doing-research',
                 'building-a-vuepress-powered-blog',
+                'setup-a-server-manually',
                 'TODO'
             ],
 
