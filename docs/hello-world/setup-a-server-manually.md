@@ -7,7 +7,7 @@ next: ./TODO
 当我们从云服务商购买了一台服务器或者确实有一台服务器在手里时，我们需要对它进行一些最基本的配置来使它可以正常工作。这篇文章可以让你了解到如何对一台 Linux 服务器进行基本的配置。  
 当然，某些云服务商也提供了现成的镜像服务一键搭建及配置。可以根据需求自行选择。
 
-## 概要
+## Step 0. 概要
 这篇文章记录使用 CentOS 系统配置一个可以让 Java Web 应用程序工作的服务器。将包含：  
 + 基本软件安装及配置
 + 基础配置
@@ -55,6 +55,7 @@ FileZilla 用来通过 FTP 向服务器端操作文件。
        ``` sh
        type $env:USERPROFILE\.ssh\id_rsa.pub | ssh root@你的服务器IP "cat >> .ssh/authorized_keys"
        ```
+       **此操作不能使用 Cmder.*
      
      + Linux/macOS  
        使用命令：  
@@ -378,7 +379,35 @@ yum -y install vim*
    ```
    若正确显示版本信息表明配置正确。
 
-## Step 8. 测试并部署项目
+## Step 8. 部署并测试项目
+下面再对 Tomcat 和 Tengine 进行一些操作和配置，最后进行简单地测试确保项目已经正确运行。  
+
+### 上传项目包
+在本地测试完成后，使用 FileZilla 将 `.war` 压缩包上传到服务器端。上传路径为 `apache-tomcat-****/webapps`  
+若你有多个项目需要分别上传到每个 Tomcat 中。在这篇文章的示例里，会将三个项目分别上传到三份 Tomcat 中。  
+
+::: warning 注意
+当在 IDE 测试导出项目时，请：  
++ 明确项目配置文件中 MySQL 密码已经与服务器中安装的 MySQL 密码相同。
++ 明确配置文件中当前项目的端口号以便后续配置。在这篇文章的示例里三个项目的端口号分别为 `8080`, `8081` 和 `8082`.
+:::
+
+上传完毕后对文件夹中的部分文件做些修改，以使我们的项目成为该 Tomcat 的默认项目。  
++ 重命名 `ROOT` 文件夹，添加后缀类似 `_1` 以使自动生成的 ROOT 项目不再是默认项目。  
++ 重命名我们上传的项目为 `ROOT.war`. 当服务器启动时会自动解压该包来生成默认项目文件夹 ROOT.  
+
+完成后：  
+![Tomcat Webapps](/img/tomcat_webapps.jpg)
+
+### 配置 Tomcat
+
+### 再配置 Tengine
+
+### 启动项目以测试
+
+## 你可能会遇到的问题
+1. Q：项目正常运行几天后再访问报 502 Bad Gateway 错误怎么办？  
+   A：明确报错项目，命令访问到它所在的 Tomcat 并尝试重新启动它。
       
 ## 参考文献或资料
 [1] vim. [GitHub - vim/vim: The official Vim repository](https://github.com/vim/vim)  
@@ -397,4 +426,4 @@ yum -y install vim*
 [14] Oracle. [A Quick Guide to Using the MySQL Yum Repository](https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/)  
 [15] 24只羊. [CentOS7安装MySQL（完整版）](https://blog.csdn.net/qq_36582604/article/details/80526287)  
 [16] Alibaba Group. [简单例子-The Tengine Web Server](http://tengine.taobao.org/document_cn/install_cn.html)  
-[17] 随风ˇ止步. [Tengine安装](https://www.cnblogs.com/zhoudemo/p/9043585.html)
+[17] 随风ˇ止步. [Tengine安装](https://www.cnblogs.com/zhoudemo/p/9043585.html)  
