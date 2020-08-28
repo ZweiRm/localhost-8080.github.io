@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>让我们来手动配置一台服务器 | 本地煮鸡:8080</title>
+    <meta name="generator" content="VuePress 1.5.4">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="一个博客, 大概会记录一些技术笔记">
+    <link rel="preload" href="/assets/css/0.styles.ff1f9cf9.css" as="style"><link rel="preload" href="/assets/js/app.d07be59a.js" as="script"><link rel="preload" href="/assets/js/3.443abace.js" as="script"><link rel="preload" href="/assets/js/21.def12064.js" as="script"><link rel="preload" href="/assets/js/5.e5300968.js" as="script"><link rel="prefetch" href="/assets/js/10.c7aec6f9.js"><link rel="prefetch" href="/assets/js/11.d03121b2.js"><link rel="prefetch" href="/assets/js/12.41268184.js"><link rel="prefetch" href="/assets/js/13.f2365b9d.js"><link rel="prefetch" href="/assets/js/14.7bed20f5.js"><link rel="prefetch" href="/assets/js/15.18546ab2.js"><link rel="prefetch" href="/assets/js/16.07ab5c15.js"><link rel="prefetch" href="/assets/js/17.9bde1cdb.js"><link rel="prefetch" href="/assets/js/18.fdabb00a.js"><link rel="prefetch" href="/assets/js/19.5e985d70.js"><link rel="prefetch" href="/assets/js/20.aaae7a60.js"><link rel="prefetch" href="/assets/js/22.de43c72b.js"><link rel="prefetch" href="/assets/js/23.ec7075b0.js"><link rel="prefetch" href="/assets/js/24.903623b8.js"><link rel="prefetch" href="/assets/js/25.cd7aba8f.js"><link rel="prefetch" href="/assets/js/26.bbe27de8.js"><link rel="prefetch" href="/assets/js/27.13f198c4.js"><link rel="prefetch" href="/assets/js/28.b6f1a5a6.js"><link rel="prefetch" href="/assets/js/29.f3a91a1e.js"><link rel="prefetch" href="/assets/js/30.e9428586.js"><link rel="prefetch" href="/assets/js/31.dbc9b65d.js"><link rel="prefetch" href="/assets/js/32.4fcc3c7c.js"><link rel="prefetch" href="/assets/js/33.0ce3a87e.js"><link rel="prefetch" href="/assets/js/34.12edd7e3.js"><link rel="prefetch" href="/assets/js/35.e3562e6c.js"><link rel="prefetch" href="/assets/js/36.cafca1a0.js"><link rel="prefetch" href="/assets/js/37.f41c61d2.js"><link rel="prefetch" href="/assets/js/38.3cad210d.js"><link rel="prefetch" href="/assets/js/39.6ac500a1.js"><link rel="prefetch" href="/assets/js/4.808f7068.js"><link rel="prefetch" href="/assets/js/40.5da40a19.js"><link rel="prefetch" href="/assets/js/41.732719ee.js"><link rel="prefetch" href="/assets/js/6.42baef53.js"><link rel="prefetch" href="/assets/js/7.697b99e1.js"><link rel="prefetch" href="/assets/js/8.fae09b8f.js"><link rel="prefetch" href="/assets/js/9.5025cf72.js"><link rel="prefetch" href="/assets/js/vendors~flowchart.d91dd0c8.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ff1f9cf9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">本地煮鸡:8080</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link router-link-active">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link router-link-active">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><a href="/hello-world/" aria-current="page" class="sidebar-link">Hello World!</a></li><li><a href="/hello-world/about-the-article-of-java.html" class="sidebar-link">关于 Java 编程部分的文章</a></li><li><a href="/hello-world/computing-machinery-and-intelligence.html" class="sidebar-link">A. M. Turing (1950) Computing Machinery and Intelligence. Mind 49: 433-460.</a></li><li><a href="/hello-world/the-right-way-doing-research.html" class="sidebar-link">学术研究的正确姿势</a></li><li><a href="/hello-world/building-a-vuepress-powered-blog.html" class="sidebar-link">搭建一个基于 VuePress 的博客/技术文档网站</a></li><li><a href="/hello-world/setup-a-server-manually.html" aria-current="page" class="active sidebar-link">让我们来手动配置一台服务器</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-0-概要" class="sidebar-link">Step 0. 概要</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-1-配置-ssh-密钥及安全组" class="sidebar-link">Step 1. 配置 SSH 密钥及安全组</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#ssh-密钥" class="sidebar-link">SSH 密钥</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#安全组" class="sidebar-link">安全组</a></li></ul></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-2-安装-vim" class="sidebar-link">Step 2. 安装 Vim</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-2-5-配置-swap-可选" class="sidebar-link">Step 2.5. 配置 SWAP（可选）</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-3-安装并配置-jdk" class="sidebar-link">Step 3. 安装并配置 JDK</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-4-设置防火墙" class="sidebar-link">Step 4. 设置防火墙</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-5-安装-mysql" class="sidebar-link">Step 5. 安装 MySQL</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-6-安装-tomcat" class="sidebar-link">Step 6. 安装 Tomcat</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-7-安装并配置-tengine" class="sidebar-link">Step 7. 安装并配置 Tengine</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#step-8-部署并测试项目" class="sidebar-link">Step 8. 部署并测试项目</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#上传项目包" class="sidebar-link">上传项目包</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#配置-tomcat" class="sidebar-link">配置 Tomcat</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#再配置-tengine" class="sidebar-link">再配置 Tengine</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#启动项目以测试" class="sidebar-link">启动项目以测试</a></li></ul></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#你可能会遇到的问题" class="sidebar-link">你可能会遇到的问题</a></li><li class="sidebar-sub-header"><a href="/hello-world/setup-a-server-manually.html#参考文献或资料" class="sidebar-link">参考文献或资料</a></li></ul></li><li><a href="/hello-world/TODO.html" class="sidebar-link">// TODO</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="让我们来手动配置一台服务器"><a href="#让我们来手动配置一台服务器" class="header-anchor">#</a> 让我们来手动配置一台服务器</h1> <p>当我们从云服务商购买了一台服务器或者确实有一台服务器在手里时，我们需要对它进行一些最基本的配置来使它可以正常工作。这篇文章可以让你了解到如何对一台 Linux 服务器进行基本的配置。<br>
+当然，某些云服务商也提供了现成的镜像服务一键搭建及配置。可以根据需求自行选择。</p> <h2 id="step-0-概要"><a href="#step-0-概要" class="header-anchor">#</a> Step 0. 概要</h2> <p>这篇文章记录使用 CentOS 系统配置一个可以让 Java Web 应用程序工作的服务器。将包含：</p> <ul><li>基本软件安装及配置</li> <li>基础配置</li> <li>Java Web 应用相关软件安装及配置</li></ul> <p><strong>在此之前你需要掌握的知识：</strong>  Linux 基本操作命令</p> <p><strong>在操作中会使用到的软件：</strong> Cmder；FileZilla<br>
+Cmder 用来敲命令，当然你也可以用 PowerShell；<br>
+FileZilla 用来通过 FTP 向服务器端操作文件。</p> <h2 id="step-1-配置-ssh-密钥及安全组"><a href="#step-1-配置-ssh-密钥及安全组" class="header-anchor">#</a> Step 1. 配置 SSH 密钥及安全组</h2> <p>使用 SSH 连接服务器可以让我们免去每次输入密码的麻烦。安全组的配置可以在云服务商端设置对某端口某协议放行与否，以此来提高安全性。本段所有命令在本机执行。</p> <h3 id="ssh-密钥"><a href="#ssh-密钥" class="header-anchor">#</a> SSH 密钥</h3> <ul><li><p>Vultr 服务器</p> <ol><li><p>生成 SSH Key<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>ssh-keygen
+</code></pre></div><p>命令会要求进行简单配置，若使用默认配置只需连续按下回车以确认。<br>
+SSH Key 会默认存放于 <code>C:\Users\用户名\.ssh</code>（Windows) ；<code>~/.ssh/</code>(Unix)文件夹中。 其中密钥为 <code>id_rsa</code>；公钥为 <code>id_rsa.pub</code>。</p></li> <li><p>部署 SSH Key<br>
+使用命令查看公钥：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">cat</span> /home/example_user/.ssh/id_rsa.pub
+</code></pre></div><p>复制弹出的结果，打开 Vultr 网站中 Account&gt; SSH Keys&gt; Add SSH Key 填写表单并保存。<br> <img src="/img/vultr_add_ssh_key.jpg" alt="Add SSH Key"></p></li> <li><p>使用 SSH Key 部署服务器<br>
+在 Vultr 网站中 Products&gt;Deploy New Instance 选择所需要的服务器配置、镜像并勾选刚才配置的 SSH Key.</p> <div class="custom-block warning"><p class="custom-block-title">注意</p> <p>在 Vultr 中，自动给服务器实例配置 SSH Key 只发生在购买服务器时。所以如果我们已经拥有了一台服务器后意欲自动配置 SSH Key 只能通过重装 SSH Key 操作来实现。而<strong>这个操作会抹除服务器的所有内容</strong>。<br>
+方法：Vultr 网站中 Products&gt; Server&gt; Settings&gt; Reinstall SSH Keys</p> <p><strong>手动向服务器部署 SSH Key</strong><br>
+除了 Vultr 提供的自动部署 SSH Key，我们还可以手动向服务器上传 SSH Key来避免抹除已有服务器的麻烦。</p> <ul><li><p>Windows<br> <strong>在 PowerShell 中使用命令：</strong></p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">type</span> <span class="token variable">$env</span>:USERPROFILE<span class="token punctuation">\</span>.ssh<span class="token punctuation">\</span>id_rsa.pub <span class="token operator">|</span> <span class="token function">ssh</span> root@你的服务器IP <span class="token string">&quot;cat &gt;&gt; .ssh/authorized_keys&quot;</span>
+</code></pre></div><p>*<em>此操作不能使用 Cmder.</em></p></li> <li><p>Linux/macOS<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>ssh-copy-id -i ~/.ssh/id_rsa.pub root@你的服务器IP
+</code></pre></div><p>根据提示要求输入密码来安装 Key.</p></li></ul></div></li> <li><p>使用 SSH 登录服务器<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">ssh</span> root@你的服务器IP
+</code></pre></div><p>即可免密码登录远程服务器。</p></li></ol></li> <li><p>阿里云服务器</p> <ol><li><p>创建密钥对<br>
+在阿里云 ECS 管理控制台中点击 网络与安全&gt; 密钥对。完成相应的配置，点击确定生成密钥对。下载私钥 <code>密钥对名称.pem</code> 到本地，存放于<code>C:\Users\用户名\.ssh</code>/<code>~/.ssh/</code>下。</p></li> <li><p>绑定密钥对<br>
+在密钥对设置中点击：操作&gt; 绑定密钥对。选择要配置的服务器实例，点击确定。（当服务器实例正在运行中时需要对其重新启动）</p></li> <li><p>使用 SSH 连接服务器</p> <ul><li><p>确认私钥所在位置，并修改其权限。<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">chmod</span> <span class="token number">400</span> ~/.ssh/密钥对名称.pem
+</code></pre></div></li> <li><p>连接服务器实例<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">ssh</span> -i ~/.ssh/密钥对名称.pem root@你的服务器IP
+</code></pre></div></li></ul></li></ol></li></ul> <h3 id="安全组"><a href="#安全组" class="header-anchor">#</a> 安全组</h3> <ul><li><p>Vultr 服务器</p> <ol><li><p>新建安全组<br>
+Vultr 网站 Products&gt; Firewall&gt; Add FireWall Group<br>
+按提示填写表单。开放端口<code>22</code>, <code>80</code>, <code>443</code>, <code>3306</code>, <code>8080</code>, <code>8081</code>, <code>8082</code>并保存。</p></li> <li><p>绑定安全组<br>
+Vultr 网站 Products&gt; Server&gt; Settings&gt; Firewall<br>
+选择刚才配置的安全组并使其生效。</p></li></ol></li> <li><p>阿里云服务器</p> <ol><li><p>创建安全组<br>
+在 ECS 控制台点击 网络与安全&gt; 安全组&gt; 创建安全组<br>
+配置安全组开放端口<code>22</code>, <code>80</code>, <code>443</code>, <code>3306</code>, <code>8080</code>, <code>8081</code>, <code>8082</code>并保存。</p></li> <li><p>绑定安全组<br>
+在 ECS 控制台点击 实例与镜像&gt; 实例&gt; 操作&gt; 管理&gt; 本实例安全组&gt; 加入安全组<br>
+选择配置的安全组并使其生效。</p></li></ol></li></ul> <h2 id="step-2-安装-vim"><a href="#step-2-安装-vim" class="header-anchor">#</a> Step 2. 安装 Vim</h2> <p>Vim 是一款基于 Vi 的编辑器。相对于 Vi，它有更强大的功能。我们会使用 Vim 来应对后续编辑文件的需要。<br>
+使用 <code>yum</code> 来安装 vim：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum -y <span class="token function">install</span> vim*
+</code></pre></div><p>安装完成后，就可以使用 vim 来创建、编辑文件了。这里附上一个简单的<a href="https://www.runoob.com/linux/linux-vim.html" target="_blank" rel="noopener noreferrer">教程<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>。</p> <h2 id="step-2-5-配置-swap-可选"><a href="#step-2-5-配置-swap-可选" class="header-anchor">#</a> Step 2.5. 配置 SWAP（可选）</h2> <p>当服务器内存过小时，会造成某些程序崩溃。增加交换区来配置虚拟内存。</p> <ol><li><p>SWAP 分区大小<br>
+根据红帽建议 <a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/installation_guide/s2-diskpartrecommend-ppc#id4394007" target="_blank" rel="noopener noreferrer">Recommended Partitioning Scheme<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>：</p> <table><thead><tr><th style="text-align:center;">物理内存</th> <th style="text-align:center;">建议的交换空间大小</th> <th style="text-align:center;">若开启休眠功能建议的交换空间大小</th></tr></thead> <tbody><tr><td style="text-align:center;">⩽ 2GB</td> <td style="text-align:center;">2 倍于 RAM 大小</td> <td style="text-align:center;">3 倍于 RAM大小</td></tr> <tr><td style="text-align:center;">&gt; 2GB – 8GB</td> <td style="text-align:center;">和 RAM 大小相等</td> <td style="text-align:center;">2 倍于 RAM 大小</td></tr> <tr><td style="text-align:center;">&gt; 8GB – 64GB</td> <td style="text-align:center;">至少 4 GB</td> <td style="text-align:center;">1.5 倍于 RAM 大小</td></tr> <tr><td style="text-align:center;">&gt;64GB</td> <td style="text-align:center;">至少 4 GB</td> <td style="text-align:center;">不建议休眠</td></tr></tbody></table></li> <li><p>设置 SWAP 分区
+使用命令：</p> <ol><li><p>创建 SWAP 分区</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">dd</span> <span class="token assign-left variable">if</span><span class="token operator">=</span>/dev/zero <span class="token assign-left variable">of</span><span class="token operator">=</span>/swapfile <span class="token assign-left variable">bs</span><span class="token operator">=</span>1M <span class="token assign-left variable">count</span><span class="token operator">=</span><span class="token number">2048</span>
+</code></pre></div><p>其中 <code>bs</code>×<code>count</code> 为 SWAP 分区大小，这个示例中大小位 2G. <code>bs</code>为每块大小，<code>count</code>为块数。<br> <code>/swapfile</code>为生成的分区路径。</p></li> <li><p>将刚才生成的分区设置为 SWAP 分区</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">mkswap</span> /swapfile
+</code></pre></div></li> <li><p>启用 SWAP 分区</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">swapon</span> /swapfile
+</code></pre></div></li> <li><p>自动挂载分区</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vim</span> /etc/fstab
+</code></pre></div><p>添加行并保存：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>/swapfile swap swap defaults <span class="token number">0</span> <span class="token number">0</span>
+</code></pre></div></li> <li><p>检查 swappiness 值<br>
+这个参数控制操作系统使用 SWAP 分区的时机。参数范围由 0 到 100。当参数为 0 时表示系统最大程度使用物理内存，耗尽时使用 SWAP 分区；100 表示积极使用 SWAP 分区，将物理内存上的内容及时搬运到 SWAP 分区里。CentOS 7 默认为 30；CentOS 6 默认为 60.<br>
+使用命令检查：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">cat</span> /proc/sys/vm/swappiness
+</code></pre></div><p>若需修改，执行命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 临时修改</span>
+sysctl vm.swappiness<span class="token operator">=</span>?
+</code></pre></div><p>或者</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># 永久修改</span>
+<span class="token function">vim</span> /etc/sysctl.conf
+</code></pre></div><p>并添加行：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>vm.swappiness<span class="token operator">=</span>?
+</code></pre></div></li> <li><p>查看内存情况<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">free</span>
+</code></pre></div></li></ol></li></ol> <h2 id="step-3-安装并配置-jdk"><a href="#step-3-安装并配置-jdk" class="header-anchor">#</a> Step 3. 安装并配置 JDK</h2> <ol><li>在 <a href="http://jdk.java.net/" target="_blank" rel="noopener noreferrer">OpenJDK<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>下载 Linux 适用的 JDK 压缩包，并使用 FileZilla 上传到服务器合适的位置。</li> <li>解压缩<br>
+使用命令：<div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">tar</span> -xzvf openjdk-****_linux-x64_bin.tar.gz
+</code></pre></div>*<em>将命令中的文件替换成你所下载的版本。</em></li> <li>配置环境变量<br>
+这里使用对系统所有用户有效且便于维护的方法进行设置。这个操作需要管理员权限。使用命令：
+<ol><li><p>新建 Shell 脚本并编辑</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vim</span> /etc/profile.d/java.sh
+</code></pre></div><p>编辑内容并保存：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># Java Environment</span>
+<span class="token assign-left variable">JAVA_HOME</span><span class="token operator">=</span>/root/java/jdk-11
+<span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span><span class="token builtin class-name">:</span><span class="token variable">$JAVA_HOME</span>/bin
+<span class="token assign-left variable">CLASSPATH</span><span class="token operator">=</span><span class="token variable">$JAVA_HOME</span>/lib
+<span class="token builtin class-name">export</span> JAVA_HOME <span class="token environment constant">PATH</span> CLASSPATH
+</code></pre></div><p>*<em>将命令中 <code>JAVA_HOME</code> 替换成刚才解压完成后生成的文件夹路径。</em><br>
+这样的配置方式可以在不需要该环境变量时更简便地进行维护。</p></li> <li><p>使环境变量生效<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">source</span> /etc/profile.d/java.sh
+</code></pre></div></li> <li><p>检查是否生效<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>java -version
+</code></pre></div><p>若正确显示版本信息表明配置正确。</p></li></ol></li></ol> <h2 id="step-4-设置防火墙"><a href="#step-4-设置防火墙" class="header-anchor">#</a> Step 4. 设置防火墙</h2> <ol><li><p>检查防火墙状态<br>
+默认情况下，CentOS 7 已经内置并开启了防火墙 firewalld. 使用命令检查其状态：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>firewall-cmd --state
+</code></pre></div><p>若显示 <code>running</code> 则已开启。</p> <p>当显示命令不存在时，使用命令安装：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum <span class="token function">install</span> firewalld -y
+</code></pre></div></li> <li><p>设置放行规则<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">22</span>/tcp
+firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">80</span>/tcp
+firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">443</span>/tcp
+firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">3306</span>/tcp
+firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">8080</span>/tcp
+firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">8081</span>/tcp
+firewall-cmd --permanent --zone<span class="token operator">=</span>public --add-port<span class="token operator">=</span><span class="token number">8082</span>/tcp
+</code></pre></div><p>每一条都显示<code>success</code>则正确。</p></li> <li><p>重载防火墙以使得配置生效<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>firewall-cmd --reload
+</code></pre></div></li> <li><p>检查防火墙<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>firewall-cmd --zone<span class="token operator">=</span>public --list-ports
+</code></pre></div><p>检查所有要设置的端口都已放行。</p></li></ol> <h2 id="step-5-安装-mysql"><a href="#step-5-安装-mysql" class="header-anchor">#</a> Step 5. 安装 MySQL</h2> <ol><li><p>下载 yum repository<br>
+访问 <a href="https://dev.mysql.com/downloads/repo/yum/" target="_blank" rel="noopener noreferrer">MySQL Community Downloads<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>，找到适合的版本，点击<code>Download</code>。在页面中，复制<code>No thanks, just start my download.</code>链接所对应的地址。<br>
+在服务器端使用命令下载 rpm 文件：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">wget</span> https://dev.mysql.com/get/platform-and-version-specific-package-name.noarch.rpm
+</code></pre></div><p>*<em>命令中 url 替换为刚才复制的链接。</em></p></li> <li><p>安装 yum repository<br>
+使用命令安装：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum -y <span class="token function">install</span> platform-and-version-specific-package-name.noarch.rpm
+</code></pre></div></li> <li><p>安装 MySQL<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum <span class="token function">install</span> mysql-community-server
+</code></pre></div><p>按提示键入 <code>y</code> 来确认。</p></li> <li><p>启动 MySQL<br>
+使用命令来启动 MySQL 服务：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>systemctl start mysqld.service
+</code></pre></div><p>接着使用命令来查看 MySQL 服务的状态：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>systemctl status mysqld.service
+</code></pre></div><p>若显示绿色的 <code>active (running)</code> 则 MySQL 启动正常。</p></li> <li><p>登录并配置 MySQL<br>
+输入命令获得 MySQL 自动生成的初始密码：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">grep</span> <span class="token string">'temporary password'</span> /var/log/mysqld.log
+</code></pre></div><p>*<em>返回的 <code>2020-08-23T13:59:15.793152Z 6 [Note] [MY-010454] [Server] A temporary password is generated for root@localhost: ********</code> 末尾为初始密码</em></p> <p>复制初试密码并登录 MySQL：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>mysql -uroot -p
+</code></pre></div><p>按提示粘贴密码并确定。</p> <p>使用命令更改自定义 MySQL 登录密码：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>ALTER <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'localhost'</span> IDENTIFIED BY <span class="token string">'MyNewPass4!'</span><span class="token punctuation">;</span>
+</code></pre></div><p>*<em>注意这里是 SQL 语句，需以分号结尾。</em></p> <p>使用命令来更改远程连接：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>CREATE <span class="token environment constant">USER</span> <span class="token string">'root'</span>@<span class="token string">'%'</span> IDENTIFIED BY <span class="token string">'******'</span><span class="token punctuation">;</span>
+</code></pre></div><p>这里 <code>%</code> 指所有 IP，根据需要可以改为固定某 IP。<code>******</code> 为对应密码。</p> <div class="language-sh extra-class"><pre class="language-sh"><code>GRANT ALL PRIVILEGES ON *.* TO <span class="token string">'root'</span>@<span class="token string">'%'</span> WITH GRANT OPTION<span class="token punctuation">;</span>
+</code></pre></div><p>设置新创建的账户的权限。</p></li> <li><p>按需求建立数据库、执行数据库文件</p></li></ol> <h2 id="step-6-安装-tomcat"><a href="#step-6-安装-tomcat" class="header-anchor">#</a> Step 6. 安装 Tomcat</h2> <ol><li><p>下载 Tomcat<br>
+访问 <a href="https://tomcat.apache.org/" target="_blank" rel="noopener noreferrer">Apache Tomcat<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>, 选择合适的版本并下载。</p></li> <li><p>安装 Tomcat<br>
+将下载好的文件使用 FileZilla 上传到服务器，按类似安装 JDK 的方法在合适的位置解压缩。按需要可以解压多份 Tomcat 服务器以后备用。</p></li></ol> <h2 id="step-7-安装并配置-tengine"><a href="#step-7-安装并配置-tengine" class="header-anchor">#</a> Step 7. 安装并配置 Tengine</h2> <ol><li><p>下载并安装相关软件<br>
+使用命令安装编译器：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum -y <span class="token function">install</span> gcc gcc-c++ autoconf automake <span class="token function">make</span>
+</code></pre></div><p>使用命令安装 pcre-devel：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum -y <span class="token function">install</span> pcre-devel
+</code></pre></div><p>使用命令安装 OpenSSL：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>yum -y <span class="token function">install</span> openssl openssl-devel
+</code></pre></div></li> <li><p>下载并安装 Tengine<br>
+访问<a href="http://tengine.taobao.org/" target="_blank" rel="noopener noreferrer">The Tengine Web Server<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a>下载压缩包，并使用 FileZilla 上传到服务器适当的位置。按类似安装 JDK 的方法解压缩。</p> <p>在服务器访问解压好的文件夹，使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>./configure
+<span class="token function">make</span>
+<span class="token function">sudo</span> <span class="token function">make</span> <span class="token function">install</span>
+</code></pre></div><p>*<em>请确保安装过程没有报错：类似<code>./configure: error</code>的错误提示。若有，请查阅相关文档解决。</em><br>
+*<em>Tengine 默认将安装在 <code>/usr/local/nginx</code> 目录。</em></p></li> <li><p>配置环境变量<br>
+使用命令生成并保存文件：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vim</span> /etc/profile.d/tengine.sh
+</code></pre></div><p>编辑内容：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token comment"># Tengine Environment</span>
+<span class="token assign-left variable"><span class="token environment constant">PATH</span></span><span class="token operator">=</span><span class="token environment constant">$PATH</span>:/usr/local/nginx/sbin
+<span class="token builtin class-name">export</span> <span class="token environment constant">PATH</span>
+</code></pre></div><p>使环境变量生效  使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token builtin class-name">source</span> /etc/profile.d/tengine.sh
+</code></pre></div><p>检查是否生效<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>nginx -v
+</code></pre></div><p>若正确显示版本信息表明配置正确。</p></li> <li><p>设置为系统服务<br>
+使用命令创建文件，使得 Tengine 开机自启：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vim</span> /lib/systemd/system/nginx.service
+</code></pre></div><p>编辑内容并保存：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token punctuation">[</span>Unit<span class="token punctuation">]</span>
+<span class="token assign-left variable">Description</span><span class="token operator">=</span>The nginx HTTP and reverse proxy server
+<span class="token assign-left variable">After</span><span class="token operator">=</span>syslog.target network.target remote-fs.target nss-lookup.target
+ 
+<span class="token punctuation">[</span>Service<span class="token punctuation">]</span>
+<span class="token assign-left variable">Type</span><span class="token operator">=</span>forking
+<span class="token assign-left variable">PIDFile</span><span class="token operator">=</span>/usr/local/nginx/logs/nginx.pid
+<span class="token assign-left variable">ExecStartPre</span><span class="token operator">=</span>/usr/local/nginx/sbin/nginx -t
+<span class="token assign-left variable">ExecStart</span><span class="token operator">=</span>/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+<span class="token assign-left variable">ExecReload</span><span class="token operator">=</span>/bin/kill -s HUP <span class="token variable">$MAINPID</span>
+<span class="token assign-left variable">ExecStop</span><span class="token operator">=</span>/bin/kill -s QUIT <span class="token variable">$MAINPID</span>
+<span class="token assign-left variable">PrivateTmp</span><span class="token operator">=</span>true
+ 
+<span class="token punctuation">[</span>Install<span class="token punctuation">]</span>
+<span class="token assign-left variable">WantedBy</span><span class="token operator">=</span>multi-user.target
+</code></pre></div><p>修改该文件权限：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">chmod</span> <span class="token number">745</span> /lib/systemd/system/nginx.service
+</code></pre></div><p>设置开机自启：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>systemctl <span class="token builtin class-name">enable</span> nginx.service
+</code></pre></div></li></ol> <h2 id="step-8-部署并测试项目"><a href="#step-8-部署并测试项目" class="header-anchor">#</a> Step 8. 部署并测试项目</h2> <p>下面再对 Tomcat 和 Tengine 进行一些操作和配置，最后进行简单地测试确保项目已经正确运行。</p> <h3 id="上传项目包"><a href="#上传项目包" class="header-anchor">#</a> 上传项目包</h3> <p>在本地测试完成后，使用 FileZilla 将 <code>.war</code> 压缩包上传到服务器端。上传路径为 <code>apache-tomcat-****/webapps</code><br>
+若你有多个项目需要分别上传到每个 Tomcat 中。在这篇文章的示例里，会将三个项目分别上传到三份 Tomcat 中。</p> <div class="custom-block warning"><p class="custom-block-title">注意</p> <p>当在 IDE 测试导出项目时，请：</p> <ul><li>明确项目配置文件中 MySQL 密码已经与服务器中安装的 MySQL 密码相同。</li> <li>明确配置文件中当前项目的端口号以便后续配置。在这篇文章的示例里三个项目的端口号分别为 <code>8080</code>, <code>8081</code> 和 <code>8082</code>.</li></ul></div> <p>上传完毕后对文件夹中的部分文件做些修改，以使我们的项目成为该 Tomcat 的默认项目。</p> <ul><li>重命名 <code>ROOT</code> 文件夹，添加后缀类似 <code>_1</code> 以使自动生成的 ROOT 项目不再是默认项目。</li> <li>重命名我们上传的项目为 <code>ROOT.war</code>. 当服务器启动时会自动解压该包来生成默认项目文件夹 ROOT.</li></ul> <p>完成后：<br> <img src="/img/tomcat_webapps.jpg" alt="Tomcat Webapps"></p> <h3 id="配置-tomcat"><a href="#配置-tomcat" class="header-anchor">#</a> 配置 Tomcat</h3> <p>我们对每一个 Tomcat 的配置文件进行修改。<br>
+访问文件夹：<code>apache-tomcat-******/conf/</code>，找到<code>server.xml</code>进行编辑：</p> <ol><li><p>将每个 Tomcat 的 <code>port</code> 设置项改为与所开发的 Web APP 设置一致。把 <code>redirectPort</code> 设置项改为 <code>443</code>. 保存修改。</p> <div class="language-xml extra-class"><div class="highlight-lines"><div class="highlighted"> </div><br><div class="highlighted"> </div><br></div><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Connector</span> <span class="token attr-name">port</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>8080<span class="token punctuation">&quot;</span></span> <span class="token attr-name">protocol</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>HTTP/1.1<span class="token punctuation">&quot;</span></span>
+<span class="token attr-name">connectionTimeout</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>20000<span class="token punctuation">&quot;</span></span>
+<span class="token attr-name">redirectPort</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>443<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+</code></pre></div><p>之后类似的，将 SHUTDOWN 用的 <code>8085</code> 依次改为不同的端口，保存修改。</p></li> <li><p>在每个 Tomcat 的 <code>server.xml</code> 配置文件中增添标签：<br>
+找到 <code>&lt;Engine&gt;...&lt;/Engine&gt;</code> 标签，在其中添加子标签用以后续配合 Tengine 识别 HTTP 和 HTTPS 访问：</p> <div class="language-xml extra-class"><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Engine</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>Catalina<span class="token punctuation">&quot;</span></span> <span class="token attr-name">defaultHost</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>localhost<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>Valve</span> <span class="token attr-name">className</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>org.apache.catalina.valves.RemoteIpValve<span class="token punctuation">&quot;</span></span> <span class="token attr-name">remoteIpHeader</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>X-Forwarded-For<span class="token punctuation">&quot;</span></span> <span class="token attr-name">protocolHeader</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>X-Forwarded-Proto<span class="token punctuation">&quot;</span></span> <span class="token attr-name">protocolHeaderHttpsValue</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>https<span class="token punctuation">&quot;</span></span><span class="token punctuation">/&gt;</span></span>
+...
+</code></pre></div><p>完成后保存修改。</p></li></ol> <h3 id="再配置-tengine"><a href="#再配置-tengine" class="header-anchor">#</a> 再配置 Tengine</h3> <ol><li><p>创建 HTTPS 证书文件夹并上传证书<br>
+在目录 <code>/usr/local/nginx/conf/</code> 下创建 <code>cert/</code> 文件夹。访问域名提供商（如阿里云）控制台下载 HTTPS 证书。下载完成后通过 FileZilla 上传到刚才建立的文件夹中。</p></li> <li><p>配置 Tengine<br>
+使用命令编辑 Tengine 的配置文件以设置服务器反向代理：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">vim</span> /usr/local/nginx/conf/nginx.conf
+</code></pre></div><div class="language-properties extra-class"><div class="highlight-lines"><div class="highlighted"> </div><br><br><br><br><br><br><br><br><br><div class="highlighted"> </div><div class="highlighted"> </div><div class="highlighted"> </div><br><div class="highlighted"> </div><br><br><div class="highlighted"> </div><br><div class="highlighted"> </div><div class="highlighted"> </div><br><br><br><br><div class="highlighted"> </div><div class="highlighted"> </div><br><br><div class="highlighted"> </div><br><br><br><div class="highlighted"> </div><div class="highlighted"> </div><br><br><br><br><br><br><br><br><br><br></div><pre class="language-properties"><code><span class="token attr-name">pid</span> <span class="token attr-value">       /usr/local/nginx/logs/nginx.pid; # 去掉该行注释，更改该项内容为此。</span>
+
+<span class="token attr-name">http</span> <span class="token attr-value">{</span>
+<span class="token attr-name">    include</span> <span class="token attr-value">      mime.types;</span>
+<span class="token attr-name">    default_type</span> <span class="token attr-value"> application/octet-stream;</span>
+
+<span class="token attr-name">    sendfile</span> <span class="token attr-value">       on;</span>
+
+<span class="token attr-name">    keepalive_timeout</span> <span class="token attr-value"> 65;</span>
+
+<span class="token attr-name">    upstream</span> <span class="token attr-value">tomcat*** {</span>
+<span class="token attr-name">        server</span> <span class="token attr-value">localhost:8080; # 对应 Tomcat 服务器中配置文件中的设置</span>
+    }
+
+<span class="token comment">    # HTTPS server</span>
+<span class="token attr-name">    server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">        listen</span> <span class="token attr-value">      443 ssl;</span>
+<span class="token attr-name">        server_name</span> <span class="token attr-value"> domain.com; # 改为在域名商购买的域名</span>
+
+<span class="token attr-name">        ssl_certificate</span> <span class="token attr-value">     cert/domain_name.pem; # 改为刚才保存在 cer/ 文件夹中 .pem 文件路径</span>
+<span class="token attr-name">        ssl_certificate_key</span> <span class="token attr-value"> cert/domain_name.key; # 改为刚才保存在 cer/ 文件夹中 .key 文件路径</span>
+
+<span class="token attr-name">        ssl_session_cache</span> <span class="token attr-value">   shared:SSL:1m;</span>
+<span class="token attr-name">        ssl_session_timeout</span> <span class="token attr-value"> 5m;</span>
+
+<span class="token attr-name">        ssl_ciphers</span> <span class="token attr-value">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4; #使用此加密套件。</span>
+<span class="token attr-name">        ssl_protocols</span> <span class="token attr-value">TLSv1 TLSv1.1 TLSv1.2; #使用该协议进行配置。</span>
+<span class="token attr-name">        ssl_prefer_server_ciphers</span> <span class="token attr-value"> on;</span>
+
+<span class="token attr-name">        rewrite</span> <span class="token attr-value">^(.*)$ https://$host$1 permanent;   #将所有 HTTP 请求通过 rewrite 重定向到 HTTPS。</span>
+
+<span class="token attr-name">        location</span> <span class="token attr-value">/ {</span>
+<span class="token attr-name">            root</span> <span class="token attr-value">  html;</span>
+<span class="token attr-name">            index</span> <span class="token attr-value"> index.html index.htm; # 改为 Web APP 开发设置的首页</span>
+<span class="token attr-name">            proxy_pass</span> <span class="token attr-value">http://tomcat_***; # 对应上面 upstream 项进行修改</span>
+        }
+    }
+    
+<span class="token attr-name">    server</span> <span class="token attr-value">{ # 对应 HTTP 访问进行跳转</span>
+<span class="token attr-name">        lisent</span> <span class="token attr-value">80;</span>
+<span class="token attr-name">        server_name</span> <span class="token attr-value">health.ahza.xin;</span>
+<span class="token attr-name">        return</span> <span class="token attr-value">301 https://******$request_uri; # 跳转 URL设置为 HTTPS协议</span>
+    }
+}
+</code></pre></div><div class="custom-block warning"><p class="custom-block-title">提示</p> <p><code>upstream</code> 项命名不能使用下划线，否则 Tomcat 报 400 错误。</p></div> <p>有几个 Tomcat 就配置几对 <code>upstream</code> 和 <code>server</code>. 下面是本篇文章中的配置文件示例：</p> <div class="language-properties extra-class"><pre class="language-properties"><code><span class="token comment"> #user  nobody;</span>
+<span class="token attr-name"> worker_processes</span> <span class="token attr-value"> 1;</span>
+ 
+<span class="token comment"> #error_log  logs/error.log;</span>
+<span class="token comment"> #error_log  logs/error.log  notice;</span>
+<span class="token comment"> #error_log  logs/error.log  info;</span>
+<span class="token comment"> #error_log  &quot;pipe:rollback logs/error_log interval=1d baknum=7 maxsize=2G&quot;;</span>
+ 
+<span class="token attr-name"> pid</span> <span class="token attr-value">       /usr/local/nginx/logs/nginx.pid;</span>
+ 
+ 
+<span class="token attr-name"> events</span> <span class="token attr-value">{</span>
+<span class="token attr-name">     worker_connections</span> <span class="token attr-value"> 1024;</span>
+ }
+ 
+ 
+<span class="token attr-name"> http</span> <span class="token attr-value">{</span>
+<span class="token attr-name">     include</span> <span class="token attr-value">      mime.types;</span>
+<span class="token attr-name">     default_type</span> <span class="token attr-value"> application/octet-stream;</span>
+ 
+<span class="token comment">     #log_format  main  '$remote_addr - $remote_user [$time_local] &quot;$request&quot; '</span>
+<span class="token comment">     #                  '$status $body_bytes_sent &quot;$http_referer&quot; '</span>
+<span class="token comment">     #                  '&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;';</span>
+ 
+<span class="token comment">     #access_log  logs/access.log  main;</span>
+<span class="token comment">     #access_log  &quot;pipe:rollback logs/access_log interval=1d baknum=7 maxsize=2G&quot;  main;</span>
+ 
+<span class="token attr-name">     sendfile</span> <span class="token attr-value">       on;</span>
+<span class="token comment">     #tcp_nopush     on;</span>
+ 
+<span class="token comment">     #keepalive_timeout  0;</span>
+<span class="token attr-name">     keepalive_timeout</span> <span class="token attr-value"> 65;</span>
+ 
+<span class="token comment">     #gzip  on;</span>
+ 
+<span class="token comment">     #server {</span>
+<span class="token comment">     #    listen       80;</span>
+<span class="token comment">     #    server_name  localhost;</span>
+ 
+<span class="token comment">         #charset koi8-r;</span>
+ 
+<span class="token comment">         #access_log  logs/host.access.log  main;</span>
+<span class="token comment">         #access_log  &quot;pipe:rollback logs/host.access_log interval=1d baknum=7 maxsize=2G&quot;  main;</span>
+ 
+<span class="token comment">     #    location / {</span>
+<span class="token comment">     #        root   html;</span>
+<span class="token comment">     #        index  index.html index.htm;</span>
+<span class="token comment">     #    }</span>
+ 
+<span class="token comment">         #error_page  404              /404.html;</span>
+ 
+<span class="token comment">         # redirect server error pages to the static page /50x.html</span>
+<span class="token comment">         #</span>
+<span class="token comment">         # error_page   500 502 503 504  /50x.html;</span>
+<span class="token comment">         # location = /50x.html {</span>
+<span class="token comment">         #     root   html;</span>
+<span class="token comment">         # }</span>
+ 
+<span class="token comment">         # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span>
+<span class="token comment">         #</span>
+<span class="token comment">         #location ~ \.php$ {</span>
+<span class="token comment">         #    proxy_pass   http://127.0.0.1;</span>
+<span class="token comment">         #}</span>
+ 
+<span class="token comment">         # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span>
+<span class="token comment">         #</span>
+<span class="token comment">         #location ~ \.php$ {</span>
+<span class="token comment">         #    root           html;</span>
+<span class="token comment">         #    fastcgi_pass   127.0.0.1:9000;</span>
+<span class="token comment">         #    fastcgi_index  index.php;</span>
+<span class="token comment">         #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span>
+<span class="token comment">         #    include        fastcgi_params;</span>
+<span class="token comment">         #}</span>
+ 
+<span class="token comment">         # pass the Dubbo rpc to Dubbo provider server listening on 127.0.0.1:20880</span>
+<span class="token comment">         #</span>
+<span class="token comment">         #location /dubbo {</span>
+<span class="token comment">         #    dubbo_pass_all_headers on;</span>
+<span class="token comment">         #    dubbo_pass_set args $args;</span>
+<span class="token comment">         #    dubbo_pass_set uri $uri;</span>
+<span class="token comment">         #    dubbo_pass_set method $request_method;</span>
+<span class="token comment">         #</span>
+<span class="token comment">         #    dubbo_pass org.apache.dubbo.samples.tengine.DemoService 0.0.0 tengineDubbo dubbo_backend;</span>
+<span class="token comment">         #}</span>
+ 
+<span class="token comment">         # deny access to .htaccess files, if Apache's document root</span>
+<span class="token comment">         # concurs with nginx's one</span>
+<span class="token comment">         #</span>
+<span class="token comment">         #location ~ /\.ht {</span>
+<span class="token comment">         #    deny  all;</span>
+<span class="token comment">         #}</span>
+<span class="token comment">     # }</span>
+ 
+<span class="token comment">     # upstream for Dubbo rpc to Dubbo provider server listening on 127.0.0.1:20880</span>
+<span class="token comment">     #</span>
+<span class="token comment">     #upstream dubbo_backend {</span>
+<span class="token comment">     #    multi 1;</span>
+<span class="token comment">     #    server 127.0.0.1:20880;</span>
+<span class="token comment">     #}</span>
+ 
+<span class="token comment">     # another virtual host using mix of IP-, name-, and port-based configuration</span>
+<span class="token comment">     #</span>
+<span class="token comment">     #server {</span>
+<span class="token comment">     #    listen       8000;</span>
+<span class="token comment">     #    listen       somename:8080;</span>
+<span class="token comment">     #    server_name  somename  alias  another.alias;</span>
+ 
+<span class="token comment">     #    location / {</span>
+<span class="token comment">     #        root   html;</span>
+<span class="token comment">     #        index  index.html index.htm;</span>
+<span class="token comment">     #    }</span>
+<span class="token comment">     #}</span>
+ 
+<span class="token attr-name">     upstream</span> <span class="token attr-value">tomcatHealth {</span>
+<span class="token attr-name">         server</span> <span class="token attr-value">localhost:8080;</span>
+     }
+ 
+<span class="token attr-name">     upstream</span> <span class="token attr-value">tomcatOjFront {</span>
+<span class="token attr-name">         server</span> <span class="token attr-value">localhost:8081;</span>
+     }
+ 
+<span class="token attr-name">     upstream</span> <span class="token attr-value">tomcatOjBack {</span>
+<span class="token attr-name">         server</span> <span class="token attr-value">localhost:8082;</span>
+     }
+ 
+<span class="token comment">     # HTTPS server 1</span>
+<span class="token attr-name">     server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">         listen</span> <span class="token attr-value">      443 ssl;</span>
+<span class="token attr-name">         server_name</span> <span class="token attr-value"> health.ahza.xin;</span>
+ 
+<span class="token attr-name">         ssl_certificate</span> <span class="token attr-value">     cert/3030836_health.ahza.xin.pem;</span>
+<span class="token attr-name">         ssl_certificate_key</span> <span class="token attr-value"> cert/3030836_health.ahza.xin.key;</span>
+ 
+<span class="token attr-name">         ssl_session_cache</span> <span class="token attr-value">   shared:SSL:1m;</span>
+<span class="token attr-name">         ssl_session_timeout</span> <span class="token attr-value"> 5m;</span>
+ 
+<span class="token attr-name">         ssl_ciphers</span> <span class="token attr-value">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span>
+<span class="token attr-name">         ssl_protocols</span> <span class="token attr-value">TLSv1 TLSv1.1 TLSv1.2;</span>
+<span class="token attr-name">         ssl_prefer_server_ciphers</span> <span class="token attr-value"> on;</span>
+ 
+<span class="token attr-name">         location</span> <span class="token attr-value">/ {</span>
+<span class="token attr-name">             root</span> <span class="token attr-value">  html;</span>
+<span class="token attr-name">             index</span> <span class="token attr-value"> index.html index.htm;</span>
+<span class="token attr-name">             proxy_pass</span> <span class="token attr-value">http://tomcatHealth;</span>
+         }
+     }
+ 
+<span class="token attr-name">     server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">         listen</span> <span class="token attr-value">80;</span>
+<span class="token attr-name">         server_name</span> <span class="token attr-value">health.ahza.xin;</span>
+<span class="token attr-name">         return</span> <span class="token attr-value">301 https://health.ahza.xin$request_uri;</span>
+     }
+ 
+<span class="token comment">     # HTTPS server 2</span>
+<span class="token attr-name">     server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">         listen</span> <span class="token attr-value">      443 ssl;</span>
+<span class="token attr-name">         server_name</span> <span class="token attr-value"> oj.front.ahza.xin;</span>
+ 
+<span class="token attr-name">         ssl_certificate</span> <span class="token attr-value">     cert/3030823_oj.front.ahza.xin.pem;</span>
+<span class="token attr-name">         ssl_certificate_key</span> <span class="token attr-value"> cert/3030823_oj.front.ahza.xin.key;</span>
+ 
+<span class="token attr-name">         ssl_session_cache</span> <span class="token attr-value">   shared:SSL:1m;</span>
+<span class="token attr-name">         ssl_session_timeout</span> <span class="token attr-value"> 5m;</span>
+ 
+<span class="token attr-name">         ssl_ciphers</span> <span class="token attr-value">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span>
+<span class="token attr-name">         ssl_protocols</span> <span class="token attr-value">TLSv1 TLSv1.1 TLSv1.2;</span>
+<span class="token attr-name">         ssl_prefer_server_ciphers</span> <span class="token attr-value"> on;</span>
+ 
+<span class="token attr-name">         location</span> <span class="token attr-value">/ {</span>
+<span class="token attr-name">             root</span> <span class="token attr-value">  html;</span>
+<span class="token attr-name">             index</span> <span class="token attr-value"> login.html index.html index.htm;</span>
+<span class="token attr-name">             proxy_pass</span> <span class="token attr-value">http://tomcatOjFront;</span>
+         }
+     }
+ 
+<span class="token attr-name">     server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">         listen</span> <span class="token attr-value">80;</span>
+<span class="token attr-name">         server_name</span> <span class="token attr-value">oj.front.ahza.xin;</span>
+<span class="token attr-name">         return</span> <span class="token attr-value">301 https://oj.front.ahza.xin$request_uri;</span>
+     }
+ 
+<span class="token comment">     # HTTPS server 3</span>
+<span class="token attr-name">     server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">         listen</span> <span class="token attr-value">      443 ssl;</span>
+<span class="token attr-name">         server_name</span> <span class="token attr-value"> oj.back.ahza.xin;</span>
+ 
+<span class="token attr-name">         ssl_certificate</span> <span class="token attr-value">     cert/3030837_oj.back.ahza.xin.pem;</span>
+<span class="token attr-name">         ssl_certificate_key</span> <span class="token attr-value"> cert/3030837_oj.back.ahza.xin.key;</span>
+ 
+<span class="token attr-name">         ssl_session_cache</span> <span class="token attr-value">   shared:SSL:1m;</span>
+<span class="token attr-name">         ssl_session_timeout</span> <span class="token attr-value"> 5m;</span>
+ 
+<span class="token attr-name">         ssl_ciphers</span> <span class="token attr-value">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;</span>
+<span class="token attr-name">         ssl_protocols</span> <span class="token attr-value">TLSv1 TLSv1.1 TLSv1.2;</span>
+<span class="token attr-name">         ssl_prefer_server_ciphers</span> <span class="token attr-value"> on;</span>
+ 
+<span class="token attr-name">         location</span> <span class="token attr-value">/ {</span>
+<span class="token attr-name">             root</span> <span class="token attr-value">  html;</span>
+<span class="token attr-name">             index</span> <span class="token attr-value"> login.html index.html index.htm;</span>
+<span class="token attr-name">             proxy_pass</span> <span class="token attr-value">http://tomcatOjBack;</span>
+         }
+     }
+ 
+<span class="token attr-name">     server</span> <span class="token attr-value">{</span>
+<span class="token attr-name">         listen</span> <span class="token attr-value">80;</span>
+<span class="token attr-name">         server_name</span> <span class="token attr-value">oj.back.ahza.xin;</span>
+<span class="token attr-name">         return</span> <span class="token attr-value">301 https://oj.back.ahza.xin$request_uri;</span>
+     }
+ 
+ }
+</code></pre></div><p>使用命令测试配置是否正确：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>nginx -t
+</code></pre></div><p>如提示错误查阅相关文档解决。</p> <div class="custom-block warning"><p class="custom-block-title">提示</p> <p>这里配置的所有域名均需要经过 ICP 域名信息备案，否则可能会被服务器提供商禁止访问。</p></div></li></ol> <h3 id="启动项目以测试"><a href="#启动项目以测试" class="header-anchor">#</a> 启动项目以测试</h3> <ol><li><p>启动 Tengine<br>
+使用命令：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>systemctl start nginx.service
+</code></pre></div></li> <li><p>启动 Tomcat<br>
+分别进入每一个 Tomcat 文件夹中，访问 <code>bin/</code> 文件夹，并使用命令启动 Tomcat：</p> <div class="language-sh extra-class"><pre class="language-sh"><code>./startup.sh
+</code></pre></div><p>访问 <code>logs/</code> 文件夹，使用命令观察启动情况：</p> <div class="language-sh extra-class"><pre class="language-sh"><code><span class="token function">tail</span> -f catalina.out 
+</code></pre></div><p>出现问题时，请查阅相关文档解决。</p></li></ol> <h2 id="你可能会遇到的问题"><a href="#你可能会遇到的问题" class="header-anchor">#</a> 你可能会遇到的问题</h2> <ol><li><p>Q：项目正常运行几天后再访问报 502 Bad Gateway 错误怎么办？<br>
+A：明确报错项目，命令访问到它所在的 Tomcat 并尝试重新启动它。</p></li> <li><p>Q：为什么本地端 IDE 测试项目可以正确运行，服务器启动 Tomcat 后报错。错误内容以 <code>Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]...</code> 起头，包括 <code>Caused by: java.lang.NullPointerException: null</code> ？<br>
+A：低版本的 javassist 库引起了这个问题，尝试修改 pom 文件以更新依赖来解决。如：</p> <div class="language-xml extra-class"><div class="highlight-lines"><br><br><br><div class="highlighted"> </div><br><br><br></div><pre class="language-xml"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>parent</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>groupId</span><span class="token punctuation">&gt;</span></span>org.springframework.boot<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>groupId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>artifactId</span><span class="token punctuation">&gt;</span></span>spring-boot-starter-parent<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>artifactId</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>version</span><span class="token punctuation">&gt;</span></span>2.1.0.RELEASE<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>version</span><span class="token punctuation">&gt;</span></span>
+        <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>relativePath</span><span class="token punctuation">/&gt;</span></span> <span class="token comment">&lt;!-- lookup parent from repository --&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>parent</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div></li></ol> <h2 id="参考文献或资料"><a href="#参考文献或资料" class="header-anchor">#</a> 参考文献或资料</h2> <p>[1] vim. <a href="https://github.com/vim/vim" target="_blank" rel="noopener noreferrer">GitHub - vim/vim: The official Vim repository<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[2] Vultr. <a href="https://www.vultr.com/docs/how-do-i-generate-ssh-keys" target="_blank" rel="noopener noreferrer">How Do I Generate SSH Keys?<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[3] Vultr. <a href="https://www.vultr.com/docs/deploy-a-new-server-with-an-ssh-key" target="_blank" rel="noopener noreferrer">Deploy a New Server with an SSH Key<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[4] Vultr. <a href="https://www.vultr.com/docs/how-to-add-and-delete-ssh-keys" target="_blank" rel="noopener noreferrer">How to Add and Delete SSH Keys<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[5] 阿里云. <a href="https://help.aliyun.com/document_detail/51793.html" target="_blank" rel="noopener noreferrer">创建SSH密钥对<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[6]  <a href="https://help.aliyun.com/document_detail/51796.html" target="_blank" rel="noopener noreferrer">绑定SSH密钥对<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[7] 阿里云. <a href="https://help.aliyun.com/document_detail/51798.html" target="_blank" rel="noopener noreferrer">使用SSH密钥对连接Linux实例<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[8] 明济安. <a href="https://www.cnblogs.com/mingjian/p/5230387.html" target="_blank" rel="noopener noreferrer">linux设置虚拟内存（swap）解决mysql因内存不足挂掉的故障<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[9] 乾乾君子. <a href="https://blog.csdn.net/sirchenhua/article/details/87861709" target="_blank" rel="noopener noreferrer">Linux SWAP交换分区应该设置多大？<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[10] 悠悠i. <a href="https://www.cnblogs.com/youyoui/p/10680329.html" target="_blank" rel="noopener noreferrer">Linux环境变量配置全攻略<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[11] taodanc. <a href="https://blog.csdn.net/duan9015/article/details/103332154" target="_blank" rel="noopener noreferrer">Linux下配置JDK11环境变量<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[12] 菩提尘. <a href="https://www.cnblogs.com/kevin1990/p/8641315.html" target="_blank" rel="noopener noreferrer">Linux 环境下/etc/profile和/etc/profile.d 的区别<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[13] 老蒋. <a href="https://www.itbulu.com/centos7-firewalld.html" target="_blank" rel="noopener noreferrer">CentOS7安装firewalld防火墙添加放行端口简单演示过程<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[14] Oracle. <a href="https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/" target="_blank" rel="noopener noreferrer">A Quick Guide to Using the MySQL Yum Repository<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[15] 24只羊. <a href="https://blog.csdn.net/qq_36582604/article/details/80526287" target="_blank" rel="noopener noreferrer">CentOS7安装MySQL（完整版）<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[16] 王晨_icat. <a href="https://www.jianshu.com/p/79ae3a922954" target="_blank" rel="noopener noreferrer">MySQL server version for the right syntax to use near 'identified by &quot;******&quot; with grant option' ...<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[17] Alibaba Group. <a href="http://tengine.taobao.org/document_cn/install_cn.html" target="_blank" rel="noopener noreferrer">简单例子-The Tengine Web Server<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[18] 随风ˇ止步. <a href="https://www.cnblogs.com/zhoudemo/p/9043585.html" target="_blank" rel="noopener noreferrer">Tengine安装<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[19] 阿里云. <a href="https://help.aliyun.com/document_detail/98728.html" target="_blank" rel="noopener noreferrer">在Nginx或Tengine服务器上安装证书<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[20] 亡朝歌. <a href="https://blog.csdn.net/baidu_34861695/article/details/97787413" target="_blank" rel="noopener noreferrer">【新手向】Nginx+Tomcat+SSL 实现多项目http和https混用<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[21] ye976142425. <a href="https://blog.csdn.net/ye976142425/article/details/81409310" target="_blank" rel="noopener noreferrer">nginx代理俩个不相干的tomcat,并且俩配置https,亲测。<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[22] IPI715718. <a href="https://blog.csdn.net/IPI715718/article/details/83549506" target="_blank" rel="noopener noreferrer">nginx 启动报错“var/run/nginx/nginx.pid&quot; no such file or directory解决方法<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[23] 温故而知新666. <a href="https://blog.csdn.net/nimasike/article/details/51889171?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~baidu_landing_v2~default-1-51889171.nonecase&amp;utm_term=tengine%E5%8A%A0%E5%85%A5%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8" target="_blank" rel="noopener noreferrer">CentOs7 安装Tengine 并设置成系统服务，开机自动启动。<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[24] 西邮陈冠希. <a href="https://blog.csdn.net/weixin_38214171/article/details/85333852" target="_blank" rel="noopener noreferrer">nginx配置tomcat反向代理出现 java.lang.IllegalArgumentException: The character [_] is never valid in a domai<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a><br>
+[25] Maxwell1987. <a href="https://my.oschina.net/u/1762727/blog/2877884" target="_blank" rel="noopener noreferrer">[每日短篇] 12 - Spring Boot + JPA 因为 javassist 包出现 NullPointerException 问题的解决<svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/ZweiRm/localhost-8080.github.io/edit/master/docs/hello-world/setup-a-server-manually.md" target="_blank" rel="noopener noreferrer">帮助我改善此页面！</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">8/28/2020, 3:44:38 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/hello-world/building-a-vuepress-powered-blog.html" class="prev">
+        搭建一个基于 VuePress 的博客/技术文档网站
+      </a></span> <span class="next"><a href="/hello-world/TODO.html">
+        // TODO
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.d07be59a.js" defer></script><script src="/assets/js/3.443abace.js" defer></script><script src="/assets/js/21.def12064.js" defer></script><script src="/assets/js/5.e5300968.js" defer></script>
+  </body>
+</html>
