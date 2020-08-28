@@ -284,7 +284,7 @@ A2(Running, <font color="red">wait()[A2]</font>)
 4. 其他不改变原串的方法  
    |方法|描述|备注|
    |--|--|--|
-   |`int compareTo(String another)`|判断两个字符串大小，根据返回值政府来确定|
+   |`int compareTo(String another)`|判断两个字符串大小，根据返回值正负来确定|
    |`String concat(String str)`|拼接字符串，不该面原字符串||
    |`boolean contains(String str)`|是否包含该子串||
    |`boolean equals(Object o)`|是否相等||

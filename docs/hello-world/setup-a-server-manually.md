@@ -319,6 +319,18 @@ yum -y install vim*
    ```
    **注意这里是 SQL 语句，需以分号结尾。*
    
+   使用命令来更改远程连接：  
+   ``` sh
+   CREATE USER 'root'@'%' IDENTIFIED BY '******';
+   ```
+   这里 `%` 指所有 IP，根据需要可以改为固定某 IP。`******` 为对应密码。  
+   ``` sh
+   GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+   ```
+   设置新创建的账户的权限。  
+
+6. 按需求建立数据库、执行数据库文件
+   
 ## Step 6. 安装 Tomcat
 1. 下载 Tomcat  
    访问 [Apache Tomcat](https://tomcat.apache.org/), 选择合适的版本并下载。  
@@ -377,7 +389,39 @@ yum -y install vim*
    ``` sh
    nginx -v
    ```
-   若正确显示版本信息表明配置正确。
+   若正确显示版本信息表明配置正确。  
+
+4. 设置为系统服务  
+   使用命令创建文件，使得 Tengine 开机自启：  
+   ``` sh
+   vim /lib/systemd/system/nginx.service
+   ```
+   编辑内容并保存：  
+   ``` sh
+   [Unit]
+   Description=The nginx HTTP and reverse proxy server
+   After=syslog.target network.target remote-fs.target nss-lookup.target
+    
+   [Service]
+   Type=forking
+   PIDFile=/usr/local/nginx/logs/nginx.pid
+   ExecStartPre=/usr/local/nginx/sbin/nginx -t
+   ExecStart=/usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+   ExecReload=/bin/kill -s HUP $MAINPID
+   ExecStop=/bin/kill -s QUIT $MAINPID
+   PrivateTmp=true
+    
+   [Install]
+   WantedBy=multi-user.target
+   ```
+   修改该文件权限：  
+   ``` sh
+   chmod 745 /lib/systemd/system/nginx.service
+   ```
+   设置开机自启：  
+   ``` sh
+   systemctl enable nginx.service
+   ```
 
 ## Step 8. 部署并测试项目
 下面再对 Tomcat 和 Tengine 进行一些操作和配置，最后进行简单地测试确保项目已经正确运行。  
@@ -400,14 +444,341 @@ yum -y install vim*
 ![Tomcat Webapps](/img/tomcat_webapps.jpg)
 
 ### 配置 Tomcat
+我们对每一个 Tomcat 的配置文件进行修改。  
+访问文件夹：`apache-tomcat-******/conf/`，找到`server.xml`进行编辑：  
+1. 将每个 Tomcat 的 `port` 设置项改为与所开发的 Web APP 设置一致。把 `redirectPort` 设置项改为 `443`. 保存修改。  
+   ``` xml{1,3}
+   <Connector port="8080" protocol="HTTP/1.1"
+   connectionTimeout="20000"
+   redirectPort="443" />
+   ```  
+   之后类似的，将 SHUTDOWN 用的 `8085` 依次改为不同的端口，保存修改。  
+
+2. 在每个 Tomcat 的 `server.xml` 配置文件中增添标签：  
+   找到 `<Engine>...</Engine>` 标签，在其中添加子标签用以后续配合 Tengine 识别 HTTP 和 HTTPS 访问：  
+   ``` xml
+   <Engine name="Catalina" defaultHost="localhost">
+     <Valve className="org.apache.catalina.valves.RemoteIpValve" remoteIpHeader="X-Forwarded-For" protocolHeader="X-Forwarded-Proto" protocolHeaderHttpsValue="https"/>
+   ...
+   ```
+   完成后保存修改。
 
 ### 再配置 Tengine
+1. 创建 HTTPS 证书文件夹并上传证书  
+   在目录 `/usr/local/nginx/conf/` 下创建 `cert/` 文件夹。访问域名提供商（如阿里云）控制台下载 HTTPS 证书。下载完成后通过 FileZilla 上传到刚才建立的文件夹中。  
+   
+2. 配置 Tengine  
+   使用命令编辑 Tengine 的配置文件以设置服务器反向代理：  
+   ``` sh
+   vim /usr/local/nginx/conf/nginx.conf
+   ```
+   
+   ``` properties {1,11,12,13,15,18,20,21,26,27,30,34,35}
+   pid        /usr/local/nginx/logs/nginx.pid; # 去掉该行注释，更改该项内容为此。
+   
+   http {
+       include       mime.types;
+       default_type  application/octet-stream;
+
+       sendfile        on;
+   
+       keepalive_timeout  65;
+   
+       upstream tomcat*** {
+           server localhost:8080; # 对应 Tomcat 服务器中配置文件中的设置
+       }
+   
+       # HTTPS server
+       server {
+           listen       443 ssl;
+           server_name  domain.com; # 改为在域名商购买的域名
+   
+           ssl_certificate      cert/domain_name.pem; # 改为刚才保存在 cer/ 文件夹中 .pem 文件路径
+           ssl_certificate_key  cert/domain_name.key; # 改为刚才保存在 cer/ 文件夹中 .key 文件路径
+   
+           ssl_session_cache    shared:SSL:1m;
+           ssl_session_timeout  5m;
+   
+           ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4; #使用此加密套件。
+           ssl_protocols TLSv1 TLSv1.1 TLSv1.2; #使用该协议进行配置。
+           ssl_prefer_server_ciphers  on;
+   
+           rewrite ^(.*)$ https://$host$1 permanent;   #将所有 HTTP 请求通过 rewrite 重定向到 HTTPS。
+   
+           location / {
+               root   html;
+               index  index.html index.htm; # 改为 Web APP 开发设置的首页
+               proxy_pass http://tomcat_***; # 对应上面 upstream 项进行修改
+           }
+       }
+       
+       server { # 对应 HTTP 访问进行跳转
+           lisent 80;
+           server_name health.ahza.xin;
+           return 301 https://******$request_uri; # 跳转 URL设置为 HTTPS协议
+       }
+   }
+   ```
+   ::: warning 提示
+   `upstream` 项命名不能使用下划线，否则 Tomcat 报 400 错误。
+   :::
+   
+   有几个 Tomcat 就配置几对 `upstream` 和 `server`. 下面是本篇文章中的配置文件示例：  
+   ``` properties
+    #user  nobody;
+    worker_processes  1;
+    
+    #error_log  logs/error.log;
+    #error_log  logs/error.log  notice;
+    #error_log  logs/error.log  info;
+    #error_log  "pipe:rollback logs/error_log interval=1d baknum=7 maxsize=2G";
+    
+    pid        /usr/local/nginx/logs/nginx.pid;
+    
+    
+    events {
+        worker_connections  1024;
+    }
+    
+    
+    http {
+        include       mime.types;
+        default_type  application/octet-stream;
+    
+        #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+        #                  '$status $body_bytes_sent "$http_referer" '
+        #                  '"$http_user_agent" "$http_x_forwarded_for"';
+    
+        #access_log  logs/access.log  main;
+        #access_log  "pipe:rollback logs/access_log interval=1d baknum=7 maxsize=2G"  main;
+    
+        sendfile        on;
+        #tcp_nopush     on;
+    
+        #keepalive_timeout  0;
+        keepalive_timeout  65;
+    
+        #gzip  on;
+    
+        #server {
+        #    listen       80;
+        #    server_name  localhost;
+    
+            #charset koi8-r;
+    
+            #access_log  logs/host.access.log  main;
+            #access_log  "pipe:rollback logs/host.access_log interval=1d baknum=7 maxsize=2G"  main;
+    
+        #    location / {
+        #        root   html;
+        #        index  index.html index.htm;
+        #    }
+    
+            #error_page  404              /404.html;
+    
+            # redirect server error pages to the static page /50x.html
+            #
+            # error_page   500 502 503 504  /50x.html;
+            # location = /50x.html {
+            #     root   html;
+            # }
+    
+            # proxy the PHP scripts to Apache listening on 127.0.0.1:80
+            #
+            #location ~ \.php$ {
+            #    proxy_pass   http://127.0.0.1;
+            #}
+    
+            # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+            #
+            #location ~ \.php$ {
+            #    root           html;
+            #    fastcgi_pass   127.0.0.1:9000;
+            #    fastcgi_index  index.php;
+            #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;
+            #    include        fastcgi_params;
+            #}
+    
+            # pass the Dubbo rpc to Dubbo provider server listening on 127.0.0.1:20880
+            #
+            #location /dubbo {
+            #    dubbo_pass_all_headers on;
+            #    dubbo_pass_set args $args;
+            #    dubbo_pass_set uri $uri;
+            #    dubbo_pass_set method $request_method;
+            #
+            #    dubbo_pass org.apache.dubbo.samples.tengine.DemoService 0.0.0 tengineDubbo dubbo_backend;
+            #}
+    
+            # deny access to .htaccess files, if Apache's document root
+            # concurs with nginx's one
+            #
+            #location ~ /\.ht {
+            #    deny  all;
+            #}
+        # }
+    
+        # upstream for Dubbo rpc to Dubbo provider server listening on 127.0.0.1:20880
+        #
+        #upstream dubbo_backend {
+        #    multi 1;
+        #    server 127.0.0.1:20880;
+        #}
+    
+        # another virtual host using mix of IP-, name-, and port-based configuration
+        #
+        #server {
+        #    listen       8000;
+        #    listen       somename:8080;
+        #    server_name  somename  alias  another.alias;
+    
+        #    location / {
+        #        root   html;
+        #        index  index.html index.htm;
+        #    }
+        #}
+    
+        upstream tomcatHealth {
+            server localhost:8080;
+        }
+    
+        upstream tomcatOjFront {
+            server localhost:8081;
+        }
+    
+        upstream tomcatOjBack {
+            server localhost:8082;
+        }
+    
+        # HTTPS server 1
+        server {
+            listen       443 ssl;
+            server_name  health.ahza.xin;
+    
+            ssl_certificate      cert/3030836_health.ahza.xin.pem;
+            ssl_certificate_key  cert/3030836_health.ahza.xin.key;
+    
+            ssl_session_cache    shared:SSL:1m;
+            ssl_session_timeout  5m;
+    
+            ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+            ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+            ssl_prefer_server_ciphers  on;
+    
+            location / {
+                root   html;
+                index  index.html index.htm;
+                proxy_pass http://tomcatHealth;
+            }
+        }
+    
+        server {
+            listen 80;
+            server_name health.ahza.xin;
+            return 301 https://health.ahza.xin$request_uri;
+        }
+    
+        # HTTPS server 2
+        server {
+            listen       443 ssl;
+            server_name  oj.front.ahza.xin;
+    
+            ssl_certificate      cert/3030823_oj.front.ahza.xin.pem;
+            ssl_certificate_key  cert/3030823_oj.front.ahza.xin.key;
+    
+            ssl_session_cache    shared:SSL:1m;
+            ssl_session_timeout  5m;
+    
+            ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+            ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+            ssl_prefer_server_ciphers  on;
+    
+            location / {
+                root   html;
+                index  login.html index.html index.htm;
+                proxy_pass http://tomcatOjFront;
+            }
+        }
+    
+        server {
+            listen 80;
+            server_name oj.front.ahza.xin;
+            return 301 https://oj.front.ahza.xin$request_uri;
+        }
+    
+        # HTTPS server 3
+        server {
+            listen       443 ssl;
+            server_name  oj.back.ahza.xin;
+    
+            ssl_certificate      cert/3030837_oj.back.ahza.xin.pem;
+            ssl_certificate_key  cert/3030837_oj.back.ahza.xin.key;
+    
+            ssl_session_cache    shared:SSL:1m;
+            ssl_session_timeout  5m;
+    
+            ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+            ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+            ssl_prefer_server_ciphers  on;
+    
+            location / {
+                root   html;
+                index  login.html index.html index.htm;
+                proxy_pass http://tomcatOjBack;
+            }
+        }
+    
+        server {
+            listen 80;
+            server_name oj.back.ahza.xin;
+            return 301 https://oj.back.ahza.xin$request_uri;
+        }
+    
+    }
+   ```
+   
+   使用命令测试配置是否正确：  
+   ``` sh
+   nginx -t
+   ```
+   如提示错误查阅相关文档解决。  
+   
+   ::: warning 提示
+   这里配置的所有域名均需要经过 ICP 域名信息备案，否则可能会被服务器提供商禁止访问。
+   :::
 
 ### 启动项目以测试
-
+1. 启动 Tengine  
+   使用命令：  
+   ``` sh
+   systemctl start nginx.service
+   ```
+   
+2. 启动 Tomcat  
+   分别进入每一个 Tomcat 文件夹中，访问 `bin/` 文件夹，并使用命令启动 Tomcat：  
+   ``` sh
+   ./startup.sh
+   ```
+    访问 `logs/` 文件夹，使用命令观察启动情况：  
+    ``` sh
+   tail -f catalina.out 
+   ```
+   出现问题时，请查阅相关文档解决。  
+   
 ## 你可能会遇到的问题
 1. Q：项目正常运行几天后再访问报 502 Bad Gateway 错误怎么办？  
-   A：明确报错项目，命令访问到它所在的 Tomcat 并尝试重新启动它。
+   A：明确报错项目，命令访问到它所在的 Tomcat 并尝试重新启动它。  
+
+2. Q：为什么本地端 IDE 测试项目可以正确运行，服务器启动 Tomcat 后报错。错误内容以 `Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]...` 起头，包括 `Caused by: java.lang.NullPointerException: null` ？  
+   A：低版本的 javassist 库引起了这个问题，尝试修改 pom 文件以更新依赖来解决。如：  
+     ``` xml{4}
+     <parent>
+             <groupId>org.springframework.boot</groupId>
+             <artifactId>spring-boot-starter-parent</artifactId>
+             <version>2.1.0.RELEASE</version>
+             <relativePath/> <!-- lookup parent from repository -->
+     </parent>
+     ```
       
 ## 参考文献或资料
 [1] vim. [GitHub - vim/vim: The official Vim repository](https://github.com/vim/vim)  
@@ -415,7 +786,7 @@ yum -y install vim*
 [3] Vultr. [Deploy a New Server with an SSH Key](https://www.vultr.com/docs/deploy-a-new-server-with-an-ssh-key)  
 [4] Vultr. [How to Add and Delete SSH Keys](https://www.vultr.com/docs/how-to-add-and-delete-ssh-keys)  
 [5] 阿里云. [创建SSH密钥对](https://help.aliyun.com/document_detail/51793.html)  
-[6] 阿里云. [绑定SSH密钥对](https://help.aliyun.com/document_detail/51796.html)  
+[6]  [绑定SSH密钥对](https://help.aliyun.com/document_detail/51796.html)  
 [7] 阿里云. [使用SSH密钥对连接Linux实例](https://help.aliyun.com/document_detail/51798.html)  
 [8] 明济安. [linux设置虚拟内存（swap）解决mysql因内存不足挂掉的故障](https://www.cnblogs.com/mingjian/p/5230387.html)  
 [9] 乾乾君子. [Linux SWAP交换分区应该设置多大？](https://blog.csdn.net/sirchenhua/article/details/87861709)  
@@ -425,5 +796,13 @@ yum -y install vim*
 [13] 老蒋. [CentOS7安装firewalld防火墙添加放行端口简单演示过程](https://www.itbulu.com/centos7-firewalld.html)  
 [14] Oracle. [A Quick Guide to Using the MySQL Yum Repository](https://dev.mysql.com/doc/mysql-yum-repo-quick-guide/en/)  
 [15] 24只羊. [CentOS7安装MySQL（完整版）](https://blog.csdn.net/qq_36582604/article/details/80526287)  
-[16] Alibaba Group. [简单例子-The Tengine Web Server](http://tengine.taobao.org/document_cn/install_cn.html)  
-[17] 随风ˇ止步. [Tengine安装](https://www.cnblogs.com/zhoudemo/p/9043585.html)  
+[16] 王晨_icat. [MySQL server version for the right syntax to use near 'identified by "******" with grant option' ...](https://www.jianshu.com/p/79ae3a922954)  
+[17] Alibaba Group. [简单例子-The Tengine Web Server](http://tengine.taobao.org/document_cn/install_cn.html)  
+[18] 随风ˇ止步. [Tengine安装](https://www.cnblogs.com/zhoudemo/p/9043585.html)  
+[19] 阿里云. [在Nginx或Tengine服务器上安装证书](https://help.aliyun.com/document_detail/98728.html)  
+[20] 亡朝歌. [【新手向】Nginx+Tomcat+SSL 实现多项目http和https混用](https://blog.csdn.net/baidu_34861695/article/details/97787413)  
+[21] ye976142425. [nginx代理俩个不相干的tomcat,并且俩配置https,亲测。](https://blog.csdn.net/ye976142425/article/details/81409310)  
+[22] IPI715718. [nginx 启动报错“var/run/nginx/nginx.pid" no such file or directory解决方法](https://blog.csdn.net/IPI715718/article/details/83549506)  
+[23] 温故而知新666. [CentOs7 安装Tengine 并设置成系统服务，开机自动启动。](https://blog.csdn.net/nimasike/article/details/51889171?utm_medium=distribute.pc_aggpage_search_result.none-task-blog-2~all~baidu_landing_v2~default-1-51889171.nonecase&utm_term=tengine%E5%8A%A0%E5%85%A5%E7%B3%BB%E7%BB%9F%E6%9C%8D%E5%8A%A1%E5%BC%80%E6%9C%BA%E5%90%AF%E5%8A%A8)  
+[24] 西邮陈冠希. [nginx配置tomcat反向代理出现 java.lang.IllegalArgumentException: The character [_] is never valid in a domai](https://blog.csdn.net/weixin_38214171/article/details/85333852)  
+[25] Maxwell1987. [[每日短篇] 12 - Spring Boot + JPA 因为 javassist 包出现 NullPointerException 问题的解决](https://my.oschina.net/u/1762727/blog/2877884)  
