@@ -786,7 +786,7 @@ yum -y install vim*
 [3] Vultr. [Deploy a New Server with an SSH Key](https://www.vultr.com/docs/deploy-a-new-server-with-an-ssh-key)  
 [4] Vultr. [How to Add and Delete SSH Keys](https://www.vultr.com/docs/how-to-add-and-delete-ssh-keys)  
 [5] 阿里云. [创建SSH密钥对](https://help.aliyun.com/document_detail/51793.html)  
-[6]  [绑定SSH密钥对](https://help.aliyun.com/document_detail/51796.html)  
+[6] 阿里云. [绑定SSH密钥对](https://help.aliyun.com/document_detail/51796.html)  
 [7] 阿里云. [使用SSH密钥对连接Linux实例](https://help.aliyun.com/document_detail/51798.html)  
 [8] 明济安. [linux设置虚拟内存（swap）解决mysql因内存不足挂掉的故障](https://www.cnblogs.com/mingjian/p/5230387.html)  
 [9] 乾乾君子. [Linux SWAP交换分区应该设置多大？](https://blog.csdn.net/sirchenhua/article/details/87861709)  
