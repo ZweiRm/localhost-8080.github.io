@@ -384,7 +384,10 @@ Netlify 提供了一种十分方便的持续集成体验。也就是说，每当
       :::
 
 4. **Q: 我修改了侧边栏配置，而且确定正确修改了对应的 Markdown 文档的名称，dev 模式也能正确看到文章。但为什么使用 `build` 命令生成网页时不断报错？**  
-   A: 请检查 Markdown 文档中 front-matter 的 `prev` 和 `next` 项是否也正确修改。
+   A: 请检查 Markdown 文档中 front-matter 的 `prev` 和 `next` 项是否也正确修改。  
+
+5. **Q: 为什么我的侧边栏不显示？**  
+   A: 请认真检查是否正确配置侧边栏相关的内容，如文件夹命名、文档命名、congfig.js 中相关配置项是否正确（如是否漏写两边任意的`/`）。
 
 ## 参考文献或资料
 [1] Evan You.[VuePress](https://vuepress.vuejs.org/)  

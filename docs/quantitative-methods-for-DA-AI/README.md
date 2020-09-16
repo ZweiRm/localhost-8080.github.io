@@ -17,5 +17,5 @@ Normally, we take a group of objects which shares the same type to analyse. When
 The group of processes containing data collection, inspecting, cleansing, transforming and modeling, interpretation and reporting getting together is data analytics.   
 
 ## References
-[1] Lan Liang, Liu Yang. COMP 7180. Hong Kong Baptist University, 2019.  
+[1] Zhang Lu, Lan Liang. COMP 7180 Quantitative Methods for Data Analytics and Artificial Intelligence. Hong Kong Baptist University, 2020.  
 [2] Mostafa Eissa. [Introduction to Machine Learning](https://www.codeproject.com/Articles/1146582/Introduction-to-Machine-Learning)

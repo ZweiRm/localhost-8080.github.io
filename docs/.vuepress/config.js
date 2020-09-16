@@ -121,6 +121,10 @@ module.exports = {
                 '',
             ],
 
+            '/artificial-intelligence/': [
+                '',
+            ],
+
             '/software-engineering/': [
                 '',
                 'software-process',
