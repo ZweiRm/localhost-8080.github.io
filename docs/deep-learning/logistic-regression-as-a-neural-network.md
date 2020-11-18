@@ -88,7 +88,7 @@ A function used to measure how well the algorithm is doing. (For single training
 A function used to measure how well the algorithm is doing. (For the whole training set)    
 
 $$J(w, b)=\frac{1}{m} \sum_{i=1}^{m}L(\hat{y}^{(i)}, y^{(i)})=-\frac{1}{m} \sum_{i=1}^{m} [y^{(i)} \log (\hat{y}^{(i)})+(1-y^{(i)}) \log (1-\hat{y}^{(i)})]$$  
-Still, the lower value of loss function is, the better prediction of algorithm is.
+Still, the lower value of cost function is, the better prediction of algorithm is.
 
 ## Gradient Descent
 A algorithm to train (learn) the parameters $w$ and $b$ on the training set.

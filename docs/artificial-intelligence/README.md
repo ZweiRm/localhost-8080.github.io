@@ -1,8 +1,14 @@
-# Artifitical Intelligence
+---
+prev: false
+next: ./search-strategies
+---
+
+# Artificial Intelligence
+This is a course about AI fundamental concept, learning models and relative techniques.
 
 ## Definition
 The definition of AI can be classified into four dimensions.  
-|Tinking humanly|Thinking rationally|
+|Thinking humanly|Thinking rationally|
 |:--:|:--:|
 |<span style="font-weight:bold">Acting humanly</span>|<span  style="font-weight:bold">Acting rationally</span>|
 
@@ -10,7 +16,7 @@ The definition of AI can be classified into four dimensions.
   [Turing Test](/hello-world/computing-machinery-and-intelligence) testing whether machines have intelligent behavior like human. A computer wanted to pass the test should having the capabilities like: **Natural language processing**, **Knowledge representation**, **Automated reasoning** and **Machine learning**.  
   
   + Category  
-    + (Normal) Turing Test: Avoding direct physical interaction between interrogator and computer.  
+    + (Normal) Turing Test: Avoiding direct physical interaction between interrogator and computer.  
     + Total Turing Test: Providing computer vision and robotics.
 
   + Category about AI  
@@ -18,10 +24,10 @@ The definition of AI can be classified into four dimensions.
     + Weak AI: Conscious is not compulsory.  
 
 + **Thinking humanly** The Cognitive Modelling Approach（认知建模法）  
-  To find out how human think, we have the methods like: **Introspection**（内省）and **Psychological experiments**. Analyse and use it to determine whether a program of mechanism can thinking like human. Setting up a new filed called Congnitive Science which is a combination of psychology and AI.  
+  To find out how human think, we have the methods like: **Introspection**（内省）and **Psychological experiments**. Analyse and use it to determine whether a program of mechanism can thinking like human. Setting up a new filed called Cognitive Science which is a combination of psychology and AI.  
 
   + General Problem Solver (GPS)  
-    Focusing on reasoning. Cheking whether the reasoning steps are match with human's.  
+    Focusing on reasoning. Checking whether the reasoning steps are match with human's.  
 
 + **Thinking Rationally** The Law of Thought Approach（法则思维法）  
   Right thinking.

@@ -123,6 +123,7 @@ module.exports = {
 
             '/artificial-intelligence/': [
                 '',
+                'search-strategies',
             ],
 
             '/software-engineering/': [
