@@ -1,6 +1,6 @@
 ---
 editLink: false
-prev: ./setup-a-server-manually
+prev: ./array-and-linked-list
 next: false
 ---
 

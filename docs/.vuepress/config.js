@@ -143,6 +143,7 @@ module.exports = {
                 'the-right-way-doing-research',
                 'building-a-vuepress-powered-blog',
                 'setup-a-server-manually',
+                'array-and-linked-list',
                 'TODO'
             ],
 
