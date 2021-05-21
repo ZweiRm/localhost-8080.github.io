@@ -55,8 +55,27 @@ $g(n)$ is an asymptotic upper bound (渐进上界) for $f(n)$. If $f(n) \in O(g(
   + Advantages  
     + Complete (It is guarantee to find solution if there is any)
     + Always find the shallowest goal first when there are multi-solutions.  
-
   
+  + Drawback
+    + Memory and time cost may not support due to it must maintained all the nodes in memory at the same time.  
+
+## Uniform Cost Search
+  + Modifies the Bread-first search strategy by always expanding the lowest-cost node.  
+  + The first solution found is guaranteed to be the cheapest solution.  
+  ![Uniform Cost](/img/uniformCost.png)  
+
+## Depth-first Search
+  + Depth-first search always expands the node at the deepest level of the tree.  
+  ![Depth-first Search](/img/depthFirstSearch.png)  
+
+  + Advantages  
+    + Have modest memory Requirement. Only store a single path from the root to a leaf node, along with the remaining unexpanded sibling nodes for each node on the path. For branch factor $b$ and maximum depth $m$, it only need $bm$ nodes to storage.  
+    + Time complexity is $O(b^m)$.
+  
+  + Drawbacks
+    + May stuck when going down the wrong path (infinite loop).  
+    + May find a solution path longer than optimal solution.  
+    + Neither complete nor optimal.  
 
 ## References
 [1] Y.M. Cheung. COMP 7015 Artificial Intelligence. Hong Kong Baptist University, 2020   
