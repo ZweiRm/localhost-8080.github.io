@@ -37,7 +37,21 @@ module.exports = {
         'flowchart': {},
         'vuepress-plugin-baidu-tongji-analytics': {
             key: '5344755f0a57ddd063df74878ae8a921'
-        }
+        },
+        'seo': {
+            siteTitle: (_, $site) => $site.title,
+            title: $page => $page.title,
+            description: $page => $page.frontmatter.description,
+            author: (_, $site) => $site.themeConfig.author,
+            tags: $page => $page.frontmatter.tags,
+            twitterCard: _ => undefined,
+            type: $page => ['computer science', 'software engineering', 'java', 'machine learning'].some(folder => $page.regularPath.startsWith('/' + folder)) ? 'article' : 'website',
+            url: (_, $site, path) => ($site.themeConfig.domain || '') + path,
+            image: ($page, $site) => $page.frontmatter.image && (($site.themeConfig.domain && !$page.frontmatter.image.startsWith('http') || '') + $page.frontmatter.image),
+            publishedAt: $page => $page.frontmatter.date && new Date($page.frontmatter.date),
+            modifiedAt: $page => $page.lastUpdated && new Date($page.lastUpdated),
+        },
+        'vuepress-plugin-nprogress':{}
     },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',
@@ -47,27 +61,27 @@ module.exports = {
         editLinkText: '帮助我改善此页面！',
         lastUpdated: '上次更新',
         nav: [{
-                text: '主页',
-                link: '/',
-            },
-            {
-                text: '笔记',
-                items: [
-                    { text: 'Java', link: '/java/' },
-                    { text: 'Kotlin', link: '/kotlin/' },
-                    { text: 'Python', link: '/python/' },
-                    { text: 'Web', link: '/web/' },
-                    { text: 'Spring', link: '/spring/' },
-                    { text: '大数据', link: '/big-data/' },
-                    { text: '前端', link: '/front-end/' },
-                    { text: '深度学习', link: '/deep-learning/' },
-                    { text: '软件工程', link: '/software-engineering/' },
-                    { text: '杂谈', link: '/hello-world/' }
-                ]
-            },
-            { text: '关于', link: '/about/' },
-            { text: 'Github', link: 'https://www.github.com/ZweiRm' },
-            { text: '码云', link: 'https://gitee.com/zweirm/' },
+            text: '主页',
+            link: '/',
+        },
+        {
+            text: '笔记',
+            items: [
+                { text: 'Java', link: '/java/' },
+                { text: 'Kotlin', link: '/kotlin/' },
+                { text: 'Python', link: '/python/' },
+                { text: 'Web', link: '/web/' },
+                { text: 'Spring', link: '/spring/' },
+                { text: '大数据', link: '/big-data/' },
+                { text: '前端', link: '/front-end/' },
+                { text: '深度学习', link: '/deep-learning/' },
+                { text: '软件工程', link: '/software-engineering/' },
+                { text: '杂谈', link: '/hello-world/' }
+            ]
+        },
+        { text: '关于', link: '/about/' },
+        { text: 'Github', link: 'https://www.github.com/ZweiRm' },
+        { text: '码云', link: 'https://gitee.com/zweirm/' },
         ],
         sidebar: {
             '/java/': [
