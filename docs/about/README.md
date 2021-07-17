@@ -5,8 +5,8 @@ sidebar: false
 
 # About Me
 ::: tip Duo Huang
-BEng in Software Engeneering  
-MSc studying @ HKBU   
+BEng in Software Engineering  
+MSc in Advanced Information Systems (aka MSc in Data Analytics and Artificial Intelligence)  
 
 momg@foxmail.com
 :::
