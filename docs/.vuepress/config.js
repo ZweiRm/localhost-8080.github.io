@@ -150,6 +150,14 @@ module.exports = {
                 'multivariate-function-differential'
             ],
 
+            '/algorithm/': [
+                '',
+            ],
+
+            '/recommender-systems': [
+                '',
+            ],
+
             '/hello-world/': [
                 '',
                 'about-the-article-of-java',
