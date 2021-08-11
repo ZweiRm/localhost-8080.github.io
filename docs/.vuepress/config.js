@@ -155,8 +155,9 @@ module.exports = {
                 'ds-001',
             ],
 
-            '/recommender-systems': [
+            '/recommender-systems/': [
                 '',
+                'introduction',
             ],
 
             '/hello-world/': [
