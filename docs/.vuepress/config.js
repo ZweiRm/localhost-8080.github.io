@@ -152,6 +152,7 @@ module.exports = {
 
             '/algorithm/': [
                 '',
+                'ds-001',
             ],
 
             '/recommender-systems': [
