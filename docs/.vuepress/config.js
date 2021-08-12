@@ -68,15 +68,24 @@ module.exports = {
             text: '笔记',
             items: [
                 { text: 'Java', link: '/java/' },
+                { text: '杂谈', link: '/hello-world/' }
+            ]
+        },
+        {
+            text: '施工中笔记',
+            items: [
+                { text: '算法', link: '/algorithm/' },
+                { text: '人工智能', link: '/artificial-intelligence/'},
+                { text: '深度学习', link: '/deep-learning/' },
+                { text: '推荐系统', link: '/recommender-systems/' },
+                { text: '数据分析与人工智能定量分析', link: '/quantitative-methods-for-DA-AI/'},
                 { text: 'Kotlin', link: '/kotlin/' },
                 { text: 'Python', link: '/python/' },
                 { text: 'Web', link: '/web/' },
                 { text: 'Spring', link: '/spring/' },
                 { text: '大数据', link: '/big-data/' },
                 { text: '前端', link: '/front-end/' },
-                { text: '深度学习', link: '/deep-learning/' },
                 { text: '软件工程', link: '/software-engineering/' },
-                { text: '杂谈', link: '/hello-world/' }
             ]
         },
         { text: '关于', link: '/about/' },
