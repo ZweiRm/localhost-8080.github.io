@@ -1,9 +1,10 @@
 ---
 prev: false
-next: false
+next: ./overall
 ---
 
 # Spring
+本 分区介绍 Spring 框架的各个细节。
 
 ## 框架
 
@@ -54,4 +55,3 @@ next: false
     - 国际化
     - 事件（监听泛型事件）
     - 泛型处理
-    
