@@ -176,11 +176,11 @@ next: ./API-util
             …
          }      
       ```
-      手动指定锁对象，可以传入类字节码，`this`对象，共享资源。  
+      手动指定锁对象，可以传入类字节码（类锁），`this`对象（对象锁），共享资源。  
 
       实例（使用 `this` 作为锁对象）：  
       ``` java
-      public class Main implements Runnable{
+      public class Main implements Runnable {
          // 生成实例
          static Main instance = new Main();
 
@@ -219,9 +219,9 @@ next: ./API-util
 
       实例（使用对象作为锁对象）：  
       ``` java
-      public class Main27 implements Runnable{
+      public class Main implements Runnable {
          // 生成实例
-         static Main27 instance = new Main27();
+         static Main instance = new Main();
 
          // 生成锁对象
          Object lock1 = new Object();
@@ -283,15 +283,15 @@ next: ./API-util
       使用 `synchronized` 修饰普通方法，此时锁对象默认为 `this` 对象。  
       实例：  
       ``` java
-      public class Main28 implements Runnable{
-         static Main28 main28 = new Main28();
+      public class Main implements Runnable {
+         static Main instance = new Main();
 
          @Override
          public void run() {
             method();
          }
 
-         static synchronized void method() {
+         synchronized void method() {
             System.out.println("====同步方法开始====");
             System.out.println(Thread.currentThread().getName());
             System.out.println("====同步方法结束====");
@@ -303,8 +303,8 @@ next: ./API-util
          }
 
          public static void main(String[] args) throws InterruptedException {
-            Thread thread1 = new Thread(main28);
-            Thread thread2 = new Thread(main28);
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
 
             thread1.start();
             thread2.start();
@@ -318,8 +318,101 @@ next: ./API-util
       Thread-0 进入 `run()` 调用 `method()` 时拿到锁，执行完毕释放后交给 Thread-1.  
 
 + 类锁  
-  **同步静态方法**  
-  **同步 Class 对象**
+  对于一个 Java 类来说，有且只有一个字节码对象（Class 对象）。所以当一个类拥有众多实例时，在使用类锁后，同一时刻只有一个实例可以访问资源。  
+
+  1. **同步静态方法**  
+     当同一个类的不同对象生成的线程试图访问同一个被锁定的方法时，两个线程仍然会并行执行该方法。只有被锁定的方法是静态方法时，该锁变为类锁形式，只有拿到锁的线程才能执行目标方法。  
+
+     实例：  
+     ``` java
+     public class Main implements Runnable {
+         // 创建实例
+         static Main instance1 = new Main();
+         static Main instance2 = new Main();
+  
+         // 静态方法
+         static synchronized void method() {
+            System.out.println("====同步方法开始====");
+            System.out.println(Thread.currentThread().getName());
+            System.out.println("====同步方法结束====");
+            try {
+                  Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                  e.printStackTrace();
+            }
+         }
+  
+         @Override
+         public void run() {
+            method();
+         }
+
+         public static void main(String[] args) throws InterruptedException {
+            // 线程分别使用不同 instance 实例来创建
+            Thread thread1 = new Thread(instance1);
+            Thread thread2 = new Thread(instance2);
+  
+            thread1.start();
+            thread2.start();
+  
+            thread1.join();
+            thread2.join();
+            System.out.println("====结束====");
+         }
+     }
+     ```
+
+  2. **同步字节码对象（代码块）**  
+      当锁对象为类的字节码时，无论这个类的哪一个实例试图访问该代码块均需要拿到锁。但当锁对象为 `this` 对象时，不同实例并行运行被锁的代码块。    
+        ``` java
+        public class Main implements Runnable {
+            static Main instance1 = new Main();
+            static Main instance2 = new Main();
+
+            @Override
+            public void run() {
+                method();
+            }
+
+            void method() {
+                synchronized (Main.class) {
+                    System.out.println("====同步代码块开始====");
+                    System.out.println(Thread.currentThread().getName());
+                    System.out.println("====同步代码块结束====");
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            public static void main(String[] args) throws InterruptedException {
+                Thread thread1 = new Thread(instance1);
+                Thread thread2 = new Thread(instance2);
+
+                thread1.start();
+                thread2.start();
+
+                thread1.join();
+                thread2.join();
+                System.out.println("====结束====");
+            }
+        }
+        ```
+::: warning 值得注意的是
+当不同线程使用同一个实例创建时，不管使用对象锁还是类锁都可以起到效果。
+:::
+
+::: tip 使用 <code>synchronized</code> 的几种常见情况
+1. 两个线程同时访问一个对象的同步方法
+    即由同一个实例生成的两个线程，访问被锁定 `this` 的代码块或方法。锁生效，两个线程争夺同一把锁。  
+2. 两个线程同时访问两个对象的同步方法
+    即由两个不同实例生成的两个线程，访问被锁定的 `this` 的代码块或方法。锁失效，锁定的是本身对象，而不是公共的对象。  
+3. 两个线程访问 <code>synchronized</code> 修饰的静态方法  
+    静态方法是属于类的，当由两个不同实例生成的连那个线程访问这样的静态方法时，锁生效。（例子等同于同步静态方法中的实例）  
+4. 
+::: 
 
 ### 线程通信
 通过等待唤醒机制调节线程之间的执行顺序。  
