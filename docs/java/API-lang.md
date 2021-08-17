@@ -167,18 +167,159 @@ next: ./API-util
   + 重写`call()`
 
 ### 线程同步
-使用`synchronized`关键字来同步多个线程，一定程度上解决线程冲突。  
+使用 `synchronized` 关键字来同步多个线程，一定程度上解决线程冲突。它可以保证在同一时刻最多只有一个线程执行该段被修饰的代码。是最基本的互斥同步手段。  
 
-**同步代码块**  
-``` java
-   synchronized(同步锁 *所有线程可见*) {
-      …
-   }      
-```
-可以传入类字节码，`this`对象，共享资源
++ 对象锁  
+   1. **同步代码块**  
+      ``` java
+         synchronized(同步锁 *所有线程可见*) {
+            …
+         }      
+      ```
+      手动指定锁对象，可以传入类字节码，`this`对象，共享资源。  
 
-**同步方法**  
-   使用`synchronized`修饰方法，此时锁对象为`this`对象。
+      实例（使用 `this` 作为锁对象）：  
+      ``` java
+      public class Main implements Runnable{
+         // 生成实例
+         static Main instance = new Main();
+
+         @Override
+         public void run() {
+            synchronized (this) {
+               System.out.println("====开始同步代码块====");
+               System.out.println(Thread.currentThread().getName());
+               System.out.println("====同步代码块结束====");
+               try {
+                     Thread.sleep(1000);
+               } catch (InterruptedException e) {
+                     e.printStackTrace();
+               }
+            }
+         }
+
+         public static void main(String[] args) throws InterruptedException {
+            // 创建线程对象
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
+      
+            // 运行线程
+            thread1.start();
+            thread2.start();
+      
+            // 保证正确提示
+            thread1.join();
+            thread2.join();
+            //        while (thread1.isAlive() || thread2.isAlive()) {}
+            System.out.println("=====结束=====");
+         }
+      }
+      ```
+      `synchronized` 关键字锁定了以 `this` 为对象的代码块。在两个线程使用 `start()` 调用到 `run()` 时，会因为锁的缘故按次序运行，释放掉第一个线程的锁再执行第二个。若没有对代码块进行锁定，则两个线程同时执行代码块中的内容。  
+
+      实例（使用对象作为锁对象）：  
+      ``` java
+      public class Main27 implements Runnable{
+         // 生成实例
+         static Main27 instance = new Main27();
+
+         // 生成锁对象
+         Object lock1 = new Object();
+         Object lock2 = new Object();
+
+         @Override
+         public void run() {
+            // 代码块 1
+            synchronized (lock1) {
+                  System.out.println("====开始同步代码块 1====");
+                  System.out.println(Thread.currentThread().getName());
+                  System.out.println("====同步代码块 1 结束====");
+                  try {
+                     Thread.sleep(1000);
+                  } catch (InterruptedException e) {
+                     e.printStackTrace();
+                  }
+            }
+
+            // 代码块 2
+            synchronized (lock2) {
+                  System.out.println("====开始同步代码块 2====");
+                  System.out.println(Thread.currentThread().getName());
+                  System.out.println("====同步代码块 2 结束====");
+                  try {
+                     Thread.sleep(1000);
+                  } catch (InterruptedException e) {
+                     e.printStackTrace();
+                  }
+            }
+         }
+
+         public static void main(String[] args) throws InterruptedException {
+            // 创建线程对象
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
+
+            // 运行线程
+            thread1.start();
+            thread2.start();
+
+            // 保证正确提示
+            thread1.join();
+            thread2.join();
+      //        while (thread1.isAlive() || thread2.isAlive()) {}
+            System.out.println("=====结束=====");
+         }
+      }
+      ```
+      运行结果：  
+      ![同步代码块](/img/synchronized_block.gif)  
+      可以发现，执行步骤为：  
+      1. Thread-0 拿到 lock 1； 执行代码块 1；T-0 释放 lock 1  
+      2. Thread-0 拿到 lock 2 同时 Thread-1 拿到 lock1；T-0 执行代码块 2 同时 T-1 执行代码块 1；释放 T-0 释放 lock 2 同时 T-1 释放 lock 1  
+      3. Thread-1 拿到 lock 2；T-1 执行代码块 2；T-1 释放 lock 2  
+      4. 打印结束
+
+   2. **同步方法**  
+      使用 `synchronized` 修饰普通方法，此时锁对象默认为 `this` 对象。  
+      实例：  
+      ``` java
+      public class Main28 implements Runnable{
+         static Main28 main28 = new Main28();
+
+         @Override
+         public void run() {
+            method();
+         }
+
+         static synchronized void method() {
+            System.out.println("====同步方法开始====");
+            System.out.println(Thread.currentThread().getName());
+            System.out.println("====同步方法结束====");
+            try {
+                  Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                  e.printStackTrace();
+            }
+         }
+
+         public static void main(String[] args) throws InterruptedException {
+            Thread thread1 = new Thread(main28);
+            Thread thread2 = new Thread(main28);
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+            System.out.println("====结束====");
+         }
+      }
+      ```
+      Thread-0 进入 `run()` 调用 `method()` 时拿到锁，执行完毕释放后交给 Thread-1.  
+
++ 类锁  
+  **同步静态方法**  
+  **同步 Class 对象**
 
 ### 线程通信
 通过等待唤醒机制调节线程之间的执行顺序。  
