@@ -1,6 +1,6 @@
 ---
 prev: ./
-next: false
+next: ./ioc
 ---
 
 # 总览
@@ -126,4 +126,11 @@ next: false
 |JMS|1.1+|JmsTemplate|
 |EJB 2.0|1.0+|AbstractStatefulSessionBean|
 |Dependency Injection for Java|2.5+|AutowiredAnnotationBeanPostProcessor|
-|Bean Validation|3.0+|LocalValidatorFactoryBean|
+|Bean Validation|3.0+|LocalValidatorFactoryBean|\
+
+## 核心模块
+`spring-core` 基础 API。包括资源管理、泛型处理等。  
+`spring-beans`  Bean 相关，提供依赖查找、依赖注入等功能。  
+`spring-aop` AOP 处理相关，提供动态代理、 AOP 字节码提升等功能。  
+`spring-context` 提供事件驱动、注解驱动、模块驱动等功能。  
+`spring-expression` 表达式语言支持功能。

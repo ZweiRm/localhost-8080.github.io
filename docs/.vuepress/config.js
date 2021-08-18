@@ -125,6 +125,7 @@ module.exports = {
             '/spring/': [
                 '',
                 'overall',
+                'ioc'
             ],
 
             '/big-data/': [
