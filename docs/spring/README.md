@@ -36,7 +36,7 @@ next: ./overall
 - IoC （管理 Bean）
     - 关于 IoC
     - 依赖查找 （IoC 的一种实现）
-    - 依赖注入（IoC 的一种实现）
+    - 依赖注入 （IoC 的一种实现）
     - 依赖来源
     - IoC 容器生命周期
 - Bean
