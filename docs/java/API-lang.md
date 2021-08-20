@@ -189,12 +189,12 @@ next: ./API-util
             synchronized (this) {
                System.out.println("====开始同步代码块====");
                System.out.println(Thread.currentThread().getName());
-               System.out.println("====同步代码块结束====");
                try {
                      Thread.sleep(1000);
                } catch (InterruptedException e) {
                      e.printStackTrace();
                }
+               System.out.println("====同步代码块结束====");
             }
          }
 
@@ -294,12 +294,12 @@ next: ./API-util
          synchronized void method() {
             System.out.println("====同步方法开始====");
             System.out.println(Thread.currentThread().getName());
-            System.out.println("====同步方法结束====");
             try {
                   Thread.sleep(1000);
             } catch (InterruptedException e) {
                   e.printStackTrace();
             }
+            System.out.println("====同步方法结束====");
          }
 
          public static void main(String[] args) throws InterruptedException {
@@ -334,12 +334,12 @@ next: ./API-util
          static synchronized void method() {
             System.out.println("====同步方法开始====");
             System.out.println(Thread.currentThread().getName());
-            System.out.println("====同步方法结束====");
             try {
                   Thread.sleep(1000);
             } catch (InterruptedException e) {
                   e.printStackTrace();
             }
+            System.out.println("====同步方法结束====");
          }
   
          @Override
@@ -378,12 +378,12 @@ next: ./API-util
                 synchronized (Main.class) {
                     System.out.println("====同步代码块开始====");
                     System.out.println(Thread.currentThread().getName());
-                    System.out.println("====同步代码块结束====");
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
+                    System.out.println("====同步代码块结束====");
                 }
             }
 
@@ -405,13 +405,232 @@ next: ./API-util
 :::
 
 ::: tip 使用 <code>synchronized</code> 的几种常见情况
-1. 两个线程同时访问一个对象的同步方法
+1. 两个线程同时访问一个对象的同步方法  
     即由同一个实例生成的两个线程，访问被锁定 `this` 的代码块或方法。锁生效，两个线程争夺同一把锁。  
-2. 两个线程同时访问两个对象的同步方法
+
+2. 两个线程同时访问两个对象的同步方法  
     即由两个不同实例生成的两个线程，访问被锁定的 `this` 的代码块或方法。锁失效，锁定的是本身对象，而不是公共的对象。  
+
 3. 两个线程访问 <code>synchronized</code> 修饰的静态方法  
     静态方法是属于类的，当由两个不同实例生成的连那个线程访问这样的静态方法时，锁生效。（例子等同于同步静态方法中的实例）  
-4. 
+
+4. 两个线程同时访问同步方法和非同步方法  
+    两个线程由相同实例生成，其中一个被访问的方法被 `this` 锁定，规定一个线程执行被锁定方法，另一个执行非锁定方法。结果是两线程异步执行两个方法，不上锁的方法不受控制。  
+    实例：  
+    ``` java
+    public class Main implements Runnable {
+	    static Main instance = new Main();
+
+	    @Override
+		public void run() {
+            // 两个线程异步启动，其中指定线程 1 执行同步方法，线程 2 执行异步方法
+            if (Thread.currentThread().getName().equals("Thread-0")) {
+                methodSynchronized();
+            } else {
+                methodAsynchronous();
+            }
+		}
+
+		public synchronized void methodSynchronized() {
+            System.out.println("====同步方法开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====同步方法结束====");
+		}
+
+		public void methodAsynchronous() {
+            System.out.println("====异步方法开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====异步方法结束====");
+		}
+
+		public static void main(String[] args) throws InterruptedException {
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+            System.out.println("====结束====");
+	    }
+    }
+    ```
+    
+5. 访问同一个对象的不同普通同步方法  
+   当两个基于同一个对象生成的线程分别执行不同的被锁定的方法时，两个线程同步执行。随机一个线程先拿到锁开始执行对应方法，完毕后第二个线程拿到锁执行对应方法。  
+   实例：  
+    ``` java
+    public class Main implements Runnable {
+        static Main instance = new Main();
+
+        @Override
+        public void run() {
+            // 两个线程异步启动，其中指定线程 1 执行同步方法 1，线程 2 执行同步方法 2 方法
+            if (Thread.currentThread().getName().equals("Thread-0")) {
+                methodSynchronized1();
+            } else {
+                methodSynchronized2();
+            }
+        }
+
+        public synchronized void methodSynchronized1() {
+            System.out.println("====同步方法 1 开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====同步方法 1 结束====");
+        }
+
+        public synchronized void methodSynchronized2() {
+            System.out.println("====同步方法 2 开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====同步方法 2 结束====");
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+            System.out.println("====结束====");
+        }
+    }
+    ```
+
+6. 同时访问静态被 `synchronized` 修饰和非静态被 `synchronized` 修饰的方法  
+   当两个线程生成自同一个对象去执行对应方法时，由于两个被锁的方法锁定范围不同，两个线程依然异步执行。就算两个线程生成自不同对象，也会异步执行。只有锁定范围和线程生成匹配才会同步执行。  
+   ``` java
+    public class Main implements Runnable {
+        static Main instance = new Main();
+
+        @Override
+        public void run() {
+            // 两个线程异步启动，其中指定线程 1 执行同步静态方法 1，线程 2 执行同步方法 2 方法
+            if (Thread.currentThread().getName().equals("Thread-0")) {
+                methodSynchronizedStatic();
+            } else {
+                methodSynchronizedNormal();
+            }
+        }
+
+        public static synchronized void methodSynchronizedStatic() {
+            System.out.println("====同步静态方法 1 开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====同步静态方法 1 结束====");
+        }
+
+        public synchronized void methodSynchronizedNormal() {
+            System.out.println("====同步方法 2 开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====同步方法 2结束====");
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+            System.out.println("====结束====");
+        }
+    }
+    ```
+
+7. 方法抛出异常  
+    随机一个线程拿到锁后开始执行，但若方法方法抛出异常后 Java 会释放同步锁，下一个进程拿到锁后执行后续代码。  
+    实例：  
+    ``` java
+    public class Main35 implements Runnable {
+        static Main35 instance = new Main35();
+
+        @Override
+        public void run() {
+            if (Thread.currentThread().getName().equals("Thread-0")) {
+                methodSynchronizedWithException();
+            } else {
+                methodSynchronizedWithoutException();
+            }
+        }
+
+        public  synchronized void methodSynchronizedWithException() {
+            System.out.println("====同步异常方法 1 开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // 创建异常
+            throw new RuntimeException();
+    //        System.out.println("====同步异常方法 1 结束====");
+        }
+
+        public synchronized void methodSynchronizedWithoutException() {
+            System.out.println("====同步方法 2 开始====");
+            System.out.println(Thread.currentThread().getName());
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println("====同步方法 2结束====");
+        }
+
+        public static void main(String[] args) throws InterruptedException {
+            Thread thread1 = new Thread(instance);
+            Thread thread2 = new Thread(instance);
+
+            thread1.start();
+            thread2.start();
+
+            thread1.join();
+            thread2.join();
+            System.out.println("====结束====");
+        }
+    }
+    ```
+    运行结果：  
+    ![Synchronized With Exception](/img/synchronizedWithException.png)
+
+8. 一个线程访问一个被 `synchronized` 修饰的方法，但方法中调用了另一个普通方法  
+    会造成线程不安全，`synchronized` 只对本方法起效，当运行跳出方法后不再同步。  
 ::: 
 
 ### 线程通信
