@@ -167,6 +167,8 @@ next: ./API-util
   + 重写`call()`
 
 ### 线程同步
+
+#### 分类
 使用 `synchronized` 关键字来同步多个线程，一定程度上解决线程冲突。它可以保证在同一时刻最多只有一个线程执行该段被修饰的代码。是最基本的互斥同步手段。  
 
 + 对象锁  
@@ -400,6 +402,7 @@ next: ./API-util
             }
         }
         ```
+
 ::: warning 值得注意的是
 当不同线程使用同一个实例创建时，不管使用对象锁还是类锁都可以起到效果。
 :::
@@ -576,8 +579,8 @@ next: ./API-util
     随机一个线程拿到锁后开始执行，但若方法方法抛出异常后 Java 会释放同步锁，下一个进程拿到锁后执行后续代码。  
     实例：  
     ``` java
-    public class Main35 implements Runnable {
-        static Main35 instance = new Main35();
+    public class Main implements Runnable {
+        static Main instance = new Main();
 
         @Override
         public void run() {
@@ -632,6 +635,104 @@ next: ./API-util
 8. 一个线程访问一个被 `synchronized` 修饰的方法，但方法中调用了另一个普通方法  
     会造成线程不安全，`synchronized` 只对本方法起效，当运行跳出方法后不再同步。  
 ::: 
+
+<br/>
+
+#### **`synchronized` 性质**  
++ 可重入  
+    + 一个线程访问拿到锁执行外层方法后，内层方法可再次获得锁  
+    + *作用*：避免死锁，提升封装性  
+        例如 `method1()` 中某语句调用了 `method2()` ，且两个方法都被 `synchronized` 修饰。若 `synchronized` 不具有可重入性，线程拿到锁执行 `method1()` 时会由于当前方法未执行完而不释放锁，而 `method2()` 需要锁才能继续执行，陷入死锁状态。  
+    + *粒度*：线程（非调用）
++ 不可中断  
+    + 只有当一个线程释放锁后另一个线程才能拿到锁  
+
+#### **`synchronized` 原理**  
++ 获取与释放
+    + 内置锁（监视器锁）  
+        `synchronized` 修饰的方法或代码块，在执行时获取锁，再完成或抛出异常时释放锁。等同于 `java.utils.concurrent` 所提供的 `ReentrantLock`.  
+        
+        **实例**：  
+        ``` java
+        import java.util.concurrent.locks.Lock;
+        import java.util.concurrent.locks.ReentrantLock;
+
+        public class Main {
+            // 创建由 Lock 实现的可重入锁
+            Lock lock = new ReentrantLock();
+
+            public synchronized void methodWithSynchronized() {
+                System.out.println("====执行同步方法====");
+            }
+            
+            public void methodWithReentrantLock() {
+                lock.lock();
+                try {
+                    System.out.println("====执行可重入锁所方法====");
+                } finally {
+                    lock.unlock();
+                }
+            }
+
+            public static void main(String[] args) {
+                Main instance = new Main();
+
+                // 两个方法等价
+                instance.methodWithSynchronized();
+                instance.methodWithReentrantLock();
+            }
+        }
+        ```
+    + `monitorenter` 和 `moniterexit`  
+        + 内置锁是通过 `monitorenter` 和 `moniterexit` 指令来实现的。  
+        + 在需要获取锁定的地方执行 `monitorenter`，在释放的地方执行 `monitorexit`。但是 Java 无法直接判断需要释放锁的情形，所以在正常释放和异常退出都单独执行 `monitorexit`。  
+        + `monitorenter` 会使锁计数器 +1，`monitorexit` 会使锁计数器 -1. 每个对象都关联于一个 monitor，且同一时间只有一个对象可以获得 monitor 锁。
+        + `monitorenter` ：若当前计数器为 0，则意味着当前 monitor 无锁，则立即获得锁并使得计数器 +1；若当前线程重入锁，则计数器继续 +1；若其他线程访问到计数器不为 0 的 monitor，进入阻塞状态，直到计数器变为 0 重新获得锁。  
+        + `monitorexit` ：若当前线程拥有锁，在执行该指令时，计数器 -1. 当执行后计数器为 0 意味着当前线程执行完毕释放锁，若不为 0 则继续持有锁。
+        **实例**：  
+        ``` java
+        public void method(Thread thread) {
+            synchronized (lock) {
+            }
+        }
+        ```
+        所对应的字节码反编译为：  
+        ``` {10,12,16}
+        public void method(java.lang.Thread);
+        descriptor: (Ljava/lang/Thread;)V
+        flags: (0x0001) ACC_PUBLIC
+        Code:
+        stack=2, locals=4, args_size=2
+            0: aload_0
+            1: getfield      #3                  // Field lock:Ljava/lang/Object;
+            4: dup
+            5: astore_2
+            6: monitorenter
+            7: aload_2
+            8: monitorexit
+            9: goto          17
+            12: astore_3
+            13: aload_2
+            14: monitorexit
+            15: aload_3
+            16: athrow
+            17: return
+        ...
+        ```
++ 可重入原理  
+    利用锁计数器来实现。JVM 负责跟踪对象被加锁的次数。
++ 可见性原理  
+    根据 Java 内存模型（JMM），每一个线程拥有一个本地内存，其中保存着共享资源的副本。  
+    ![JMM](/img/JMM.png)  
+    在线程 A 向 线程 B 通信时，主内存作为其沟通桥梁。当资源使用 `synchronized` 修饰时，会保证线程A 在完全执行完毕将数据写回主内存后再由线程 B 从主内存中获取。保证了线程的本地内存与主内存数据一致。  
+
+#### `synchronized` 的缺陷
++ 效率低  
+    锁释放的情形少。无法设定获取锁超时时间，不能中断一个正在等待获得锁的线程。
++ 不灵活
+    相比读写锁，`synchronized` 获取释放锁机制单一。每个锁仅能锁定单一对象，在某些情景下不能够完全满足需求。  
++ 无法知晓是否成功获得了锁
+    失去了在获取成功或失败条件下执行特定逻辑的能力。
 
 ### 线程通信
 通过等待唤醒机制调节线程之间的执行顺序。  
