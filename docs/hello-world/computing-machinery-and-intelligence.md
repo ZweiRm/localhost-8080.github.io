@@ -1,6 +1,6 @@
 ---
 editLink: false
-prev: ./about-the-article-of-java
+prev: ./
 next: ./the-right-way-doing-research
 ---
 

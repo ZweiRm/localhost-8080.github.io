@@ -101,6 +101,7 @@ module.exports = {
                 'API-lang',
                 'API-util',
                 'API-io',
+                'references'
             ],
 
             '/kotlin/': [
@@ -173,7 +174,6 @@ module.exports = {
 
             '/hello-world/': [
                 '',
-                'about-the-article-of-java',
                 'computing-machinery-and-intelligence',
                 'the-right-way-doing-research',
                 'building-a-vuepress-powered-blog',
