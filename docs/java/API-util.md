@@ -57,8 +57,8 @@ next: ./API-io
 
 **重要实现类**  
 `ArrayList`类
-+ 默认初始容量为10；扩容时，在上一次的基础上扩容一半容量
-+ 线程不安全的集合
++ 默认初始容量为 10；扩容时，在上一次的基础上扩容一半容量 (无参创建时为空数组，第一次赋值时扩展为 10)
++ 线程不安全的集合（在方法内做局部变量时安全）
 + 内存空间连续 
 + 增删元素比较慢
 
@@ -537,7 +537,7 @@ class CallableDemo implements Callable<String> {
 **Package** java.util  
 `public class Collections`
 
-操作集合的工具类  
+操作集合的工具类，提供了对集合的各种操作方法。它也对原生集合进行了封装，提供了线程安全的集合(Synchronized)和不可变集合(Unmodifiable)。  
 
 **重要方法**  
 `compare(T o1, T o2)`  
