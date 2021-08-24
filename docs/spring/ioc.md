@@ -4,12 +4,14 @@ next: ./references
 ---
 
 # 控制反转
+通常情况下 beans 通过构造器类或者服务定位机制自己控制实例化和依赖的位置，但在 Spring 里，这些操作交由 Spring 容器通过控制反转来实现。控制反转是一种设定对象之间依赖（与之关联的对象）的一种过程。它仅允许通过以下形式来实现：构造器参数；工厂方法参数；对象在背工厂方法构造完成或返回时设定的属性。容器会在创建 beans 时注入依赖。  
+
 控制反转是一种编程原则，它和传统控制流相比逆转了整个控制流，自定义代码会从框架中接收控制流。  
 传统流程：自定义功能代码调用库来处理一般任务；  
 控制反转：框架调用自定义代码。  
 
 ## 实现方法
-1. Service Locator pattern （服务定位模式）  
+1. Service Locator pattern （服务定位模式）（不完全算 IoC)  
    通过 JNDI 来获取 Java EE 组件。  
 2. Dependency Injection （DI, 依赖注入）
    + 构造器注入
@@ -53,6 +55,16 @@ next: ./references
   + PicoContainer
   + Google Guice
   + Spring Framework
+
+**Spring 作为 IoC 容器的优势**  
++ IoC 管理，依赖查找与依赖注入
++ AOP
++ 事务
++ 事件机制
++ SPI 扩展
++ 第三方整合
++ 易测试
++ 更好的面向对象
 
 ### Java Beans
 Java Beans 是 Java 提供的一种可重用组件。Java Beans 提供了基于反射实现的自省机制，通过这种机制可以获取和更改 Java Beans 的信息。  
@@ -154,15 +166,147 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
 |依赖查找|主动获取|相对繁琐|侵入业务逻辑|依赖容器 API|良好|
 |依赖注入|被动提供|相对便利|侵入性低|不依赖容器 API|一般|
 
+### 依赖查找
+**分类**  
++ 根据 Bean 名称或 ID 查找（鉴定）
+  + 实时查找  
+    `/domain/` 中的 User POJO
+    ``` java
+    public class User {
+        private Long id;
+        private String name;
+
+        public Long getId() {
+            return id;
+        }
+
+        public void setId(Long id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return "User{" +
+                    "id=" + id +
+                    ", name='" + name + '\'' +
+                    '}';
+        }
+    }
+    ```
+    `/META-INF/` 中的上下文管理 XML  
+    ``` xml
+    <?xml version="1.0" encoding="utf-8" ?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="user" class="xin.ahza.ioc.domain.User">
+            <property name="id" value="1"/>
+            <property name="name" value="user"/>
+        </bean>
+    </beans>
+    ```
+
+    应用程序上下文  
+    ``` java
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.context.support.ClassPathXmlApplicationContext;
+    import xin.ahza.ioc.domain.User;
+
+    public class DependencyLookup {
+        public static void main(String[] args) {
+        // 使用 XML 配置文件启动 Spring 上下文
+        BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
+
+        realtimeLookup(beanFactory);
+    }
+
+        private static void realtimeLookup(BeanFactory beanFactory) {
+            User user = (User) beanFactory.getBean("user");
+            System.out.println(user);
+        }
+    }
+    ```
+    
+    运行结果  
+    ```
+    User{id=1, name='user'}
+    ```
+  + 延迟查找
+    使用 `ObjectFactoryCreatingFactoryBean` 来作为 Bean 实现查找。它是 `FactoryBean` 的一个实现，可以返回一个 `ObjectFactory`。这个 `ObjectFacory` 可以返回一个来自 `BeanFactory` 的 Bean.  
+    POJO 与上相同  
+    `/META-INF/` 中的上下文管理 XML. 在确定 User Bean 之后新增 ObjectFactory Bean  
+    ``` xml
+    <?xml version="1.0" encoding="utf-8" ?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="user" class="xin.ahza.ioc.domain.User">
+            <property name="id" value="1"/>
+            <property name="name" value="user"/>
+        </bean>
+        <bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
+            <property name="targetBeanName" value=""/>
+        </bean>
+    </beans>
+    ```
+
+    应用程序上下文  
+    ``` java
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.beans.factory.ObjectFactory;
+    import org.springframework.context.support.ClassPathXmlApplicationContext;
+    import xin.ahza.ioc.domain.User;
+
+    public class DependencyLookup {
+        public static void main(String[] args) {
+            // 使用 XML 配置文件启动 Spring 上下文
+            BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
+            delayLookup(beanFactory);
+        }
+
+        private static void delayLookup(BeanFactory beanFactory) {
+            ObjectFactory<User> objectFactory = (ObjectFactory<User>) beanFactory.getBean("objectFactory");
+            User user = objectFactory.getObject();
+            System.out.println(user);
+        }
+    }
+    ```
+    
+    运行结果  
+    ```
+    User{id=1, name='user'}
+    ```
++ 根据 Bean 类型查找
+  + 单个 Bean 对象
+  + 集合 Bean 对象
++ 根据 Bean 名称和类型查找
++ 根据注解查找
+  + 单个 Bean 对象
+  + 集合 Bean 对象
+  
 ### 依赖注入
 **构造器注入与 Setter 注入**  
-+ 构造器注入
++ 构造器注入  
+  基于构造器的注入是通过容器调用带有很多参数的构造方法来完成的，每一个参数代表一个依赖关系。（与调用带有确定参数的静态工厂方法来创建 bean 几乎等价；容器对带参数的构造器和带参数的静态工厂方法类似）  
   + 优点
     + 以不可变对象形式实现组件来保证被依赖的对象不为空（也可以用 ObjectProvider 来依赖空对象）
     + 以完全初始化状态返回给调用端
     + 被管理对象状态一致
   + 缺点
-+ Setter 注入
++ Setter 注入  
+  容器在调用无参构造函数或无参静态工厂方法实例化 bean 后，在 bean 上调用 setter 来注入依赖。  
   + 一般用于可选依赖的注入
   + 优点
     + 便于重新注入和重配置
