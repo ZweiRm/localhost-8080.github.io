@@ -168,7 +168,7 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
 
 ### 依赖查找
 **分类**  
-+ 根据 Bean 名称或 ID 查找（鉴定）
++ 根据 Bean 名称或 ID 查找（鉴定）  
   + 实时查找  
     `/domain/` 中的 User POJO
     ``` java
@@ -241,7 +241,7 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
     ```
     User{id=1, name='user'}
     ```
-  + 延迟查找
+  + 延迟查找  
     使用 `ObjectFactoryCreatingFactoryBean` 来作为 Bean 实现查找。它是 `FactoryBean` 的一个实现，可以返回一个 `ObjectFactory`。这个 `ObjectFacory` 可以返回一个来自 `BeanFactory` 的 Bean.  
     POJO 与上相同  
     `/META-INF/` 中的上下文管理 XML. 在确定 User Bean 之后新增 ObjectFactory Bean  
@@ -288,7 +288,7 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
     ```
     User{id=1, name='user'}
     ```
-+ 根据 Bean 类型查找
++ 根据 Bean 类型查找  
   + 单个 Bean 对象  
     POJO 类与上相同  
     `/META-INF/` 中的上下文管理 XML 文件与实时查找相同  
@@ -304,8 +304,6 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
             // 使用 XML 配置文件启动 Spring 上下文
             BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
 
-            realtimeLookup(beanFactory);
-            delayLookup(beanFactory);
             typeLookup(beanFactory);
         }
         private static void typeLookup(BeanFactory beanFactory) {
@@ -315,12 +313,144 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
         }
     }    
     ```
-  + 集合 Bean 对象
-+ 根据 Bean 名称和类型查找
-+ 根据注解查找
-  + 单个 Bean 对象
-  + 集合 Bean 对象
-  
+    
+    运行结果  
+    ```
+    User{id=1, name='user'}
+  + 集合 Bean 对象  
+    POJO 类与上相同  
+    `/META-INF/` 中的上下文管理 XML 文件与实时查找相同  
+    应用程序上下文  
+    ``` java
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.beans.factory.ListableBeanFactory;
+    import org.springframework.beans.factory.ObjectFactory;
+    import org.springframework.context.support.ClassPathXmlApplicationContext;
+    import xin.ahza.ioc.domain.User;
+
+    import java.util.Map;
+
+    public class DependencyLookup {
+        public static void main(String[] args) {
+            // 使用 XML 配置文件启动 Spring 上下文
+            BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
+
+            collectionTypeLookup(beanFactory);
+        }
+
+        private static void collectionTypeLookup(BeanFactory beanFactory) {
+            // 检测 beanFactory 是否返回的是 Map 集合
+            if (beanFactory instanceof ListableBeanFactory) {
+                ListableBeanFactory listableBeanFactory = (ListableBeanFactory) beanFactory;
+                // 以 bean id 为 key, bean name 为 value 的 Map对象
+                Map<String, User> users = listableBeanFactory.getBeansOfType(User.class);
+                System.out.println(users);
+            }
+        }
+    }
+    ```
+
+    运行结果  
+    ```
+    {user=User{id=1, name='user'}}
+    ```
++ 根据 Bean 名称和类型查找  
++ 根据注解查找  
+  当需要用注解来区分某些 Bean 时，例如 User 和 SuperUser，它们都是 User，但 SuperUser 拥有更高的权限。在 Beans 中我们可以编写注解来区分它们。  
+  编写注解类  
+    ``` java
+    import java.lang.annotation.ElementType;
+    import java.lang.annotation.Retention;
+    import java.lang.annotation.RetentionPolicy;
+    import java.lang.annotation.Target;
+
+    @Target(ElementType.TYPE)
+    @Retention(RetentionPolicy.RUNTIME)
+    public @interface Super {
+    }
+    ```
+  + 集合 Bean 对象  
+    在之前的 User POJO 基础上，编写 SuperUser POJO  
+    ``` java
+    import xin.ahza.ioc.annotation.Super;
+
+    @Super
+    public class SuperUser extends User {
+        private String address;
+
+        public String getAddress() {
+            return address;
+        }
+
+        public void setAddress(String address) {
+            this.address = address;
+        }
+
+        @Override
+        public String toString() {
+            return "SuperUser{" +
+                    "address='" + address + '\'' +
+                    "} " + super.toString();
+        }
+    }
+    ```
+
+    更新 `/META-INF/` 中的上下文管理 XML 文件，增加 SuperUser Bean  
+    ``` xml{11,12,13}
+    <?xml version="1.0" encoding="utf-8" ?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:p="http://www.springframework.org/schema/p"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+        <bean id="user" class="xin.ahza.ioc.domain.User">
+            <property name="id" value="1"/>
+            <property name="name" value="user"/>
+        </bean>
+        <bean id="superUser" class="xin.ahza.ioc.domain.SuperUser" parent="user" primary="true">
+            <property name="address" value="Address"/>
+        </bean>
+    </beans>
+    ```
+    ::: warning 值得注意的是
+    因为 User Bean 和 SuperUser Bean 同属于 User，所以在之前案例的根据 Bean 类型的单个 Bean 查找会出现冲突。这里在 SuperUser Bean 的 `property` 中指定了 `primary=true` 来保证在单个查询中发现多个 Bean 时只查找优先项。
+    :::
+    应用程序上下文  
+    ``` java
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.beans.factory.ListableBeanFactory;
+    import org.springframework.beans.factory.ObjectFactory;
+    import org.springframework.context.support.ClassPathXmlApplicationContext;
+    import xin.ahza.ioc.annotation.Super;
+    import xin.ahza.ioc.domain.User;
+
+    import java.util.Map;
+
+    public class DependencyLookup {
+        public static void main(String[] args) {
+            // 使用 XML 配置文件启动 Spring 上下文
+            BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
+
+            collectionAnnotationLookup(beanFactory);
+        }
+
+        private static void collectionAnnotationLookup(BeanFactory beanFactory) {
+            // 检测 beanFactory 是否返回的是 Map 集合
+            if (beanFactory instanceof ListableBeanFactory) {
+                ListableBeanFactory listableBeanFactory = (ListableBeanFactory) beanFactory;
+                // 以 bean id 为 key, bean name 为 value 的 Map对象
+                Map<String, User> users = (Map) listableBeanFactory.getBeansWithAnnotation(Super.class);
+                System.out.println(users);
+            }
+        }
+    }
+    ```
+
+    运行结果  
+    ```
+    {superUser=SuperUser{address='Address'} User{id=1, name='user'}}
+    ```
+    
 ### 依赖注入
 **构造器注入与 Setter 注入**  
 + 构造器注入  
