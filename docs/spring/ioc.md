@@ -289,7 +289,32 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
     User{id=1, name='user'}
     ```
 + 根据 Bean 类型查找
-  + 单个 Bean 对象
+  + 单个 Bean 对象  
+    POJO 类与上相同  
+    `/META-INF/` 中的上下文管理 XML 文件与实时查找相同  
+    应用程序上下文  
+    ``` java
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.beans.factory.ObjectFactory;
+    import org.springframework.context.support.ClassPathXmlApplicationContext;
+    import xin.ahza.ioc.domain.User;
+
+    public class DependencyLookup {
+        public static void main(String[] args) {
+            // 使用 XML 配置文件启动 Spring 上下文
+            BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-lookup-context.xml");
+
+            realtimeLookup(beanFactory);
+            delayLookup(beanFactory);
+            typeLookup(beanFactory);
+        }
+        private static void typeLookup(BeanFactory beanFactory) {
+            // 使用接受参数为 Class<T> 形式的 getBean() 获取 Bean
+            User user = beanFactory.getBean(User.class);
+            System.out.println(user);
+        }
+    }    
+    ```
   + 集合 Bean 对象
 + 根据 Bean 名称和类型查找
 + 根据注解查找
