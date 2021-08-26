@@ -257,7 +257,7 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
             <property name="name" value="user"/>
         </bean>
         <bean id="objectFactory" class="org.springframework.beans.factory.config.ObjectFactoryCreatingFactoryBean">
-            <property name="targetBeanName" value=""/>
+            <property name="targetBeanName" value="user"/>
         </bean>
     </beans>
     ```
