@@ -452,6 +452,89 @@ Spring 在 3.0- 大量使用基于 PropertyEditorSupport 来实现元信息的�
     ```
     
 ### 依赖注入
+**分类**  
++ 根据 Bean 名称注入  
++ 根据 Bean 类型注入  
+  + 单个 Bean 对象  
+  + 集合 Bean 对象  
+    User 和 SuperUser POJO 与之前相同  
+    新建 UserRepository Bean 来应用注入  
+    ``` java
+    import xin.ahza.ioc.domain.User;
+
+    import java.util.Collection;
+
+    public class UserRepository {
+        private Collection<User> users;
+
+        // 用 getter and setter 代替模拟增删改查
+        public Collection<User> getUsers() {
+            return users;
+        }
+
+        public void setUsers(Collection<User> users) {
+            this.users = users;
+        }
+    }
+    ```
+    在 Repository 中，使用声明一个类型为 `Collection<User>` 的对象来将 User 注入进来。之后以 setter 和 getter 模拟查找操作。  
+
+    新建配置 XML  
+    ``` xml
+    <?xml version="1.0" encoding="utf-8" ?>
+    <beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:util="http://www.springframework.org/schema/util"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
+        <import resource="dependency-lookup-context.xml"/>
+
+        <!--手动装配-->
+        <bean id="userRepository" class="xin.ahza.ioc.repository.UserRepository">
+            <property name="users">
+                <util:list>
+                    <ref bean="superUser"/>
+                    <ref bean="user"/>
+                </util:list>
+            </property>
+        </bean>
+    <beans>
+    ```
+    也可以使用自动装配，将 `<bean>` 更新为：  
+    ``` xml
+    <bean id="userRepository" class="xin.ahza.ioc.repository.UserRepository" autowire="byType"/>
+    ```
+    ::: warning 值得注意的是
+    自动装配的 集合 bean 顺序无法手动定制，手动装配可以。
+    :::
+
+    上下文程序  
+    ``` java
+    import org.springframework.beans.factory.BeanFactory;
+    import org.springframework.context.support.ClassPathXmlApplicationContext;
+    import xin.ahza.ioc.repository.UserRepository;
+
+    public class DependencyInjection {
+        public static void main(String[] args) {
+            // 使用 XML 配置文件启动 Spring 上下文
+            BeanFactory beanFactory = new ClassPathXmlApplicationContext("classpath:/META-INF/dependency-injection-context.xml");
+
+            UserRepository userRepository = beanFactory.getBean("userRepository", UserRepository.class);
+            System.out.println(userRepository.getUsers());
+        }
+    }
+    ```
+
+    运行结果  
+    ```
+    [User{id=1, name='user'}, SuperUser{address='Address'} User{id=1, name='user'}]
+    ```
++ 容器内建 Bean 对象  
++ 非 Bean 对象  
++ 注入类型  
+  + 实时注入  
+  + 延迟注入  
+
 **构造器注入与 Setter 注入**  
 + 构造器注入  
   基于构造器的注入是通过容器调用带有很多参数的构造方法来完成的，每一个参数代表一个依赖关系。（与调用带有确定参数的静态工厂方法来创建 bean 几乎等价；容器对带参数的构造器和带参数的静态工厂方法类似）  

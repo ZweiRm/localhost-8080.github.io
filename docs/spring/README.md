@@ -4,7 +4,7 @@ next: ./overall
 ---
 
 # Spring
-本 分区介绍 Spring 框架的各个细节。
+本分区介绍 Spring 框架的各个细节。
 
 ## 框架
 
