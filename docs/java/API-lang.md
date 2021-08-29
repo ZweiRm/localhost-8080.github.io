@@ -155,19 +155,156 @@ next: ./API-util
 
 + 继承`Thread`类
   + 在`run()`中重写线程执行逻辑。  
+    子类重写父类方法后，覆盖父类中的 `run()`，执行时直接执行这个方法。
 
   + 类实例通过`start()`启动线程。
 
 + 实现`Runnable`接口
-  + 重写`run()`。
+  + 重写`run()`。  
+    在 `Thread` 类中 `run()` 源码为：  
+    ``` java
+    @Override
+    public void run() {
+        if (target != null) {
+            target.run();
+        }
+    }
+    ```
+    手动定义的 `run()` 作为 target 对象传给 `Thread` 类，在判断非空后调用 `target.run()` (即我们手动写的 `run()`)。
 
   + 通过`Thread`类对象启动线程。
 
-+ 实现`Callable<T>接口`
-  + 重写`call()`
+::: tip 一般地
+我们认为实现 `Runnable` 接口的方式更好。  
+使用继承 `Thread` 类方法建立线程的缺点：  
++ 继承 `Thread` 类后，线程的运行和逻辑耦合在一起  
++ 每个线程独立，无法应用线程池来减少线程创建和销毁的资源占用  
++ Java 只允许单继承，当已经继承了 `Thread` 类后，可扩展性降低  
+
+Q: 分析以下代码运行情况  
+``` java
+public class Main {
+    public static void main(String[] args) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("====Runnable====");
+            }
+        }) {
+            @Override
+            public void run() {
+                System.out.println("====Thread====");
+            }
+        }.start();
+    }
+}
+```
+
+[分析]  
+在以 `Thread` 为基础的匿名内部类的参数中，传入了一个 `Runnable` 接口的实现。该实现重写了 `run()` 作为源码中的 `target.run()` 传递给外部的匿名内部类。在匿名内部类里重写了 `run()` 完全覆盖了 `Thread` 类中的 `run()`。所以最终只执行匿名内部类中的 `run()`。  
+
+运行结果：  
+```
+====Thread====
+```
+:::
+
+::: warning 也就是说
+不管通过哪种方法实现线程，创建的时候都是在构造一个 `Thread` 类。通过 `Runnable` 接口实现 `run()` 后，会把这个接口的实例传给 Thread类；通过继承 `Thread` 类后，重写 `run()` 直接调用该方法。
+:::
+
+::: danger 一些不全面的观点
+1. 使用线程池也是一种创建线程的方法  
+   使用线程池创建 500 个线程并打印它们的名称：  
+    ``` java
+    public class Main40 {
+        public static void main(String[] args) {
+            // 创建线程池
+            ExecutorService executorService = Executors.newCachedThreadPool();
+
+            for (int i = 0; i < 500; i++) {
+                executorService.submit(new Task());
+            }
+        }
+    }
+
+    // Runnable Task
+    class Task implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            System.out.println(Thread.currentThread().getName());
+        }
+    }   
+    ```
+   进入 `Executors` 类源码我们可以观察到，它最终也是使用 `Thread` 来创建线程的：  
+    ``` java
+    ...
+    public Thread newThread(Runnable r) {
+                Thread t = new Thread(group, r,
+                    namePrefix + threadNumber.getAndIncrement(),
+                    0);
+    ...
+    ```
+
+2. 通过实现 `Callable<T>` 接口或 `FutureTask` 类也算一种线程得到创建方法  
+    它们底层也是通过 `Runnable` 接口来实现的。所以根据 `Callable` 有返回值而 `Runnable` 没有来说明 `Callable` 是一种新的线程实现方法的说法也无道理。 
+
+3. 使用定时器创建线程也是一种新的创建线程的方法  
+    使用 `Timer` 来每秒打印一下线程的名称：  
+    ``` java
+    public class Main {
+        public static void main(String[] args) {
+            Timer timer = new Timer();
+            timer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                }
+            }, 1000, 1000);
+        }
+    }
+    ```
+    我们可以观察到 `TimerTask` 类的源码中，实现了 `Runnable` 接口：  
+    ``` java
+    public abstract class TimerTask implements Runnable {
+        ...
+    ```
+
+4. 通过匿名内部类或者使用 Lambda 表达式语法创建线程是一种新的方法  
+    ``` java
+    public class Main {
+        public static void main(String[] args) {
+            // 匿名内部类方法一
+            new Thread() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                }
+            }.start();
+
+            // 匿名内部类方法二
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println(Thread.currentThread().getName());
+                }
+            }).start();
+
+            // Lambda 表达式
+            new Thread(() -> System.out.println(Thread.currentThread().getName())).start();
+        }
+    }
+    ```
+    它们的本质也是实现了 `Runnable` 接口，重写了 `run()`.
+:::
 
 ### 线程同步
-
 #### 分类
 使用 `synchronized` 关键字来同步多个线程，一定程度上解决线程冲突。它可以保证在同一时刻最多只有一个线程执行该段被修饰的代码。是最基本的互斥同步手段。  
 
