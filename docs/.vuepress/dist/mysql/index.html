@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>MySQL | 本地煮鸡:8080</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="一个博客, 大概会记录一些技术笔记">
+    <meta property="article:modified_time" content="2021-08-30T11:47:57.000Z">
+    <meta property="og:site_name" content="本地煮鸡:8080">
+    <meta property="og:title" content="MySQL">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/mysql/">
+    <meta name="twitter:title" content="MySQL">
+    <meta name="twitter:url" content="/mysql/">
+    
+    <link rel="preload" href="/assets/css/0.styles.d86c96e9.css" as="style"><link rel="preload" href="/assets/js/app.2a231f70.js" as="script"><link rel="preload" href="/assets/js/3.edba18b2.js" as="script"><link rel="preload" href="/assets/js/41.bd84d893.js" as="script"><link rel="preload" href="/assets/js/6.9f2b6213.js" as="script"><link rel="preload" href="/assets/js/5.74cf20d1.js" as="script"><link rel="prefetch" href="/assets/js/10.659d688c.js"><link rel="prefetch" href="/assets/js/11.1a2e2c62.js"><link rel="prefetch" href="/assets/js/12.8eb80cdb.js"><link rel="prefetch" href="/assets/js/13.d4f1fd06.js"><link rel="prefetch" href="/assets/js/14.75611cbe.js"><link rel="prefetch" href="/assets/js/15.e3c0c5b0.js"><link rel="prefetch" href="/assets/js/16.796b7074.js"><link rel="prefetch" href="/assets/js/17.26483284.js"><link rel="prefetch" href="/assets/js/18.f63e49c6.js"><link rel="prefetch" href="/assets/js/19.ace63165.js"><link rel="prefetch" href="/assets/js/20.8cdbdf4d.js"><link rel="prefetch" href="/assets/js/21.a87f2737.js"><link rel="prefetch" href="/assets/js/22.8bcdd9dd.js"><link rel="prefetch" href="/assets/js/23.6cd5c641.js"><link rel="prefetch" href="/assets/js/24.37e9f8d5.js"><link rel="prefetch" href="/assets/js/25.136785b7.js"><link rel="prefetch" href="/assets/js/26.0183f231.js"><link rel="prefetch" href="/assets/js/27.af8afb73.js"><link rel="prefetch" href="/assets/js/28.f8559ab3.js"><link rel="prefetch" href="/assets/js/29.f37daf6a.js"><link rel="prefetch" href="/assets/js/30.c543aece.js"><link rel="prefetch" href="/assets/js/31.81c9dab3.js"><link rel="prefetch" href="/assets/js/32.6a26bfb9.js"><link rel="prefetch" href="/assets/js/33.79d40e34.js"><link rel="prefetch" href="/assets/js/34.189fb7a9.js"><link rel="prefetch" href="/assets/js/35.4393866e.js"><link rel="prefetch" href="/assets/js/36.610aaf93.js"><link rel="prefetch" href="/assets/js/37.967b833d.js"><link rel="prefetch" href="/assets/js/38.fdf4c72b.js"><link rel="prefetch" href="/assets/js/39.abcceb81.js"><link rel="prefetch" href="/assets/js/4.3e9ac5f8.js"><link rel="prefetch" href="/assets/js/40.5f0d77f9.js"><link rel="prefetch" href="/assets/js/42.a9e42a26.js"><link rel="prefetch" href="/assets/js/43.d02e1559.js"><link rel="prefetch" href="/assets/js/44.c4b99328.js"><link rel="prefetch" href="/assets/js/45.e3ab67de.js"><link rel="prefetch" href="/assets/js/46.7c349191.js"><link rel="prefetch" href="/assets/js/47.e0a56d7e.js"><link rel="prefetch" href="/assets/js/48.b9afcc51.js"><link rel="prefetch" href="/assets/js/49.6dd727b6.js"><link rel="prefetch" href="/assets/js/50.31d22d9d.js"><link rel="prefetch" href="/assets/js/51.d2990646.js"><link rel="prefetch" href="/assets/js/52.80b714d7.js"><link rel="prefetch" href="/assets/js/53.2f275891.js"><link rel="prefetch" href="/assets/js/54.8ab1ff15.js"><link rel="prefetch" href="/assets/js/55.dd6da70d.js"><link rel="prefetch" href="/assets/js/56.6200d7b5.js"><link rel="prefetch" href="/assets/js/57.c4c843c7.js"><link rel="prefetch" href="/assets/js/58.5e20b713.js"><link rel="prefetch" href="/assets/js/7.9f42334e.js"><link rel="prefetch" href="/assets/js/8.2a6c6fce.js"><link rel="prefetch" href="/assets/js/9.f042e7fe.js"><link rel="prefetch" href="/assets/js/vendors~flowchart.9798c266.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.d86c96e9.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">本地煮鸡:8080</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/algorithm/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-item"><!----> <a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/mysql/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  MySQL
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/algorithm/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-item"><!----> <a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/mysql/" aria-current="page" class="nav-link router-link-exact-active router-link-active">
+  MySQL
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/mysql/" aria-current="page" class="active sidebar-link">MySQL</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mysql/#语句执行过程" class="sidebar-link">语句执行过程</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mysql/#server-层" class="sidebar-link">Server 层</a></li><li class="sidebar-sub-header"><a href="/mysql/#存储引擎层" class="sidebar-link">存储引擎层</a></li><li class="sidebar-sub-header"><a href="/mysql/#日志模块" class="sidebar-link">日志模块</a></li></ul></li></ul></li><li><a href="/mysql/transaction.html" class="sidebar-link">事务</a></li><li><a href="/mysql/indices.html" class="sidebar-link">索引</a></li><li><a href="/mysql/references.html" class="sidebar-link">参考文献或资料</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="mysql"><a href="#mysql" class="header-anchor">#</a> MySQL</h1> <h2 id="语句执行过程"><a href="#语句执行过程" class="header-anchor">#</a> 语句执行过程</h2> <p><img src="/img/mysqlProcess.png" alt="MySQL 执行过程"></p> <h3 id="server-层"><a href="#server-层" class="header-anchor">#</a> Server 层</h3> <p>Server 层包含了 MySQL 的绝大多数核心服务，包括内置（日期、时间、数学和加密）函数。跨存储引擎的功能（存储过程、触发器、视图）在这一层实现。</p> <ul><li>连接器
+<ul><li>负责管理和数据直接的连接，权限验证<br>
+使用命令来连接数据库：<div class="language-shell extra-class"><pre class="language-shell"><code>mysql -h<span class="token variable">$ip</span> -P<span class="token variable">$port</span> -u<span class="token variable">$user</span> -p
+</code></pre></div><code>mysql</code> 客户端工具使用 TCP 与服务端建立连接，时候只用密码来验证身份。<br>
+若密码错误，客户端程序执行结束，否则连接器会查询权限表，根据权限判断赋予当前连接权限。<div class="custom-block warning"><p class="custom-block-title">值得注意的是</p> <p>一个连接成功建立之后，此时若管理员账户对这个连接的权限进行了修改也不会对其造成实时影响。当重新连接时影响生效。</p></div>
+连接创建以后进入空闲状态，即 Sleep. 使用 <code>show processlist;</code> 可以命令查看当前连接。<br>
+当客户端长时间没有动作，连接器会自动断开连接，默认为 8 小时，由 <code>wait_timeout</code> 控制。</li> <li>连接分类
+<ul><li>长连接<br>
+连接成功后持续有请求，则这些请求都是用同一个连接执行。</li> <li>短连接<br>
+连接成功后执行几次操作就断开连接，之后重新建立。<br>
+建立连接的过程复杂，一般情况是用长连接来避免很多的连接动作。</li></ul> <div class="custom-block tip"><p class="custom-block-title">问题</p> <p>当 MySQL 在执行过程中，临时内存都放在连接对象中管理导致内存占用上涨很快。内存占用过大时会导致系统强行杀掉进程导致 MySQL 异常重启，怎么处理？</p> <ul><li>定期断开长连接。当连接执行一段时间后，或程序执行过一个占用内存很大的大查询后断开连接。之后需要查询时重新连接。</li> <li>每次执行大操作后，执行 <code>mysql_reset_connection</code> 重新初始化连接资源。 此操作不需要重新连接和权限验证，但会将连接恢复到刚创建完成时的状态。<span class="badge tip" style="vertical-align:top;" data-v-15b7b770>MySQL 5.7 +</span></li></ul></div></li></ul></li> <li>查询缓存 <span class="badge error" style="vertical-align:top;" data-v-15b7b770>MySQL 8.0 -</span><br>
+MySQL 8.0 前 Server 层包含一个 Query Cache, 查询语句会交给这个缓存和分析器。若命中则进行 Precheck 权限验证，后返回结果，若没有命中则分析器继续执行，结束后将结果存入缓存。<div class="custom-block warning"><p class="custom-block-title">值得注意的是</p> <p>查询缓存时，会失效很频繁。对于一张表来说，只要有一个更新，那关于这张表的所有缓存都会被清空。这样以来，更新压力大的数据库的缓存命中率会非常低。<br>
+MySQL 也提供了按需使用的缓存，设置 <code>query_cache_type</code> 为 <code>DEMAND</code> 后，默认不使用查询缓存，只有在使用了 <code>SQL_CACHE</code> 关键字的查询语句才会使用缓存。例如：<code>SELECT SQL_CACHE * FROM T WHERE ID=10;</code></p></div></li> <li>分析器<br>
+词法语法分析，分解输入命令，判断是否符合语法。Precheck 权限验证。目标表和目标列是否存在验证。</li> <li>优化器<br>
+执行计划生成；索引选择</li> <li>执行器<br>
+操作引擎返回结果。<br>
+执行前会进行 Precheck 来判断是否对目标表有权限。通过后根据引擎定义调用引擎对表操作。<br> <code>row_examined</code> 表示执行器扫描行数，与执行器调用次数不同。</li></ul> <h3 id="存储引擎层"><a href="#存储引擎层" class="header-anchor">#</a> 存储引擎层</h3> <p>存储引擎层负责数据的存储和提取，以插件形式实现其架构。支持 InnoDB, MyISAM, Memory 等多个存储引擎，在 5.5.5+ 后 InnoDB 成为默认存储引擎。不同的存储引擎公用一个 Server 层。</p> <h3 id="日志模块"><a href="#日志模块" class="header-anchor">#</a> 日志模块</h3> <p>在执行查询语句以外的语句时，例如 INSERT, UPDATE, DELETE, CREATE 等时，会涉及到重做日志 redo log 和归档日志 binlog.</p> <h4 id="redo-log"><a href="#redo-log" class="header-anchor">#</a> redo log</h4> <ul><li>MySQL 使用 Write-Ahead Logging (WAL) 技术来减少磁盘访问的随机 I/O 次数来加快运行。 InnoDB 会先将记录写在 redo log 里并更新内存，等待适当时将操作更新在磁盘里。</li> <li>例如配置 4 个文件为一组作为 redo log, 每个文件可以存放 1GB 内容，则总共可以存放 4GB 操作。四个文件形成一个循环队列。队头是 check point, 队尾是 write pos, 每当有操作时 write pos 向后移动。如果队满则将队头写入磁盘，更新 checkpoint.</li> <li>通过 redo log, InnoDB 可以保证数据库发生异常重启后，之前的记录不对丢失，称为 crash-safe.<br>
+当崩溃发生，试图恢复时，系统无法知道 redo log 中哪些已经写入磁盘，所以需要保证写入操作的幂等，这些操作基于 Page 的物理日志实现。</li> <li><code>innodn_flush_log_at_trx_commit</code> 设置为 1 时表示每次事务均直接持久化到磁盘中。可以保证 MySQL 异常重启后数据不丢失。</li></ul> <h4 id="binlog"><a href="#binlog" class="header-anchor">#</a> binlog</h4> <ul><li>Server 层的日志会被记录到 binlog 中。这个日志是一个逻辑日志并且所有的引擎都可以使用。</li> <li>binlog 采用追加逻辑操作的形式记录日志。</li> <li><code>sync_binlog</code> 设置为 1 时表示每次事务均直接持久化到磁盘中。</li></ul> <p>示例：UPDATE 语句的流程：<br> <code>UPDATE T SET c=c+1 WHERE ID=2;</code></p> <ol><li>执行器调用引擎通过树搜索获取 ID=2 行。若这行已经在内存中则直接返回结果给执行器，否则从磁盘读入内存后返回结果。</li> <li>执行器执行 c+1 操作，后调用引擎写入新数据。</li> <li>引擎先将数据更新在内存中，同时将该操作写入 redo log，此时 redo log 处于 prepare 状态。之后引擎告知执行器执行完成，可以提交事务。</li> <li>执行器生成这个操作的 binlog，写入磁盘。</li> <li>执行器调用引擎的事务提交接口。引擎将刚写入的 redo log 状态更新为 commit.</li></ol> <p><strong>两阶段提交</strong><br>
+通过 redo log 等待 binlog 写入完成前后的状态改变，实现两阶段提交。这可以使得两份日志逻辑一致。<br>
+准备恢复到某一个时间点的状态步骤：</p> <ol><li>恢复目标时间点最近的全备份到临时库。</li> <li>从备份时间开始，通过 binlog 的日志，依次回放操作直到目标时间点。</li> <li>将临时库上线为生产库。</li></ol> <p>没有两阶段提交的示例：在执行 <code>UPDATE T SET c=c+1 WHERE ID=2;</code> 语句时，写完第一个日志文件后崩溃。操作前 c 的值为 0.</p> <ul><li>情形一：redo log 写入完成，binlog 还未写入<br>
+redo log 拥有 cras-safe 的特性，在恢复完成后 c 的值为 1；但 binlog 并未写入 UPDATE 操作，若根据 binlog 恢复，c 的值为 0. 两者不相等。</li> <li>情形二：binlog 写入完成， redo log 还未写入<br>
+redo log 恢复后 UPDATE 语句事务不存在，c 的值为0；但 binlog 已经记录了更新操作，这个事物恢复后 c 的值为 1. 两者不相等。</li></ul> <p>类似的，除了在崩溃恢复，服务器扩容来增加服务器读取能力时，常见的方法也是使用全备份加 binlog 回放来实现，两阶段提交可以保证主从数据库之间数据的一致性。</p></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/ZweiRm/localhost-8080.github.io/edit/master/docs/mysql/README.md" target="_blank" rel="noopener noreferrer">帮助我改善此页面！</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">8/30/2021, 7:47:57 PM</span></div></footer> <div class="page-nav"><p class="inner"><!----> <span class="next"><a href="/mysql/transaction.html">
+        事务
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.2a231f70.js" defer></script><script src="/assets/js/3.edba18b2.js" defer></script><script src="/assets/js/41.bd84d893.js" defer></script><script src="/assets/js/6.9f2b6213.js" defer></script><script src="/assets/js/5.74cf20d1.js" defer></script>
+  </body>
+</html>

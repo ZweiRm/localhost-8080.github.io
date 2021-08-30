@@ -1,5 +1,5 @@
 ---
-prev: ./transacton
+prev: ./transaction
 next: ./references
 ---
 
