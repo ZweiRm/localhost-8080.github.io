@@ -176,6 +176,7 @@ module.exports = {
 
             '/mysql/':[
                 '',
+                'transaction',
             ],
 
             '/hello-world/': [
