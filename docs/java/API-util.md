@@ -66,6 +66,7 @@ next: ./API-io
 + 基于链表实现，增删快，查询慢
 + 线程不安全的集合
 ![LinkedList](/img/LinkedList.png)
++ 因为在 Java 中，链表默认实现为双向链表。使用在按 index 访问结点时，源码采用了判断 index 属于前一半元素还是后一半元素的形式，之后使用 for 循环从前到 index 或从后到 index 依次遍历直到访问到目标结点。这样做可以减少一半元素的遍历操作。  
 
 `Vector`类
 + Java 中最早的集合，初始容量是10

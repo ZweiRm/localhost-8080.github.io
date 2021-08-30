@@ -18,4 +18,8 @@ next: false
 
 [7]Oracle America, Inc..[The Java® Language Specification Java SE 11 Edition](https://docs.oracle.com/javase/specs/jls/se11/html/index.html).2018  
 
-[8]悟空.[Java高并发之魂：synchronized深度解析](https://www.imooc.com/learn/1086).2018
+[8]悟空.[Java高并发之魂：synchronized深度解析](https://www.imooc.com/learn/1086).2018  
+
+[9]悟空.[Java并发核心知识体系精讲](https://coding.imooc.com/class/362.html).2019  
+
+[10]牟文斌.[一课掌握Lambda表达式语法及应用](https://www.imooc.com/course/introduction/id/1196).2019  
