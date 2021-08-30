@@ -83,6 +83,7 @@ module.exports = {
                 { text: 'Python', link: '/python/' },
                 { text: 'Web', link: '/web/' },
                 { text: 'Spring', link: '/spring/' },
+                { text: 'MySQL', link: '/mysql/'},
                 { text: '大数据', link: '/big-data/' },
                 { text: '前端', link: '/front-end/' },
                 { text: '软件工程', link: '/software-engineering/' },
@@ -171,6 +172,13 @@ module.exports = {
             '/recommender-systems/': [
                 '',
                 'introduction',
+            ],
+
+            '/mysql/':[
+                '',
+                'transaction',
+                'indices',
+                'references',
             ],
 
             '/hello-world/': [
