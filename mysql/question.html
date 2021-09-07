@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>关于索引的迷惑 | 本地煮鸡:8080</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="一个博客, 大概会记录一些技术笔记">
+    <meta property="article:modified_time" content="2021-09-04T15:57:33.000Z">
+    <meta property="og:site_name" content="本地煮鸡:8080">
+    <meta property="og:title" content="关于索引的迷惑">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/mysql/question.html">
+    <meta name="twitter:title" content="关于索引的迷惑">
+    <meta name="twitter:url" content="/mysql/question.html">
+    
+    <link rel="preload" href="/assets/css/0.styles.6382141a.css" as="style"><link rel="preload" href="/assets/js/app.b1c910cf.js" as="script"><link rel="preload" href="/assets/js/3.edba18b2.js" as="script"><link rel="preload" href="/assets/js/43.c96f1c28.js" as="script"><link rel="preload" href="/assets/js/5.74cf20d1.js" as="script"><link rel="prefetch" href="/assets/js/10.659d688c.js"><link rel="prefetch" href="/assets/js/11.e75f6980.js"><link rel="prefetch" href="/assets/js/12.ad7da3c4.js"><link rel="prefetch" href="/assets/js/13.bf7835e2.js"><link rel="prefetch" href="/assets/js/14.75611cbe.js"><link rel="prefetch" href="/assets/js/15.c7c90e2e.js"><link rel="prefetch" href="/assets/js/16.108cc861.js"><link rel="prefetch" href="/assets/js/17.d62fc01b.js"><link rel="prefetch" href="/assets/js/18.7d779a70.js"><link rel="prefetch" href="/assets/js/19.4f04c81d.js"><link rel="prefetch" href="/assets/js/20.2c9b45fd.js"><link rel="prefetch" href="/assets/js/21.8a669a43.js"><link rel="prefetch" href="/assets/js/22.03abd32b.js"><link rel="prefetch" href="/assets/js/23.601c9bed.js"><link rel="prefetch" href="/assets/js/24.626ae573.js"><link rel="prefetch" href="/assets/js/25.6f33a11e.js"><link rel="prefetch" href="/assets/js/26.0183f231.js"><link rel="prefetch" href="/assets/js/27.a5e7c143.js"><link rel="prefetch" href="/assets/js/28.f8559ab3.js"><link rel="prefetch" href="/assets/js/29.f37daf6a.js"><link rel="prefetch" href="/assets/js/30.2d7f810e.js"><link rel="prefetch" href="/assets/js/31.d60d659c.js"><link rel="prefetch" href="/assets/js/32.749f453f.js"><link rel="prefetch" href="/assets/js/33.97e8cc83.js"><link rel="prefetch" href="/assets/js/34.58f60d62.js"><link rel="prefetch" href="/assets/js/35.3338ad8d.js"><link rel="prefetch" href="/assets/js/36.8163b227.js"><link rel="prefetch" href="/assets/js/37.74d3f5de.js"><link rel="prefetch" href="/assets/js/38.fdf4c72b.js"><link rel="prefetch" href="/assets/js/39.abcceb81.js"><link rel="prefetch" href="/assets/js/4.3e9ac5f8.js"><link rel="prefetch" href="/assets/js/40.c8a8068f.js"><link rel="prefetch" href="/assets/js/41.bd84d893.js"><link rel="prefetch" href="/assets/js/42.25d48f73.js"><link rel="prefetch" href="/assets/js/44.1bb91579.js"><link rel="prefetch" href="/assets/js/45.7e27fb98.js"><link rel="prefetch" href="/assets/js/46.24d28f92.js"><link rel="prefetch" href="/assets/js/47.80151436.js"><link rel="prefetch" href="/assets/js/48.2e6619b7.js"><link rel="prefetch" href="/assets/js/49.9c58786f.js"><link rel="prefetch" href="/assets/js/50.96218769.js"><link rel="prefetch" href="/assets/js/51.afcd4b15.js"><link rel="prefetch" href="/assets/js/52.510b5aa6.js"><link rel="prefetch" href="/assets/js/53.81e4173d.js"><link rel="prefetch" href="/assets/js/54.b90e58b0.js"><link rel="prefetch" href="/assets/js/55.d9119db8.js"><link rel="prefetch" href="/assets/js/56.3a8b052f.js"><link rel="prefetch" href="/assets/js/57.40d80356.js"><link rel="prefetch" href="/assets/js/58.91e37b88.js"><link rel="prefetch" href="/assets/js/59.0cfbf0c4.js"><link rel="prefetch" href="/assets/js/6.85771ff3.js"><link rel="prefetch" href="/assets/js/7.9e531ddf.js"><link rel="prefetch" href="/assets/js/8.2a6c6fce.js"><link rel="prefetch" href="/assets/js/9.9fe60ec4.js"><link rel="prefetch" href="/assets/js/vendors~flowchart.9798c266.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6382141a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">本地煮鸡:8080</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/algorithm/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-item"><!----> <a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/mysql/" class="nav-link router-link-active">
+  MySQL
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/algorithm/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-item"><!----> <a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/mysql/" class="nav-link router-link-active">
+  MySQL
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/mysql/" aria-current="page" class="sidebar-link">MySQL</a></li><li><a href="/mysql/transaction.html" class="sidebar-link">事务</a></li><li><a href="/mysql/indices.html" class="sidebar-link">索引</a></li><li><a href="/mysql/references.html" class="sidebar-link">参考文献或资料</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="关于索引的迷惑"><a href="#关于索引的迷惑" class="header-anchor">#</a> 关于索引的迷惑</h1> <h2 id="已知资料"><a href="#已知资料" class="header-anchor">#</a> 已知资料</h2> <p>在 InnoDB 引擎中，采用了 B+ 树的形式才建立索引。对于同一张表，会建立两个索引：主键索引和非主键索引。</p> <ul><li>主键索引<br>
+也称为聚簇索引 (Clusterd Index)。以主键值建立树，叶子结点存储整行数据。</li> <li>非主键索引<br>
+也称为二级索引 (Secondary Index)。以索引列建立树，叶子结点存储主键的值。</li></ul> <p>在具体查询过程中，如果采用主键进行查询的方式，则使用聚簇索引直接查找；若采用值查询的方式，则先在对应列的树中搜索，再根据得到的 ID 在聚簇索引中搜索，称为回表。由于回表需要查询两颗索引树，所以一般尽量使用主键查询。</p> <h2 id="课程例子"><a href="#课程例子" class="header-anchor">#</a> 课程例子</h2> <p>有表：</p> <table><thead><tr><th style="text-align:center;">id</th> <th style="text-align:center;">k</th> <th style="text-align:center;">name</th></tr></thead> <tbody><tr><td style="text-align:center;">100</td> <td style="text-align:center;">1</td> <td style="text-align:center;"><code>null</code></td></tr> <tr><td style="text-align:center;">200</td> <td style="text-align:center;">2</td> <td style="text-align:center;"><code>null</code></td></tr> <tr><td style="text-align:center;">300</td> <td style="text-align:center;">3</td> <td style="text-align:center;"><code>null</code></td></tr> <tr><td style="text-align:center;">500</td> <td style="text-align:center;">5</td> <td style="text-align:center;"><code>null</code></td></tr> <tr><td style="text-align:center;">600</td> <td style="text-align:center;">6</td> <td style="text-align:center;"><code>null</code></td></tr></tbody></table> <p>给字段 k 设置了索引</p> <h2 id="疑惑"><a href="#疑惑" class="header-anchor">#</a> 疑惑</h2> <blockquote><p>如果语句是 select * from T where ID=500，即主键查询方式，则只需要搜索 ID 这棵 B+ 树；</p></blockquote> <p>实际运行:</p> <div class="language-sql extra-class"><pre class="language-sql"><code><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span>
+	<span class="token operator">*</span>
+<span class="token keyword">FROM</span>
+	<span class="token punctuation">`</span><span class="token keyword">data</span><span class="token punctuation">`</span> 
+<span class="token keyword">WHERE</span>
+	id <span class="token operator">=</span> <span class="token number">500</span>
+</code></pre></div><p>结果：
+<code>Extra null</code><br>
+与预期不符。</p> <blockquote><p>如果语句是 select * from T where k=5，即普通索引查询方式，则需要先搜索 k 索引树，得到 ID 的值为 500，再到 ID 索引树搜索一次。这个过程称为回表。</p></blockquote> <p>实际运行:</p> <div class="language-sql extra-class"><pre class="language-sql"><code><span class="token keyword">EXPLAIN</span> <span class="token keyword">SELECT</span>
+	<span class="token operator">*</span>
+<span class="token keyword">FROM</span>
+	<span class="token punctuation">`</span><span class="token keyword">data</span><span class="token punctuation">`</span> 
+<span class="token keyword">WHERE</span>
+	k <span class="token operator">=</span> <span class="token number">5</span>
+</code></pre></div><p>结果：
+<code>Extra null</code><br>
+与预期不符。</p> <div class="custom-block warning"><p class="custom-block-title">疑问</p> <ul><li>经过试验，如果 <code>SELECT</code> 的不是 <code>*</code> 而是 <code>id</code> 或者 <code>k</code> 时，<code>EXPLAIN</code> 的结果会变成 <code>Using index</code>;</li> <li>经过试验，如果更换表设计，去掉字段 <code>name</code>，仅保留 <code>id</code> 和 <code>k</code> 时，再重复上面两个查询语句，第二个语句结果会变成 <code>Using index</code>;</li></ul> <p>问题一是<strong>控制使用索引与否的到底是什么</strong>，按照实验一，可以猜测是“在多字段情况下，给单个非主键字段设置索引，使用索引与否由 <code>SELECT</code> 项控制。只有查询字段是被索引包含的才会使用；<br>
+但是第二个实验在更新表设计后，在通配查询也使用了索引，破除了上面的猜想。<br>
+造成上面情况的原因是什么？</p> <p>问题二是<strong>为什么语句一在 <code>Explain</code> 后显示为 <code>null</code></strong>？</p></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/ZweiRm/localhost-8080.github.io/edit/master/docs/mysql/question.md" target="_blank" rel="noopener noreferrer">帮助我改善此页面！</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">9/4/2021, 11:57:33 PM</span></div></footer> <!----> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.b1c910cf.js" defer></script><script src="/assets/js/3.edba18b2.js" defer></script><script src="/assets/js/43.c96f1c28.js" defer></script><script src="/assets/js/5.74cf20d1.js" defer></script>
+  </body>
+</html>
