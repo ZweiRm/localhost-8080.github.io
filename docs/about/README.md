@@ -21,6 +21,9 @@ momg@foxmail.com
 [Github Repository](https://github.com/ZweiRm/ahza_health_mixfront)  
 [Website](https://health.ahza.xin/)
 
+### Ahza Coupon 
+[Website](https://coupon.ahza.xin/)
+
 ::: warning
 These apps are still in the beta version.  
 Please **DO NOT** use your frequently-used password to register testing account of these apps.
