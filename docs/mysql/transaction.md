@@ -56,7 +56,7 @@ MySQL 给出了四个隔离级别，通过隔离级别来解决上面的问题�
 
 ## 启动方式
 1. 显示启动。
-    使用 `begiin transaction` 或者 `start transaction` 来启动，提交语句是 `commit`, 回滚语句是 `rollback`.
+    使用 `begin transaction` 或者 `start transaction` 来启动，提交语句是 `commit`, 回滚语句是 `rollback`.
 2. 设置关闭线程自动提交。
     使用 `set autocommit=0` 来关闭自动提交。当就算只执行一个 SELECT 语句时也会开启一个事务。这个事务只有当主动 commit 或 rollback，或者断开连接时才结束。  
     ::: warning 特别地
