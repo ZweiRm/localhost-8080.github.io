@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>锁 | 本地煮鸡:8080</title>
+    <meta name="generator" content="VuePress 1.8.2">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="一个博客, 大概会记录一些技术笔记">
+    <meta property="article:modified_time" content="2021-09-14T15:13:00.000Z">
+    <meta property="og:site_name" content="本地煮鸡:8080">
+    <meta property="og:title" content="锁">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="/mysql/lock.html">
+    <meta name="twitter:title" content="锁">
+    <meta name="twitter:url" content="/mysql/lock.html">
+    
+    <link rel="preload" href="/assets/css/0.styles.6382141a.css" as="style"><link rel="preload" href="/assets/js/app.39411ef0.js" as="script"><link rel="preload" href="/assets/js/3.3efdb081.js" as="script"><link rel="preload" href="/assets/js/44.95770bff.js" as="script"><link rel="preload" href="/assets/js/6.279234f0.js" as="script"><link rel="preload" href="/assets/js/5.c1db86ad.js" as="script"><link rel="prefetch" href="/assets/js/10.92d7c762.js"><link rel="prefetch" href="/assets/js/11.837ccec4.js"><link rel="prefetch" href="/assets/js/12.71d7bb59.js"><link rel="prefetch" href="/assets/js/13.9b635bdb.js"><link rel="prefetch" href="/assets/js/14.5b24efb3.js"><link rel="prefetch" href="/assets/js/15.8984ea68.js"><link rel="prefetch" href="/assets/js/16.28782335.js"><link rel="prefetch" href="/assets/js/17.8c8fe584.js"><link rel="prefetch" href="/assets/js/18.732ea28a.js"><link rel="prefetch" href="/assets/js/19.5da0ae34.js"><link rel="prefetch" href="/assets/js/20.079c29f3.js"><link rel="prefetch" href="/assets/js/21.3148760c.js"><link rel="prefetch" href="/assets/js/22.70458cbb.js"><link rel="prefetch" href="/assets/js/23.e4c4fedd.js"><link rel="prefetch" href="/assets/js/24.542e4e05.js"><link rel="prefetch" href="/assets/js/25.1a6a1388.js"><link rel="prefetch" href="/assets/js/26.82066589.js"><link rel="prefetch" href="/assets/js/27.be82ea78.js"><link rel="prefetch" href="/assets/js/28.00386555.js"><link rel="prefetch" href="/assets/js/29.c1288df8.js"><link rel="prefetch" href="/assets/js/30.d853a40c.js"><link rel="prefetch" href="/assets/js/31.cf21c0d2.js"><link rel="prefetch" href="/assets/js/32.1ae54633.js"><link rel="prefetch" href="/assets/js/33.7dd30fc7.js"><link rel="prefetch" href="/assets/js/34.632ce5d9.js"><link rel="prefetch" href="/assets/js/35.f8eae663.js"><link rel="prefetch" href="/assets/js/36.8e335d2d.js"><link rel="prefetch" href="/assets/js/37.d965e796.js"><link rel="prefetch" href="/assets/js/38.c55d8017.js"><link rel="prefetch" href="/assets/js/39.03448044.js"><link rel="prefetch" href="/assets/js/4.f36e69d2.js"><link rel="prefetch" href="/assets/js/40.4a4853ff.js"><link rel="prefetch" href="/assets/js/41.1ab79730.js"><link rel="prefetch" href="/assets/js/42.2fdf2dce.js"><link rel="prefetch" href="/assets/js/43.5f2f7767.js"><link rel="prefetch" href="/assets/js/45.3b65cb61.js"><link rel="prefetch" href="/assets/js/46.fae97ea5.js"><link rel="prefetch" href="/assets/js/47.95fdddae.js"><link rel="prefetch" href="/assets/js/48.f9fcbc38.js"><link rel="prefetch" href="/assets/js/49.8ff0b8c1.js"><link rel="prefetch" href="/assets/js/50.228a61bc.js"><link rel="prefetch" href="/assets/js/51.b2dd5f61.js"><link rel="prefetch" href="/assets/js/52.0219a3dc.js"><link rel="prefetch" href="/assets/js/53.ac9b9766.js"><link rel="prefetch" href="/assets/js/54.53546026.js"><link rel="prefetch" href="/assets/js/55.8cc1f2ad.js"><link rel="prefetch" href="/assets/js/56.c287ebb3.js"><link rel="prefetch" href="/assets/js/57.4c7eebe4.js"><link rel="prefetch" href="/assets/js/58.86407e8c.js"><link rel="prefetch" href="/assets/js/59.540ebfd0.js"><link rel="prefetch" href="/assets/js/60.05fede69.js"><link rel="prefetch" href="/assets/js/61.637ad455.js"><link rel="prefetch" href="/assets/js/7.9f42334e.js"><link rel="prefetch" href="/assets/js/8.44c6de7e.js"><link rel="prefetch" href="/assets/js/9.ab2f5e7a.js"><link rel="prefetch" href="/assets/js/vendors~flowchart.cfb38b78.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.6382141a.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">本地煮鸡:8080</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/algorithm/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-item"><!----> <a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/mysql/" class="nav-link router-link-active">
+  MySQL
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/algorithm/" class="nav-link">
+  算法
+</a></li><li class="dropdown-item"><!----> <a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-item"><!----> <a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-item"><!----> <a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-item"><!----> <a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li><li class="dropdown-item"><!----> <a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-item"><!----> <a href="/python/" class="nav-link">
+  Python
+</a></li><li class="dropdown-item"><!----> <a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-item"><!----> <a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-item"><!----> <a href="/mysql/" class="nav-link router-link-active">
+  MySQL
+</a></li><li class="dropdown-item"><!----> <a href="/big-data/" class="nav-link">
+  大数据
+</a></li><li class="dropdown-item"><!----> <a href="/front-end/" class="nav-link">
+  前端
+</a></li><li class="dropdown-item"><!----> <a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li></ul></div></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/mysql/" aria-current="page" class="sidebar-link">MySQL</a></li><li><a href="/mysql/transaction.html" class="sidebar-link">事务</a></li><li><a href="/mysql/indices.html" class="sidebar-link">索引</a></li><li><a href="/mysql/lock.html" aria-current="page" class="active sidebar-link">锁</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mysql/lock.html#全局锁" class="sidebar-link">全局锁</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mysql/lock.html#使用场景" class="sidebar-link">使用场景</a></li></ul></li><li class="sidebar-sub-header"><a href="/mysql/lock.html#表级锁" class="sidebar-link">表级锁</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/mysql/lock.html#表锁" class="sidebar-link">表锁</a></li><li class="sidebar-sub-header"><a href="/mysql/lock.html#元数据锁-metadata-lock" class="sidebar-link">元数据锁 (Metadata Lock)</a></li></ul></li></ul></li><li><a href="/mysql/references.html" class="sidebar-link">参考文献或资料</a></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="锁"><a href="#锁" class="header-anchor">#</a> 锁</h1> <p>为了解决并发操作可能会出现的问题，MySQL 提供了锁机制。根据加锁范围，分为全局锁、表级锁和行级锁。</p> <h2 id="全局锁"><a href="#全局锁" class="header-anchor">#</a> 全局锁</h2> <p>使用命令 <code>FLUSH TABLES WITH READ LOCK</code> 让整个库处于只读状态。之后其他线程的 DDL(数据定义语言，包括创建表、修改表等)、DML(数据操作语言，包括增、删、改)和更新类的事务的提交语句会被阻塞。<br>
+使用 <code>UNLOCK TABLES</code> 解锁。</p> <h3 id="使用场景"><a href="#使用场景" class="header-anchor">#</a> 使用场景</h3> <p>当在进行全库逻辑备份（所有记录查找并保存到文本）时，可以考虑使用全局锁。</p> <ul><li>必要性<br>
+可能会发生数据不一致。在不加全局锁的情形下，因为不同表之间执行顺序不同备份时间就不同。若一张表在备份时间差内进行了更新操作，则它会与已经备份的关联表数据不一致。<div class="custom-block tip"><p class="custom-block-title">一个有限制条件的解决方案</p> <p>可以利用可重复读的事务来解决。在支持事务的引擎里，比如 InnoDB 提供了逻辑备份工具 mysqldump. 使用参数 <code>-single-transaction</code> 来使用它时会在导入数据前启动一个事务，保证视图的一致性。且由于多版本并发控制 （MVCC），在备份过程中可以进行更新操作。</p></div></li> <li>缺点
+<ul><li>在主库备份时，FTWRL 会使得主库不能执行更新操作，业务停摆；</li> <li>若是读写分离的主从库模式，从库备份时，从库不能执行主库同步的 binglog 导致主从延迟。</li></ul></li></ul> <div class="custom-block warning"><p class="custom-block-title">关于设置全局只读的解决方法</p> <p>使用 <code>set global readonly=true</code> 也可以使得整个库处于只读的状态，但会带来一些问题：</p> <ul><li>在一些主从库中，会使用 readonly 作为逻辑判断是否是从库；</li> <li>当客户端发生异常断开时，readonly 不会改变库的状态，依旧保持只读会导致库处于长时间不可写状态。 FTWRL 在发生断开时会自动释放全局锁，让库恢复可以正常更新的状态。</li></ul></div> <h2 id="表级锁"><a href="#表级锁" class="header-anchor">#</a> 表级锁</h2> <p>表锁分为两种：表锁和元数据锁。</p> <h3 id="表锁"><a href="#表锁" class="header-anchor">#</a> 表锁</h3> <p>使用 <code>LOCK TABLES $table READ/WRITE</code> 来对表进行锁定。它使用 <code>UNLOCK TABLES</code> 主动解锁或在客户端断开连接时自动释放锁。它不仅限制别的线程的读或写，也限制本线程的操作：</p> <ul><li>线程 A 对某表添加读锁，线程 A 和其他线程都不能对表进行写操作。同时线程 A 不可以读写其他未加锁的表；</li> <li>线程 A 对某表添加写锁，线程 A 可以对表进行写操作，其他线程对表读写都阻塞；</li></ul> <p>理解为共享读锁，独占写锁。表锁在没有更细粒度的锁出现前，是最常用的并发处理机制。</p> <h3 id="元数据锁-metadata-lock"><a href="#元数据锁-metadata-lock" class="header-anchor">#</a> 元数据锁 (Metadata Lock) <span class="badge tip" style="vertical-align:top;" data-v-15b7b770>MySQL 5.5+</span></h3> <p>元数据锁会在一个表被访问时自动加锁而不需要显示使用。它可以保证读写的正确性。MDL 在语句开始时申请，事务结束后释放。</p> <ul><li>当一个表在进行增删改查时会添加读锁，此时所有线程都可以正常读取元数据，不影响增删改查。（读锁之间不互斥，多个线程可以对同一张表进行增删改查）</li> <li>当一个表正在进行结构更改操作时加写锁，只有拥有锁的线程可以读写元数据，其他线程不能执行任何操作。（写锁与读锁、写锁与写锁互斥，保证结构变更安全性）</li></ul> <div class="custom-block warning"><p class="custom-block-title">增加或修改字段时的风险</p></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/ZweiRm/localhost-8080.github.io/edit/master/docs/mysql/lock.md" target="_blank" rel="noopener noreferrer">帮助我改善此页面！</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">9/14/2021, 11:13:00 PM</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/mysql/indices.html" class="prev">
+        索引
+      </a></span> <span class="next"><a href="/mysql/references.html">
+        参考文献或资料
+      </a>
+      →
+    </span></p></div> </main></div><div class="global-ui"><!----><!----></div></div>
+    <script src="/assets/js/app.39411ef0.js" defer></script><script src="/assets/js/3.3efdb081.js" defer></script><script src="/assets/js/44.95770bff.js" defer></script><script src="/assets/js/6.279234f0.js" defer></script><script src="/assets/js/5.c1db86ad.js" defer></script>
+  </body>
+</html>

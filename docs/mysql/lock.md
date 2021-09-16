@@ -1,6 +1,6 @@
 ---
 prev: ./indices
-next: ./reference
+next: ./references
 ---
 
 # 锁
