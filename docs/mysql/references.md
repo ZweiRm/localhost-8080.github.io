@@ -1,5 +1,5 @@
 ---
-prev: ./indices
+prev: ./lock
 next: false
 ---
 
