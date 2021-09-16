@@ -179,6 +179,7 @@ module.exports = {
                 '',
                 'transaction',
                 'indices',
+                'lock',
                 'references',
             ],
 
