@@ -181,6 +181,7 @@ module.exports = {
                 'indices',
                 'lock',
                 'references',
+                'diivide',
             ],
 
             '/hello-world/': [
