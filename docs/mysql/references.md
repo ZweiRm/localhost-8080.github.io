@@ -8,4 +8,6 @@ next: false
 
 [2] Xin Huang. COMP 7640 Database Systems and Administration. Hong Kong Baptist University, 2021.   
 
-[3] Jessica程序猿. [联合索引在B+树上的结构](https://www.cnblogs.com/wuchanming/p/9185661.html). 2018
+[3] Jessica程序猿. [联合索引在B+树上的结构](https://www.cnblogs.com/wuchanming/p/9185661.html). 2018  
+
+[4] 花落的速度. [mysql MDL读写锁阻塞，以及online ddl造成的“插队”现象](https://blog.csdn.net/q2878948/article/details/96430129). 2019
