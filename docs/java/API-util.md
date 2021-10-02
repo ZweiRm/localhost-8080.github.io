@@ -424,6 +424,38 @@ class FileWatching implements Runnable {
 + 类似线程池，实现线程复用
 + 先交由核心线程处理；若核心线程已满则放入工作队列中；若工作队列满则创建临时线程
 
+**创建线程池的构造方法参数**  
+|参数名|类型|含义|
+|:--:|:--:|:--:|
+|corePoolSize|int|核心线程数量|
+|maxPoolSize|int|最大线程数量|
+|keepAliveTime|long|保持存活时间|
+|workQueue|BlockingQueue|任务存储队列|
+|threadFactory|ThreadFactory|当线程池需要新的线程时，会使用 threadFactory 来生成新线程|
+|Handler|RejectedExecutionHandler|当线程池无法接受所提交任务时的拒绝策略|
+
+当线程池创建完成后，不会创建线程。等待任务到来时再创建线程。线程池可以在 corePoolSize 的基础上额外增加线程以应对情况，其最大数量是 maxPoolSize. 具体逻辑是：  
++ 如果线程数量小于 corePoolSize, 即使有线程处于空闲，也新建一个线程来处理新任务；
++ 如果线程大于等于 corePoolSize 但小于 maxPoolSize, 则任务存放在任务队列中等待调用到现有线程中；
++ 如果队列已满且线程数量小于 maxPoolSize, 创建新线程来运行任务；
++ 如果队列已满且线程数等于 maxPoolSize, 拒绝该任务。  
+
+keepAliveTime 是线程存活时间。当线程数量大于 corePoolSize 后，多余空闲线程会在时间超过 keepAliveTime 后被终止。如果设置 allowCoreThreadTimeout= true 则核心线程也会被终止（不推荐）。  
+
+新线程由 ThreadFactory 创建，默认使用 `Executor.defaultThreadFactory()`，创建的线程在同一个线程组中。拥有同样的 NORM_PRIORITY 且都不是守护线程。也可以指定 ThreadFactory 来对线程名、线程组、优先级、是否是守护线程等进行设置。  
+
+对于线程队列，有以下常见类型：  
++ SynchronousQueue: 直接交换,做简单的队列和线程之间中转。队列中没有容量，使用这种队列需要设置较大的 maxPoolSize;  
++ LinkedBlockingQueue: 无界队列，所有任务都会持续放到队列中。当处理速度追不上任务新增速度时，可能会发生异常，比如内存超限；
++ ArrayBlcokingQueue: 有界队列。  
+
+**特性**  
++ 当设置 corePoolSize 和 maxPoolSize 相等，则创建固定大小的线程池。  
++ 线程池优先保证当前有较少的线程数量，只有在负载很大的情况下才增加线程数。  
++ 将 maxPoolSize 设置为很大值（如 Integer.MAX_VALUE）来允许线程池容纳任意数量的并发任务。  
++ 如果任务队列使用了无界队列（如 LinkedBlockingQueue），那么线程数量就永远不会超过 corePoolSize。  
+
+
 **实例代码**  
 ``` java
 public class ExcutorServiceDemo {
@@ -457,28 +489,53 @@ class Demo implements Runnable {
 ```
 
 ::: tip 线程池
-`Executor`提供了三种线程池：`CachedThreadPool`、`FixedThreadPool`和`ForkJoinPool`。  
+`Executor`提供了以下线程池：`CachedThreadPool`、`ScheduledThreadPool`, `FixedThreadPool`, `SingleThreadExecutor` 和 `ForkJoinPool`。  
 
 + `CachedThreadPool`
   + 缓存线程池
-  + 小队列大池
-  + 无核心线程，临时线程存活时间短
+  + 小队列大池（无界线程池）
+  + 无核心线程，临时线程存活时间短（自动回收多余线程）
   + 能够较好应用高并发场景
   + 不适合长任务场景
   ``` java
   ExecutorService executorService = Executors.newCachedThreadPool();
   ```
+  + 在源码中使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 为 0，maxPoolSize 为 Integer.MAX_VALUE 来允许任意多任务并发操作。keepAliveTime 为 60L. 使用 SynchronousQueue 作为任务队列，队列中无容量，仅用作队列与线程中间简单交换。可能会因为线程过多而发生内存超限。
+
++ `ScheduledThreadPool`  
+  + 周期性的线程池
+  + 使用 `schedule()` 传入参数：任务，延迟时间，时间单位来执行延迟任务
+  + 使用 `scheduleAtFixedRate()` 传入参数：任务，起始延迟时间，执行周期，时间单位来执行定时任务
+  ``` java
+  ExecutorService executorService = Executors.newScheduledThreadPool(5);
+  ```
+  + 和 `CachedThreadPool` 类似，参数设定 corePoolSize 为创建时的传入参数，maxPoolSize 为 Integer.MAX_VALUE 来允许任意多任务并发操作。
 
 + `FixedThreadPool`
   + 大队列小池（传入数目）
   + 所有线程都为核心线程
   + 降低服务器的并发压力
   ``` java
-  ExecutorService executorService = Executors.newFiuxedThreadPool(5);
+  ExecutorService executorService = Executors.newFixedThreadPool(5);
   ```
+  + 在源码中使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 与 maxPoolSize 相同，都为创建 FixedThreadPool 时的参数，以次创建固定大小的线程池。因为不会有超出 corePoolSize 的线程，所以 keepAliveTime 为 0L. 最后使用 LinkedBlockingQueue 来充当任务队列，所有超出线程数量的任务都会被放在这个无界队列中。  
 
++ `SingleThreadExecutor`  
+  + 类似 `FixedThreadPool`，源码使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 与 maxPoolSize 相同，都为 1,  keepAliveTime 为 0L, 使用 LinkedBlockingQueue 来充当任务队列。  
+  + 
 + `ForkJoinPool`
   + 分叉合并（不推荐使用）
+
++ `WorkStealingPool` <Badge text="Java 1.8+"/>  
+  + 适用于有子任务的情况  
+  + 线程之间可以窃取资源来提升并行能力，但不保证执行顺序
+
+|线程池|corePoolSize|maxpoolSize|keepAliveTime|workQueue|
+|:--:|:--:|:--:|:--:|:--:|
+|FixedThreadPool|参数列表接收|与 corePoolSize 相同|0s|LinkedBlockingQueue（无界队列）|
+|SingleThreadExecutor|1|1|0s|LinkedBlockingQueue（无界队列）|
+|CachedThreadPool|0|Integer.MAX_VALUE|60s|SynchronousQueue（直接交换简单队列）|
+|ScheduledThreadPool|参数列表接收|Integer.MAX_VALUE|10s|DelayedWorkQueue（优先队列）|
 :::
 
 ::: tip Callable 接口
@@ -500,6 +557,12 @@ class CallableDemo implements Callable<String> {
    }
 }
 ```
+:::
+
+::: warning 关于创建线程池
+一般来讲，更推荐手动创建线程池。创建时可以参考以下启发规则：  
++ 当任务是 CPU 密集型的（如加密、Hash 计算等），线程数量设置为 CPU 核心数的 1 到 2 倍。
++ 当任务是耗时 IO 型的（如读写数据库、文件、网络等），线程数应大于 CPU 核心数多倍。以 JVM 线程监控显示最繁忙的情况为依据，保证线程空闲可以衔接。具体计算方法：线程数 = CPU 核心数 * (1 + 平均等待时间 / 平均工作时间)
 :::
 
 ### 锁与原子操作
