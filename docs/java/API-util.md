@@ -421,8 +421,16 @@ class FileWatching implements Runnable {
 **基本信息**  
 `public interface ExecutorService`  
 
-+ 类似线程池，实现线程复用
++ 线程池，实现线程复用
 + 先交由核心线程处理；若核心线程已满则放入工作队列中；若工作队列满则创建临时线程
+
+`Executor` 接口是 JUC 线程池库的顶级接口。`ExecutorService` 继承了该接口。`Executor` 中只有一个 `execute()`.  
+`ExecutorService` 接口在 `Executor` 的基础上增加了新的方法，比如 `shutdown()`.  
+
+`Executors` 是关于 `Executor` 的工具类。具体的内置线程池创建是用这个类创建的。  
+
+`ThreadPoolExecutor` 继承了抽象类 `AbstractExecutorService`, 而 `AbstractExecutorService` 实现了 `ExecutorService` 接口。  
+在使用 `Executors` 创建线程池时，使用了向上造型。即 `ThreadPoolExecutor` 对象 被 `ExecutorService` 变量接收。  
 
 **创建线程池的构造方法参数**  
 |参数名|类型|含义|
@@ -562,8 +570,196 @@ class CallableDemo implements Callable<String> {
 ::: warning 关于创建线程池
 一般来讲，更推荐手动创建线程池。创建时可以参考以下启发规则：  
 + 当任务是 CPU 密集型的（如加密、Hash 计算等），线程数量设置为 CPU 核心数的 1 到 2 倍。
-+ 当任务是耗时 IO 型的（如读写数据库、文件、网络等），线程数应大于 CPU 核心数多倍。以 JVM 线程监控显示最繁忙的情况为依据，保证线程空闲可以衔接。具体计算方法：线程数 = CPU 核心数 * (1 + 平均等待时间 / 平均工作时间)
++ 当任务是耗时 IO 型的（如读写数据库、文件、网络等），线程数应大于 CPU 核心数多倍。以 JVM 线程监控显示最繁忙的情况为依据，保证线程空闲可以衔接。具体计算方法：线程数 = CPU 核心数 * (1 + 平均等待时间 / 平均工作时间)  
+
+在使用线程池时需要注意：  
++ 避免任务堆积
++ 避免线程数过度增加
++ 排查是否发生线程泄漏（无法回收的线程）
 :::
+
+**线程池的结束方法**  
++ `shutdown()`  
+  + 执行后对新来任务拒绝，等待当前和队列中所有任务执行完毕后终止线程池。
+  + 使用 `isShutdown()` 判断当前是否进入了 shutdown 状态。
+  + 使用 `isTerminated()` 判断当前是否所有线程任务都已完成。
++ `awaitTermination()`  
+  + 开始后进入阻塞状态，检测时间内线程池任务是否会完全终止并返回结果。传入参数：中止时间，时间单位。
++ `shutdownNow()`  
+  + 立刻关闭线程池。线程中的线程获取到了 interrupted 信号，队列中的任务返回为 runnableList.
+
+**线程池拒绝任务**  
++ Executor 关闭后，新任务会被拒绝。（例如在 `shutdown()` 执行后）  
++ Executor 在线程已经达到 maxPoolSize 且任务队列已满时，新任务会被拒绝。  
+
+拒绝策略：  
++ AbortPolicy：直接抛出异常
++ DiscardPolicy：静默丢弃
++ DiscardOldestPolicy：新任务到来时，丢弃存在时间最久的任务
++ CallerRunsPolicy：让提交任务的线程自己执行任务，可以避免业务损失，提供负反馈以降低线程池压力
+
+**钩子方法**  
+利用钩子函数可以在任务之前前后设定特定的逻辑（例如生成日志或者进行统计等）。  
+自定义的可暂停线程池：  
+``` java
+import java.util.concurrent.*;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+
+public class PauseableThreadPool extends ThreadPoolExecutor {
+    // 标记位
+    private boolean isPaused;
+    // 上锁来保证对标记位的并发修改线程安全
+    private final ReentrantLock lock = new ReentrantLock();
+    // 新建锁状态
+    private Condition unpaused = lock.newCondition();
+
+    public PauseableThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue) {
+        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue);
+    }
+
+    public PauseableThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory) {
+        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory);
+    }
+
+    public PauseableThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, RejectedExecutionHandler handler) {
+        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, handler);
+    }
+
+    public PauseableThreadPool(int corePoolSize, int maximumPoolSize, long keepAliveTime, TimeUnit unit, BlockingQueue<Runnable> workQueue, ThreadFactory threadFactory, RejectedExecutionHandler handler) {
+        super(corePoolSize, maximumPoolSize, keepAliveTime, unit, workQueue, threadFactory, handler);
+    }
+
+    // 暂停方法
+    private void pause() {
+        lock.lock();
+        try {
+            isPaused = true;
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    // 恢复方法
+    private void resume() {
+        lock.lock();
+        try {
+            isPaused = false;
+            unpaused.signalAll();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    // 钩子方法
+    @Override
+    protected void beforeExecute(Thread t, Runnable r) {
+        super.beforeExecute(t, r);
+        lock.lock();
+        try {
+            while (isPaused) {
+                // 休眠线程
+                unpaused.await();
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public static void main(String[] args) throws InterruptedException {
+        // 创建自定义可暂停线程池实例
+        PauseableThreadPool pauseableThreadPool = new PauseableThreadPool(10, 20, 10L, TimeUnit.SECONDS, new LinkedBlockingQueue<>());
+
+        // 任务
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                System.out.println("执行");
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        
+        // 使用线程池
+        for (int i = 0; i < 10_000; i++) {
+            pauseableThreadPool.execute(runnable);
+        }
+
+        // 暂停
+        Thread.sleep(1500);
+        pauseableThreadPool.pause();
+        System.out.println("线程池暂停");
+
+        // 恢复
+        Thread.sleep(1500);
+        pauseableThreadPool.resume();
+        System.out.println("线程池恢复");
+    }
+}
+```
+**实现原理**  
+线程池组成：  
++ 线程池管理器：管理线程池的创建销毁等
++ 工作线程：具体处理任务的线程
++ 任务队列：存放线程的队列
++ 任务接口（Task）：具体执行的任务
+
+**线程复用原理**  
+``` java {3,22}
+final void runWorker(Worker w) {
+   Thread wt = Thread.currentThread();
+   Runnable task = w.firstTask;
+   w.firstTask = null;
+   w.unlock(); // allow interrupts
+   boolean completedAbruptly = true;
+   try {
+      while (task != null || (task = getTask()) != null) {
+            w.lock();
+            // If pool is stopping, ensure thread is interrupted;
+            // if not, ensure thread is not interrupted.  This
+            // requires a recheck in second case to deal with
+            // shutdownNow race while clearing interrupt
+            if ((runStateAtLeast(ctl.get(), STOP) ||
+               (Thread.interrupted() &&
+                  runStateAtLeast(ctl.get(), STOP))) &&
+               !wt.isInterrupted())
+               wt.interrupt();
+            try {
+               beforeExecute(wt, task);
+               try {
+                  task.run();
+                  afterExecute(task, null);
+               } catch (Throwable ex) {
+                  afterExecute(task, ex);
+                  throw ex;
+               }
+            } finally {
+               task = null;
+               w.completedTasks++;
+               w.unlock();
+            }
+      }
+      completedAbruptly = false;
+   } finally {
+      processWorkerExit(w, completedAbruptly);
+   }
+}
+```
+工作线程会不断从队列中拿到 task，之后通过 `run()` 来执行。这样以来，相同的线程就可以执行不同的任务。  
+
+**线程池状态** 
++ RUNNING：接收新任务，排队处理任务
++ SHUTDOWN：不接受新任务，排队处理任务
++ STOP：不接受新任务，不处理排队任务，中断正在进行任务
++ TIDYING：所有任务已完成，即将运行 `terminate()` 钩子方法
++ TERMINATED：`terminate()` 运行完成
+
+
 
 ### 锁与原子操作
 + 锁
