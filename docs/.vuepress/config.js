@@ -143,8 +143,9 @@ module.exports = {
                 '',
             ],
 
-            '/front-end/': [
+            '/redis/': [
                 '',
+                'cache'
             ],
 
             '/deep-learning/': [
