@@ -23,3 +23,5 @@ next: false
 [9]悟空.[Java并发核心知识体系精讲](https://coding.imooc.com/class/362.html).2019  
 
 [10]牟文斌.[一课掌握Lambda表达式语法及应用](https://www.imooc.com/course/introduction/id/1196).2019  
+
+[11]悟空.[玩转Java并发工具，精通JUC，成为并发多面手](https://coding.imooc.com/class/409.html).2020  
