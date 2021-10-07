@@ -8,7 +8,7 @@ next: ./setup-a-server-manually
 VuePress 是一款基于 Vue 的静态网站生成器。它可以将你编写的 Markdown 文档转化为已经渲染好的 HTML 静态页面。这些页面有着良好的 SEO 优化，可以轻松的支持搜索引擎收录；同时页面被浏览时由 Vue 接管而形成单页应用，其他页面按浏览按需加载。 
 
 ## 为什么选 VuePress?
-最重要的一点是：VuePress 对 Vue 技术有着很好的支持。你可以在文档中使用 Vue 的动态组件，这对 Vue 程序员来说十分友好。  
+最重要的一点是：VuePress 对 Vue 技术有着很好的支持。这也就意味着除了其他静态网站生成器的功能，你可以在文档中使用 Vue 的动态组件，这对 Vue 程序员来说十分友好。关于 Vue 组件，你可以参考这个链接：[在 Markdown 中使用 Vue](https://vuepress.vuejs.org/zh/guide/using-vue.html)。  
 其次是 VuePress 的默认主题，它的设计初衷是为了提供给编写产品文档的一个解决方案。也就是说，VuePress 生成的静态网页应用的风格看上去是技术文档，而不是传统博客。这更契合程序员的日常阅读习惯，同时可以让我们编写文章时操作简便且富有条理。当然，VuePress 也有官方和第三方主题，可以实现 Hexo 等技术的博客风格，可以按需安装。  
 VuePress 也拥有者丰富的插件库，当你需要评论功能、用 $\LaTeX$ 输入一些公式等，都能找到相关的插件来支持自己的需求。  
 这些是表层上的一些优势。关于 VuePress 和其他类似技术在底层实现和性能方面的对比可以在[官方文档](https://vuepress.vuejs.org/zh/guide/#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AF)中进行阅读。
