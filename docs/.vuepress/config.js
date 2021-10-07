@@ -176,7 +176,8 @@ module.exports = {
             '/algorithm/': [
                 '',
                 'ds-001',
-                'ds-002'
+                'ds-002',
+                'dynamic-programming'
             ],
 
             '/recommender-systems/': [
