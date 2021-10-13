@@ -82,6 +82,10 @@ next: false
      }
      ```
 
++ 完全背包  
+  当物品有无限多个时，是完全背包问题。  
+  对于前面的问题，当把条件改成
+
 ## 组合总和 Ⅳ <Badge text="LeetCode 377" type="warning"/>
 给你一个由 不同 整数组成的数组 nums ，和一个目标整数 target 。请你从 nums 中找出并返回总和为 target 的元素组合的个数。  
 
@@ -243,6 +247,76 @@ class Solution {
             num2 = sum;
         }
         return sum;
+    }
+}
+```
+
+## 爬楼梯 <Badge text="LeetCode 70"/>
+假设你正在爬楼梯。需要 n 阶你才能到达楼顶。  
+
+每次你可以爬 1 或 2 个台阶。你有多少种不同的方法可以爬到楼顶呢？  
+
+注意：给定 n 是一个正整数。  
+
+**示例1**  
+输入： 2  
+输出： 2  
+解释： 有两种方法可以爬到楼顶。  
+1.  1 阶 + 1 阶  
+2.  2 阶  
+
+**示例2**  
+输入： 3  
+输出： 3  
+解释： 有三种方法可以爬到楼顶。  
+1.  1 阶 + 1 阶 + 1 阶  
+2.  1 阶 + 2 阶  
+3.  2 阶 + 1 阶  
+
+**解法1**  
+类似组合总和 Ⅳ, 这里对应和的结果为 n, nums 数组元素为 1 和 2.  
+``` java
+class Solution {
+    public int climbStairs(int n) {                 // 完全背包问题
+        int[] dp = new int[n + 1];                  // 滚动数组
+        int[] stairs = {1, 2};
+
+        dp[0] = 1;
+
+        for (int i = 1; i <= n; i++) {              // 遍历每一种楼梯
+            for (int j = 0; j <= 1; j++) {          // 有 1 节和 2 节两种选法
+                if (i >= stairs[j]) {               // 只要总台阶数量比 1 或 2 大
+                     dp[i] += dp[i - stairs[j]];    // 当已经有 1 或 2 节时，只需要找到能凑齐 i 个台阶就行
+                }
+            }
+        }
+
+        return dp[n];
+    }
+}
+```
+
+**解法2**  
+对于一节台阶 i 来说，只有两种来源，就是通过爬一节上来的 dp[i - 1] 和爬两节上来的 dp[i - 2].  
+那么这道题就转化成了斐波那契数列。  
+``` java
+class Solution {
+    public int climbStairs(int n) {
+       if (n < 2) {
+            return n;
+        }
+
+        // 动态规划
+        int[] dp = new int[n + 1];
+        
+        dp[1] = 1;
+        dp[2] = 2;
+
+        for (int i = 3; i <= n; i++) {
+            dp[i] = dp[i - 1] + dp[i - 2];
+        }
+
+        return dp[n];
     }
 }
 ```
