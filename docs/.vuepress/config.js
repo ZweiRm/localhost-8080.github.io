@@ -177,6 +177,7 @@ module.exports = {
                 '',
                 'ds-001',
                 'ds-002',
+                'ds-003',
                 'dynamic-programming'
             ],
 
