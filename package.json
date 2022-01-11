@@ -4,8 +4,8 @@
     "main": "index.js",
     "license": "MIT",
     "scripts": {
-        "docs:dev": "npx vuepress dev docs",
-        "docs:build": "npx vuepress build docs"
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs"
     },
     "dependencies": {
         "vuepress-plugin-baidu-tongji-analytics": "^1.0.2",

@@ -320,3 +320,91 @@ class Solution {
     }
 }
 ```
+
+## 不同路径 <Badge text="LeetCode 62" type="warning"/>
+一个机器人位于一个 m x n 网格的左上角 （起始点在下图中标记为 “Start” ）。  
+
+机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。  
+
+问总共有多少条不同的路径？  
+
+**示例 1**  
+输入：m = 3, n = 7  
+输出：28  
+
+**示例 2**  
+输入：m = 3, n = 2  
+输出：3  
+解释：  
+从左上角开始，总共有 3 条路径可以到达右下角。  
+1. 向右 -> 向下 -> 向下  
+2. 向下 -> 向下 -> 向右  
+3. 向下 -> 向右 -> 向下  
+
+**解法**  
+``` java
+class Solution {
+    public int uniquePaths(int m, int n) {
+        // 到位置 (i, j) 有几种路径
+        int[][] dp = new int[m][n];
+
+        // 初始化，第一行和第一列只有一种路径
+        for (int i = 0; i < m; i++) {   // 列
+            dp[i][0] = 1;
+        }
+        for (int i = 0; i < n; i++) {   // 行
+            dp[0][i] = 1;
+        }
+
+        // 动态规划
+        for (int i = 1; i < m; i++) {
+            for (int j = 1; j < n; j++) {
+                // 状态转移：只能从上面或者左面过来
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1];
+            }
+        }
+        
+        return dp[m - 1][n - 1];
+    }
+}
+```
+
+## 使用最小花费爬楼梯 <Badge text="LeetCode 746"/>
+数组的每个下标作为一个阶梯，第 i 个阶梯对应着一个非负数的体力花费值 cost[i]（下标从 0 开始）。  
+
+每当你爬上一个阶梯你都要花费对应的体力值，一旦支付了相应的体力值，你就可以选择向上爬一个阶梯或者爬两个阶梯。  
+
+请你找出达到楼层顶部的最低花费。在开始时，你可以选择从下标为 0 或 1 的元素作为初始阶梯。  
+
+**示例 1**  
+输入：cost = [10, 15, 20]  
+输出：15  
+解释：最低花费是从 cost[1] 开始，然后走两步即可到阶梯顶，一共花费 15 。  
+
+**示例 2**  
+输入：cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]  
+输出：6  
+解释：最低花费方式是从 cost[0] 开始，逐个经过那些 1 ，跳过 cost[3] ，一共花费 6 。  
+
+**解法**  
+``` java
+class Solution {
+    public int minCostClimbingStairs(int[] cost) {
+        // 登到台阶 i 需要的体力
+        int[] dp = new int[cost.length];
+
+        // 初始化 DP 数组
+        dp[0] = cost[0];
+        dp[1] = cost[1];
+
+        // 动态规划
+        for (int i = 2; i < cost.length; i++) {
+            // 状态转移
+            dp[i] = Math.min(dp[i - 1], dp[i - 2]) + cost[i];
+        }
+        
+        // 最后两节不消耗体力
+        return Math.min(dp[cost.length - 1], dp[cost.length - 2]);
+    }
+}
+```
