@@ -525,23 +525,24 @@ Class AnotherClass {
 ## 3.11 接口
 + 类似于类的引用类型。
 
-+ 使用关键字`interface`表示  
++ 使用关键字 `interface` 表示  
 
-+ 接口中方法默认且只能为抽象方法<Badge type="error" text="< Java SE 7.0"/>  
-  + 在接口中，使用`default`关键字修饰的方法可以拥有方法体<Badge text="Java SE 8.0 +"/>  
++ 接口中方法默认且只能为抽象方法。<Badge type="error" text="< Java SE 7.0"/>  
+  + 在接口中，使用 `default` 关键字修饰的方法可以拥有方法体，可以给所有具体实现对象扩展功能。<Badge text="Java SE 8.0 +"/>  
+  + 接口中也可以存在静态方法，要求该方法拥有方法体。这样的方法可以直接通过接口名打点获取到。<Badge text="Java SE 8.0 +"/>  
 
-+ 接口中的数据都为公共的静态常量（被`final`, `static`和`public`修饰的成员变量）
++ 接口中的数据都为公共的静态常量（被 `final`, `static` 和 `public` 修饰的成员变量）  
 
 ### 3.11.1 接口的实现
 + 和抽象类类似，接口也可以有具体化的实现，称为实现(implements)。  
 
-+ 使用关键字`implements`来使一个类变为目标接口的实现类。
++ 使用关键字 `implements` 来使一个类变为目标接口的实现类。
   + 当类成为某接口（们）的实现类后，要求实现接口中定义的所有抽象方法。  
 
   + 一个类可以实现多个接口，不过可能会造成方法混乱。  
 
 ### 3.11.2 接口的多重继承
-**接口可以多重继承**，使用`extends`关键字来继承其他接口。
+**接口可以多重继承**，使用 `extends` 关键字来继承其他接口。
 
 ::: tip 特别地
 对于引用数据类型的强制转换有：
@@ -558,11 +559,11 @@ Class AnotherClass {
 ::: warning 注意
 + 接口**不能被实例化**。  
 
-+ 接口中**不允许定义构造方法**，**编译完成后会产生`.class`文件**，但**接口不是类**。  
++ 接口中**不允许定义构造方法**，**编译完成后会产生 `.class` 文件**，但**接口不是类**。  
 
-+ 接口**默认只能被`public`修**饰，且实现接口的类中的**具体实现方法也只能被`public`所修饰**。
++ 接口**默认只能被 `public` 修**饰，且实现接口的类中的**具体实现方法也只能被 `public` 所修饰**。
 
-+ 接口中的**方法默认被`public`和`abstract`修饰**。
++ 接口中的**方法默认被 `public` 和 `abstract` 修饰**。
 
 + 接口**可作为模板**，用于反射中来实现解耦。
 :::
@@ -583,7 +584,7 @@ Class AnotherClass {
 定义在类的内部，方法外部的类。
 
 ### 3.12.3 静态内部类
-使用`static`关键字修饰的内部类。
+使用 `static` 关键字修饰的内部类。
 
 ### 3.12.4 匿名内部类
 + 类体定义和对象创建写在一起的形式，没有名称，只使用一次。
@@ -597,9 +598,155 @@ Class AnotherClass {
 ### 3.12.5 内部接口
 + 定义在类或接口中的接口。  
 
-+ 类中定义的接口，接口中定义的类，接口中定义的接口，默认都用`static`修饰。  
++ 类中定义的接口，接口中定义的类，接口中定义的接口，默认都用 `static` 修饰。  
 
 ### 3.12.6 Lambda 表达式 <Badge text="Java 8.0+"/>
 + Lambda 表达式是 Java 8.0 提供的特性，它也被成为箭头函数、匿名函数和闭包。它体现了代码即数据（Code as Data）的思想。通过传统方法利用接口和匿名内部类等方法来实现将代码封装为数据的手段存在语法冗余、`this` 关键字在内部类中绑定和访问有误区、变量捕获有特殊要求、数据控制不友好等问题。Lambda 表达式进行了优化。它本质上只是语法上的优化而不是新的内容。  
-+ Lambda 表达式是一种轻量级函数编程的思想，可以使得代码聚焦于数据逻辑处理。  
-+ `->` 是 Lambda 表达式的核心操作符，在它左边是参数列表，右侧是操作表达式。
++ Lambda 表达式是一种轻量级函数编程的思想，可以使得代码聚焦于数据逻辑处理。    
++ `->` 是 Lambda 表达式的核心操作符，在它左边是参数列表，右侧是操作表达式。  
++ Lambda 表达式只能操作一个方法。它的本质就是对函数式接口的实现。  
+
+**函数式接口 Functional Interface**  
++ 函数式接口是只包含一个抽象方法的特殊接口。可以使用语义化检测注解 `@FunctionalInterface` 来对其进行修饰进行检查。  
++ 因为 Java 8.0 提供了接口默认方法，所以可以利用默认方法来对函数式接口增加通用功能，而不是在实现类中增加。  
++ 类似的，Java 8.0 也提供了接口中的静态方法。当业务中有需要使用类名打点直接获取方法时，可以直接在接口中定义这样的静态方法。  
++ **虽然函数式接口要求只能存在一个抽象方法，但如果有额外的继承自 Object 类的抽象方法，它们也可以存在于函数式接口中。*  
+
+``` java
+@FunctionalInterface
+public interface SomeFuncIntf {
+    // 唯一的抽象方法
+    String method(String parameter);
+
+    // 默认方法
+    default String defaultMehod(String parameter) {
+        // ...
+    }
+
+    // 静态方法
+    static String staticMehod(String parameter) {
+        // ...
+    }
+
+    // 继承自 Object 类的其他抽象方法
+    String toString();
+}
+```
+
+利用 Lambda 表达式对函数式接口编写具体实现：  
+``` java
+SomeFuncIntf somefunc = (String parameter) -> {
+    return "The results";
+}
+```
+
+**Java 内建函数式接口**  
+在 Java 8.0 中提供了一些预定义的常用函数式功能，它们被划分于 `java.util.function` 包中。  
++ `java.util.function.Predicate<T>`  
+  接收参数对象 `T`, 返回一个 `boolean` 类型的结果。  
+  ``` java
+  Predicate<Integer> pre = (Integer intg) -> {
+      return intg > 0;
+  };
+
+  // 使用 test() 验证
+  System.out.println(pre.test(3));
+  ```
+
++ `java.util.function.Consumer<T>`  
+  接收参数对象 `T`, 不返回结果。  
+  ``` java
+  Consumer<Integer> con = (Integer intg) -> {
+      System.out.println("Consuming " + intg);
+  };
+
+  // 使用 accept() 验证
+  con.accept(3);
+  ```
+
++ `java.util.function.Supplier<T>`  
+  不接受参数，返回结果对象 `T`.    
+  ``` java
+  Supplier<String> supp = () -> {
+      return UUID.randomUUID().toString();
+  };
+
+  // 使用 get() 验证
+  System.out.println(supp.get());
+  ```
+
++ `java.util.function.Function<T, R>`  
+  接收参数对象 `T`, 返回结果对象 `R`.  
+  ``` java
+  Function<String, Integer> func = (String msg) -> {
+      return msg.equals("Yes") ? 1 : 0;
+  };
+
+  // 使用 apply() 验证
+  System.out.println(func.apply("No"));
+  ```
+
++ `java.util.function.UnaryOperator<T>`  
+  接收参数对象 `T`, 返回结果对象 `T`. 它继承了 `Function`接口。  
+  ``` java
+  UnaryOperatorr<String> uOpt = (String msg) -> {
+      msg += " done";
+      return msg;
+  };
+
+  // 使用继承自 Function 的 apply() 验证
+  System.out.println(uopt.apply("Yes"));
+  ```
+
++ `java.util.function.BinaryOperator<T>`  
+  接收两个参数对象 `T`, 返回一个结果对象 `T`. 它继承了 `Function`接口。  
+  ``` java
+  BinaryOperator<Integer> biOpt = (Integer num1, Integer num2) -> {
+      return num1 > num2 ? 1 : 0;
+  };
+
+  // 使用继承自 Function 的 apply() 验证
+  System.out.println(biOpt.apply(1, 2));
+  ``` 
+
+**基本语法**  
+`[接口声明] = (参数) -> {代码块};`  
++ 接口声明：与该 Lambda 表达式关联的接口的声明，用于接收结果。
++ 参数：与关联接口中抽象方法中声明的参数相同（包括个数相同和顺序相同）。可以不声明参数的类型，JVM 会自动通过绑定的函数式接口推断参数的类型。
++ 操作符：`->`.
++ 执行代码块：出现在操作符右侧，负责描述具体逻辑。当所需要执行的代码只有一行时，可以省略括号。当所需要执行的代码只有一行且有返回值时，可以省略括号和 `return` 关键字。  
+
+*类型*  
++ 没有参数、没有返回值的函数式接口抽象函数  
+  ``` java
+  // 接口定义
+  interface LambdaWithoutReturnAndParameter {
+      void method();
+  }
+
+  // 具体执行
+  LambdaWithoutReturnAndParameter lbdNRNP = () -> System.out.println("Hello world!");
+  lbdNRNP.method();
+  ```
+
++ 带有参数，没有返回值的函数式接口抽象函数  
+  ``` java
+  interface LambdaWithoutReturnWithParameter {
+      void method(String name, int age);
+  }
+
+  LambdaWithoutReturnWithParameter lbdNRWP = (String name, int age) -> {
+      System.out.println("Name: " + name + ", Age: " + age);
+  };
+  lbdNRWP.method("Tom", 18);
+  ```
+
++ 带有参数，带有返回值的函数式接口抽象函数  
+  ``` java
+  interface LambdaWithReturnAndParameter {
+      int method(int num1, int num2);
+  }
+
+  LambdaWithReturnAndParameter lbdWRWP = (num1, num2) -> num1 + num2;
+  System.out.println(lbdWRWP.method(1, 2));
+  ```
