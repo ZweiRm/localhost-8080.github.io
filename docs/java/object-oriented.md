@@ -607,7 +607,7 @@ Class AnotherClass {
 + Lambda 表达式只能操作一个方法。它的本质就是对函数式接口的实现。  
 
 **函数式接口 Functional Interface**  
-+ 函数式接口是只包含一个抽象方法的特殊接口，使用语义化检测注解 `@FunctionalInterface` 来对其进行修饰。  
++ 函数式接口是只包含一个抽象方法的特殊接口。可以使用语义化检测注解 `@FunctionalInterface` 来对其进行修饰进行检查。  
 + 因为 Java 8.0 提供了接口默认方法，所以可以利用默认方法来对函数式接口增加通用功能，而不是在实现类中增加。  
 + 类似的，Java 8.0 也提供了接口中的静态方法。当业务中有需要使用类名打点直接获取方法时，可以直接在接口中定义这样的静态方法。  
 + **虽然函数式接口要求只能存在一个抽象方法，但如果有额外的继承自 Object 类的抽象方法，它们也可以存在于函数式接口中。*  
@@ -639,3 +639,114 @@ SomeFuncIntf somefunc = (String parameter) -> {
     return "The results";
 }
 ```
+
+**Java 内建函数式接口**  
+在 Java 8.0 中提供了一些预定义的常用函数式功能，它们被划分于 `java.util.function` 包中。  
++ `java.util.function.Predicate<T>`  
+  接收参数对象 `T`, 返回一个 `boolean` 类型的结果。  
+  ``` java
+  Predicate<Integer> pre = (Integer intg) -> {
+      return intg > 0;
+  };
+
+  // 使用 test() 验证
+  System.out.println(pre.test(3));
+  ```
+
++ `java.util.function.Consumer<T>`  
+  接收参数对象 `T`, 不返回结果。  
+  ``` java
+  Consumer<Integer> con = (Integer intg) -> {
+      System.out.println("Consuming " + intg);
+  };
+
+  // 使用 accept() 验证
+  con.accept(3);
+  ```
+
++ `java.util.function.Supplier<T>`  
+  不接受参数，返回结果对象 `T`.    
+  ``` java
+  Supplier<String> supp = () -> {
+      return UUID.randomUUID().toString();
+  };
+
+  // 使用 get() 验证
+  System.out.println(supp.get());
+  ```
+
++ `java.util.function.Function<T, R>`  
+  接收参数对象 `T`, 返回结果对象 `R`.  
+  ``` java
+  Function<String, Integer> func = (String msg) -> {
+      return msg.equals("Yes") ? 1 : 0;
+  };
+
+  // 使用 apply() 验证
+  System.out.println(func.apply("No"));
+  ```
+
++ `java.util.function.UnaryOperator<T>`  
+  接收参数对象 `T`, 返回结果对象 `T`. 它继承了 `Function`接口。  
+  ``` java
+  UnaryOperatorr<String> uOpt = (String msg) -> {
+      msg += " done";
+      return msg;
+  };
+
+  // 使用继承自 Function 的 apply() 验证
+  System.out.println(uopt.apply("Yes"));
+  ```
+
++ `java.util.function.BinaryOperator<T>`  
+  接收两个参数对象 `T`, 返回一个结果对象 `T`. 它继承了 `Function`接口。  
+  ``` java
+  BinaryOperator<Integer> biOpt = (Integer num1, Integer num2) -> {
+      return num1 > num2 ? 1 : 0;
+  };
+
+  // 使用继承自 Function 的 apply() 验证
+  System.out.println(biOpt.apply(1, 2));
+  ``` 
+
+**基本语法**  
+`[接口声明] = (参数) -> {代码块};`  
++ 接口声明：与该 Lambda 表达式关联的接口的声明，用于接收结果。
++ 参数：与关联接口中抽象方法中声明的参数相同（包括个数相同和顺序相同）。可以不声明参数的类型，JVM 会自动通过绑定的函数式接口推断参数的类型。
++ 操作符：`->`.
++ 执行代码块：出现在操作符右侧，负责描述具体逻辑。当所需要执行的代码只有一行时，可以省略括号。当所需要执行的代码只有一行且有返回值时，可以省略括号和 `return` 关键字。  
+
+*类型*  
++ 没有参数、没有返回值的函数式接口抽象函数  
+  ``` java
+  // 接口定义
+  interface LambdaWithoutReturnAndParameter {
+      void method();
+  }
+
+  // 具体执行
+  LambdaWithoutReturnAndParameter lbdNRNP = () -> System.out.println("Hello world!");
+  lbdNRNP.method();
+  ```
+
++ 带有参数，没有返回值的函数式接口抽象函数  
+  ``` java
+  interface LambdaWithoutReturnWithParameter {
+      void method(String name, int age);
+  }
+
+  LambdaWithoutReturnWithParameter lbdNRWP = (String name, int age) -> {
+      System.out.println("Name: " + name + ", Age: " + age);
+  };
+  lbdNRWP.method("Tom", 18);
+  ```
+
++ 带有参数，带有返回值的函数式接口抽象函数  
+  ``` java
+  interface LambdaWithReturnAndParameter {
+      int method(int num1, int num2);
+  }
+
+  LambdaWithReturnAndParameter lbdWRWP = (num1, num2) -> num1 + num2;
+  System.out.println(lbdWRWP.method(1, 2));
+  ```
