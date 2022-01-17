@@ -86,8 +86,8 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
    ``` json
    {
      "scripts": {
-       "docs:dev": "npx vuepress dev docs",
-       "docs:build": "npx vuepress build docs"
+       "docs:dev": "vuepress dev docs",
+       "docs:build": "vuepress build docs"
      }
    }
    ```
@@ -100,8 +100,8 @@ VuePress 的部署方案是多种多样的，这篇文章主要讲 VuePress + Gi
         "vuepress": "^1.3.1"
       },
       "scripts": {
-        "docs:dev": "npx vuepress dev docs",
-        "docs:build": "npx vuepress build docs"
+        "docs:dev": "vuepress dev docs",
+        "docs:build": "vuepress build docs"
       }
    }
    ```
@@ -387,7 +387,10 @@ Netlify 提供了一种十分方便的持续集成体验。也就是说，每当
    A: 请检查 Markdown 文档中 front-matter 的 `prev` 和 `next` 项是否也正确修改。  
 
 5. **Q: 为什么我的侧边栏不显示？**  
-   A: 请认真检查是否正确配置侧边栏相关的内容，如文件夹命名、文档命名、congfig.js 中相关配置项是否正确（如是否漏写两边任意的`/`）。
+   A: 请认真检查是否正确配置侧边栏相关的内容，如文件夹命名、文档命名、congfig.js 中相关配置项是否正确（如是否漏写两边任意的`/`）。  
+
+6. **Q: 当我试图启动 VuePress 时提示项目系统文件 "`isDebug; SyntaxError: Unexpected token ;`" 错误。**  
+    A: 请尝试更新您的 Node.js 到更新的版本。此问题**也会出现在 Netlify 部署中**。对于 Netlify, 请在设置中增添环境变量：`NODE_VERSION` 为合适的版本。
 
 ## 参考文献或资料
 [1] Evan You.[VuePress](https://vuepress.vuejs.org/)  
