@@ -578,10 +578,12 @@ Class AnotherClass {
 
 + 方法内部类中**不能定义静态属性和静态方法**，但**静态常量是允许定义的**。
 
-+ 方法内部类**可以使用外部类中的一些属性和方法**。**但如果使用的是当前方法的数据时，要求这个数据为常量**。
++ 方法内部类**可以使用外部类中的一些属性和方法**。**但如果使用的是当前方法的数据时，要求这个数据为常量 (自动被 `final` 修饰，不可以被修改)**。  
+
++ 在内部类中使用 `this` 关键字表示当前该内部类的对象。  
 
 ### 3.12.2 成员内部类
-定义在类的内部，方法外部的类。
++ 定义在类的内部，方法外部的类。
 
 ### 3.12.3 静态内部类
 使用 `static` 关键字修饰的内部类。
@@ -750,3 +752,35 @@ SomeFuncIntf somefunc = (String parameter) -> {
   LambdaWithReturnAndParameter lbdWRWP = (num1, num2) -> num1 + num2;
   System.out.println(lbdWRWP.method(1, 2));
   ```
+
+**变量捕获**  
+Lambda 表达式可以实现在匿名内部类的参数捕获功能。  
++ 在 Lambda 表达式形式的匿名内部类中，`this` 关键字表示它所在外部类的对象。  
++ 可以直接访问匿名内部类中的局部变量。
++ 可以直接访问外部类成员方法中的局部变量，但默认自动被 `final` 修饰，无法进行修改。
+
+``` java
+class Main {
+    String globalVar = "global";
+
+    public void method() {
+        String localVar = "local";
+
+        // 匿名内部类
+        new Thread(() -> {
+            String innerVar = "inner";
+
+            // 使用 this 来访问全局变量
+            System.out.println(this.globalVar);
+
+            // 访问内部类中的内部变量
+            System.out.println(innerVar);
+
+            // 访问外部类成员方法的局部变量
+            System.out.println(localVar);
+
+            // localVar = "hello"; 不允许被修改
+        });
+    }
+}
+```
