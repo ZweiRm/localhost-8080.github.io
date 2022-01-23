@@ -784,3 +784,144 @@ class Main {
     }
 }
 ```
+
+**类型推断**  
+Lambda 表达式参数类型自动推断  
+在使用 Lambda 表达式来实现一个函数式接口时，JVM 会自动联系它对应的函数式接口来推断出参数的具体类型。所以在编写 Lambda 表达式时可以不用显式声明参数的类型。  
+``` java
+// 函数式接口
+@FunctionalInterface
+interface OneFuncInterf<T, R> {
+    R method(T t, R r);
+}
+
+public class Main {
+    // 以函数式接口为参数的方法，作用是将传入的字符串加入到指定的 List 中
+    public static void execute(OneFuncInterf<String, List> interf) {
+        List<String> list = interf.method("Hello", new ArrayList());
+        System.out.println(list);
+    }
+
+    // Lambda 形式执行 execute 方法
+    execute((x, y) -> {
+        y.add(x);
+        return y;
+    });
+
+    // 匿名内部类形式执行 execute 方法
+    execute(new OneFuncInterf<String, List>() {
+        @Override
+        public List method(String s, List list) {
+            list.add(s);
+            return list;
+        }
+    });
+}
+```
+
+**方法重载**  
+在同一个类中有多个名称相同但参数列表或返回值不同的方法称为方法重载。对于参数列表是不同函数式接口的重载方法，它作为 Lambda 表达式形式实现接口时，会因为无法推断出当前对应的具体接口而报错。此时请使用传统匿名内部类形式来实现该接口。  
+``` java
+public class Main {
+    // 两个内部接口
+    interface IntfOne {
+        void method(String s);
+    }
+
+    interface IntfTwo {
+        void method(String s);
+    }
+
+    // 重载方法
+    public void execute(IntfOne intf) {
+        intf.method("Hello");
+    }
+
+    public void execute(IntfTwo intf) {
+        intf.method("World");
+    }
+
+    // 主函数
+    public static void main(String[] args) {
+        Main main = new Main();
+
+        // 使用 Lambda 形式创建接口对象
+        // main.execute((String s) -> {
+        //     System.out.println(s);
+        // });
+
+        // 使用匿名内部类形式创建接口对象
+        main.execute(new IntfOne() {
+            @Override
+            public void method(String s) {
+                System.out.println(s);
+            }
+        });
+
+        main.execute(new IntfTwo() {
+            @Override
+            public void method(String s) {
+                System.out.println(s);
+            }
+        });
+    }
+}
+```
+
+**底层原理**  
+编写简单的 Lambda 表达式代码并对其反编译查看结果。  
+``` java
+public class Main {
+    public static void main(String[] args) {
+        Interf interf = (s) -> System.out.println(s);
+        interf.method("Hello world.");
+    }
+}
+
+interface Interf {
+    void method(String s);
+}
+```
+
+反编译 Main.class 有：  
+``` java{4}
+public class Main {
+  public Main();
+  public static void main(java.lang.String[]);
+  private static void lambda$main$0(java.lang.String);  // 具体方法实现
+}
+```
+其中生成了静态方法 `lambda$main$0`, 即：  
+``` java
+public class Main {
+    ...
+
+    private static void lambda$main$0(java.lang.String s) {
+        System.out.println(s);
+    }
+}
+```
+
+继续对整个编译过程动态编译，有：  
+``` java{3}
+final class Main$Lambda$1 implements Interf {
+    private Main$$Lambda$1();
+    public void method(java.lang.String);
+}
+```
+即：  
+``` java
+public class Main {
+    ...
+
+    final class Main$Lambda$1 implements Interf {
+        private Main$$Lambda$1();
+        public void method(java.lang.String s) {
+            Main.lambda$main$0();   // 调用上面的具体实现方法
+        }
+    }
+}
+```
+
+最后在执行时创建 `Main$Lambda$1` 类的对象，调用其方法进行执行。
+```
