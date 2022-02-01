@@ -25,3 +25,5 @@ next: false
 [10]牟文斌.[一课掌握Lambda表达式语法及应用](https://www.imooc.com/course/introduction/id/1196).2019  
 
 [11]悟空.[玩转Java并发工具，精通JUC，成为并发多面手](https://coding.imooc.com/class/409.html).2020  
+
+[12]菜鸟教程. [Java 8 Stream](https://www.runoob.com/java/java8-streams.html).2022  

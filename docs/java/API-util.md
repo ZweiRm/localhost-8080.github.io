@@ -116,6 +116,19 @@ next: ./API-io
 在数据结构知识中，栈和队列是一种有着特殊规则的线性表。而在 Java 语言中各个集合类之间的继承、实现关系并不完全符合传统数据结构知识。
 :::
 
+## Stream <Badge text="Java 8.0+"/>
+**基本信息**  
+**Package** java.util.stream  
+
+Java 为集合运算和表达提供了一种更高阶的表达方式，通过这种表达方式可以使得代码更简洁直观。  
+
+1. 聚合操作
+   可以对数据集合进行批量的操作，如 filter, map, reduce, find, sorted, match 等。可以实现一些类似 SQL 语句的效果。
+2. 处理流程
+   1. 获取数据源
+   2. 数据转换（1 到多次）
+   3. 执行逻辑操作获取结果
+
 ## 并发
 **基本信息**  
 **Package** java.util.concurrent
