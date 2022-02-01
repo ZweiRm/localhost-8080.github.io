@@ -112,6 +112,8 @@ next: ./API-introduction
 例如在传递数组对象时，只要地址不发生改变，方法中的一切变化会作用于原数组。
 :::
 
+
+
 ## 3.4 代码块
 ### 3.4.1 构造代码块
 + 定义在类内。  
@@ -924,4 +926,75 @@ public class Main {
 ```
 
 最后在执行时创建 `Main$Lambda$1` 类的对象，调用其方法进行执行。
+
+
+**方法引用**  
+方法引用与Lambda 表达式绑定使用。  
+
++ 静态方法引用  
+  语法：`类名::方法名`
++ 实例方法引用  
+  语法：创建一个类的实例后，使用 `对象名::方法名`
++ 构造方法引用  
+  语法: `类名::new`, 使用对应的函数式接口对象接收
+
+使用方法引用等方法来实现对 `Person` 对象集合的操作：
+``` java
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+class Person {
+    private String name;
+    private String gender;
+    private int age;
+
+    public static int comparaByAge(Person p1, Person p2) {
+        return p1.getAge() - p2.getAge();
+    }
+}
+
+class PersonUtil {
+    public int compareByName(Person p1, Person p2) {
+        return p1.getName().hashCode() - p2.getName().hashCode();
+    }
+}
+
+interface IPerson {
+    // 通过指定类型的构造方法初始化对象数据
+    Person initPerson(String name, String gender, int age);
+}
+
+public class Main {
+    // 存储 Person 对象列表
+    List<Person> personList = new ArrayList();
+    personList.add(new Person("Amy", "F", 16));
+    personList.add(new Person("Bob", "M", 18));
+    ...
+
+    // 匿名内部类实现集合对比 (Comparator)
+    Collections.sort(personList, new Comparator<Person>() {
+        @Override
+        public int compare(Person o1, Person o2) {
+            return o1.getAge() - o2.getAge();
+        }
+    });
+
+    // Lambda 表达式实现集合对比
+    // Lambda 表达式自动关联相应的函数式接口，自动推断参数类型，填充到具体逻辑中。生成具体的对象传给 sort()
+    Collections.sort(personList, (p1, p2) -> p1.getAge() - p2.getAge());
+
+    // 静态方法引用实现集合对比
+    // 静态方法引用直接调用自己编写的逻辑关联到函数式接口，而不需要重新再写第二遍。生成具体对象，传递给 sort()
+    Collections.sort(personList, Person::compareByAge);
+
+    // 实例方法引用实现集合对比
+    // 直接生成一个对象，关联替换对应函数式接口匿名方法。生成对象传递给 sort()
+    PersonUtil personutil = new PersonUtil();
+    Collections.sort(personList, personutil::compareByName);
+
+    // 构造方法引用
+    // 通过函数式接口获取 Person 类型的构造接口
+    IPerson ip = Person::new;
+    Person person = ip.initPerson("Jerry", "M", 22);    // 使用构造接口创建对象
+}
 ```
