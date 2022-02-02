@@ -126,8 +126,32 @@ Java 为集合运算和表达提供了一种更高阶的表达方式，通过这
    可以对数据集合进行批量的操作，如 filter, map, reduce, find, sorted, match 等。可以实现一些类似 SQL 语句的效果。
 2. 处理流程
    1. 获取数据源
+      + 从集合或数组中获取 stream  
+        `集合.stream()`; `集合.parallelStream()`; `Arrays.stream(T t)` (T 为具体数组).  
+      + 从流中获取 stream  
+        `BufferReader.lines()`  
+      + 通过静态工厂获取 stream  
+        `java.util.stream.IntStream.range()`; `java.nio.file.Files.walk()`
+      + 自定义构建 stream  
+        `java.util.Spliterator`
+      + 其他方式  
+        `Random.ints()`; `Pattern.splitAsStream()`
    2. 数据转换（1 到多次）
+      + 中间操作 API (intermediate)  
+        它的结果是一个 stream. 可以存在一到多个连续的中间操作。但中间操作只记录操作方式而不具体执行，直到结束操作发生时才开始对数据进行真是操作。  
+        具体分为：  
+        + 无状态中间操作：数据处理时不受前置中间操作的影响。  
+          常用：`map`, `filter`, `peek`, `parallel`, `sequential`, `unordered`    
+        + 有状态中间操作：数据处理时受前置中间操作的影响。  
+          常用：`distinct`, `sorted`, `limit`, `skip`  
    3. 执行逻辑操作获取结果
+      + 终结操作/结束操作 (terminal)  
+        对于一个 stream 来说，只能有一个终结操作。这个操作一旦发生，就会对集合进行真实的处理并生成结果，过程不可逆。  
+        具体分为：  
+        + 非短路操作：stream 必须处理完集合中所有元素才能得到结果。  
+          常用：`forEach`, `forEachOrdered`, `toArray`, `reduce`, `collect`, `min`, `max`, `count`, `iterator`  
+        + 短路操作：stream 在处理过程中一旦满足某个条件即可得到结果。（例如从一个无限大的 stream 中获得一个有限大的 stream）  
+          常用：`anyMatch`, `allMatch`, `noneMatch`, `findFirst`, `findAny`  
 
 ## 并发
 **基本信息**  
