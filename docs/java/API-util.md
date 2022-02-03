@@ -116,6 +116,35 @@ next: ./API-io
 在数据结构知识中，栈和队列是一种有着特殊规则的线性表。而在 Java 语言中各个集合类之间的继承、实现关系并不完全符合传统数据结构知识。
 :::
 
+## `Map`接口
+**基本信息**  
+**Package** java.util  
+`Interface Map<K,​V>`
+
++ 以键-值对形式存在的数据结构，其中键是唯一的
++ 遍历`Map`的方法
+  + 获取所有键，通过键来获取值
+  + 获取键值对组成的集合
+
+**重要实现类**  
+`HashMap`类  
++ 默认初始容量是 16, 加载因子为 0.75F
++ 每次扩容一倍
++ 允许键或值为`null`
++ 异步式线程不安全的映射，不对映射做安全限制
+
+`HashTable`类
++ 默认初始容量为 11, 加载因子为 0.75F
++ 不允许键或值为`null`
++ 同步式线程安全的映射
+  + 对外公开的涉及到键值对的操作方法都是同步方法
+  + 锁对象是`this`，`HashTable`以本身对象作为锁对象
+
+`ConcurrentHashMap`类
++ 异步式线程安全的映射
++ 引入分段锁（分桶锁）
+详情见[ConcurrentMap](#concurrentmap接口)  
+
 ## Stream <Badge text="Java 8.0+"/>
 **基本信息**  
 **Package** java.util.stream  
@@ -128,6 +157,35 @@ Java 为集合运算和表达提供了一种更高阶的表达方式，通过这
    1. 获取数据源
       + 从集合或数组中获取 stream  
         `集合.stream()`; `集合.parallelStream()`; `Arrays.stream(T t)` (T 为具体数组).  
+        ``` java
+        // 直接将多个元素转换为 Stream 对象
+        Stream elementsStream = Stream.of("Alice", "Bob", "Jerry");
+
+        // 将引用数据类型数组转换为 Stream 对象
+        String[] strArray = new String[]{"Alice", "Bob", "Jerry"};
+        Stream arrayStream = Arrays.stream(strArray);
+
+        // 将列表转换为 Stream 对象
+        List<String> list = new ArrayList<>();
+        list.add("Alice");
+        list.add("Bob");
+        list.add("Jerry");
+        Stream listStream = list.stream();
+
+        // 将集合转换为 Stream 对象
+        Set<String> set = new HashSet<>();
+        set.add("Alice");
+        set.add("Bob");
+        set.add("Jerry");
+        Stream setStream = set.stream();
+
+        // 将 Map 转换为 Stream 对象
+        Map<String, Integer> map = new HashMap<>();
+        map.put("Alice", 1);
+        map.put("Bob", 2);
+        map.put("Jery", 3);
+        Stream mapStream = map.entrySet().stream();
+        ```
       + 从流中获取 stream  
         `BufferReader.lines()`  
       + 通过静态工厂获取 stream  
@@ -144,6 +202,83 @@ Java 为集合运算和表达提供了一种更高阶的表达方式，通过这
           常用：`map`, `filter`, `peek`, `parallel`, `sequential`, `unordered`    
         + 有状态中间操作：数据处理时受前置中间操作的影响。  
           常用：`distinct`, `sorted`, `limit`, `skip`  
+        
+        常用中间操作：  
+        ``` java
+        // 数据
+        List<String> accountList = new ArrayList<>();
+        accountList.add("Alice");
+        accountList.add("Bob");
+        accountList.add("James");
+        accountList.add("Mary");
+        accountList.add("Robert");
+        accountList.add("Jennifer");
+        accountList.add("John");
+
+        // 通过 map 中间操作利用 Lambda 表达式关联函数式接口对数据进行操作
+        // 结束后转回 List
+        accountList = accountList.stream()
+            .map(x -> "Name: " + x)
+            .collect(Collectors.toList());
+        accountList.forEach(System.out::println);
+        
+        // 通过 filter 中间操作过滤符合条件的用户
+        // filter 的参数是函数式接口 Predicate. 若操作逻辑复杂，可以自定义接口实现类进行操作
+        accountList = accountList.stream()
+            .filter(x -> x.length() > 3)
+            .collect(Collectors.toList());
+        accountList.forEach(System.out::println);
+
+        // 通过 forEach 中间操作实现增强循环
+        accountList.forEach(System.out::println);// 带有方法引用的增强型循环
+        accountList.forEach(x -> System.out.println("Account Name: " + x));
+
+        // 通过 peek 中间操作对同一个集合多次迭代修改
+        accountList.stream()
+            .peek(x -> System.out.println("Iterate 1: " + x))
+            .peek(x -> System.out.println("Iterate 2: " + x))
+            .forEach(System.out::println);
+        ```
+
+        对数字运算的操作：  
+        ``` java
+        // 数据
+        List<Integer> intList = new ArrayList<>();
+        intList.add(5);
+        intList.add(23);
+        intList.add(1);
+        intList.add(75);
+        intList.add(3);
+        intList.add(1);
+        intList.add(87);
+
+        // 通过 skip 中间操作跳过某些数据，属于有状态中间操作
+        intList.stream().skip(3).forEach(System.out::println);
+
+        // 通过 limit 中间操作限制输出数据的数量，属于有状态中间操作
+        intList.stream().limit(2).forEach(System.out::println);
+
+        // 通过 distinct 中间操作剔除重复数据，属于有状态中间操作
+        intList.stream().distinct().forEach(System.out::println);
+
+        // 通过 sorted 中间操作对数据进行排序，属于有状态中间操作
+        intList.stream().sorted().forEach(System.out::println);
+
+        // 通过 max 终结操作获取集合中最大值
+        // 它返回一个 Optional 对象。
+        // Optional 是一个存放对象的容器，可以仅存放 null 也可以存放具体数据。当其中存在数据时可以通过 get() 获取
+        Optional maxOptional = intList.stream().max((x, y) -> x - y);
+        System.out.println(maxOptional.get());
+
+        // 通过 min 终结操作获取集合中最小值
+        Optional minOptional = intList.stream().min((x, y) -> x - y);
+        System.out.println(minOptional.get());
+
+        // 通过 reduce 终结操作合并处理数据，依次对每个元素进行合并操作
+        // 求所有元素的和
+        Optional sumOptional = intList.stream().reduce((sum, x) -> sum + x);
+        System.out.println(sumOptional.get());
+        ```
    3. 执行逻辑操作获取结果
       + 终结操作/结束操作 (terminal)  
         对于一个 stream 来说，只能有一个终结操作。这个操作一旦发生，就会对集合进行真实的处理并生成结果，过程不可逆。  
@@ -152,6 +287,35 @@ Java 为集合运算和表达提供了一种更高阶的表达方式，通过这
           常用：`forEach`, `forEachOrdered`, `toArray`, `reduce`, `collect`, `min`, `max`, `count`, `iterator`  
         + 短路操作：stream 在处理过程中一旦满足某个条件即可得到结果。（例如从一个无限大的 stream 中获得一个有限大的 stream）  
           常用：`anyMatch`, `allMatch`, `noneMatch`, `findFirst`, `findAny`  
+      ``` java
+      // 将 Stream 对象转换为数组
+      Object[] objArr = stream.toArray();   // 生成 Object 数组
+      String[] strArr = stream.toArray(String[]::new);  // 通过方法引用生成 String 类型数组
+
+      // 将 Stream 对象转换为字符串
+      String str = stream.collect(Collectors.joining()).toString(); // 将字符拼接并转换成字符串
+
+      // 将 Stream 对象转换为列表
+      List<String> strList = (List<String>) stream.collect(Collectors.toList);
+
+      // 将 Stream 对象转换为集合
+      Set<String> strSet = (Set<String>) stream.collect(Collectors.toSet());
+
+      // 将 Stream 对象转换为 Map
+      // 使用 Lambda 表达式对 Key 和 Value 进行单独处理
+      Map<String, String> strMap = (Map<String, String>) stream.collect(Collectors.toMap(x -> x, y -> y));
+      ```
+
+**基本数据类型流**  
+在 Stream 中对集合进行操作时，会频繁的对基本数据类型进行自动装箱和自动拆箱的工作。Java 为其提供了一些封装来使得整个处理流程只进行一次装箱一次拆箱，从而降低执行的复杂性。比如 `IntStream` 等。  
+``` java
+// 将 int 数组转换为 IntStream 并遍历打印元素
+IntStream.of(new int[]{1, 2, 3}).forEach(System.out::println);
+
+// 范围打印 1 到 5
+IntStream.range(1, 6).forEach(System.out::println);         // [1,6)
+IntStream.rangeClosed(1, 5).forEach(System.out::println);   // [1,5]
+```
 
 ## 并发
 **基本信息**  
@@ -841,35 +1005,6 @@ final void runWorker(Worker w) {
   + 返回正负值来确定大小  
   + 若为正则第一个数排到第二个数之后；反之排到其前  
   + 若没有指定排序规则， 必须实现`Comparable`接口，比较规则写在`compareTo()`中
-
-## `Map`接口
-**基本信息**  
-**Package** java.util  
-`Interface Map<K,​V>`
-
-+ 以键-值对形式存在的数据结构，其中键是唯一的
-+ 遍历`Map`的方法
-  + 获取所有键，通过键来获取值
-  + 获取键值对组成的集合
-
-**重要实现类**  
-`HashMap`类  
-+ 默认初始容量是 16, 加载因子为 0.75F
-+ 每次扩容一倍
-+ 允许键或值为`null`
-+ 异步式线程不安全的映射，不对映射做安全限制
-
-`HashTable`类
-+ 默认初始容量为 11, 加载因子为 0.75F
-+ 不允许键或值为`null`
-+ 同步式线程安全的映射
-  + 对外公开的涉及到键值对的操作方法都是同步方法
-  + 锁对象是`this`，`HashTable`以本身对象作为锁对象
-
-`ConcurrentHashMap`类
-+ 异步式线程安全的映射
-+ 引入分段锁（分桶锁）
-详情见[ConcurrentMap](#concurrentmap接口)  
 
 ## `Properties`类
 **基本信息**  
