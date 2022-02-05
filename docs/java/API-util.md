@@ -186,6 +186,51 @@ Java 为集合运算和表达提供了一种更高阶的表达方式，通过这
         map.put("Jery", 3);
         Stream mapStream = map.entrySet().stream();
         ```
+
+        关于 ParallelStream:  
+        @flowstart
+        st=>start: 开始
+        e=>end: 结束
+        
+        op1=>operation: Splitor.estimateSize() 分片数量 阈值处理
+        
+        cond1=>condition: 分片大于阈值？
+        op2=>operation: 最小任务单元计算 doLeaf
+        op3=>operation: 创建子任务 Task
+        
+        op4=>operation: 终结判断 AbstractTask.tryComplete(...)
+        
+        cond2=>condition: 其他并行中间节点 Pedding == 0?
+        op5=>operation: 最终任务操作 onCompletion(...)
+        op6=>operation: 等待其他节点
+        
+        cond3=>condition: 其他子节点任务？
+        op7=>operation: 合并所有节点数据
+        op8=>operation: 销毁中间数据
+
+        cond4=>condition: 节点任务判断？
+
+        op9=>operation: 左右节点 fork 分解
+
+        cond5=>condition: 通过软件控制 CPU 分片对线程均衡操作？
+        op10=>operation: 添加到当前线程
+
+        st->op1
+
+        op1->cond1
+        cond1(yes)->op2->op4->cond2
+        cond1(no)->op3->op9->cond5
+        cond2(yes)->op6->e
+        cond2(no)->op5->cond3
+        cond3(yes)->op8->e
+        cond3(no)->op7->cond4
+        cond4(yes)->op5
+        cond4(no)->e
+        cond5(yes)->op10->e
+        cond5(no)->op1
+        @flowend
+        **ParallelStream 在操作非线程安全的集合时会出现数据不一致。可以通过 Collections 提供的同步块来实现线程安全，但会出现线程竞争问题。通过联合 Stream 提供的聚合操作（例如 collect 操作）和 ParallelStream可以实现对非线程安全集合的并行操作。**
+
       + 从流中获取 stream  
         `BufferReader.lines()`  
       + 通过静态工厂获取 stream  
