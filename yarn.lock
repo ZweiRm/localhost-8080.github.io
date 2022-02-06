@@ -8295,7 +8295,7 @@ vuepress-plugin-container@^2.0.2:
     "@vuepress/shared-utils" "^1.2.0"
     markdown-it-container "^2.0.0"
 
-vuepress-plugin-flowchart@^1.4.3:
+vuepress-plugin-flowchart@^1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/vuepress-plugin-flowchart/-/vuepress-plugin-flowchart-1.5.0.tgz#42342767e643e5f9d56ae2e68f5d306224a717b4"
   integrity sha512-mmLstal1v/S2h22wBYR51XIweqR2AMbQ+kDO44GswqtVfXODhfJLZX2D2oPwnx6x0lRMRkbnKUE8OVllcCizvg==

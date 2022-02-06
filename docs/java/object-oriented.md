@@ -86,7 +86,9 @@ next: ./API-introduction
 
 + 便于模块化开发。
 
-**方法签名**：一个方法由其修饰符、返回值类型、方法名和形式参数唯一确定，这一组数据称为方法签名。
+**方法签名**：一个方法由其修饰符、返回值类型、方法名和形式参数唯一确定，这一组数据称为方法签名。  
+定义：`修饰符 返回值类型 方法名(形式参数) {...}`  
+例如：`public void method(int num1, int num2) {...}`  
 
 ### 3.3.1 构造方法
 与类同名且没有返回值类型。  
@@ -998,3 +1000,107 @@ public class Main {
     Person person = ip.initPerson("Jerry", "M", 22);    // 使用构造接口创建对象
 }
 ```
+
+
+## 3.13 泛型
+使用泛型可以在定义类、接口和函数时将某一个类型（即某一个类或者某一个接口）作为参数。它可以使得在使用不同类型作为输入下重用某些代码，效果类比形式参数。  
+
+主要作用：  
++ 更强的编译时类型检查  
+  Java 编译器会在编译器对泛型进行检查，从而降低了整个程序在运行时发生错误的概率。  
++ 消除类型转换  
+  例如：默认情况下 List 存放的是 `Object` 类型数据。所有其他引用类都是 `Object` 的子类，所以各类型数据都可以成功存入默认的 List 中。但在试图通过默认 List 接收一个指定类型的元素时，就会发生类型转换。如果我们对整个 List 使用泛型声明元素类型后，后续提取接收元素则不需要类型转换。  
+  默认 List:  
+  ``` java{3}
+  List list = new ArrayList();
+  list.add("hello");
+  String s = (String) list.get(0);
+  ```
+  使用泛型的 List:  
+  ``` java{3}
+  List<String> list = new ArrayList<String>();
+  list.add("hello");
+  String s = list.get(0);
+  ```
++ 实现泛型算法  
+  通过泛型来实现泛型算法。使其可定义、类型安全且易读。  
+
+### 3.13.1 泛型类型
+**声明泛型类型**  
+对于规定了类型的类和接口，称之为泛型类型。对于类型参数，使用尖括号包裹。其中类型参数是一个大写的字母。  
+定义语法：`class ClassName<T1, T2, ..., Tn> {...}`  
+  
+通常我们规定类型参数字母用以下所示的来表示：  
++ `E` Element 元素 (从 Java 集合中扩展)
++ `K` Key 键
++ `N` Number 数字
++ `T` Type 类型
++ `V` Value 值
++ `S`, `U`, `V`, etc. 类型（单个 T 无法满足需求时，按字母表序使用 T 周围的其他字母）  
+
+举例：  
+定义一个可以存放元素的 `Box` 类，其存放元素定义为 `Object` 类型。`Box` 类拥有获取元素的 `get()` 和存放元素的 `set()`. 因为可以存放的类型定义为 `Object`, 所以它可以接受任意引用类型的元素。则可能会造成一些无法在编译期被检查出来的错误：在代码的某一部分向 Box 中存放 `Integer` 类型的数据而另一部分代码向 Box 存放 `String` 类型的数据。这样就会造成运行时错误。  
+``` java
+public class Box {
+    private Object object;
+
+    public void set(Object object) { this.object = object; }
+    public Object get() { return object; }
+}
+```
+
+使用泛型来规定 Box 只能接受某一种类型的元素：  
+``` java
+public class Box<T> {
+    // T stands for "Type"
+    private T t;
+
+    public void set(T t) { this.t = t; }
+    public T get() { return t; }
+}
+```
+在 Box 被使用时，需要指明该 Box 接受的元素类型，并且这个 Box 只能接受这样一种类型，从而避免了之前描述的错误可能。  
+
+**调用与实例化泛型类型**  
+当实例化一个参数化类型时，必须在尖括号中用具体的引用类型来代替定义时的字母，如：  
+使用 `Box<Integer> intergerBox` 来声明一个只能存放 `Integer` 类型的 Box.  
+使用 `new Box<Integer>()` 来实例化具体的可以存放 `Integer` 的 Box 对象。  
+
+::: tip 钻石操作符 <Badge text="Java 7.0+"/> <Badge text="Java 9.0+"/>
+在 Java SE 7.0 之后，当调用泛型类型的构造函数来实例化对象时，可以不在尖括号里写出具体的类型而让编译器自动进行推断。这样的空尖括号 `<>` 称为钻石操作符。在 Java 9 中，它新增了对匿名内部类的支持。  
+例如声明并实例化一个可以存放 `Integer` 类型的 Box 写为：  
+`Box<Integer> integerBox = new Box<>();`
+:::
+
+**多类型参数的泛型类型**  
+泛型类型可以拥有多个类型参数。例如编写一个拥有键值对的容器接口和具体的实现类：  
+``` java
+// Pair 容器接口
+public interface Pair<K, V> {
+    public K getKey();
+    public V getValue();
+}
+
+// 具体实现类：OrderedPair
+public class OrderedPair<K, V> implements Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    public OrderedPair(K key, V value) {
+	this.key = key;
+	this.value = value;
+    }
+
+    public K getKey()	{ return key; }
+    public V getValue() { return value; }
+}
+
+// 声明并创建具体实例
+OrderedPair<String, Integer> p1 = new OrderedPair<>("Even", 8);
+OrderedPair<String, String>  p2 = new OrderedPair<>("hello", "world");
+```
+
+**参数化类型**  
+对于一个泛型类型，它声明时的类型参数也可以是一个声明了类型参数的泛型类型，称为参数和类型。  
+例如：`OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));`  
