@@ -813,7 +813,7 @@ true
    ```
    ::: warning 注意
    + `break;`语句用来跳出当前判定或循环。  
-   所以我们可以知道当执行到某不含`break;`的`care`块时，判定仍将继续下去，直到所有`case`均不满足或遇到`break;`才退出操作。  
+   所以我们可以知道当执行到某不含`break;`的`case`块时，判定仍将继续下去，直到所有`case`均不满足或遇到`break;`才退出操作。  
    **Input**
    ``` java
    public class SwitchDemoFallThrough {
