@@ -1102,5 +1102,79 @@ OrderedPair<String, String>  p2 = new OrderedPair<>("hello", "world");
 ```
 
 **参数化类型**  
-对于一个泛型类型，它声明时的类型参数也可以是一个声明了类型参数的泛型类型，称为参数和类型。  
-例如：`OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));`  
+对于一个泛型类型，它声明时的类型参数也可以是一个声明了类型参数的泛型类型，称为参数化类型。  
+例如：  
+`OrderedPair<String, Box<Integer>> p = new OrderedPair<>("primes", new Box<Integer>(...));`  
+
+**原始类型**  
+当一个泛型类型在声明和实例化时没有声明类型参数时，称为原始类型。  
+对于上面的泛型类型 Box 来说，省略类型参数声明之后：`Box rawBox = new Box();`  
+就是声明并实例化了 Box 的原始类型。  
++ 一个非泛型类型的普通类型不称为原始类型也无需声明类型参数。  
++ 当使用声明了类型参数的变量接收（引用）原始类型时，会得到警告 `unchecked conversion`
+  ``` java{2}
+  Box rawBox = new Box();
+  Box<Integer> intBox = rawBox;
+  ```
++ 当声明的原始类型变量接收（引用）泛型类型时，会得到警告 `unchecked invocation`  
+  ``` java{2}
+  Box<Integer> intBox = new Box<>();
+  Box rawBox = intBox;
+  ```
++ 当声明的原始类型变量接收（引用）泛型类型并使用泛型类型的方法时，会得到警告 `unchecked invocation to {method}`
+  ``` java {3}
+  Box<String> stringBox = new Box<>();
+  Box rawBox = stringBox;
+  rawBox.set(8);  // warning: unchecked invocation to set(T)
+  ```
+
+### 3.13.2 泛型方法
+类似泛型类型，当一个方法声明了它限定使用的类型后称为泛型方法。对于方法的泛型，它的作用域只在被声明的函数里。  
+语法：`权限控制符 [静态] <泛型 1, 泛型 2, ...> 返回值类型 方法名(参数列表) {...}`  
+**泛型和静态的声明必须出现在返回值类型前**。  
+
+编写一个 `Util` 类，其中包含泛型方法 `compare()` 用来比较两个泛型类型 `Pair`:  
+``` java{20-23}
+// Pair 类
+public class Pair<K, V> {
+
+    private K key;
+    private V value;
+
+    public Pair(K key, V value) {
+        this.key = key;
+        this.value = value;
+    }
+
+    public void setKey(K key) { this.key = key; }
+    public void setValue(V value) { this.value = value; }
+    public K getKey()   { return key; }
+    public V getValue() { return value; }
+}
+
+// Util 类
+public class Util {
+    public static <K, V> boolean compare(Pair<K, V> p1, Pair<K, V> p2) {
+        return p1.getKey().equals(p2.getKey()) &&
+               p1.getValue().equals(p2.getValue());
+    }
+}
+```
+
+调用 `compare()` 来比较两个 `Pair` 实例：  
+``` java{6}
+// 实例化 Pair
+Pair<Integer, String> p1 = new Pair<>(1, "apple");
+Pair<Integer, String> p2 = new Pair<>(2, "pear");
+
+// 调用比较函数，结果由布尔变量 same 所引用
+boolean same = Util.<Integer, String>compare(p1, p2);
+```
+*类型推断*  
+在调用泛型方法时，编译器可以自动推断出这个泛型方法所需要的类型参数，所以调用时的类型参数声明可以被省略。  
+``` java{3}
+Pair<Integer, String> p1 = new Pair<>(1, "apple");
+Pair<Integer, String> p2 = new Pair<>(2, "pear");
+boolean same = Util.compare(p1, p2);
+```
+
