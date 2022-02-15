@@ -1229,3 +1229,23 @@ public static <T extends Comparable<T>> int countGreaterThan(T[] anArray, T elem
 ```
 在循环中，不使用 `e > elem`. 因为比较运算符只适用于基本数字类型。使用有界类型参数来使用 `Comparable` 接口的 `compareTo()` 实现对比。  
 
+::: warning 关于继承关系
+**泛型类型的泛化**  
+类似类之间的多态，一个父类声明可以引用子类对象（例如 `Object someObj = new Integer(1);`, 一个类型参数声明为父类的泛型类型可以存放子类元素。  
+``` java
+Box<Number> box = new Box<Number>();
+box.add(new Integer(10));   // OK
+box.add(new Double(10.1));  // OK
+```
+但要注意：**声明了类型参数为父类的泛型类型与声明了类型参数为子类的泛型类型不构成继承关系。**  
+``` java{6,7}
+// 一个参数要求为 Number 为类型参数的泛型类型 Box 的函数
+public void boxTest(Box<Number> n) { /* ... */ }
+
+Box<Integer> intBox = new Box<>();
+Box<Double> doubleBox = new Box<>();
+// boxTest(intBox);
+// boxTest(doubleBox);
+```
+泛型类型之间可以通过 `extends` (类) 和 `implements` (接口)来实现继承关系。例如 `ArrayList<E>` 实现了 `List<E>`，而 `List<E>` 继承了 `Collection<E>`. 那么这三个类直接是继承关系。那么对应的，当声明了父类参数类型且后续不变时，类之间的继承关系保留，例如：`ArrayList<String>` 是 `List<String>` 的子类，而 `List<String>` 是 `Collection<String>` 的子类。  
+:::
