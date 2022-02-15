@@ -1249,3 +1249,34 @@ Box<Double> doubleBox = new Box<>();
 ```
 泛型类型之间可以通过 `extends` (类) 和 `implements` (接口)来实现继承关系。例如 `ArrayList<E>` 实现了 `List<E>`，而 `List<E>` 继承了 `Collection<E>`. 那么这三个类直接是继承关系。那么对应的，当声明了父类参数类型且后续不变时，类之间的继承关系保留，例如：`ArrayList<String>` 是 `List<String>` 的子类，而 `List<String>` 是 `Collection<String>` 的子类。  
 :::
+
+::: tip 关于泛型的类型推断
++ 实例化时类型参数的自动推断  
+  当调用泛型类型的构造函数来实例化对象时，可以不在尖括号里写出具体的类型而让编译器自动进行推断，称为钻石操作符。  
+  ``` java
+  Map<String, List<String>> myMap = new HashMap<>();
+  ```
+  钻石操作符不可省略，否则声明的是原始类型。  
++ 调用泛型方法时的类型推断  
+  在调用泛型方法时，编译器可以自动推断出这个泛型方法所需要的类型参数，所以调用时的类型参数声明可以被省略。  
+  ``` java
+  // 泛型方法定义
+  public static <U> void addBox(U u, java.util.List<Box<U>> boxes) {/* ... */}
+
+  // 自动推断出调用时的类型参数是 Integer
+  BoxDemo.addBox(Integer.valueOf(20), listOfIntegerBoxes);
+  ```
++ 构造函数类型推断
+  构造函数也可以被写成泛型方法。是实例化时，可以类似泛型方法的类型推断而不必写出具体的类型参数。  
+  ``` java
+  class MyClass<X> {
+    // 带有类型参数的构造函数
+    <T> MyClass(T t) {
+      // ...
+    }
+  }
+
+  // 实例化时，从传入的 "" 推断出构造函数所需要的类型参数是 String
+  MyClass<Integer> myObject = new MyClass<>("");
+  ```
+:::
