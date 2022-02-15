@@ -1178,3 +1178,54 @@ Pair<Integer, String> p2 = new Pair<>(2, "pear");
 boolean same = Util.compare(p1, p2);
 ```
 
+### 3.13.3 有界类型参数
+当限定泛型类型可接受的类型参数范围时（例如只接受某一类及其子类作为类型参数）称为有界类型参数。  
++ 使用 `extends` 关键字来设定类型参数的上界；使用 `super` 关键字来设定类型参数的下界。  
+  语法：`<? extends 类/接口>` 上界, ``<? super 类/接口>`` 下界  
+  ``` java{2,8}
+  // 规定了上界的泛型方法
+  public <U extends Number> void inspect(U u){
+      System.out.println("T: " + t.getClass().getName());
+      System.out.println("U: " + u.getClass().getName());
+  }
+
+  // 规定了上界的泛型类型
+  public class NaturalNumber<T extends Integer> {...}
+  ```
++ 当拥有多个界时，类型参数直接用 `&` 隔开。`<T extends B1 & B2 & B3>`  
+  一个具有多个界的类型变量是边界中列出的所有类型的一个子类型。如果其中一个界是一个类，必须首先指定它。  
+  ``` java{5}
+  Class A { /* ... */ }
+  interface B { /* ... */ }
+  interface C { /* ... */ }
+
+  class D <T extends A & B & C> { /* ... */ }
+  ```
++ 当一个泛型类型设定好它的类型参数范围后，可以使用这个类型参数的方法。  
+  ``` java{8}
+  public class NaturalNumber<T extends Integer> {
+
+      private T n;
+
+      public NaturalNumber(T n)  { this.n = n; }
+
+      public boolean isEven() {
+          return n.intValue() % 2 == 0;
+      }
+
+      // ...
+  }
+  ```
+
+实例：编写一个泛型数组的元素对比函数，要求计数比指定元素大的所有元素个数。  
+``` java
+public static <T extends Comparable<T>> int countGreaterThan(T[] anArray, T elem) {
+    int count = 0;
+    for (T e : anArray)
+        if (e.compareTo(elem) > 0)
+            ++count;
+    return count;
+}
+```
+在循环中，不使用 `e > elem`. 因为比较运算符只适用于基本数字类型。使用有界类型参数来使用 `Comparable` 接口的 `compareTo()` 实现对比。  
+
