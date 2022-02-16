@@ -1287,7 +1287,7 @@ Box<Double> doubleBox = new Box<>();
 
 **上界通配**  
 使用通配符可以设定泛型类型参数的上边界。  
-语法：`<? extends 类/接口>`.
+语法：`<? extends 类/接口>`.  
 实例：定义一个 `sumOfList()` 来获得 List 中所有元素的和。要求 List 元素可以为 `Number` 及其子类类型，和以 `double` 形式储存。  
 ``` java
 // sumOfList()，使用上界通配规定参数 List 中元素的上界为 Number
@@ -1307,4 +1307,47 @@ List<Double> ld = Arrays.asList(1.2, 2.3, 3.5);
 System.out.println("sum = " + sumOfList(ld));
 ```
 
+**下界通配**  
+类似上界通配，使用通配符可以设定泛型类型参数的上边界。  
+语法：`<? super 类/接口>`.  
+实例：定义一个方法来计算 1 到 10 的和（1 + 2 + 3 + ... + 10），并且将每一轮的结果添加到一个 `List` 中。要求这个 `List` 存放元素的类型是 `Integer` 及其父类类型。  
+``` java
+public static void addNumbers(List<? super Integer> list) {
+    for (int i = 1; i <= 10; i++) {
+        list.add(i);
+    }
+}
+```
+
 **无界通配**  
+当在尖括号内只写一个问号时，称为无界通配，它用来表示未知类型。  
+通常有两种适用情形：  
++ 当编写的方法可以被 `Object` 类的功能所实现  
++ 泛型类型中的方法与参数类型无关  
+  例如泛型类型 `List<T>` 中，`List.size()` 和 `List.clear()` 与 `T` 具体是什么类型无关。  
+
+实例：编写一个遍历打印 List 元素的方法。  
+``` java
+// 错误写法，这个方法只能遍历打印元素为 Object 类型的 List
+// 元素为其他类型的 List 不是 List<Object> 的子类
+public static void printList(List<Object> list) {
+    for (Object elem : list)
+        System.out.println(elem + " ");
+    System.out.println();
+}
+
+// 正确写法，使用无界通配保证元素为任何类型的 List 都是 List<Object> 的子类
+public static void printList(List<?> list) {
+    for (Object elem: list)
+        System.out.print(elem + " ");
+    System.out.println();
+}
+
+// 调用 printList()
+List<Integer> li = Arrays.asList(1, 2, 3);
+List<String>  ls = Arrays.asList("one", "two", "three");
+printList(li);
+printList(ls);
+```
+**`List<Object>` 与 `List<?>` 是不同的。你可以在 `List<Object>` 中插入一个 `Object` 或者 `Object` 的任何子类型。但是你只能在 `List<?>` 中插入 `null`.**  
+
