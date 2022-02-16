@@ -1181,7 +1181,7 @@ boolean same = Util.compare(p1, p2);
 ### 3.13.3 有界类型参数
 当限定泛型类型可接受的类型参数范围时（例如只接受某一类及其子类作为类型参数）称为有界类型参数。  
 + 使用 `extends` 关键字来设定类型参数的上界；使用 `super` 关键字来设定类型参数的下界。  
-  语法：`<? extends 类/接口>` 上界, ``<? super 类/接口>`` 下界  
+  语法：`<X extends 类/接口>` 上界, ``<X super 类/接口>`` 下界  
   ``` java{2,8}
   // 规定了上界的泛型方法
   public <U extends Number> void inspect(U u){
@@ -1266,7 +1266,7 @@ Box<Double> doubleBox = new Box<>();
   // 自动推断出调用时的类型参数是 Integer
   BoxDemo.addBox(Integer.valueOf(20), listOfIntegerBoxes);
   ```
-+ 构造函数类型推断
++ 构造函数类型推断  
   构造函数也可以被写成泛型方法。是实例化时，可以类似泛型方法的类型推断而不必写出具体的类型参数。  
   ``` java
   class MyClass<X> {
@@ -1280,3 +1280,31 @@ Box<Double> doubleBox = new Box<>();
   MyClass<Integer> myObject = new MyClass<>("");
   ```
 :::
+
+### 3.13.4 通配
+在泛型代码中，问号（`?`）被称为通配符，代表未知类型。通配符可以在各种情况下使用：作为参数、字段或局部变量的类型；有时作为返回类型（尽管更好的编程实践要求其更具体）。  
+注意：**通配符永远不会被用作泛型方法调用、泛型类型实例创建或超类型的类型参数。**  
+
+**上界通配**  
+使用通配符可以设定泛型类型参数的上边界。  
+语法：`<? extends 类/接口>`.
+实例：定义一个 `sumOfList()` 来获得 List 中所有元素的和。要求 List 元素可以为 `Number` 及其子类类型，和以 `double` 形式储存。  
+``` java
+// sumOfList()，使用上界通配规定参数 List 中元素的上界为 Number
+public static double sumOfList(List<? extends Number> list) {
+    double s = 0.0;
+    for (Number n : list)
+        s += n.doubleValue(); // 使用 doubleValue() 来使得结果为 double 类型
+    return s;
+}
+
+// 计算 Integer 类型 list 的元素和
+List<Integer> li = Arrays.asList(1, 2, 3);
+System.out.println("sum = " + sumOfList(li));
+
+// 计算 Double 类型 list 的元素和
+List<Double> ld = Arrays.asList(1.2, 2.3, 3.5);
+System.out.println("sum = " + sumOfList(ld));
+```
+
+**无界通配**  
