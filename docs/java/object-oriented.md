@@ -1364,6 +1364,8 @@ Box<Double> doubleBox = new Box<>();
 List<? extends Integer> intList = new ArrayList<>();
 List<? extends Number>  numList = intList;  // OK. List<? extends Integer> is a subtype of List<? extends Number>
 ```
-对于 `List<?>`, `List<Number>`, `List<Integer>`, `List<? extends Number>`, `List<? extends Integer>`, `List<? super Number>`, `List<? super Integer>` 之间的关系为：  
+对于 `List<?>`, `List<Number>`, `List<Integer>`, `List<? extends Number>`, `List<? extends Integer>`, `List<? super Number>`, `List<? super Integer>` 它们之间的关系为：  
 ![List继承关系](/img/List继承关系.png)
 :::
+
+**通配捕获与 Helper 函数**  
