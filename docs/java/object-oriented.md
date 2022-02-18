@@ -1229,27 +1229,6 @@ public static <T extends Comparable<T>> int countGreaterThan(T[] anArray, T elem
 ```
 在循环中，不使用 `e > elem`. 因为比较运算符只适用于基本数字类型。使用有界类型参数来使用 `Comparable` 接口的 `compareTo()` 实现对比。  
 
-::: warning 关于继承关系
-**泛型类型的泛化**  
-类似类之间的多态，一个父类声明可以引用子类对象（例如 `Object someObj = new Integer(1);`, 一个类型参数声明为父类的泛型类型可以存放子类元素。  
-``` java
-Box<Number> box = new Box<Number>();
-box.add(new Integer(10));   // OK
-box.add(new Double(10.1));  // OK
-```
-但要注意：**声明了类型参数为父类的泛型类型与声明了类型参数为子类的泛型类型不构成继承关系。**  
-``` java{6,7}
-// 一个参数要求为 Number 为类型参数的泛型类型 Box 的函数
-public void boxTest(Box<Number> n) { /* ... */ }
-
-Box<Integer> intBox = new Box<>();
-Box<Double> doubleBox = new Box<>();
-// boxTest(intBox);
-// boxTest(doubleBox);
-```
-泛型类型之间可以通过 `extends` (类) 和 `implements` (接口)来实现继承关系。例如 `ArrayList<E>` 实现了 `List<E>`，而 `List<E>` 继承了 `Collection<E>`. 那么这三个类直接是继承关系。那么对应的，当声明了父类参数类型且后续不变时，类之间的继承关系保留，例如：`ArrayList<String>` 是 `List<String>` 的子类，而 `List<String>` 是 `Collection<String>` 的子类。  
-:::
-
 ::: tip 关于泛型的类型推断
 + 实例化时类型参数的自动推断  
   当调用泛型类型的构造函数来实例化对象时，可以不在尖括号里写出具体的类型而让编译器自动进行推断，称为钻石操作符。  
@@ -1351,3 +1330,40 @@ printList(ls);
 ```
 **`List<Object>` 与 `List<?>` 是不同的。你可以在 `List<Object>` 中插入一个 `Object` 或者 `Object` 的任何子类型。但是你只能在 `List<?>` 中插入 `null`.**  
 
+::: warning 关于继承关系
+**泛型类型的泛化**  
+类似类之间的多态，一个父类声明可以引用子类对象（例如 `Object someObj = new Integer(1);`, 一个类型参数声明为父类的泛型类型可以存放子类元素。  
+``` java
+Box<Number> box = new Box<Number>();
+box.add(new Integer(10));   // OK
+box.add(new Double(10.1));  // OK
+```
+但要注意：**声明了类型参数为父类的泛型类型与声明了类型参数为子类的泛型类型不构成继承关系。**  
+``` java{6,7}
+// 一个参数要求为 Number 为类型参数的泛型类型 Box 的函数
+public void boxTest(Box<Number> n) { /* ... */ }
+
+Box<Integer> intBox = new Box<>();
+Box<Double> doubleBox = new Box<>();
+// boxTest(intBox);
+// boxTest(doubleBox);
+```
+![泛型类型的泛化](/img/泛型类型泛化.png)
+
+泛型类型之间可以通过 `extends` (类) 和 `implements` (接口)来实现继承关系。例如 `ArrayList<E>` 实现了 `List<E>`，而 `List<E>` 继承了 `Collection<E>`. 那么这三个类直接是继承关系。那么对应的，当声明了父类参数类型且后续不变时，类之间的继承关系保留，例如：`ArrayList<String>` 是 `List<String>` 的子类，而 `List<String>` 是 `Collection<String>` 的子类。  
+![Collection继承关系](/img/Collection继承关系.png)
+
+**泛型类型继承关系**  
+使用通配可以实现泛型类型的继承关系。  
+对于 `Box<Integer>` 和 `Box<Number>` 来说，虽然它们之间不存在继承关系，但是它们的公共父类可以是 `Box<?>`.
+![Box的公共父类](/img/Box公共父类.png)  
+
+利用上下界通配可以真正实现类型参数是子父类的泛型类型继承。例如：  
+``` java
+// 泛型类型向上造型
+List<? extends Integer> intList = new ArrayList<>();
+List<? extends Number>  numList = intList;  // OK. List<? extends Integer> is a subtype of List<? extends Number>
+```
+对于 `List<?>`, `List<Number>`, `List<Integer>`, `List<? extends Number>`, `List<? extends Integer>`, `List<? super Number>`, `List<? super Integer>` 之间的关系为：  
+![List继承关系](/img/List继承关系.png)
+:::
