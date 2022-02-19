@@ -1440,3 +1440,51 @@ List<Double>  ld = Arrays.asList(10.10, 20.20, 30.30);
 swapFirst(li, ld);
 ```
 虽然两个 list 都符合 `List<? extends Number>`, 但显然 `Integer` 与 `Double` 无法匹配。这样的代码也无法编写 Helper 函数来解决。  
+
+::: tip 通配使用建议
+建议通过以下规则来确定具体代码中使用上下界通配时的范围确定：  
+将变量看做两大类型：输入型和输出型。其中，  
++ 输入型变量：向代码提供数据。  
++ 输出型变量：保存数据，供给其他地方使用。  
+
+例如：一个函数 `copy(src, dest)`, 其中 `src` 是输入型变量， `dest` 是输出型变量。  
+
+以此为标准，当要确定通配上下界时：  
++ 输入型变量用上界通配
++ 输出型变量用下界通配
++ 当输入型变量可以使用 `Object` 类特性时，用无界通配
++ 变量既有输入特性又有输出特性，不使用通配  
+
+*这些准则并不适用于方法的返回类型。应该避免使用通配符作为返回类型，因为它迫使使用代码的程序员去处理通配符。*  
+
+**关于 `List<? extends ...>`**  
+一般认为一个 `List<? extends ...>` 是一个只读的 list。它的现有元素不能被增加或修改，但其实不是严格意义上的只读。
+``` java
+// 自然数类
+class NaturalNumber {
+
+    private int i;
+
+    public NaturalNumber(int i) { this.i = i; }
+    // ...
+}
+
+// 偶数类
+class EvenNumber extends NaturalNumber {
+
+    public EvenNumber(int i) { super(i); }
+    // ...
+}
+
+// 具体调用
+List<EvenNumber> le = new ArrayList<>();
+List<? extends NaturalNumber> ln = le;
+// ln.add(new NaturalNumber(35));  // compile-time error
+```
+`List<EvenNumber>` 是 `List<? extends NaturalNumber>` 的子类，所以变量 `ln` 可以引用 `le` (向上造型)。但调用 `ln` 的 `add()` 去添加一个自然数到偶数 list 是不可以的。  
+但是，仍然可以对 `ln` 进行以下操作：  
++ 添加 `null` 元素
++ 调用 `clear()`
++ 获取迭代器 iterator 并调用 `remove`
++ 捕捉通配并写入从 list 中读到的元素
+:::
