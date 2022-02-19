@@ -1369,3 +1369,74 @@ List<? extends Number>  numList = intList;  // OK. List<? extends Integer> is a 
 :::
 
 **通配捕获与 Helper 函数**  
+当在代码中声明了一个通配符时，编译器会去通过它周围的代码推断出这个通配符所需要的具体类型，称为通配捕获。  
+但在某些情况下，编译器无法推断出具体所需要的类型时，就会报 `WildcardError`. 这时需要编写一些 Helper 方法来使得泛型捕获到正确的类型。  
+
+实例：  
+``` java
+import java.util.List;
+
+public class WildcardError {
+
+    void foo(List<?> i) {
+        i.set(0, i.get(0));
+    }
+}
+```
+会得到错误：  
+```
+WildcardError.java:6: error: method set in interface List<E> cannot be applied to given types;
+    i.set(0, i.get(0));
+     ^
+  required: int,CAP#1
+  found: int,Object
+  reason: actual argument Object cannot be converted to CAP#1 by method invocation conversion
+  where E is a type-variable:
+    E extends Object declared in interface List
+  where CAP#1 is a fresh type-variable:
+    CAP#1 extends Object from capture of ?
+1 error
+```
+在代码中，编译器会把参数 `i` 推断为 `Object`. 之后在 `foo()` 中调用变量 `i` 所在的 `List` 接口中的 `List.set(int, E)`. 这个函数要求第二个参数是一个类型参数，但因为编译器之前将 `i` 推断成为 `Object` 类型，所以对应 `i.get(0)` 也是 `Object` 类型。这样的结果与要求不匹配，编译器无法确定对 list 插入的值到底是何种类型而报错。  
+
+通过编写一个 `fooHelper()` 来绕过编译器的类型安全检测：  
+``` java
+public class WildcardFixed {
+
+    void foo(List<?> i) {
+        fooHelper(i);
+    }
+
+
+    // Helper method created so that the wildcard can be captured
+    // through type inference.
+    private <T> void fooHelper(List<T> l) {
+        l.set(0, l.get(0));
+    }
+
+}
+```
+这样以来，在 `foolHelper()` 中已经声明了类型参数是 `T`，编译器就可以在 `List.set(int, E)` 中确定第二个参数是 `T` 类型的，从而符合类型安全。  
+
+实例 2：  
+``` java
+import java.util.List;
+
+public class WildcardErrorBad {
+
+    void swapFirst(List<? extends Number> l1, List<? extends Number> l2) {
+      Number temp = l1.get(0);
+      l1.set(0, l2.get(0)); // expected a CAP#1 extends Number,
+                            // got a CAP#2 extends Number;
+                            // same bound, but different types
+      l2.set(0, temp);	    // expected a CAP#1 extends Number,
+                            // got a Number
+    }
+}
+
+// 具体调用执行
+List<Integer> li = Arrays.asList(1, 2, 3);
+List<Double>  ld = Arrays.asList(10.10, 20.20, 30.30);
+swapFirst(li, ld);
+```
+虽然两个 list 都符合 `List<? extends Number>`, 但显然 `Integer` 与 `Double` 无法匹配。这样的代码也无法编写 Helper 函数来解决。  
