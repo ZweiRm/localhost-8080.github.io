@@ -13,7 +13,7 @@ features:
   details: 笔记力图以简洁的文字和画面表现出各知识的条理关系。
 - title: 实用
   details: 这不是百科全书，但在全面的基础上尽量展示最可能用到的部分。
-footer: Copyright © 2018-2021 ahza.xin | localhost-8080.io
+footer: Copyright © 2018-2022 ahza.xin | localhost-8080.io
 ---
 
 <div style="vertical-align: middle;">

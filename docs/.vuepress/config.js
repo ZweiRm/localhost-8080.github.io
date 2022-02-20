@@ -97,9 +97,9 @@ module.exports = {
                 ]},
             ]
         },
-        { text: '关于', link: '/about/' },
         { text: 'Github', link: 'https://www.github.com/ZweiRm' },
         { text: '码云', link: 'https://gitee.com/zweirm/' },
+        { text: '关于', link: '/about/' },
         ],
         sidebar: {
             '/java/': [
