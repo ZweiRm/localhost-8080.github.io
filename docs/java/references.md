@@ -27,3 +27,5 @@ next: false
 [11]悟空.[玩转Java并发工具，精通JUC，成为并发多面手](https://coding.imooc.com/class/409.html).2020  
 
 [12]菜鸟教程. [Java 8 Stream](https://www.runoob.com/java/java8-streams.html).2022  
+
+[13]开发者小王.[Java泛型（一）类型擦除](https://www.jianshu.com/p/2bfbe041e6b7).2017
