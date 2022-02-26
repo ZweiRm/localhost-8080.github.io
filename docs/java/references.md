@@ -28,4 +28,6 @@ next: false
 
 [12]菜鸟教程. [Java 8 Stream](https://www.runoob.com/java/java8-streams.html).2022  
 
-[13]开发者小王.[Java泛型（一）类型擦除](https://www.jianshu.com/p/2bfbe041e6b7).2017
+[13]开发者小王.[Java泛型（一）类型擦除](https://www.jianshu.com/p/2bfbe041e6b7).2017  
+
+[14]Cay S. Horstmann.Java核心技术 卷I[M].北京:机械工业出版社,2016  

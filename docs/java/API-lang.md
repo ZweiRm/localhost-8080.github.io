@@ -1256,3 +1256,34 @@ int i = integer.intValue();
 这个类中对基础运算（如加、减、乘、除）提供了方法支持，故，不能使用运算符（如`+`、`-`、`*`、`/`）来进行运算。
 
 :::
+
+## 反射
+### 基本信息
+**Package** java.lang  
+`public final class Class<T>`  
+
+**Package** java.lang.reflect  
+
+Java 提供了反射机制，使用该机制可以动态操作 Java 代码（例如程序经过编译后的变动），也可以利用其来分析类的具体能力。它也体现了高内聚低耦合的设计思想。  
+
+### `Class`类
+`Class` 类的实例代表运行中的 Java 应用程序中的类和接口。枚举是类的一种，注解是接口的一种。  
+每个数组也都属于一个类，该类反映为一个 `Class` 对象，该对象被所有具有相同元素类型和维数的数组共享。  
+Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`float` 和 `double`）以及关键字 `void` 也被表示为 `Class` 对象。  
+`Class` 没有公共构造函数。相反，`Class` 对象是由 Java 虚拟机在加载类时自动构建的，并通过调用类加载器中的 `defineClass()` 方法来构建。  
+
+**获取 Class 对象**  
+通过获取具体类的 Class 对象，我们可以利用它们获取该类的类信息。获取方法：  
+1. `对象.getClass()`  
+   通过某类的具体实例来获取该类的 `Class` 对象。调用了 [Object 类](#object类)中的方法来实现。  
+2. `类名.class`  
+   每个类都有一个隐含的静态属性 `class`, 通过类名直接获取该属性来获取到 `Class` 对象。  
+3. `Class.forName("类全路径")`  
+   `Class` 类的静态方法，获取 `Class` 对象。  
+
+::: tip <code>Object</code> 与 <code>Class</code>
++ `Object` 是顶级父类，`Class` 也继承自 `Object`.  
++ `Class` 类用于反射，它表示了 Class 这样的一种类，可以利用它来进一步获取关于类的各种信息。  
++ `Class` 类的实例表示了当前运行着的 Java 程序的类，每一个类都会在运行时自动创建出它对应的 `Class` 类实例。  
++ `Class` 类的构造函数私有，只能通过 JVM 来访问。所以无法手动创建 `Class` 类的实例。  
+:::
