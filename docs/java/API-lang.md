@@ -1280,6 +1280,111 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
    每个类都有一个隐含的静态属性 `class`, 通过类名直接获取该属性来获取到 `Class` 对象。  
 3. `Class.forName("类全路径")`  
    `Class` 类的静态方法，获取 `Class` 对象。  
+   它是一种动态加载类的方法，这样的加载方式不在程序编译期完成，而是在运行时再动态加载。  
+   例如：  
+   ``` java
+   class Main {
+       public static void main(String[] args) {
+           Admin admin = new Admin();
+           admin.login();
+
+           User user = new User();
+           user.login();
+       }
+   }
+   ```
+   这样的主函数经过编译后，编译器无法找到类 `Admin` 和 `User` 以及它们所对应的 `login()` 而报错。这样的类加载形式是静态加载。  
+
+   进行改造：  
+   ``` java
+   // 统一的人员接口
+   interface Person {
+       public void login();
+   }
+
+   // 具体实现
+   class Admin implements Person {
+       @Override
+       public void login() {
+           System.out.println("Admin login.");
+       }
+   }
+
+   class User implements Person {
+       @Override
+       public void login() {
+           System.out.println("User login.");
+       }
+   }
+
+   // 主函数
+   class Main {
+       public static void main(String[] args) {
+           // 通过传入参数动态加载类
+           Class personClass = Class.forName(args[0]);
+           
+           // 创建实例
+           Person person = (Person) personClass.newInstance();
+           person.login();
+       }
+   }
+   ```
+   通过这样的改造，主函数不必在编译时期就指定具体的 `Admin` 或者 `User` 类，即使它们暂时不存在也不影响主函数编译失败。在程序运行时，给程序传入具体要加载的类动态加载并调用其 `login()` 来完成整个功能。  
+
+**获取构造函数**  
+1. `class对象.getConstructor(构造函数参数类型class对象)`  
+   返回指定参数类型的公共构造函数。  
+   例如：  
+   ``` java
+   public class Person {
+       // 属性
+
+       // 有参构造方法
+       public Person(String name, int age) {
+           this.age = age;
+           this.name = name;
+       }
+   }
+
+   // main 函数中，获取到 class 对象 cl 后
+   // 获取有参构造函数(传入构造方法需要的 String 和 int 类型的 class 对象)
+   Constructor con = cl.getConstructor(String.class, int.class);
+   ```
+2. `class对象.getConstructor()`  
+   获取所有公共构造函数。  
+3. `class对象.getDeclaredConstractor(构造函数参数类型字class对象)`  
+   返回指定参数类型的全部构造函数（包括 `public` `private` 等）。  
+
+**获取实例对象**  
+`class对象.newInstance()` 要求存在无参数构造函数  
+
+**获取类属性**  
+`class对象.getDeclaredField("属性名")`
+
+**获取方法对象**  
+1. `class对象.getMethod("方法名", 方法对应参数的class对象)`  
+   要求方法公有  
+2. `class对象.getDeclaredMethod("方法名", 方法对应参数的class对象)`  
+
+**获取所实现的接口**  
+`class对象.getInterfaces()`  
+
+**其他常用方法**  
+|名称|作用|
+|--|--|
+|`class对象.getName()`|获取类全路径名|
+|`class对象.getPackage()`|获取类所在包|
+|`class对象.getSimpleName()`|获取当前类名|
+|`class对象.getSuperclass()`|获取父类名|
+|`class对象.isAnonymousClass()`|是否是匿名内部类|
+|`class对象.isLocalClass()`|是否是方法内部类|
+|`class对象.isPrimitive()`|是否是基本类型|
+|`class对象.isArray()`|是否是数组|
+|`class对象.isEnum()`|是否是枚举|
+|`class对象.isInstance(指定对象)`|判断指定对象是否是该类的实现|
+|`class对象.isInterface()`|是否是接口|
+|`class对象.isAssignableFrom(目标类型)`|判断目标类型是否是当前类的本身或子类|
+
 
 ::: tip <code>Object</code> 与 <code>Class</code>
 + `Object` 是顶级父类，`Class` 也继承自 `Object`.  
