@@ -1269,11 +1269,11 @@ Java 提供了反射机制，使用该机制可以动态操作 Java 代码（例
 ### `Class`类
 `Class` 类的实例代表运行中的 Java 应用程序中的类和接口。枚举是类的一种，注解是接口的一种。  
 每个数组也都属于一个类，该类反映为一个 `Class` 对象，该对象被所有具有相同元素类型和维数的数组共享。  
-Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`float` 和 `double`）以及关键字 `void` 也被表示为 `Class` 对象。  
+Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`float` 和 `double`）以及关键字 `void` 也被表示为 `Class` 对象。（即存在 `int.class`, `void.class` 等 `Class` 对象）。  
 `Class` 没有公共构造函数。相反，`Class` 对象是由 Java 虚拟机在加载类时自动构建的，并通过调用类加载器中的 `defineClass()` 方法来构建。  
 
 **获取 Class 对象**  
-通过获取具体类的 Class 对象，我们可以利用它们获取该类的类信息。获取方法：  
+通过获取具体类的 Class 对象（某些地方也称为字节码对象），我们可以利用它们获取该类的类信息。获取方法：  
 1. `对象.getClass()`  
    通过某类的具体实例来获取该类的 `Class` 对象。调用了 [Object 类](#object类)中的方法来实现。  
 2. `类名.class`  
@@ -1350,16 +1350,19 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
    // 获取有参构造函数(传入构造方法需要的 String 和 int 类型的 class 对象)
    Constructor con = cl.getConstructor(String.class, int.class);
    ```
-2. `class对象.getConstructor()`  
+2. `class对象.getConstructors()`  
    获取所有公共构造函数。  
-3. `class对象.getDeclaredConstractor(构造函数参数类型字class对象)`  
+3. `class对象.getDeclaredConstractors(构造函数参数类型字class对象)`  
    返回指定参数类型的全部构造函数（包括 `public` `private` 等）。  
 
 **获取实例对象**  
 `class对象.newInstance()` 要求存在无参数构造函数  
 
 **获取类属性**  
-`class对象.getDeclaredField("属性名")`
+1. `class对象.getFields("属性名")`  
+   获取所有公有属性  
+2. `class对象.getDeclaredFields("属性名")`  
+   获取所有属性  
 
 **获取方法对象**  
 1. `class对象.getMethod("方法名", 方法对应参数的class对象)`  
@@ -1392,3 +1395,30 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
 + `Class` 类的实例表示了当前运行着的 Java 程序的类，每一个类都会在运行时自动创建出它对应的 `Class` 类实例。  
 + `Class` 类的构造函数私有，只能通过 JVM 来访问。所以无法手动创建 `Class` 类的实例。  
 :::
+
+### `Constructor`类
+描述构造方法的类。  
+
+**获取实例对象**  
+`constructor对象.newInstance()`  
+
+**获取构造方法返回值类型**  
+`constructor对象.getType()` 返回值是 `Class` 类型变量  
+
+**获取构造方法参数列表**  
+`constructor对象.getParameterTypes()`  
+
+### `Field`类
+描述属性的类。  
+
+**获取指定对象的属性值**  
+`field对象.get(指定对象)` 可能需要使用 `.setAccessible(true)` 来暴力破解访问权限限制。  
+
+**设置指定对象的属性值**  
+`field对象.set(指定对象)`  
+
+**获取属性声明类型**  
+`field对象.getType()` 返回值是 `Class` 类型变量  
+
+**获取属性名称**  
+`field对象.getName()`  
