@@ -1506,7 +1506,7 @@ Class c1 = new ArrayList<String>().getClass();
 Class c2 = new ArrayList<Integer>().getClass();
 System.out.println(c1 == c2);
 ```
-结果会为 `true`, 它们都是 `ArrayList` 类型的。  
+结果会为 `true`, 它们都是 `ArrayList` 类型的。此时如果使用反射来操作 `c1` 或 `c2`, 其他它们可以存放任意类型的元素。  
 
 **泛型类型的类型擦除**  
 在类型擦除过程中，Java 编译器会擦除所有的类型参数，如果类型参数是有界的，则用它的第一个界来代替，如果类型参数是无界的，则用 `Object` 来代替。  

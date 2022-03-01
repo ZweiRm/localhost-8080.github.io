@@ -1366,7 +1366,7 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
 
 **获取方法对象**  
 1. `class对象.getMethod("方法名", 方法对应参数的class对象)`  
-   要求方法公有  
+   获取公有方法  
 2. `class对象.getDeclaredMethod("方法名", 方法对应参数的class对象)`  
 
 **获取所实现的接口**  
@@ -1422,3 +1422,25 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
 
 **获取属性名称**  
 `field对象.getName()`  
+
+### `Method`类
+描述方法的类。  
+
+**执行方法**  
+`method对象.invoke(作用对象, 参数)`  
+如果方法有返回值类型则返回该类型变量，若方法无返回则返回 `null`
+
+**破解权限**  
+`method对象.setAccessible(true)` 允许在类外执行，一般配合执行方法一起使用。  
+
+**获取方法返回值类型**  
+`method对象.getReturnType()`  
+
+**获取方法参数列表**  
+`method对象.getParameterTypes()`  
+
+**获取抛出异常**  
+`method对象.getExceptionTypes()`  
+
+**判断是否含有可变参数**  
+`method对象.inVarArgs()`  
