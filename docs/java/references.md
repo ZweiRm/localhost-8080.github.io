@@ -33,3 +33,9 @@ next: false
 [14]Cay S. Horstmann.Java核心技术 卷I[M].北京:机械工业出版社,2016  
 
 [15]Cedar.[JAVA-Reflect专题](https://www.imooc.com/learn/199).2015  
+
+[16]成富.[Java9之模块系统](https://www.imooc.com/learn/997).2018  
+
+[17]牛初九.[JAVA9模块化详解(一) ——模块化的定义](https://www.cnblogs.com/boboooo/p/8057680.html).2017  
+
+[18]牛初九.[JAVA9模块化详解(二) ——模块的使用](https://www.cnblogs.com/boboooo/p/8073908.html).2017
