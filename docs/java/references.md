@@ -38,4 +38,6 @@ next: false
 
 [17]牛初九.[JAVA9模块化详解(一) ——模块化的定义](https://www.cnblogs.com/boboooo/p/8057680.html).2017  
 
-[18]牛初九.[JAVA9模块化详解(二) ——模块的使用](https://www.cnblogs.com/boboooo/p/8073908.html).2017
+[18]牛初九.[JAVA9模块化详解(二) ——模块的使用](https://www.cnblogs.com/boboooo/p/8073908.html).2017  
+
+[19]Paul Deitel.Java Magazine September/October.[Understanding Java 9 Modules](https://www.oracle.com/corporate/features/understanding-java-9-modules.html).2017
