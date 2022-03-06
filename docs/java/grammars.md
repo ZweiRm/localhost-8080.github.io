@@ -129,6 +129,101 @@ public class VariableDemo {
 }
 ```
 
+::: tip 局部变量类型推断<Badge text="Java 10+"/>
+从 Java 10 开始，允许使用关键字 `var` 来代替局部变量声明中的类型，JVM 会从变量初始化器中自动填充合适的类型。  
+实例：  
+``` java
+// 显式声明
+var userChannels = new HashMap<User, List<String>>();
+
+// 从方法返回
+var channels = lookupUserChannels("Tom");
+channels.forEach(System.out::println);
+```
+
+代码：  
+``` java{1,2,3}
+Path path = Paths.get("src/web.log");
+try (Stream<String> lines = Files.lines(path)){
+    long warningCount
+            = lines
+                .filter(line -> line.contains("WARNING"))
+                .count();
+    System.out.println("Found " + warningCount + " warnings in the
+log file");
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+可以被改写为：
+``` java{1,2,3}
+var path = Paths.get("src/web.log");
+try (var lines = Files.lines(path)){
+    var warningCount
+            = lines
+                .filter(line -> line.contains("WARNING"))
+                .count();
+    System.out.println("Found " + warningCount + " warnings in the
+log file");
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+但是值得注意的是，这个特性不能很好的在多态中使用。
+对于父类 Vehicle 和它的子类 Car 和 Bike，有：  
+``` java
+var v = new Car(); // 会被自动推断为 Car
+
+// v = new Bike(); 当本意是 Vehicle v = new Bike() 的向上造型会失效
+```
+
+**不能使用局部变量类型推断的地方**  
++ 不能用于类的属性与方法签名  
+  // `public long process(var list) { }`  
++ 不能用于没有具体初始化的变量  
+  // `var x`  
++ 不能给 var 变量赋 `null`  
+  // `var x = null`  
++ 不能用于 Lambda 表达式  
+  // `var x = () -> {}`  
+  但 `var` 关键字可以使用在 Lambda 表达式的参数中<Badge text="Java 11+"/>  
+
+**在匿名内部类中使用局部变量类型推断**  
+通常情况下，匿名内部类中定义的属性不能在类外进行访问，但如果将匿名内部类的接受变量改为 `var` 则可以打破这个限制。  
+这个点可以用来**解决当一个方法想返回一些值作为中间结果**的情形。  
+在不使用这个特性时，必须创建和维护一个新的类来实现这样的功能，例如 `Collectors.averagingDouble()` 源码中的小 double 数组。  
+实例：  
+Product 类，包含产品的名称、库存、价值信息。要求计算一个 list 中所有产品的总价值（库存 * 价值）。最终输出每个产品的名称与总价值。  
+``` java{8,10,11,12}
+// product list
+var products = List.of(
+    new Product(10, 3, "Apple"),
+    new Product(5, 2, "Banana"),
+    new Product(17, 5, "Pear"));
+
+// 使用 stream 来映射名称与总价值，用 var 变量接收
+var productInfos = products
+    .stream()
+    .map(product -> new Object() {
+        String name = product.getName();
+        int total = product.getStock() * product.getValue();
+    })
+    .collect(toList());
+
+// 遍历输出
+productInfos.forEach(prod ->
+    System.out.println("name = " + prod.name + ", total = " +
+prod.total));
+```
+输出结果：  
+```
+name = Apple, total = 30
+name = Banana, total = 10
+name = Pear, total = 85
+```
+:::
+
 ### 2.2.3 进制
 + 十进制：0 ~ 9，满十进一，数字在代码中默认十进制
 
