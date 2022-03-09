@@ -1,4 +1,11 @@
 module.exports = {
+    locales: {
+        '/': {
+            lang: 'zh-CN',
+            title: '本地煮鸡:8080',
+            description: '一个博客, 大概会记录一些技术笔记',
+        }
+    },
     title: '本地煮鸡:8080',
     description: '一个博客, 大概会记录一些技术笔记',
     head: [
@@ -33,6 +40,9 @@ module.exports = {
         },
         'sitemap': {
             hostname: 'https://localhost-8080.io',
+            dateFormatter: val => {
+                return new Date().toISOString()
+            }
         },
         'flowchart': {},
         'vuepress-plugin-baidu-tongji-analytics': {
