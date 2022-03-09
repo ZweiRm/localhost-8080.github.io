@@ -43,7 +43,7 @@ next: ./API-util
 
 6. `equals(Object obj)`  
    比较两个对象是否相等。默认比较对象的地址，但对于`File`，`String`，`Date`和包装类来说，它们比较地是对象值。  
-   ::: tip 特别地
+   ::: tip 重写 <code>equals()</code>
    当手动重写`equals()`时，思路为:  
    1. 判断地址是否一致(`if (this == obj)`)
 
@@ -53,6 +53,14 @@ next: ./API-util
    
    4. 判断属性值是否一致
    :::
+
+::: tip <code>hashCode()</code> 与 <code>euqals()</code>
++ 如果两个对象相等，则 hashcode 一定也是相同的
++ 两个对象相等，对两个 `equals()` 方法返回 `true`
++ 两个对象有相同的 hashcode 值，它们也不一定是相等的
+
+综上，如果一个类的 `equals()` 方法被覆盖过，则 `hashCode()` 方法也必须被覆盖。
+:::
 
 ## `System`类
 

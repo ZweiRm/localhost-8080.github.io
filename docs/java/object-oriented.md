@@ -561,6 +561,8 @@ Class AnotherClass {
 :::
 
 ### 3.10.3 抽象
+在 Java 中，为了体现开闭原则引出了抽象的概念，利用抽象可以做到面向抽象编程。利用面向抽象编程，我们在编写代码时在宏观层面不关心类中具体实现而只关心类的操作。
+
 #### 3.10.3.1 抽象方法
 + 当需要子类存在一些名称一致但细节不同的方法时，可以在父类中事先声明出这些方法。  
 
@@ -606,6 +608,68 @@ Class AnotherClass {
   + 接口中也可以存在静态方法，要求该方法拥有方法体。这样的方法可以直接通过接口名打点获取到。<Badge text="Java SE 8.0 +"/>  
 
 + 接口中的数据都为公共的静态常量（被 `final`, `static` 和 `public` 修饰的成员变量）  
+
+::: tip 接口与抽象
+类似于抽象类，它也是一个同于体现开闭原则的设计。在编写代码时，利用接口可以做到只关心类的操作而不关心具体实现，等之后在具体实现的层面再做具体考量。但不同于抽象，接口着重在系统架构中设计方法层面发挥作用，定义各功能模块之间的通信；而抽象在代码实现层面发挥作用，体现代码重用。  
+
+利用接口和抽象带来的面向抽象编程，就可以通过多态的形式来完成开闭原则。下面给出一个简单的例子：  
+现在有这样一个系统，它的用户拥有登录功能。但登录功能在一个时刻仅能一个人登录（意味着入口函数只能有一个实例）。  
+``` java
+// User 类
+class User {
+    public void login() {
+        System.out.println("User login.");
+    }
+}
+```
+在入口方法利用这个类生成实例来执行这样的操作：  
+``` java
+class Main {
+    public static void main(String[] args) {
+        User user = new User();
+        user.login();
+    }
+}
+```
+但是之后系统有新的需求：引入管理员角色来管理系统。理所应当地，他们也拥有登录功能。此时对原有代码进行改造。  
+简单思考：  
+首先增加一个新的类：Admin 而不直接将 User 类改为 Admin。  
+之后对入口方法的实例进行改造，显然直接将 User 相关代码改为 Admin 会打破开闭原则，所以仍然有问题。  
+
+我们这里引入接口的概念而重新设计整个系统。  
+对于 Admin 和 User，我们抽象出一个更高层的 Person 接口，它拥有登录方法的设计。而 Admin 与 User 类作为 Person 的具体实现，重写定义在接口里的登录方法。（这样体现了功能模块设计只考虑具体方法，而到实现层再考虑具体实现）  
+在入口方法中，我们利用向上造型，使用 Person 接口来声明变量，具体的实例化根据需要进行改变。（这样就体现了开闭原则）  
+``` java
+// 统一的人员接口
+interface Person {
+    void login();
+}
+
+// 具体实现
+class Admin implements Person {
+    @Override
+    public void login() {
+        System.out.println("Admin login.");
+    }
+}
+
+class User implements Person {
+    @Override
+    public void login() {
+        System.out.println("User login.");
+    }
+}
+
+// 主函数
+class Main {
+    public static void main(String[] args) {
+        // 向上造型创建实例
+        Person person = new Admin();    // 必要时可以写 Person person = new User();
+        person.login();
+    }
+}
+```
+:::
 
 ### 3.11.1 接口的实现
 + 和抽象类类似，接口也可以有具体化的实现，称为实现(implements)。  

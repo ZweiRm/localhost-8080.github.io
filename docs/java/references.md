@@ -26,7 +26,7 @@ next: false
 
 [11]悟空.[玩转Java并发工具，精通JUC，成为并发多面手](https://coding.imooc.com/class/409.html).2020  
 
-[12]菜鸟教程. [Java 8 Stream](https://www.runoob.com/java/java8-streams.html).2022  
+[12]菜鸟教程.[Java 8 Stream](https://www.runoob.com/java/java8-streams.html).2022  
 
 [13]开发者小王.[Java泛型（一）类型擦除](https://www.jianshu.com/p/2bfbe041e6b7).2017  
 
@@ -41,3 +41,9 @@ next: false
 [18]Paul Deitel.Java Magazine September/October.[Understanding Java 9 Modules](https://www.oracle.com/corporate/features/understanding-java-9-modules.html).2017  
 
 [19]Raoul-Gabriel Urma, Richard Warburton.[Java 10 Local Variable Type Inference](https://developer.oracle.com/java/jdk-10-local-variable-type-inference.html).2018  
+
+[20]7七月.[Java全栈工程师](https://class.imooc.com/sale/javafullstack).2019  
+
+[21]耿祥义,张跃平.Java 2实用教程[M].北京:清华大学出版社,2017  
+
+[22]JavaGuide.[JavaGuide](https://javaguide.cn/).2022  
