@@ -8,6 +8,7 @@
         "docs:build": "vuepress build docs"
     },
     "dependencies": {
+        "valine": "^1.4.18",
         "vuepress-plugin-baidu-tongji-analytics": "^1.0.2",
         "vuepress-plugin-mathjax": "^1.2.8",
         "vuepress-plugin-sitemap": "^2.1.2"
