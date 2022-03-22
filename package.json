@@ -21,6 +21,7 @@
         "markdown-it-sup": "^1.0.0",
         "vue": "^2.6.10",
         "vuepress": "^1.0.1",
+        "vuepress-plugin-comment": "^0.7.3",
         "vuepress-plugin-flowchart": "^1.5.0",
         "vuepress-plugin-nprogress": "^1.1.8",
         "vuepress-plugin-seo": "^0.1.4"

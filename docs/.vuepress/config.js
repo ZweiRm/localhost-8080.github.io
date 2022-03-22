@@ -61,7 +61,15 @@ module.exports = {
             publishedAt: $page => $page.frontmatter.date && new Date($page.frontmatter.date),
             modifiedAt: $page => $page.lastUpdated && new Date($page.lastUpdated),
         },
-        'vuepress-plugin-nprogress':{}
+        'vuepress-plugin-nprogress':{},
+        'vuepress-plugin-comment': {
+            choosen: 'valine', 
+            options: {
+                el: '#valine-vuepress-comment',
+                appId: 'VKHDXsOo0FghGI6SSp2dXqUy-gzGzoHsz',
+                appKey: 'iNabEE1WnFK3fWracc5Wb8GB'
+            }
+        }
     },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',
