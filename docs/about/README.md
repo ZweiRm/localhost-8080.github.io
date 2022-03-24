@@ -1,6 +1,7 @@
 ---
 editLink: false
 sidebar: false
+comment: false
 ---
 
 # About Me
