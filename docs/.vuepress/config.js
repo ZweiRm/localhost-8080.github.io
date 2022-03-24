@@ -67,9 +67,11 @@ module.exports = {
             options: {
                 el: '#valine-vuepress-comment',
                 appId: 'VKHDXsOo0FghGI6SSp2dXqUy-gzGzoHsz',
-                appKey: 'iNabEE1WnFK3fWracc5Wb8GB'
+                appKey: 'iNabEE1WnFK3fWracc5Wb8GB',
+                path: '<%- frontmatter.to.path %>'
             }
-        }
+        },
+        'vuepress-plugin-baidu-autopush':{}
     },
     themeConfig: {
         repo: 'ZweiRm/localhost-8080.github.io',
