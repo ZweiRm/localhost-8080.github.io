@@ -47,3 +47,5 @@ next: false
 [21]耿祥义,张跃平.Java 2实用教程[M].北京:清华大学出版社,2017  
 
 [22]JavaGuide.[JavaGuide](https://javaguide.cn/).2022  
+
+[23]Vamei.[Java基础11 对象引用](https://www.cnblogs.com/vamei/archive/2013/04/01/2992484.html).2013  
