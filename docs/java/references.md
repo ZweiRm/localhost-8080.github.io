@@ -49,3 +49,5 @@ next: false
 [22]JavaGuide.[JavaGuide](https://javaguide.cn/).2022  
 
 [23]Vamei.[Java基础11 对象引用](https://www.cnblogs.com/vamei/archive/2013/04/01/2992484.html).2013  
+
+[24]王东,王伟.[新一代垃圾回收器ZGC的探索与实践](https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html).2020  
