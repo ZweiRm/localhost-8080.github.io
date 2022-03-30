@@ -51,3 +51,5 @@ next: false
 [23]Vamei.[Java基础11 对象引用](https://www.cnblogs.com/vamei/archive/2013/04/01/2992484.html).2013  
 
 [24]王东,王伟.[新一代垃圾回收器ZGC的探索与实践](https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html).2020  
+
+[25]IT烂笔头.[通俗易懂的双亲委派机制](https://blog.csdn.net/codeyanbao/article/details/82875064).2022  
