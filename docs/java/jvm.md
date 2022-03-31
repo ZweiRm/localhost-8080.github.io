@@ -290,18 +290,184 @@ Java 提供了三个内置的类加载器。其中两个用 Java 语言编写，
 
 **类加载机制**  
 + 双亲委派机制  
-   大致逻辑：  
+   主要逻辑：  
    + 类加载的时候 JVM 会判断当前类是否被当前加载器加载过，如果已经加载过则直接返回，否则把请求发给父级类加载器的 `loadClass()` 处理，再判断是否由该加载器加载，若无则继续上抛，直到顶层的 BootstrapClassLoader. 
    + 之后进入加载环节，当顶层加载器无法处理时，则下放到子级加载器尝试加载，若无法加载则层层下放，直到找到可以加载的类加载器。  
    + 若始终无法找到可以加载的类加载器，则报 ClassNotFoundException.  
   ![双亲委派机制](/img/双亲委派.jpg)
 
+   源码分析：  
+   ``` java
+   private final ClassLoader parent;
+   protected Class<?> loadClass(String name, boolean resolve) throws ClassNotFoundException {
+      synchronized (getClassLoadingLock(name)) {
+         // 首先，检查请求的类是否已经被加载过
+         Class<?> c = findLoadedClass(name);
+         if (c == null) {
+            long t0 = System.nanoTime();
+               try {
+                  if (parent != null) {//父加载器不为空，调用父加载器loadClass()方法处理
+                     c = parent.loadClass(name, false);
+                  } else {//父加载器为空，使用启动类加载器 BootstrapClassLoader 加载
+                     c = findBootstrapClassOrNull(name);
+                  }
+               } catch (ClassNotFoundException e) {
+                  //抛出异常说明父类加载器无法完成加载请求
+                  //...
+               }
+
+            if (c == null) {
+               long t1 = System.nanoTime();
+               //自己尝试加载
+               c = findClass(name);
+
+               // this is the defining class loader; record the stats
+               sun.misc.PerfCounter.getParentDelegationTime().addTime(t1 - t0);
+               sun.misc.PerfCounter.getFindClassTime().addElapsedTimeFrom(t1);
+               sun.misc.PerfCounter.getFindClasses().increment();
+            }
+         }
+         
+         if (resolve) {
+            resolveClass(c);
+         }
+         
+         return c;
+      }
+   }
+   ```
+
+   优点：保证了 Java 程序的稳定运行，避免类重复加载。保证 Java 核心 API 不会篡改。  
 + 全盘负责委托机制  
+  当一个类加载器尝试加载一个类的时候，除非提示使用的是另一个类加载器，则该类所依赖和引用的类都由同一个类加载器加载。  
   
 
 
 ### 类文件结构
+JVM 会通过编译器将程序转换为 `.class` 文件。这个文件是 Java 跨平台的基础。根据 JVM 规范，Class 文件定义结构为：  
+```
+ClassFile {
+   u4             magic;                                 //Class 文件的标志
+   u2             minor_version;                         //Class 的小版本号
+   u2             major_version;                         //Class 的大版本号
+   u2             constant_pool_count;                   //常量池的数量
+   cp_info        constant_pool[constant_pool_count-1];  //常量池
+   u2             access_flags;                          //Class 的访问标记
+   u2             this_class;                            //当前类
+   u2             super_class;                           //父类
+   u2             interfaces_count;                      //接口
+   u2             interfaces[interfaces_count];          //一个类可以实现多个接口
+   u2             fields_count;                          //Class 文件的字段属性
+   field_info     fields[fields_count];                  //一个类可以有多个字段
+   u2             methods_count;                         //Class 文件的方法数量
+   method_info    methods[methods_count];                //一个类可以有个多个方法
+   u2             attributes_count;                      //此类的属性表中的属性数
+   attribute_info attributes[attributes_count];          //属性表集合
+}
+```
+使用命令 `javap -v 类名` 来查看 Class 信息；使用命令 `javap -v 类名 -> fileName.txt` 来将结果输出到 txt 文件中。  
 
+**魔数 Magic Number**  
+Class 文件的前 4 个字节为魔数，它的作用是确定是可以被虚拟机接受的文件。  
+在 Java 中，魔数为 `0xCAFEBABE`.
+
+**文件版本号 Minor and Major Version**  
+第 5-6 字节为次版本号；7-8 字节为主版本号。  
+高版本 JVM 可以向下兼容低版本编译器生成 Class 文件，但低版本 JVM 不能运行高版本编译器。  
+
+**常量池**  
+常量池存放字面量和符号引用。  
+其中字面量包括文本字符串、被 `final` 修饰的常量等；  
+符号引用包括：类和接口的全限定名；字段的名称和描述符；方法的名称和描述符。  
+常量池的容量是 `constant_pool_count - 1`, 因为常量池计数从 1 开始，第 0 个元素作为一个 tag.  
+常量池中的每一个元素都表示了一个表，其中最开头的一个元素 tag 表示了常量类型，占长度为 u1：  
+|类型|标志|描述|
+|:--|:--:|:--|
+||0|不引用任何一个常量池项|
+|CONSTANT_utf8_info|1|UTF-8 编码的字符串|
+|CONSTANT_Integer_info|3|整形字面量|
+|CONSTANT_Float_info|4|浮点型字面量|
+|CONSTANT_Long_info|５|长整型字面量|
+|CONSTANT_Double_info|６|双精度浮点型字面量|
+|CONSTANT_Class_info|７|类或接口的符号引用|
+|CONSTANT_String_info|８|字符串类型字面量|
+|CONSTANT_Fieldref_info|９|字段的符号引用|
+|CONSTANT_Methodref_info|10|类中方法的符号引用|
+|CONSTANT_InterfaceMethodref_info|11|接口中方法的符号引用|
+|CONSTANT_NameAndType_info|12|字段或方法的符号引用|
+|CONSTANT_MethodHandle_info|15|表示方法句柄|
+|CONSTANT_MothodType_info|16|标志方法类型|
+|CONSTANT_InvokeDynamic_info|18|表示一个动态方法调用点|
+
+**访问标志**  
+用于识别类或接口级别的信息。例如文件是类还是接口；权限修饰符；非权限修饰符等。  
+|类型|值|描述|
+|:--|:--:|:--|
+|ACC_PUBLIC|0x0001|public|
+|ACC_FINAL|0x0010|final|
+|ACC_SUPER|0x0020|当 invokespecial 指令调用该类方法时特殊处理|
+|ACC_INTERFACE|0x0200|接口|
+|ACC_ABSTRACT|0x0400|abstract|
+|ACC_SYNTHETIC|0x1000|synthetic|
+|ACC_ANNOTATION|0x2000|注解|
+|ACC_EMUM|0x4000|枚举|
+
+**索引集合**  
+这一部分表示当前类、父类和接口的索引集合。这些索引用于确定类的全限定名。  
+接口索引描述类实现了哪些接口，它们会被按 `implements` 或 `extends` 关键字后面的类型顺序排放在索引中。  
+
+**字段表集合**  
+这一部分用于描述接口或类中声明的变量。它包括静态变量和实例变量，但不包含方法内部声明的局部变量）。  
+字段表的结构：  
+```
+field_info {
+   u2             access_flages;                // 权限/非权限控制符
+   u2             name_index;                   // 常量池引用，表示字段名称
+   u2             descriptor_index;             // 常量池用用，表示字段和方法描述符
+   u2             attributes_count;             // 字段个数
+   attribute_info attributes[attributes_count]; // 存放字段具体内容
+}
+```
+|类型|值|描述|
+|:--|:--:|:--|
+|ACC_PUBLIC|0x0001|public|
+|ACC_PRIVATE|0x0002|private|
+|ACC_PROTECTED|0x0004|protected|
+|ACC_STATIC|0x0008|static|
+|ACC_FINAL|0x0010|final|
+|ACC_VOLATILE|0x0040|volatile|
+|ACC_TRANSIENT|0x0080|transient|
+|ACC_SYNTHETIC|0x1000|synthetic|
+|ACC_ENUM|0x4000|枚举|
+
+**方法表集合**  
+这一部分用于表示类中的方法。分别存放方法数量和具体方法表。  
+```
+method_info {
+   u2             access_flages;                // 权限/非权限控制符
+   u2             name_index;                   // 常量池引用，表示字段名称
+   u2             descriptor_index;             // 常量池用用，表示字段和方法描述符
+   u2             attributes_count;             // 字段个数
+   attribute_info attributes[attributes_count]; // 存放字段具体内容
+}
+```
+|类型|值|描述|
+|:--|:--:|:--|
+|ACC_PUBLIC|0x0001|public|
+|ACC_PRIVATE|0x0002|private|
+|ACC_PROTECTED|0x0004|protected|
+|ACC_STATIC|0x0008|static|
+|ACC_FINAL|0x0010|final|
+|ACC_SYNCHRONIZED|0x0020|synchronized|
+|ACC_BRIDGE|0x0040|桥接方法|
+|ACC_VARARGS|0x0080|可变参数|
+|ACC_NATIVE|0x0100|native, 用 Java 语言实现|
+|ACC_ABSTRACT|0x0400|abstract|
+|ACC_STRICT|0x0800|strictfp, floating-point 为 FP-strict|
+|ACC_SYNTHETIC|0x1000|synthetic|
+
+**属性表集合**  
+这一部分是字段表和方法表中携带的属性表集合，用于描述某些场景的专有信息。  
 
 ## 关于对象
 ### 对象创建
