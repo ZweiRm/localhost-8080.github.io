@@ -295,94 +295,150 @@ void transfer(Entry[] newTable, boolean rehash) {
    }
 }
 ```
+*造成死循环*  
 在这个算法中，使用了**头插法**来转移元素，它可能会在多线程操作时造成死循环：  
+[分析]  
+假设初始 bucket 为 2, 现在有三个元素，key 为 3 5 7，都保存在第一个 bucket 中，进行 `resize()`.  
+在单线程情况下，它会按照这样的结果进行变化：  
+![单线程](/img/hashmap/单线程.jpg)  
 
+多线程情况下，假设线程 1 在 `newTable[i] = e;` 一句挂起，则当前变化为：  
+![多线程1](/img/hashmap/多线程1.jpg)  
+线程 2 继续运行，完成后续步骤。最后结果为：  
+![多线程2](/img/hashmap/多线程2.jpg)  
+线程 1 继续运行，虽然挂起前它的状态存储为 `e->3`, `next->7`, `newTable[3] = null`，但是从线程 2 更新后的主内存结果继续后续操作时运行结果为：  
+![多线程3](/img/hashmap/多线程3.jpg)  
+循环继续，处理 `e->7`, 经过操作后结果为：  
+![多线程4](/img/hashmap/多线程4.jpg)  
+循环继续，处理 `e->3`, 经过操作后结果为：  
+![多线程5](/img/hashmap/多线程5.jpg)  
+当前 `e->null` 循环结束。  
+因为出现循环链表，当使用该 HashMap 遍历时就会发生死循环。  
+
+*造成数据丢失*  
+[分析]  
+假设初始 bucket 为 2, 现在有三个元素，key 为 7 5 3，都保存在第一个 bucket 中，进行 `resize()`.  
+![多线程6](/img/hashmap/多线程6.jpg)  
+多线程情况下，假设线程 1 在 `newTable[i] = e;` 一句挂起，则当前变化为：  
+![多线程7](/img/hashmap/多线程7.jpg)  
+线程 2 继续运行，完成后续步骤。最后结果为：  
+![多线程8](/img/hashmap/多线程8.jpg)  
+线程 1 继续运行，虽然挂起前它的状态存储为 `e->7`, `next->5`, `newTable[3] = null`，但是从线程 2 更新后的主内存结果继续后续操作时运行结果为：  
+循环继续，处理 `e->5`, 经过操作后结果为：  
+![多线程9](/img/hashmap/多线程9.jpg)  
+当前 `e->null` 循环结束。  
+元素 3 丢失，且链表有环路。  
 
 **Java 8 的扩容机制**  
+在 Java 8 中，`resize()` 定义为：  
 ``` java
 final Node<K,V>[] resize() {
-    Node<K,V>[] oldTab = table;
-    int oldCap = (oldTab == null) ? 0 : oldTab.length;
-    int oldThr = threshold;
-    int newCap, newThr = 0;
-    if (oldCap > 0) {
-        // 超过最大值就不再扩充了，就只好随你碰撞去吧
-        if (oldCap >= MAXIMUM_CAPACITY) {
-            threshold = Integer.MAX_VALUE;
-            return oldTab;
-        }
-        // 没超过最大值，就扩充为原来的2倍
-        else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
-                 oldCap >= DEFAULT_INITIAL_CAPACITY)
-            newThr = oldThr << 1; // double threshold
-    }
-    else if (oldThr > 0) // initial capacity was placed in threshold
-        newCap = oldThr;
-    else {               // zero initial threshold signifies using defaults
-        newCap = DEFAULT_INITIAL_CAPACITY;
-        newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
-    }
-    // 计算新的resize上限
-    if (newThr == 0) {
+   Node<K,V>[] oldTab = table;
+   int oldCap = (oldTab == null) ? 0 : oldTab.length;
+   int oldThr = threshold;
+   int newCap, newThr = 0;
+   if (oldCap > 0) {
+      // 超过最大值就不再扩充了，就只好随你碰撞去吧
+      if (oldCap >= MAXIMUM_CAPACITY) {
+         threshold = Integer.MAX_VALUE;
+         return oldTab;
+      }
+      // 没超过最大值，就扩充为原来的2倍
+      else if ((newCap = oldCap << 1) < MAXIMUM_CAPACITY &&
+               oldCap >= DEFAULT_INITIAL_CAPACITY)
+         newThr = oldThr << 1; // double threshold
+   }
+   else if (oldThr > 0) // initial capacity was placed in threshold
+      newCap = oldThr;
+   else {               // zero initial threshold signifies using defaults
+      newCap = DEFAULT_INITIAL_CAPACITY;
+      newThr = (int)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);
+   }
+   // 计算新的resize上限
+   if (newThr == 0) {
 
-        float ft = (float)newCap * loadFactor;
-        newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
-                  (int)ft : Integer.MAX_VALUE);
-    }
-    threshold = newThr;
-    @SuppressWarnings({"rawtypes","unchecked"})
-        Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
-    table = newTab;
-    if (oldTab != null) {
-        // 把每个bucket都移动到新的buckets中
-        for (int j = 0; j < oldCap; ++j) {
-            Node<K,V> e;
-            if ((e = oldTab[j]) != null) {
-                oldTab[j] = null;
-                if (e.next == null)
-                    newTab[e.hash & (newCap - 1)] = e;
-                else if (e instanceof TreeNode)
-                    ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
-                else { // preserve order
-                    Node<K,V> loHead = null, loTail = null;
-                    Node<K,V> hiHead = null, hiTail = null;
-                    Node<K,V> next;
-                    do {
-                        next = e.next;
-                        // 原索引
-                        if ((e.hash & oldCap) == 0) {
-                            if (loTail == null)
-                                loHead = e;
-                            else
-                                loTail.next = e;
-                            loTail = e;
-                        }
-                        // 原索引+oldCap
-                        else {
-                            if (hiTail == null)
-                                hiHead = e;
-                            else
-                                hiTail.next = e;
-                            hiTail = e;
-                        }
-                    } while ((e = next) != null);
-                    // 原索引放到bucket里
-                    if (loTail != null) {
-                        loTail.next = null;
-                        newTab[j] = loHead;
-                    }
-                    // 原索引+oldCap放到bucket里
-                    if (hiTail != null) {
-                        hiTail.next = null;
-                        newTab[j + oldCap] = hiHead;
-                    }
-                }
-            }
-        }
-    }
-    return newTab;
+      float ft = (float)newCap * loadFactor;
+      newThr = (newCap < MAXIMUM_CAPACITY && ft < (float)MAXIMUM_CAPACITY ?
+               (int)ft : Integer.MAX_VALUE);
+   }
+   threshold = newThr;
+   @SuppressWarnings({"rawtypes","unchecked"})
+      Node<K,V>[] newTab = (Node<K,V>[])new Node[newCap];
+   table = newTab;
+   if (oldTab != null) {
+      // 把每个bucket都移动到新的buckets中
+      for (int j = 0; j < oldCap; ++j) {
+         Node<K,V> e;
+         if ((e = oldTab[j]) != null) {
+               oldTab[j] = null;
+               if (e.next == null)
+                  newTab[e.hash & (newCap - 1)] = e;
+               else if (e instanceof TreeNode)
+                  ((TreeNode<K,V>)e).split(this, newTab, j, oldCap);
+               else { // preserve order
+                  Node<K,V> loHead = null, loTail = null;
+                  Node<K,V> hiHead = null, hiTail = null;
+                  Node<K,V> next;
+                  do {
+                     next = e.next;
+                     // 原索引
+                     if ((e.hash & oldCap) == 0) {
+                           if (loTail == null)
+                              loHead = e;
+                           else
+                              loTail.next = e;
+                           loTail = e;
+                     }
+                     // 原索引+oldCap
+                     else {
+                           if (hiTail == null)
+                              hiHead = e;
+                           else
+                              hiTail.next = e;
+                           hiTail = e;
+                     }
+                  } while ((e = next) != null);
+                  // 原索引放到bucket里
+                  if (loTail != null) {
+                     loTail.next = null;
+                     newTab[j] = loHead;
+                  }
+                  // 原索引+oldCap放到bucket里
+                  if (hiTail != null) {
+                     hiTail.next = null;
+                     newTab[j + oldCap] = hiHead;
+                  }
+               }
+         }
+      }
+   }
+   return newTab;
 }
 ```
+当超过限制的时候会 resize，然而又因为我们使用的是 2 次幂的扩展(指长度扩为原来 2 倍)，所以，**元素的位置要么是在原位置，要么是在原位置再移动 2 次幂的位置**。  
+它的 `hash()` 定义为 `h^(h>>>16)`.  
+假设当前有两个 key 被分在了同一个 bucket 中，现在进行 rehash:  
+当长度 n 变为原来的 2 倍后，在重新计算位置的时候就需要额外考虑新的高 1 位.  
+那么就有两种情况，最高位为 0 或最高位 为 1: 
+```
+Old:
+n-1   0000 0000 0000 0000 0000 0000 0000 1111
+key1  1111 1111 1111 1111 0000 1111 0000 0101
+key2  1111 1111 1111 1111 0000 1111 0001 0101
+
+New:
+n-1   0000 0000 0000 0000 0000 0000 0001 1111
+key1  1111 1111 1111 1111 0000 1111 0000 0101
+key2  1111 1111 1111 1111 0000 1111 0001 0101
+```
+也就是说，原来因为低 4 位都为 0101 (5) 而被分到同一个 bucket 中的元素，在 rehash 后，它们可能会被分在 00101 (5) 或 10101 (21, 5+16). 即新位置只会在原位或再移动 2 次幂的位置。  
+利用这个特性，在扩容的时候不需要重新计算 hash，只需要看新增的 1 位是 1 还是 0 就可以确定它的新位置。  
+
+*数据覆盖*  
+在这个算法中，使用了**尾插法**来转移元素，它可能会在多线程操作时造成数据覆盖：
+[分析]
+当两个线程拥有相同的哈希值且目标位置为 `null` 时，它们都会进入 `if ((p = tab[i = (n - 1) & hash]) == null)` 这个判断中。  
+这时假设线程 1 进入判断但是未存储数据时被挂起，而线程 2 进入并完成元素插入。之后线程 1 继续执行，这时不需要再进行哈希判断，则线程 1 会将线程 2 已经存入的数据覆盖掉。  
 :::
 
 `HashTable`类
