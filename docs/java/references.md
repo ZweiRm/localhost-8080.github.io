@@ -53,3 +53,7 @@ next: false
 [24]王东,王伟.[新一代垃圾回收器ZGC的探索与实践](https://tech.meituan.com/2020/08/06/new-zgc-practice-in-meituan.html).2020  
 
 [25]IT烂笔头.[通俗易懂的双亲委派机制](https://blog.csdn.net/codeyanbao/article/details/82875064).2022  
+
+[26]Vincent-yuan.[HashMap 为什么线程不安全？](https://www.cnblogs.com/vincent-yuan/p/15170215.html).2021  
+
+[27]Yikun.[Java HashMap工作原理及实现](https://yikun.github.io/2015/04/01/Java-HashMap%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E5%8F%8A%E5%AE%9E%E7%8E%B0/).2015  
