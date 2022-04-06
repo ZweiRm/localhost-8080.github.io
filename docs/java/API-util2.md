@@ -8,6 +8,14 @@ next: ./API-io
 **基本信息**  
 **Package** java.util.concurrent
 
+JUC 的工具包括三大类：  
++ 并发安全
+  + 互斥同步
+  + 非互斥同步
+  + 无同步方案
++ 线程管理
++ 线程协作
+
 ### `BlockingQueue`接口
 **基本信息**  
 `public interface BlockingQueue<E>`  
@@ -351,7 +359,6 @@ keepAliveTime 是线程存活时间。当线程数量大于 corePoolSize 后，�
 + 将 maxPoolSize 设置为很大值（如 Integer.MAX_VALUE）来允许线程池容纳任意数量的并发任务。  
 + 如果任务队列使用了无界队列（如 LinkedBlockingQueue），那么线程数量就永远不会超过 corePoolSize。  
 
-
 **实例代码**  
 ``` java
 public class ExcutorServiceDemo {
@@ -385,7 +392,7 @@ class Demo implements Runnable {
 ```
 
 ::: tip 线程池
-`Executor`提供了以下线程池：`CachedThreadPool`、`ScheduledThreadPool`, `FixedThreadPool`, `SingleThreadExecutor` 和 `ForkJoinPool`。  
+`Executor` 提供了以下线程池：`CachedThreadPool`、`ScheduledThreadPool`, `FixedThreadPool`, `SingleThreadExecutor` 和 `ForkJoinPool`。  
 
 + `CachedThreadPool`
   + 缓存线程池
@@ -394,9 +401,9 @@ class Demo implements Runnable {
   + 能够较好应用高并发场景
   + 不适合长任务场景
   ``` java
-  ExecutorService executorService = Executors.newCachedThreadPool();
+  Executor Service executorService = Executors.newCachedThreadPool();
   ```
-  + 在源码中使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 为 0，maxPoolSize 为 Integer.MAX_VALUE 来允许任意多任务并发操作。keepAliveTime 为 60L. 使用 SynchronousQueue 作为任务队列，队列中无容量，仅用作队列与线程中间简单交换。可能会因为线程过多而发生内存超限。
+  + 在源码中使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 为 0，maxPoolSize 为 Integer.MAX_VALUE 来允许任意多任务并发操作。keepAliveTime 为 60L. 使用 SynchronousQueue 作为任务队列，队列中无容量，仅用作队列与线程中间简单交换。可能会因为线程过多而发生内存超限错误。
 
 + `ScheduledThreadPool`  
   + 周期性的线程池
@@ -404,6 +411,12 @@ class Demo implements Runnable {
   + 使用 `scheduleAtFixedRate()` 传入参数：任务，起始延迟时间，执行周期，时间单位来执行定时任务
   ``` java
   ExecutorService executorService = Executors.newScheduledThreadPool(5);
+
+  // 延迟启动
+  executorService.schedule(new Task(), 5, TimeUnit.SECONDS);
+
+  // 每隔一定时间循环启动
+  executorService.schedule(new Task(), 1, 3, TimeUnit.SECONDS);
   ```
   + 和 `CachedThreadPool` 类似，参数设定 corePoolSize 为创建时的传入参数，maxPoolSize 为 Integer.MAX_VALUE 来允许任意多任务并发操作。
 
@@ -415,6 +428,7 @@ class Demo implements Runnable {
   ExecutorService executorService = Executors.newFixedThreadPool(5);
   ```
   + 在源码中使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 与 maxPoolSize 相同，都为创建 FixedThreadPool 时的参数，以次创建固定大小的线程池。因为不会有超出 corePoolSize 的线程，所以 keepAliveTime 为 0L. 最后使用 LinkedBlockingQueue 来充当任务队列，所有超出线程数量的任务都会被放在这个无界队列中。  
+  + 因为 LinkedBlockingQueue 没有容量上线，所以当请求数量越来越多且无法及时处理完毕时（请求堆积），会造成占用大量内存而报 OOM 错误。  
 
 + `SingleThreadExecutor`  
   + 类似 `FixedThreadPool`，源码使用 ThreadPoolExecutor 创建线程池，参数设定 corePoolSize 与 maxPoolSize 相同，都为 1,  keepAliveTime 为 0L, 使用 LinkedBlockingQueue 来充当任务队列。  
@@ -423,15 +437,16 @@ class Demo implements Runnable {
   + 分叉合并（不推荐使用）
 
 + `WorkStealingPool` <Badge text="Java 1.8+"/>  
-  + 适用于有子任务的情况  
+  + 适用于有子任务的情况(如二叉树遍历、处理矩阵的子矩阵等情况)  
   + 线程之间可以窃取资源来提升并行能力，但不保证执行顺序
+  + 要求线程没有锁；线程执行顺序不被保证
 
 |线程池|corePoolSize|maxpoolSize|keepAliveTime|workQueue|
 |:--:|:--:|:--:|:--:|:--:|
 |FixedThreadPool|参数列表接收|与 corePoolSize 相同|0s|LinkedBlockingQueue（无界队列）|
 |SingleThreadExecutor|1|1|0s|LinkedBlockingQueue（无界队列）|
 |CachedThreadPool|0|Integer.MAX_VALUE|60s|SynchronousQueue（直接交换简单队列）|
-|ScheduledThreadPool|参数列表接收|Integer.MAX_VALUE|10s|DelayedWorkQueue（优先队列）|
+|ScheduledThreadPool|参数列表接收|Integer.MAX_VALUE|0s|DelayedWorkQueue（优先队列）|
 :::
 
 ::: tip Callable 接口
@@ -471,10 +486,38 @@ class CallableDemo implements Callable<String> {
   + 执行后对新来任务拒绝，等待当前和队列中所有任务执行完毕后终止线程池。
   + 使用 `isShutdown()` 判断当前是否进入了 shutdown 状态。
   + 使用 `isTerminated()` 判断当前是否所有线程任务都已完成。
+  ``` java
+  public class ShutDown {
+      public static void main (String[] args) {
+          ExecutorService executorService = Executors.newFixedThreadPool(10);
+          for (int i = 0; i < 1000; i++) {
+              executorService.execute(new ShutDownTask());
+          }
+          Thread.sleep(1500);
+
+          executorService.shutdown();
+
+          // 提交新任务会被拒绝
+          executorService.execute(new ShutDownTask());
+      }
+  }
+
+  class ShutDownTask implements Runnable {
+      @Override
+      public void run() {
+          try {
+              Thread.sleep(500);
+              System.out.println(Thread.currentThread().getName());
+          } catch (InterruptedException e) {
+              e.printStackTrace();
+          }
+      }
+  }
+  ```
 + `awaitTermination()`  
-  + 开始后进入阻塞状态，检测时间内线程池任务是否会完全终止并返回结果。传入参数：中止时间，时间单位。
+  + 开始后进入阻塞状态（线程继续运行），检测时间内线程池任务是否会完全终止并返回结果。传入参数：中止时间，时间单位。
 + `shutdownNow()`  
-  + 立刻关闭线程池。线程中的线程获取到了 interrupted 信号，队列中的任务返回为 runnableList.
+  + 立刻关闭线程池。线程中的线程获取到了 interrupted 信号，队列中的任务返回为 runnableList （返回值）.
 
 **线程池拒绝任务**  
 + Executor 关闭后，新任务会被拒绝。（例如在 `shutdown()` 执行后）  
