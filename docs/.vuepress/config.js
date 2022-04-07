@@ -129,6 +129,7 @@ module.exports = {
                 'object-oriented',
                 'API-introduction',
                 'API-lang',
+                'API-lang2',
                 'API-util',
                 'API-util2',
                 'API-io',
