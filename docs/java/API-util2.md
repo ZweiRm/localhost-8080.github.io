@@ -741,7 +741,12 @@ final void runWorker(Worker w) {
 
 根据等待锁的过程可以分为：  
 + 自旋锁（自旋）  
+  当同步代码内容简单，线程状态转换时间开销比代码执行时间还要长，设计出自旋锁。  
+  让线程状态不变的前提下进行自旋，如果自旋完成后之前锁定的资源已经释放锁，则不必切换状态直接获取资源，避免了切换线程状态的开销。  
+  缺点：如果锁被占用时间过长，自旋线程会浪费处理器资源。虽然自旋开销低于悲观锁，但随着自旋时间的增增长开销也线性增长。  
+  适用于多核处理器的服务器，并发程度不是特别高，临界区小。  
 + 非自旋锁（阻塞）  
+  在没有拿到锁的情况下直接阻塞线程。  
 
 **重要方法**  
 + `lock()`  
@@ -768,6 +773,32 @@ final void runWorker(Worker w) {
 + `isHeldByCurrentThread()` 查看锁是否被当前线程持有  
 + `getQueueLength()` 返回正在等待当前锁的队列长度  
     
-读写锁 `ReadWriteLock`
-+ 使用时允许多个线程同时使用统一资源，但只允许一个线程对资源进行写操作
-+ 读期间不允许进行写操作，写期间不允许进行读操作
+`ReentrantReadWriteLock` 类
++ 使用时允许多个线程同时使用统一资源，但只允许一个线程对资源进行写操作  
++ 读期间不允许进行写操作，写期间不允许进行读操作  
++ 读锁为共享锁，写锁为独享锁  
++ 适用于读多写少的场景  
++ 插队策略  
+  设置公平策略：`private static ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock(true);`  
+  不公平策略避免解饿：写锁可以随时尝试插队。读线程可以插队，但需要在等待队列头结点的线程不是写线程时可以插队。  
++ 升降级策略  
+  支持降级但不支持升级。若支持升级容易操作死锁，因为假设两个写线程想升级，都需要对方先释放锁，造成死锁。  
+``` java
+private static ReentrantReadWriteLock reentrantReadWriteLock = new ReentrantReadWriteLock();
+private static ReentrantReadWriteLock.readLock = reentrantReadWriteLock.readLock();
+private static ReentrantReadWriteLock.writeLock = reentrantReadWriteLock.writeLock();
+```
+
+**锁优化**  
+JVM 对锁进行了优化：  
++ 自旋锁的自适应：在自旋尝试一段时间后自动转为阻塞所来防止资源消耗过大。  
++ 锁消除：对于无需加锁但是加锁的场景，消除掉锁。  
++ 锁粗化：频繁对一些资源加锁解锁时，合并相邻的操作进入一个锁中。  
+
+使用锁时的启发规则：  
++ 缩小同步代码块
++ 尽量不要锁定方法
++ 减少锁使用次数
++ 避免人为制造热点数据
++ 避免锁中包含锁
++ 选择适合的锁和工具类
