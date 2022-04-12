@@ -1571,3 +1571,49 @@ public class Main {
 + 缺点：  
   + ABA 问题：线程 1 在比较时发现值符合，但是在准备修改期间被其他线程变更值为其他值又变回原值，CAS 无法知道这些变更。可以利用版本号的方法解决。  
   + 自旋时间过长
+
+### AQS (Abstract Queued Synchronizer)
+AQS 是一个用于构建锁、同步器和协作工具的工具类。利用它可以简单构建线程协作类。  
+核心为三部分：  
++ state
+  + 会因为具体实现类的不同而具有不同含义。在 `Semaphore` 中表示剩余信号量个数。在 `CountDownLatch` 中表示还要倒数的个数。在 `ReentrantLock` 中表示锁的占有情况，比如可重入次数。  
+  + 被 `volatile` 修饰，允许并发修改。修改 state 的方法需要保证线程安全，例如 `getState()`, `setSate()`, `compareAndSetState()` 等。这些方法都依赖 atomic 包支持。  
++ 控制线程对锁争抢和配合的 FIFO 队列  
+  + 用来存放等待中的线程。  
+  + 双向链表形式。  
++ 期望协作工具类要实现的获取和释放等重要方法
+  + 获取方法  
+    依赖 state 变量，经常会阻塞。例如 `Semaphore` 中的 `acquire()`, `CountDownLatch` 中的 `await()`  
+  + 释放方法  
+    依赖 state 变量，不会阻塞。例如 `Semaphore` 中的 `release()`, `CountDownLatch` 中的 `countDown()`  
+
+示例：  
+利用 AQS 编写一个一次性门闩线程协作器。线程调用 `await()` 进入阻塞状态；当某一线程调用 `signal()` 则放行所有线程。  
+``` java
+public class Latch {
+    private Sync sync = new Sync();
+
+    // 获取
+    public void await() {
+        sync.acquireShared(0);
+    }
+
+    // 释放
+    public void signal() {
+        sync.releaseShared(0);
+    }
+
+    private class Sync extends AbstractQueuedSynchronizer {
+        @Override
+        protected int tryAcquireShared(int arg) {
+            return (getState() == 1) ? 1 : -1;  // 小于 0 的时候阻塞
+        }
+
+        @Override
+        protected boolean tryReleaseShared(int arg) {
+            setState(1);    // state = 1 时放行
+            return true;    // 为真时放行
+        }
+    }
+}
+```
