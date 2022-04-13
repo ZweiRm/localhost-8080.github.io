@@ -132,6 +132,7 @@ module.exports = {
                 'API-lang2',
                 'API-util',
                 'API-util2',
+                'API-util3',
                 'API-io',
                 'jvm',
                 'references'
