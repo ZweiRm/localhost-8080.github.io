@@ -4,9 +4,9 @@ next: ./API-lang2
 ---
 
 # API-语言基础类库 (Package `java.lang`)
-## `Object`类
+## 4.1 `Object`类
 
-### 基本信息
+### 4.1.1 基本信息
 **Package** java.lang  
 `public class Object`
 
@@ -14,7 +14,7 @@ next: ./API-lang2
 
 + 任何类对象都可以用`Object`类的对象来接收。
 
-### 重要方法
+### 4.1.2 重要方法
 1. `clone()`  
    + 克隆一个对象。  
 
@@ -62,9 +62,9 @@ next: ./API-lang2
 综上，如果一个类的 `equals()` 方法被覆盖过，则 `hashCode()` 方法也必须被覆盖。
 :::
 
-## `System`类
+## 4.2 `System`类
 
-### 基本信息
+### 4.2.1 基本信息
 
 **Package** java.lang
 
@@ -74,7 +74,7 @@ next: ./API-lang2
 
 + 它是一个静态类，不能被继承，不能被实例化，所有方法都是静态方法。
 
-### 重要方法
+### 4.2.2 重要方法
 
 1. `static void gc()`
 
@@ -100,10 +100,10 @@ next: ./API-lang2
 *这三个属性都是字节流，见 [I/O Stream](./API-输入输出类库.html#i-o-stream).
 :::
 
-## 异常
+## 4.3 异常
 异常是一套处理和反馈问题的机制。
 
-### 基本信息
+### 4.3.1 基本信息
 
 **Package** java.lang
 
@@ -113,7 +113,7 @@ next: ./API-lang2
 
 + 错误无法处理，而异常可以处理。
 
-### `Exception`
+### 4.3.2 `Exception`
 **分类**
 + 编译时异常（或称已检查异常）：编译期出现的异常，要求必须处理，抛出或者捕获。  
   如：`CloneNotSupportedException`和`ParseException`
@@ -145,11 +145,11 @@ next: ./API-lang2
 无论是否发生异常都会执行
 :::
 
-### `Error`
+### 4.3.3 `Error`
 错误。不应试图捕获的严重问题。无法处理。
 
-## 枚举
-### 基本信息
+## 4.4 枚举
+### 4.4.1 基本信息
 **Package** java.lang  
 `public abstract class Enum<E extends Enum<E>>` 
 
@@ -167,8 +167,8 @@ next: ./API-lang2
 + `switch(表达式)`  
   表达式值新添Enum常量
 
-## `String`类
-### 基本信息
+## 4.5 `String`类
+### 4.5.1 基本信息
 **Package** java.lang  
 `public final class String`  
 
@@ -178,7 +178,7 @@ next: ./API-lang2
 
 + 字符串是常量，创建后不可更改，但可以被共享。
 
-### 重要方法
+### 4.5.2 重要方法
 1. `char chatAt()`  
    获取字符串指定下标字符。
 
@@ -311,7 +311,7 @@ next: ./API-lang2
 
 → [关于`Scanner`类](#scanner类)
 
-### 正则表达式
+### 4.5.3 正则表达式
 正则表达式本质上是**指定匹配**或**筛选规则**的一系列表达式。
 
 **规则**  
@@ -363,8 +363,8 @@ next: ./API-lang2
 + `String`类还提供了其他的验证规则函数，如：`boolean startsWith(String prefix)`用来验证是否由某字符串打头。
 > ---
 
-## 包装类
-### 基本信息
+## 4.6 包装类
+### 4.6.1 基本信息
 对于每种基本数据类型, Java 都提供了与其对应的类。这些类称为包装类。  
 
 | 基本数据类型 | `byte` | `short` | `int`     | `long` | `float` | `double` | `char`      | `boolean` |
@@ -373,11 +373,11 @@ next: ./API-lang2
 
 > `int`和`char`所对应的包装类为单词的全拼。
 
-### 装箱
+### 4.6.2 装箱
 
 将**基本数据类型转换为对应的引用数据类型对象**的操作。
 
-### 自动装箱 <Badge text="Java SE 5.0+"/>
+### 4.6.3 自动装箱 <Badge text="Java SE 5.0+"/>
 
 将一个**基本数据类型变量直接赋值给对应的引用数据类型对象**。本质上调用了对应的`valueOf()`。
 
@@ -401,7 +401,7 @@ Integer integer = Integer.valueOf(3);
 故推荐全部使用equals()来规避风险。
 :::
 
-### 自动拆箱 <Badge text="Java SE 5.0+"/>
+### 4.6.4 自动拆箱 <Badge text="Java SE 5.0+"/>
 
 将一个引用数据类型对象直接赋值给对应基本数据类型变量。本质上调用了对象的`xxxValue()`。
 
@@ -431,8 +431,8 @@ int i = integer.intValue();
 
 :::
 
-## `Math`类
-### 基本信息
+## 4.7 `Math`类
+### 4.7.1 基本信息
 **Package** java.lang  
 `public final class Math`
 
@@ -440,7 +440,7 @@ int i = integer.intValue();
 
 该类提供了一系列静态方法，这些方法实现了基本的数学运算，如三角函数、绝对值、平方根等。
 
-### 重要方法
+### 4.7.2 重要方法
 1. `static double ceil(double a)`  
    向上取整
 
@@ -459,7 +459,7 @@ int i = integer.intValue();
 6. `static double random()`  
    返回一个随机数 (0.0≤x<1.0)
 
-### `strictfp`关键字
+### 4.7.3 `strictfp`关键字
 
 精确浮点(strict float point)，用于修饰类、接口和方法。
 
@@ -473,8 +473,8 @@ int i = integer.intValue();
 
 :::
 
-## 反射
-### 基本信息
+## 4.8 反射
+### 4.8.1 基本信息
 **Package** java.lang  
 `public final class Class<T>`  
 
@@ -482,7 +482,7 @@ int i = integer.intValue();
 
 Java 提供了反射机制，使用该机制可以动态操作 Java 代码（例如程序经过编译后的变动），也可以利用其来分析类的具体能力。它也体现了高内聚低耦合的设计思想。  
 
-### `Class`类
+### 4.8.2 `Class`类
 `Class` 类的实例代表运行中的 Java 应用程序中的类和接口。枚举是类的一种，注解是接口的一种。  
 每个数组也都属于一个类，该类反映为一个 `Class` 对象，该对象被所有具有相同元素类型和维数的数组共享。  
 Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`float` 和 `double`）以及关键字 `void` 也被表示为 `Class` 对象。（即存在 `int.class`, `void.class` 等 `Class` 对象）。  
@@ -612,7 +612,7 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
 + `Class` 类的构造函数私有，只能通过 JVM 来访问。所以无法手动创建 `Class` 类的实例。  
 :::
 
-### `Constructor`类
+### 4.8.3 `Constructor`类
 描述构造方法的类。  
 
 **获取实例对象**  
@@ -624,7 +624,7 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
 **获取构造方法参数列表**  
 `constructor对象.getParameterTypes()`  
 
-### `Field`类
+### 4.8.4 `Field`类
 描述属性的类。  
 
 **获取指定对象的属性值**  
@@ -639,7 +639,7 @@ Java 的原始类型（布尔、字节、`char`、`short`、`int`、`long`、`fl
 **获取属性名称**  
 `field对象.getName()`  
 
-### `Method`类
+### 4.8.5 `Method`类
 描述方法的类。  
 
 **执行方法**  

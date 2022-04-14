@@ -4,8 +4,8 @@ next: ./API-util2
 ---
 
 # API-工具类库 (Package `java.util`)
-## 日期
-### `Date`类
+## 5.1 日期
+### 5.1.1 `Date`类
 **基本信息**  
 **Package** java.util  
 `public class Date`  
@@ -29,15 +29,15 @@ next: ./API-util2
   String str = new SimpleDateFormat("yyyy年MM月dd日").format(date);
   ```
 
-### `Calendar`类
+### 5.1.2 `Calendar`类
 **基本信息**  
 **Package** java.util  
 `public abstract class Calendar`  
 
 + 使用静态方法`static Calendar getInstance()`来获取一个`Calendar`类实例。  
 
-## 集合
-### `Collcetion`接口
+## 5.2 集合
+### 5.2.1 `Collcetion`接口
 **基本信息**  
 **Package** java.util  
 `public interface Collection<E>`  
@@ -46,7 +46,7 @@ next: ./API-util2
 + 其中`<E>`是泛型，代表该集合只能存储`E`类的数据作为元素(element)，且必须是引用数据类型。   
   如：`Collection<String>`限定集合中只能存储`String`类的数据。
 
-### `List`接口
+### 5.2.2 `List`接口
 **基本信息**  
 **Package** java.util  
 `public interface List<E>`    
@@ -83,7 +83,7 @@ next: ./API-util2
 	+ 放入——入栈/压栈
     + 拿出——出栈/弹栈
 
-### `Queue`接口
+### 5.2.3 `Queue`接口
 **基本信息**  
 **Package** java.util  
 `public interface Queue<E>`  
@@ -92,7 +92,7 @@ next: ./API-util2
 + 是一种特殊的`Collection`
 + 其线性实现有`ListQueue`
 
-### `Set`接口
+### 5.2.4 `Set`接口
 **基本信息**  
 **Package** java.util  
 `public interface Set<E>` 
@@ -122,7 +122,7 @@ next: ./API-util2
 在数据结构知识中，栈和队列是一种有着特殊规则的线性表。而在 Java 语言中各个集合类之间的继承、实现关系并不完全符合传统数据结构知识。
 :::
 
-## `Map`接口
+## 5.3 `Map`接口
 **基本信息**  
 **Package** java.util  
 `Interface Map<K,​V>`
@@ -454,7 +454,7 @@ key2  1111 1111 1111 1111 0000 1111 0001 0101
 + 引入分段锁（分桶锁）
 详情见[ConcurrentMap](./API-util2.html#concurrentmap接口)  
 
-## Stream <Badge text="Java 8.0+"/>
+## 5.4 Stream <Badge text="Java 8.0+"/>
 **基本信息**  
 **Package** java.util.stream  
 
@@ -671,7 +671,7 @@ IntStream.range(1, 6).forEach(System.out::println);         // [1,6)
 IntStream.rangeClosed(1, 5).forEach(System.out::println);   // [1,5]
 ```
 
-## `Iterator`接口
+## 5.5  `Iterator`接口
 **基本信息**  
 **Package** java.util  
 `public interface Iterator<E>`
@@ -681,7 +681,7 @@ IntStream.rangeClosed(1, 5).forEach(System.out::println);   // [1,5]
 + 遍历过程中不允许增删原集合
 + 若一个对象允许使用 foreach 遍历，该类必须实现`Iterable`接口
 
-## `Collections`类
+## 5.6 `Collections`类
 **基本信息**  
 **Package** java.util  
 `public class Collections`
@@ -694,7 +694,7 @@ IntStream.rangeClosed(1, 5).forEach(System.out::println);   // [1,5]
   + 若为正则第一个数排到第二个数之后；反之排到其前  
   + 若没有指定排序规则， 必须实现`Comparable`接口，比较规则写在`compareTo()`中
 
-## `Properties`类
+## 5.7 `Properties`类
 **基本信息**  
 **Package** java.util  
 `public class Properties`
@@ -709,7 +709,7 @@ IntStream.rangeClosed(1, 5).forEach(System.out::println);   // [1,5]
 `store(输出流, comments)`  
 `load(输入流)`  
 
-## `Scanner`类
+## 5.8 `Scanner`类
 **基本信息**  
 **Package** java.util  
 `public final class Scanner`

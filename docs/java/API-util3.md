@@ -8,7 +8,7 @@ next: ./API-io
 **基本信息**  
 **Package** java.util.concurrent
 
-### `ConcurrentMap`接口
+### 5.9.6 `ConcurrentMap`接口
 **基本信息**  
 `public interface ConcurrentMap<K,​V>`  
 
@@ -54,7 +54,7 @@ next: ./API-io
 	  + `subMap(String fromKey, String toKey)`  
 		 范围截取
 
-### `BlockingQueue`接口
+### 5.9.7 `BlockingQueue`接口
 **基本信息**  
 `public interface BlockingQueue<E>`  
 
@@ -136,7 +136,7 @@ next: ./API-io
    + 非阻塞队列
    + 使用 CAS 算法保证线程安全
 
-### `BlockingDeque`接口
+### 5.9.8 `BlockingDeque`接口
 **基本信息**  
 `public interface BlockingDeque<E>`  
 
@@ -144,7 +144,7 @@ next: ./API-io
 + 继承自`BlockingQueue`
 
 
-### `CopyOnWriteArrayList`类
+### 5.9.9 `CopyOnWriteArrayList`类
 **基本信息**  
 `public class CopyOnWriteArrayList<T>`  
 
@@ -194,7 +194,7 @@ next: ./API-io
   ```
 
 
-### `CountDownLatch`类
+### 5.9.10 `CountDownLatch`类
 **基本信息**  
 `public class CountDownLatch`
 
@@ -381,7 +381,7 @@ public class Main {
 }
 ```
 
-### `CyclicBarrier`类
+### 5.9.11 `CyclicBarrier`类
 **基本信息**  
 `public class CyclicBarrier`  
 
@@ -478,14 +478,14 @@ public class Main {
 }
 ``` 
 
-### `Phaser`类
+### 5.9.12 `Phaser`类
 **基本信息**  
 `public class Phaser`  
 
 和 `CyclicBarrier` 类似，但是计数可变。  
 
 
-### `Semaphore`类
+### 5.9.13 `Semaphore`类
 **基本信息**  
 `public class Semaphore`  
 
@@ -598,7 +598,7 @@ public class Main {
 ```
 
 
-### `Exchanger`类
+### 5.9.14 `Exchanger`类
 **基本信息**  
 `public class Exchanger<V>`
 
@@ -656,7 +656,7 @@ class SpyB implements Runnable {
 }
 ```
 
-### `Condition`接口
+### 5.9.15 `Condition`接口
 **基本信息**  
 **Package** java.util.concurrent.locks  
 `public interface Condition`  
@@ -806,7 +806,7 @@ public class ProducerConsumer {
 }
 ```
 
-### CAS (Compare and Swap) 原理
+### 5.9.16 CAS (Compare and Swap) 原理
 + 在并发中判断是否被其他线程修改的方法，保证多线程情况下修改不会出错。假设某个变量应该是某值，如果是，则继续修改；如果不是则该值被其他线程修改过，则不修改。  
 + 三个操作数：内存值 V, 预期值 A 和要修改的值 B. 仅当 V 与 A 相同时，才将 V 修改为 B，最后返回 V.  
 + 应用场景：  
@@ -821,7 +821,7 @@ public class ProducerConsumer {
   + ABA 问题：线程 1 在比较时发现值符合，但是在准备修改期间被其他线程变更值为其他值又变回原值，CAS 无法知道这些变更。可以利用版本号的方法解决。  
   + 自旋时间过长
 
-### AQS (Abstract Queued Synchronizer)
+### 5.9.17 AQS (Abstract Queued Synchronizer)
 AQS 是一个用于构建锁、同步器和协作工具的工具类。利用它可以简单构建线程协作类。  
 核心为三部分：  
 + state
