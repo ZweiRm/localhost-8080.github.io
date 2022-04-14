@@ -4,7 +4,7 @@ next: ./API-util3
 ---
 
 # API-工具类库 2 (Package `java.util`)
-## 并发
+## 5.9 并发
 **基本信息**  
 **Package** java.util.concurrent
 
@@ -16,7 +16,7 @@ JUC 的工具包括三大类：
 + 线程管理
 + 线程协作
 
-### `ExecutorService`接口
+### 5.9.1 `ExecutorService`接口
 **基本信息**  
 `public interface ExecutorService`  
 
@@ -393,7 +393,7 @@ final void runWorker(Worker w) {
 + TIDYING：所有任务已完成，即将运行 `terminate()` 钩子方法
 + TERMINATED：`terminate()` 运行完成
 
-### `Lock`接口
+### 5.9.2 `Lock`接口
 **基本信息**  
 **Package** java.util.concurrent.locks  
 
@@ -506,7 +506,7 @@ JVM 对锁进行了优化：
 + 避免锁中包含锁
 + 选择适合的锁和工具类
 
-### `atomic`包
+### 5.9.3 `atomic`包
 **基本信息**  
 **Package** java.util.concurrent.atomic  
 
@@ -763,7 +763,7 @@ public class Main {
 }
 ```
 
-### Callable接口
+### 5.9.4 Callable接口
 **基本信息**  
 **Package** java.util.concurrent
 
@@ -772,7 +772,7 @@ public class Main {
 克服了 `Runnable` 接口没有返回值，不能抛出可检查异常的特点。  
 类似于 `Runnable`, 是一个可以被其他线程执行的任务，其中包含了 `call()` 描述具体逻辑，它是有返回值且抛出异常的。  
 
-### Future接口
+### 5.9.5 Future接口
 **基本信息**  
 **Package** java.util.concurrent
 
