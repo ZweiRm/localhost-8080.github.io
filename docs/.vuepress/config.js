@@ -171,7 +171,8 @@ module.exports = {
             '/redis/': [
                 '',
                 'cache',
-                'cluster'
+                'cluster',
+                'data-structure'
             ],
 
             '/deep-learning/': [
