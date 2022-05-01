@@ -172,7 +172,8 @@ module.exports = {
                 '',
                 'cache',
                 'cluster',
-                'data-structure'
+                'data-structure',
+                'persistence'
             ],
 
             '/deep-learning/': [
