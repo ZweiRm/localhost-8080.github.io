@@ -104,7 +104,6 @@ module.exports = {
                     { text: 'Spring', link: '/spring/' },
                     { text: 'MySQL', link: '/mysql/'},
                     { text: 'Redis', link: '/redis/' },
-                    { text: '大数据', link: '/big-data/' },
                 ]},
                 { text: '学科基础', items: [
                     { text: '软件工程', link: '/software-engineering/' },
@@ -115,6 +114,9 @@ module.exports = {
                     { text: '深度学习', link: '/deep-learning/' },
                     { text: '推荐系统', link: '/recommender-systems/' },
                     { text: '数据分析与人工智能定量分析', link: '/quantitative-methods-for-DA-AI/'},
+                ]},
+                { text: '大数据', items: [
+                    { text: 'Hadoop', link: '/hadoop/' },
                 ]},
             ]
         },
@@ -162,10 +164,6 @@ module.exports = {
                 'overall',
                 'ioc',
                 'references'
-            ],
-
-            '/big-data/': [
-                '',
             ],
 
             '/redis/': [
@@ -221,6 +219,10 @@ module.exports = {
                 'lock',
                 'references',
                 'divide',
+            ],
+
+            '/hadoop/':[
+                ''
             ],
 
             '/hello-world/': [
