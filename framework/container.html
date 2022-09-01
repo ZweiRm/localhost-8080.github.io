@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Android 12 容器层级 | 本地煮鸡:8080</title>
+    <meta name="generator" content="VuePress 1.9.7">
+    <link rel="icon" href="/img/favicon.ico">
+    <meta name="description" content="一个博客, 大概会记录一些技术笔记">
+    
+    <link rel="preload" href="/assets/css/0.styles.ecc20c62.css" as="style"><link rel="preload" href="/assets/js/app.f18c4670.js" as="script"><link rel="preload" href="/assets/js/3.1fb3b4b2.js" as="script"><link rel="preload" href="/assets/js/26.1d8e8af3.js" as="script"><link rel="preload" href="/assets/js/5.5d16e667.js" as="script"><link rel="prefetch" href="/assets/js/10.c791a782.js"><link rel="prefetch" href="/assets/js/11.28b70681.js"><link rel="prefetch" href="/assets/js/12.5afd9efb.js"><link rel="prefetch" href="/assets/js/13.140c34f0.js"><link rel="prefetch" href="/assets/js/14.7d326419.js"><link rel="prefetch" href="/assets/js/15.8068ea95.js"><link rel="prefetch" href="/assets/js/16.67ec5bab.js"><link rel="prefetch" href="/assets/js/17.c86845e7.js"><link rel="prefetch" href="/assets/js/18.d9bb6a79.js"><link rel="prefetch" href="/assets/js/19.45ba0e69.js"><link rel="prefetch" href="/assets/js/20.720312f5.js"><link rel="prefetch" href="/assets/js/21.ded98e0f.js"><link rel="prefetch" href="/assets/js/22.97f73749.js"><link rel="prefetch" href="/assets/js/23.9a078f42.js"><link rel="prefetch" href="/assets/js/24.d38e4a7a.js"><link rel="prefetch" href="/assets/js/25.05f0e142.js"><link rel="prefetch" href="/assets/js/27.62efc4a2.js"><link rel="prefetch" href="/assets/js/28.f364071e.js"><link rel="prefetch" href="/assets/js/29.b3f6ef75.js"><link rel="prefetch" href="/assets/js/30.a46f11bd.js"><link rel="prefetch" href="/assets/js/31.1b13d8d1.js"><link rel="prefetch" href="/assets/js/32.0af6dfcd.js"><link rel="prefetch" href="/assets/js/33.0bb78317.js"><link rel="prefetch" href="/assets/js/34.4f33c285.js"><link rel="prefetch" href="/assets/js/35.ed290680.js"><link rel="prefetch" href="/assets/js/36.e87c137b.js"><link rel="prefetch" href="/assets/js/37.45c2681e.js"><link rel="prefetch" href="/assets/js/38.d2dcc99c.js"><link rel="prefetch" href="/assets/js/39.7dd9ae0a.js"><link rel="prefetch" href="/assets/js/4.8d4a860c.js"><link rel="prefetch" href="/assets/js/40.1abb1d21.js"><link rel="prefetch" href="/assets/js/41.dafc1c82.js"><link rel="prefetch" href="/assets/js/42.00a79892.js"><link rel="prefetch" href="/assets/js/43.d824c00e.js"><link rel="prefetch" href="/assets/js/44.7cd4304b.js"><link rel="prefetch" href="/assets/js/45.d10d790b.js"><link rel="prefetch" href="/assets/js/46.e4305394.js"><link rel="prefetch" href="/assets/js/47.491226dc.js"><link rel="prefetch" href="/assets/js/48.7f4b002c.js"><link rel="prefetch" href="/assets/js/49.e4d80963.js"><link rel="prefetch" href="/assets/js/50.f110a67a.js"><link rel="prefetch" href="/assets/js/51.86c9f8c9.js"><link rel="prefetch" href="/assets/js/52.c18ddf9e.js"><link rel="prefetch" href="/assets/js/53.e368a98b.js"><link rel="prefetch" href="/assets/js/54.2a88f804.js"><link rel="prefetch" href="/assets/js/55.98e1c50f.js"><link rel="prefetch" href="/assets/js/56.f6871679.js"><link rel="prefetch" href="/assets/js/57.399d1ca3.js"><link rel="prefetch" href="/assets/js/58.9950ba6e.js"><link rel="prefetch" href="/assets/js/59.dde38f82.js"><link rel="prefetch" href="/assets/js/6.dc286500.js"><link rel="prefetch" href="/assets/js/60.0561d845.js"><link rel="prefetch" href="/assets/js/61.e5ff37d9.js"><link rel="prefetch" href="/assets/js/62.d8345631.js"><link rel="prefetch" href="/assets/js/63.88af5898.js"><link rel="prefetch" href="/assets/js/64.9d152829.js"><link rel="prefetch" href="/assets/js/65.0b3c68b5.js"><link rel="prefetch" href="/assets/js/66.d9cb03c1.js"><link rel="prefetch" href="/assets/js/67.4e7defde.js"><link rel="prefetch" href="/assets/js/68.9639661b.js"><link rel="prefetch" href="/assets/js/69.a8995f74.js"><link rel="prefetch" href="/assets/js/7.ad32fd31.js"><link rel="prefetch" href="/assets/js/70.3abf2bb4.js"><link rel="prefetch" href="/assets/js/71.061c6832.js"><link rel="prefetch" href="/assets/js/72.0da682bc.js"><link rel="prefetch" href="/assets/js/73.9fa65361.js"><link rel="prefetch" href="/assets/js/74.c3c02692.js"><link rel="prefetch" href="/assets/js/75.a14d0dea.js"><link rel="prefetch" href="/assets/js/76.a0906d46.js"><link rel="prefetch" href="/assets/js/77.0e2e1410.js"><link rel="prefetch" href="/assets/js/78.514139cb.js"><link rel="prefetch" href="/assets/js/79.af2fc428.js"><link rel="prefetch" href="/assets/js/8.3532e2cd.js"><link rel="prefetch" href="/assets/js/9.55aa1538.js"><link rel="prefetch" href="/assets/js/vendors~flowchart.a1e8bc2b.js">
+    <link rel="stylesheet" href="/assets/css/0.styles.ecc20c62.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div class="theme-container"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/" class="home-link router-link-active"><!----> <span class="site-name">本地煮鸡:8080</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          编程语言
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-subitem"><a href="/python/" class="nav-link">
+  Python
+</a></li></ul></li><li class="dropdown-item"><h4>
+          后端开发技术
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-subitem"><a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-subitem"><a href="/mysql/" class="nav-link">
+  MySQL
+</a></li><li class="dropdown-subitem"><a href="/redis/" class="nav-link">
+  Redis
+</a></li></ul></li><li class="dropdown-item"><h4>
+          学科基础
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li><li class="dropdown-subitem"><a href="/algorithm/" class="nav-link">
+  算法
+</a></li></ul></li><li class="dropdown-item"><h4>
+          机器学习
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-subitem"><a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-subitem"><a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-subitem"><a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li></ul></li><li class="dropdown-item"><h4>
+          大数据
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/hadoop/" class="nav-link">
+  Hadoop
+</a></li></ul></li><li class="dropdown-item"><h4>
+          Android
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/" class="nav-link router-link-active">
+  Framework
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/" class="nav-link">
+  主页
+</a></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="笔记" class="dropdown-title"><span class="title">笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="笔记" class="mobile-dropdown-title"><span class="title">笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><!----> <a href="/java/" class="nav-link">
+  Java
+</a></li><li class="dropdown-item"><!----> <a href="/hello-world/" class="nav-link">
+  杂谈
+</a></li></ul></div></div><div class="nav-item"><div class="dropdown-wrapper"><button type="button" aria-label="施工中笔记" class="dropdown-title"><span class="title">施工中笔记</span> <span class="arrow down"></span></button> <button type="button" aria-label="施工中笔记" class="mobile-dropdown-title"><span class="title">施工中笔记</span> <span class="arrow right"></span></button> <ul class="nav-dropdown" style="display:none;"><li class="dropdown-item"><h4>
+          编程语言
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/kotlin/" class="nav-link">
+  Kotlin
+</a></li><li class="dropdown-subitem"><a href="/python/" class="nav-link">
+  Python
+</a></li></ul></li><li class="dropdown-item"><h4>
+          后端开发技术
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/web/" class="nav-link">
+  Web
+</a></li><li class="dropdown-subitem"><a href="/spring/" class="nav-link">
+  Spring
+</a></li><li class="dropdown-subitem"><a href="/mysql/" class="nav-link">
+  MySQL
+</a></li><li class="dropdown-subitem"><a href="/redis/" class="nav-link">
+  Redis
+</a></li></ul></li><li class="dropdown-item"><h4>
+          学科基础
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/software-engineering/" class="nav-link">
+  软件工程
+</a></li><li class="dropdown-subitem"><a href="/algorithm/" class="nav-link">
+  算法
+</a></li></ul></li><li class="dropdown-item"><h4>
+          机器学习
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/artificial-intelligence/" class="nav-link">
+  人工智能
+</a></li><li class="dropdown-subitem"><a href="/deep-learning/" class="nav-link">
+  深度学习
+</a></li><li class="dropdown-subitem"><a href="/recommender-systems/" class="nav-link">
+  推荐系统
+</a></li><li class="dropdown-subitem"><a href="/quantitative-methods-for-DA-AI/" class="nav-link">
+  数据分析与人工智能定量分析
+</a></li></ul></li><li class="dropdown-item"><h4>
+          大数据
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/hadoop/" class="nav-link">
+  Hadoop
+</a></li></ul></li><li class="dropdown-item"><h4>
+          Android
+        </h4> <ul class="dropdown-subitem-wrapper"><li class="dropdown-subitem"><a href="/framework/" class="nav-link router-link-active">
+  Framework
+</a></li></ul></li></ul></div></div><div class="nav-item"><a href="https://www.github.com/ZweiRm" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  Github
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="https://gitee.com/zweirm/" target="_blank" rel="noopener noreferrer" class="nav-link external">
+  码云
+  <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></div><div class="nav-item"><a href="/about/" class="nav-link">
+  关于
+</a></div> <a href="https://github.com/ZweiRm/localhost-8080.github.io" target="_blank" rel="noopener noreferrer" class="repo-link">
+    查看源码
+    <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></nav>  <ul class="sidebar-links"><li><a href="/framework/" aria-current="page" class="sidebar-link">Framework</a></li><li><a href="/framework/activity-launching-process.html" class="sidebar-link">Activity 启动流程</a></li><li><a href="/framework/performTraversal.html" class="sidebar-link">ViewRootImpl 中 performTraversal() 梳理</a></li><li><a href="/framework/container.html" aria-current="page" class="active sidebar-link">Android 12 容器层级</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/framework/container.html#结构" class="sidebar-link">结构</a></li><li class="sidebar-sub-header"><a href="/framework/container.html#参考文献或资料" class="sidebar-link">参考文献或资料</a></li></ul></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="android-12-容器层级"><a href="#android-12-容器层级" class="header-anchor">#</a> Android 12 容器层级</h1> <h2 id="结构"><a href="#结构" class="header-anchor">#</a> 结构</h2> <p>在 Android 12 中，窗口按树形层级进行排布。其决定由 Feature 和 36 个层级共同影响。<br>
+Android 12 原生定义 6 个 Feature：</p> <ul><li>WindowedMagnification</li> <li>HideDisplayCutout</li> <li>OneHandedBackgroundPanel</li> <li>OneHanded</li> <li>FullscreenMagnification</li> <li>ImePlaceholder</li></ul> <p>36 个层级：</p> <ol><li>Wallpaper</li> <li>[DefaultTaskDisplayArea][APPLICATION_LAYER]</li> <li>Presentation, Dock Driver, QS Dialog, Phone</li> <li>Search Bar, Voice Interaction Starting</li> <li>Voice Interaction</li> <li>Input Consumer</li> <li>System Dialog</li> <li>Toast</li> <li>Priority Phone</li> <li>System Alert, System Error (Cannot add internal system window)</li> <li>System Overlay (Cannot add internal system window)</li> <li>Application Overlay</li> <li>System Alert (Can add internal system window)</li> <li></li> <li>Input Method</li> <li>Input Method Dialog</li> <li>Status Bar</li> <li>Status Bar Additional</li> <li>Notification Shade</li> <li>Status Bar Sub Panel</li> <li>Keyguard Dialog</li> <li>Volume Overlay</li> <li>System Overlay (Can add internal system window)</li> <li>Navigation Bar</li> <li>Navigation Bar Panel</li> <li>Screenshot</li> <li>System Error (Cannot add internal system window)</li> <li>Magnification Overlay</li> <li>Display Overlay</li> <li>Drag</li> <li>Accessibility Overlay</li> <li>Accessibility Magnification Overlay</li> <li>Secure System Overlay</li> <li>Boot Progress</li> <li>Pointer</li></ol> <p>应用集中于第 2 层。层数越高位置越靠上。<br>
+系统按照算法利用原生 Feature 和它们能覆盖的层数生成基础树状结构。在此基础上再安排具体 APP 等的窗口位置。</p> <p>树状结构生成算法类似 2048 执行向上推的操作后，依据按断层左右分开节点，上下进行连接。</p> <p><img src="/img/android/feature.png" alt="Feature"></p> <blockquote><p>DisplayAreaPolicyBuilder.build() 里根据各个 Feature 添加的顺序、应用的层级，以及依次递补的原则，构建DisplayArea 层级，并添加到屏幕根容器DisplayContent里。
+例如：</p> <ul><li>第一个 Feature WindowedMagnification 只能应用到 0~31层级，那么就先创建一个名为 WindowedMagnification:0:31 的DisplayArea，后面的32~35层级只能递补应用第二个 Feature HideDisplayCutout，因此会创建平级的名为 HideDisplayCutout:32:35 的 DisplayArea；</li> <li>第二个 Feature HideDisplayCutout 只能应用 0~31层级的 0~16 层级，因此创建 HideDisplayCutout:0:16 挂到 WindowedMagnification:0:31 下；</li> <li>第17层级往下找只能递补应用第四个 Feature OneHanded，因此创建 OneHanded:17:17 挂到 WindowedMagnification:0:31 下，同理第18层级可以应用 Feature HideDisplayCutout，创建 HideDisplayCutout:18:18 同样挂到 WindowedMagnification:0:31 下。</li> <li>注意第24~25层，WindowedMagnification 往下没有可以应用的 Feature，这时会增补一个 Leaf:24:25</li></ul></blockquote> <p>系统默认树状结构：<br> <img src="/img/android/defualt_container.png" alt="Default Container"></p> <p>打开了屏幕录制悬浮窗的树状结构：<br> <img src="/img/android/recorder_container.png" alt="Recorder Container"></p> <p>在这棵树中，上下结构控制了 Feature 可以对应的窗口，左右体现了 Z 轴位置上下。越靠右位置越高。</p> <h2 id="参考文献或资料"><a href="#参考文献或资料" class="header-anchor">#</a> 参考文献或资料</h2> <ol><li>窗口容器管理</li> <li><a href="https://blog.csdn.net/qq_34211365/article/details/122349862" target="_blank" rel="noopener noreferrer">Android12 窗口组织方式（对比Android10）<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li> <li><a href="https://blog.csdn.net/jieliaoyuan8279/article/details/123157937" target="_blank" rel="noopener noreferrer">安卓12窗口层次: DisplayArea树<span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a></li></ol></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/ZweiRm/localhost-8080.github.io/edit/master/docs/framework/container.md" target="_blank" rel="noopener noreferrer">帮助我改善此页面！</a> <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">2022/9/1 17:48:34</span></div></footer> <div class="page-nav"><p class="inner"><span class="prev">
+      ←
+      <a href="/framework/performTraversal.html" class="prev">
+        ViewRootImpl 中 performTraversal() 梳理
+      </a></span> <!----></p></div> </main></div><div class="global-ui"><!----><!----><div></div></div></div>
+    <script src="/assets/js/app.f18c4670.js" defer></script><script src="/assets/js/3.1fb3b4b2.js" defer></script><script src="/assets/js/26.1d8e8af3.js" defer></script><script src="/assets/js/5.5d16e667.js" defer></script>
+  </body>
+</html>
