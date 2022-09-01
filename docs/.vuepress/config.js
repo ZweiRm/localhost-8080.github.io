@@ -118,6 +118,9 @@ module.exports = {
                 { text: '大数据', items: [
                     { text: 'Hadoop', link: '/hadoop/' },
                 ]},
+                { text: 'Android', items: [
+                    { text: 'Framework', link: '/framework/'},
+                ]}
             ]
         },
         { text: 'Github', link: 'https://www.github.com/ZweiRm' },
@@ -223,6 +226,13 @@ module.exports = {
 
             '/hadoop/':[
                 ''
+            ],
+
+            '/framework/':[
+                '',
+                'activity-launching-process',
+                'performTraversal',
+                'container',
             ],
 
             '/hello-world/': [
