@@ -1,5 +1,7 @@
 ---
-prev: ./
+prev: 
+  text: 'C'
+  link: 'c/index'
 next: false
 ---
 

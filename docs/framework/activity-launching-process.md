@@ -1,3 +1,12 @@
+---
+prev:
+    text: 'Framework'
+    link: 'framework/index'
+next:
+    text: 'performTraversal'
+    link: 'framework/performTraversal'
+---
+
 # Activity 启动流程
 ## 1. Launcher 发送启动信息
 桌面作为 Launcher 进程，在接收到点击应用图标的命令时会调用 Activity 中的 `startActivity()`.

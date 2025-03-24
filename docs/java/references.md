@@ -1,5 +1,7 @@
 ---
-prev: ./jvm
+prev: 
+    text: 'Java 虚拟机'
+    link: 'java/jvm'
 next: false
 ---
 

@@ -1,6 +1,10 @@
 ---
-prev: ./overall
-next: ./references
+prev: 
+    text: '总览'
+    link: 'spring/overall'
+next: 
+    text: '参考文献或资料'
+    link: 'spring/references'
 ---
 
 # 控制反转

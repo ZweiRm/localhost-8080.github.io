@@ -1,3 +1,10 @@
+---
+prev:
+    text: 'performTraversal'
+    link: '/framework/performTraversal'
+next: false
+---
+
 # Android 12 容器层级
 ## 结构
 在 Android 12 中，窗口按树形层级进行排布。其决定由 Feature 和 36 个层级共同影响。  

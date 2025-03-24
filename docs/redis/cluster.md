@@ -1,5 +1,14 @@
-# 集群
+---
+prev:
+    text: '缓存'
+    link: 'redis/cache'
+next:
+    text: '数据结构'
+    link: 'redis/data-structure'
+---
 
+
+# 集群
 ## Redis 切片集群 <Badge text="Redis 3.0+"/>
 在数据量很大的情况下，Redis 使用 RDB 进行持久化时会通过 fork 子进程来完成。而 fork 操作会阻塞主进程，而且 fork 操作需要的时间与数据量大小正相关，这样会导致 Redis 响应变慢。  
 

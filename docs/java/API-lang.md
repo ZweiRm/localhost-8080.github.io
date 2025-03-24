@@ -1,6 +1,10 @@
 ---
-prev: ./API-introduction
-next: ./API-lang2
+prev: 
+  text: 'API-介绍'
+  link: 'java/API-introduction'
+next: 
+  text: 'API-语言基础类库2'
+  link: 'java/API-lang2'
 ---
 
 # API-语言基础类库 (Package `java.lang`)
@@ -97,7 +101,7 @@ next: ./API-lang2
 + `err`  
   将错误提示信息（使用红色字体）输出到显示器（是`PrintStream`类的对象，声明：`static final PrintStream err`）
 
-*这三个属性都是字节流，见 [I/O Stream](./API-输入输出类库.html#i-o-stream).
+*这三个属性都是字节流，见 [I/O Stream](./API-io#i-o-stream).
 :::
 
 ## 4.3 异常

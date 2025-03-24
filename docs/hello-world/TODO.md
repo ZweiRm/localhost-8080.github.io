@@ -1,7 +1,5 @@
 ---
 editLink: false
-prev: ./array-and-linked-list
-next: false
 ---
 
 # // TODO

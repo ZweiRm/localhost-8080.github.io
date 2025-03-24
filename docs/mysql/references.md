@@ -1,5 +1,7 @@
 ---
-prev: ./lock
+prev: 
+    text: '分库分表'
+    link: 'mysql/divide'
 next: false
 ---
 

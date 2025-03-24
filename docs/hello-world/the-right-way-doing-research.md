@@ -1,9 +1,3 @@
----
-editLink: false
-prev: ./computing-machinery-and-intelligence
-next: ./building-a-vuepress-powered-blog
----
-
 # 学术研究的正确姿势
 本文章记录凌晓峰、杨强教授编著的《学术研究 你的成功之道》相关笔记。
 

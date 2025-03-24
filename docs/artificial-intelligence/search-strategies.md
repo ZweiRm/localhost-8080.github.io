@@ -1,5 +1,7 @@
 ---
-prev: ./
+prev:
+  text: 'Artificial Intelligence'
+  link: 'artificial-intelligence/index'
 next: false
 ---
 

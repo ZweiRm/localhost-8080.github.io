@@ -1,5 +1,7 @@
 ---
-prev: ./ds-003
+prev:
+  text: '算法 03'
+  link: 'algorithm/ds-003'
 next: false
 ---
 

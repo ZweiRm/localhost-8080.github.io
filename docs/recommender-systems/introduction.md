@@ -1,5 +1,7 @@
 ---
-prev: ./
+prev: 
+    text: 'Recommender Systems'
+    link: '/recommender-systems/index'
 next: false
 ---
 

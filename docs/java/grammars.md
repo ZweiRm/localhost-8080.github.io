@@ -1,6 +1,10 @@
 ---
-prev: ./
-next: ./object-oriented
+prev:
+    text: 'Java'
+    link: 'java/index'
+next: 
+    text: '面向对象'
+    link: 'java/object-oriented'
 ---
 
 # 语法
@@ -345,7 +349,8 @@ name = Pear, total = 85
 
 ### 2.3.3 数据类型转换
 #### 2.3.3.1 隐式转换/自动类型转换
-![自动类型转换](/img/自动类型转换.png)
+
+![自动类型转换.png](/img/自动类型转换.png)
 规律一：小类型可以自动转化为大类型  
 ``` java
 int i = 10;

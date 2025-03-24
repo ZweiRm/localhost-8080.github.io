@@ -1,5 +1,7 @@
 ---
-prev: ./
+prev: 
+    text: '软件工程'
+    link: 'software-engineering/index'
 next: false
 ---
 

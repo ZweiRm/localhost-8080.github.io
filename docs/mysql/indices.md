@@ -1,6 +1,10 @@
 ---
-prev: ./transaction
-next: ./lock
+prev: 
+    text: '事务'
+    link: 'mysql/transaction'
+next: 
+    text: '锁'
+    link: 'mysql/lock'
 ---
 
 # 索引

@@ -1,6 +1,10 @@
 ---
-prev: ./
-next: ./ioc
+prev: 
+    text: 'Spring'
+    link: 'spring/index'
+next: 
+    text: 'IoC'
+    link: 'spring/ioc'
 ---
 
 # 总览

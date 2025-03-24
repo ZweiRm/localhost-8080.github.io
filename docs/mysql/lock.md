@@ -1,6 +1,10 @@
 ---
-prev: ./indices
-next: ./references
+prev: 
+    text: '索引'
+    link: 'mysql/indices'
+next: 
+    text: '分库分表'
+    link: 'mysql/divide'
 ---
 
 # 锁

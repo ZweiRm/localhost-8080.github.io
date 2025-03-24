@@ -1,3 +1,12 @@
+---
+prev:
+    text: 'Activity 启动流程'
+    link: '/framework/activity-launching-process'
+next:
+    text: 'Android 12 容器层级'
+    link: '/framework/container'
+---
+
 # ViewRootImpl 中 performTraversal() 梳理
 ## 源码
 

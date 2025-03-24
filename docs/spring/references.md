@@ -1,5 +1,7 @@
 ---
-prev: ./ioc
+prev: 
+    text: 'IoC'
+    link: 'spring/ioc'
 next: false
 ---
 

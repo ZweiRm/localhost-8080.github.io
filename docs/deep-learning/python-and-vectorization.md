@@ -1,5 +1,7 @@
 ---
-prev: ./logistic-regression-as-a-neural-network
+prev: 
+  text: 'Logistic Regression as a Neural Network'
+  link: 'deep-learning/logistic-regress-as-a-neural-network'
 next: false
 ---
 

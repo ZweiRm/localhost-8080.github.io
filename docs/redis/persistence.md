@@ -1,3 +1,10 @@
+---
+prev:
+    text: '数据结构'
+    link: 'redis/data-structure'
+next: false
+---
+
 # 持久化
 
 ## AOF日志系统

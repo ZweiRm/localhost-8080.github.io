@@ -1,3 +1,12 @@
+---
+prev:
+    text: 'Redis'
+    link: 'redis/index'
+next:
+    text: '集群'
+    link: 'redis/cluster'
+---
+
 # 缓存
 ## 缓存异常
 ### 数据不一致

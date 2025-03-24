@@ -1,6 +1,10 @@
 ---
-prev: ./API-util3
-next: ./jvm
+prev: 
+    text: 'API-工具类库3'
+    link: 'java/API-util3'
+next: 
+    text: 'Java 虚拟机'
+    link: 'java/jvm'
 ---
 
 # API-输入/输出类库 (Package `java.io`)

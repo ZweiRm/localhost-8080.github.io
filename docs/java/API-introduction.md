@@ -1,6 +1,10 @@
 ---
-prev: ./object-oriented
-next: ./API-lang
+prev: 
+  text: '面向对象'
+  link: 'java/object-oriented'
+next: 
+  text: 'API-语言基础类库'
+  link: 'java/API-lang'
 ---
 
 # 应用程序编程接口

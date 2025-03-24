@@ -1,3 +1,12 @@
+---
+prev:
+    text: '集群'
+    link: 'redis/cluster'
+next:
+    text: '持久化'
+    link: 'redis/persistence'
+---
+
 # 数据结构
 Redis 包含五个数据结构。分别是 String, List, Hash, Set 和 Sorted Set.  除了 String 以外，其他四种是集合类型，因为它们一个键对应一个集合的数据。  
 

@@ -1,6 +1,10 @@
 ---
-prev: ./
-next: ./python-and-vectorization
+prev: 
+  text: 'Deep Learning'
+  link: 'deep-learning/index'
+next: 
+  text: 'Python and Vectorization'
+  link: 'deep-learning/python-and-vectorization'
 ---
 
 # Logistic Regression as a Neural Network

@@ -1,9 +1,3 @@
----
-editLink: false
-prev: ./
-next: ./the-right-way-doing-research
----
-
 ### A. M. Turing (1950) Computing Machinery and Intelligence. Mind 49: 433-460.
 ---
 # <p align="center">COMPUTING MACHINERY AND INTELLIGENCE</P>
@@ -119,7 +113,7 @@ The digital computers considered in the last section may be classified amongst t
         <td>q<sub>3</sub></td>
     </tr>
     <tr>
-        <td rowspan="2">Input</th>
+        <th rowspan="2">Input</th>
         <td>i<sub>0</sub></td>
         <td>q<sub>2</sub></td>
         <td>q<sub>3</sub></td>

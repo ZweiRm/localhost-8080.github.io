@@ -1,8 +1,3 @@
----
-prev: ./the-right-way-doing-research
-next: ./setup-a-server-manually
----
-
 # 搭建一个基于 VuePress 的博客/技术文档网站
 ## 什么是 VuePress?
 VuePress 是一款基于 Vue 的静态网站生成器。它可以将你编写的 Markdown 文档转化为已经渲染好的 HTML 静态页面。这些页面有着良好的 SEO 优化，可以轻松的支持搜索引擎收录；同时页面被浏览时由 Vue 接管而形成单页应用，其他页面按浏览按需加载。 

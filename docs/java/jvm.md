@@ -1,6 +1,10 @@
 ---
-prev: ./API-io
-next: ./references
+prev: 
+    text: 'API-输入输出类库'
+    link: 'java/API-io'
+next: 
+    text: '参考文献或资料'
+    link: 'java/references'
 ---
 
 # Java 虚拟机

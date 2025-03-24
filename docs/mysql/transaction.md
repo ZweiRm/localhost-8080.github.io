@@ -1,6 +1,10 @@
 ---
-prev: ./
-next: ./indices
+prev: 
+    text: 'MySQL'
+    link: 'mysql/index'
+next: 
+    text: '索引'
+    link: 'mysql/indices'
 ---
 
 # 事务
