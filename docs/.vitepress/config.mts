@@ -194,6 +194,7 @@ export default defineConfig({
                 { text: 'Activity 启动流程', link: 'framework/activity-launching-process' },
                 { text: 'performTraversal', link: 'framework/performTraversal' },
                 { text: 'Android 12 容器层级', link: 'framework/container'},
+                { text: 'Android 16 新特性', link: 'framework/android16'},
             ]
         }],
     },

@@ -2,7 +2,9 @@
 prev:
     text: 'performTraversal'
     link: '/framework/performTraversal'
-next: false
+next: 
+    text: 'Android 16 新特性'
+    link: '/framework/android16'
 ---
 
 # Android 12 容器层级
