@@ -42,7 +42,7 @@ I remain committed to driving technological advancement through rigorous researc
 + Patent: Duo Huang, Heli Li, “A Screen Casting Method, Screen Casting Device, Electronic Device, Storage Medium and Programme Product (A Machine Learning and Configuration- based Viewing Issues Auto-Detecting-Fixing and Relaunching Method for Application Screencasting)”, application No.: 2025102210572
 + Patent: Duo Huang, “A Method of Security and Privacy Detection and Application Navigation Blocking for Large-Screen Application Casting with Machine Learning Approachd”
 + Patent: Duo Huang, Yan Zhang, “A Large-screen-casting Application Transferring and Adapting Method”
-+ Patent: Deqing Zhu, Duo Huang, “A Dynamic Link Switching Method for Multi-Device Handoff Service of Large Screen Application Casting”
++ Patent: Duo Huang, Deqing Zhu, “A Dynamic Link Switching Method for Multi-Device Handoff Service of Large Screen Application Casting”
 + Patent: Ruyue Geng, Duo Huang, etl., “Window Warping Method, Device, Storage Medium, and Chip (A Window-Based Distortion Animation Method)”, application No.: 202211691403.6, open to public
 + Software Publication: Duo Huang, etl., “Design and Implementation of Health Management Platform for Special Groups”, 2018SR796507, Software Registration No. 3125602
 + Software Publication: Duo Huang, “Design and Implementation of Online Examination Platform on Java”, 2018SR611370, Software Registration No. 2940465
@@ -57,6 +57,9 @@ I remain committed to driving technological advancement through rigorous researc
   Gerrit CLs: https://android-review.googlesource.com/c/platform/cts/+/3505814
 + Designed robustness logic with dynamic cutout calculation for system bar (collaboration)  
   Gerrit CLs: https://android-review.googlesource.com/c/platform/frameworks/base/+/3554263
+### VuePress, Vue
++ Localized project documentation, making corrections for any errors found within it
+  GitHub Pull Request: https://github.com/vuejs/vuepress/pull/2934
 
 ## Key Projects
 + Large-screen Application Casting (Electic Vehicles Infotainment Systems & Cross-device Handoff)
