@@ -58,6 +58,27 @@ I remain committed to driving technological advancement through rigorous researc
 + Designed robustness logic with dynamic cutout calculation for system bar (collaboration)  
   Gerrit CLs: https://android-review.googlesource.com/c/platform/frameworks/base/+/3554263
 
+## Key Projects
++ Large-screen Application Casting (Electic Vehicles Infotainment Systems & Cross-device Handoff)
++ Dynamic Application Adaptation in Various Display Environments by Systems: A Rule-Based Transformation Framework
++ Display Geometry Optimization for Non-Rectangular Interfaces - On-Display Camera Configuration
++ xTS Compliance & Android Ecosystem Standardization
+
+Contributed over 45,000 lines of code to company repositories (34,213 lines to main Gerrit-managed codebase and 11,478 lines to secondary GitLab repository) over tenure in Xiaomi HyperOS (previously, MIUI), with all changes passing rigorous expert code reviews and comprehensive testing verification.
+
+## Honors & Awards
++ Xiaomi Ten-Million-Dollar Technology Award (of the Year) Finalist Prize - (Human x Car x Home Handoff (Large-Screen Casting)
++ Xiaomi Star Award (M-Series Pad Project)
++ Merit Scholarship
++ National Encouragement Scholarship
++ Merit Student
++ Second-class Academic Scholarship
+
+## Qualifications & Membership
++ System Architecture Design - Assistant Engineer Qualification, issued by Chinese Academy of Sciences (CAS)
++ Professional Membership of China Computer Federation (CCF), Technical Committees including Artificial Intelligence & Pattern Recognition Committee, Systems Software Committee, Software Engineering Committee
++ Membership of Institute of Electrical and Electronics Engineers (IEEE)
+
 ## Web Projects
 ### A Web Based Java Online Judge System
 [Gitee Repository](https://gitee.com/lagee_online_quizing)
