@@ -203,7 +203,7 @@ export default defineConfig({
     ],
     footer: {
         message: '本作品由<a rel="contributors" target="_blank" href="https://github.com/ZweiRm/localhost-8080.github.io/graphs/contributors"><img style="display:inline" alt="GitHub contributors" src="https://img.shields.io/github/contributors/ZweiRm/localhost-8080.github.io.svg?label=%E8%B4%A1%E7%8C%AE%E8%80%85&logo=github&logoColor=3EAF7C&style=social"></a>创作，采用<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>进行许可。<div style="display: flex; justify-content: center; align-items: center;"><a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="知识共享许可协议" style="border-width:0" src="/img/licence.png" /></a></div>',
-        copyright: 'Copyright © 2018-2025 localhost-8080.io'
+        copyright: 'Copyright © 2018-2026 localhost-8080.io'
     },
     editLink: {
         text: '请帮助我改善此页面!',
