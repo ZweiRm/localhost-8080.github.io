@@ -80,7 +80,7 @@ export default defineConfig({
                 { text: 'API-工具类库3', link: 'java/API-util3'},
                 { text: 'API-输入输出类库', link: 'java/API-io'},
                 { text: 'Java 虚拟机', link: 'java/jvm'},
-                { text: '参考文献嚯资料', link: 'java/references'}
+                { text: '参考文献或资料', link: 'java/references'}
             ]
         }],
         '/hello-world/' :[{
