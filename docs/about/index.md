@@ -7,6 +7,7 @@ comment: false
 # About Me
 <script setup>
 import { VPTeamMembers } from 'vitepress/theme'
+import { onMounted } from 'vue'
 
 const members = [
   {
@@ -21,11 +22,39 @@ const members = [
             icon: {
                 svg: '<svg t="1742816019966" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2790" width="200" height="200"><path d="M1006.08 348.16c-7.68-10.24-15.36-17.92-28.16-25.6l-71.68-46.08V84.48c0-46.08-38.4-84.48-84.48-84.48h-614.4C161.28 0 122.88 38.4 122.88 84.48v184.32L38.4 322.56c-2.56 2.56-7.68 5.12-10.24 7.68C10.24 348.16 0 368.64 0 394.24v545.28c0 46.08 38.4 84.48 84.48 84.48h855.04c46.08 0 84.48-38.4 84.48-84.48V394.24c0-15.36-7.68-30.72-17.92-46.08m-99.84 2.56l20.48 12.8-20.48 12.8v-25.6z m-721.92-266.24c0-10.24 10.24-20.48 20.48-20.48h616.96c10.24 0 20.48 10.24 20.48 20.48V419.84l-332.8 215.04L184.32 424.96V84.48zM122.88 343.04v40.96l-33.28-20.48 33.28-20.48z" p-id="2791"></path><path d="M314.88 232.96h399.36c17.92 0 30.72-12.8 30.72-30.72s-12.8-30.72-30.72-30.72h-399.36c-17.92 0-30.72 12.8-30.72 30.72s15.36 30.72 30.72 30.72m320 128c0-17.92-12.8-30.72-30.72-30.72H314.88c-17.92 0-30.72 12.8-30.72 30.72s12.8 30.72 30.72 30.72H604.16c17.92 2.56 30.72-12.8 30.72-30.72" p-id="2792"></path></svg>',
             },
-            link: 'momg@foxmail.com'
+            link: '#copy-email'
         }
     ],
   },
 ]
+
+onMounted(() => {
+  const link = document.querySelector('a[href="#copy-email"]')
+  if (link) {
+    link.addEventListener('click', async (e) => {
+      e.preventDefault()
+      const email = 'momg AT foxmail DOT com'
+      try {
+        await navigator.clipboard.writeText(email)
+      } catch {
+        // fallback for older browsers
+        const ta = document.createElement('textarea')
+        ta.value = email
+        ta.style.position = 'fixed'
+        ta.style.opacity = '0'
+        document.body.appendChild(ta)
+        ta.select()
+        document.execCommand('copy')
+        ta.remove()
+      }
+      const toast = document.createElement('div')
+      toast.textContent = '已复制邮箱地址 "' + email + '" 请修改后发送邮件'
+      toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--vp-c-bg-soft);color:var(--vp-c-text-1);padding:12px 24px;border-radius:8px;box-shadow:0 2px 12px rgba(0,0,0,.15);z-index:9999;font-size:14px;transition:opacity .3s;'
+      document.body.appendChild(toast)
+      setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300) }, 3000)
+    })
+  }
+})
 </script>
 
 <VPTeamMembers size="medium" :members="members" />
