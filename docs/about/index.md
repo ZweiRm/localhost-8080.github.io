@@ -61,15 +61,21 @@ onMounted(() => {
 
 Hi! I'm Duo Huang, a Software R&D Engineer specializing in Android platform internals (Window Management, Display Pipeline, Activity Management) with a focus on ML-driven system optimization at Xiaomi Inc. I am the technical owner of Xiaomi's dual-screen interaction system (Rear Display+) shipped on the Xiaomi 17 series, and a contributor to the Android Open Source Project (AOSP) with merged changes deployed to 1.5+ billion active devices.
 
-I earned my Master of Science in Data Analysis and Artificial Intelligence from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5%). My research interests lie at the intersection of **Systems and AI** -- specifically, how machine learning can be integrated into mobile operating systems to enable intelligent resource optimization, adaptive cross-device experiences, and novel human-computer interaction paradigms. I am also exploring reinforcement learning for systems optimization and adversarial robustness in deployed ML systems.
+I earned my Master of Science in Data Analysis and Artificial Intelligence from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5%).   
+
+My research interests lie at the intersection of Human-Computer Interaction, Intelligent Systems, and Software Engineering. I am particularly interested in:
++ Context-aware interaction and body-centric interfaces for spatial computing
++ ML-driven system optimization for mobile and cyber-physical platforms
++ Large-scale software architecture for interactive and industrial systems
++ I am also exploring how methodologies developed for consumer-facing systems (real-time coordination, fault detection, cross-device orchestration) can transfer to industrial contexts such as intelligent manufacturing and IoT.
 
 I am currently the project lead of a Xiaomi Open-Competition Research Program (200,000+ CNY funding), an industry-academia collaboration initiative focused on advancing intelligent system architecture. With 19 patents spanning ML-systems integration and HCI innovation, I remain committed to bridging rigorous research with impactful engineering.
 
 ## Education
 
-+ **Hong Kong Baptist University (HKBU)**, Hong Kong -- MSc in Advanced Information Systems (GPA 3.32/4), 09/2020 - 11/2021
++ **Hong Kong Baptist University (HKBU)**, Hong Kong -- MSc in Advanced Information Systems, 09/2020 - 11/2021
   *(Program currently named MSc in Data Analysis and Artificial Intelligence)*
-+ **Shanxi Agricultural University (SXAU)**, Shanxi -- BEng in Software Engineering (GPA 3.34/5, top 5% in program), 09/2014 - 07/2018
++ **Shanxi Agricultural University (SXAU)**, Shanxi -- BEng in Software Engineering, 09/2014 - 07/2018
 
 ## Research Experience
 
@@ -77,11 +83,6 @@ I am currently the project lead of a Xiaomi Open-Competition Research Program (2
 Beijing, 12/2023 - 03/2024 | Supervisor: Prof. Osman Yagan, Carnegie Mellon University
 
 Investigated the exploration-exploitation trade-off in food recommendation scenarios with limited user interactions. Developed and validated a novel Upper Confidence Bound (UCB) algorithm variant that balances preference learning efficiency against recommendation accuracy. Designed and implemented a WeChat-based experimental framework for real-world data collection, enabling controlled experiments with human subjects to validate the algorithm's performance against baseline approaches. This work resulted in an IEEE conference publication.
-
-### Geometric Sampling Optimization for Black-Box Adversarial Attacks
-Beijing, 01/2024 - 04/2024 | Supervisor: Prof. Gang Bai, Nankai University
-
-Conducted systematic literature review establishing a comprehensive taxonomy of black-box adversarial attack methodologies, identifying research gaps in graph-based sampling techniques. Implemented and analyzed novel graph-based sampling algorithms for generating adversarial examples with minimal perturbation budgets, optimizing the trade-off between attack success rate and perceptibility constraints across standard benchmark datasets.
 
 ### Xiaomi Open-Competition Research Program ("Jiebang Guashuai" Research Initiative)
 2025 | Project Lead | Competitive Research Grant: 200,000+ CNY
@@ -139,11 +140,6 @@ Merged into AOSP main branch, deployed to 1.5+ billion active Android devices wo
   [CL 3505814](https://android-review.googlesource.com/c/platform/cts/+/3505814)
 + Developed dynamic screen size calculation for notched display areas, restructuring the status bar height calculation module by optimizing display orientation logic and eliminating redundant dependencies (collaborated)
   [CL 3559567](https://android-review.googlesource.com/c/platform/frameworks/base/+/3559567), [CL 3554263](https://android-review.googlesource.com/c/platform/frameworks/base/+/3554263)
-
-### VuePress, Vue
-
-+ Localized project documentation, making corrections for errors found within it
-  [Pull Request #2934](https://github.com/vuejs/vuepress/pull/2934)
 
 ## Industry Experience
 
