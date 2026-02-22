@@ -61,13 +61,14 @@ onMounted(() => {
 
 Hi! I'm Duo Huang, a Software R&D Engineer specializing in Android platform internals (Window Management, Display Pipeline, Activity Management) with a focus on ML-driven system optimization at Xiaomi Inc. I am the technical owner of Xiaomi's dual-screen interaction system (Rear Display+) shipped on the Xiaomi 17 series, and a contributor to the Android Open Source Project (AOSP) with merged changes deployed to 1.5+ billion active devices.
 
-I earned my Master of Science in Data Analysis and Artificial Intelligence from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5%).   
+I earned my Master of Science in Data Analysis and Artificial Intelligence from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5%).
 
-My research interests lie at the intersection of Human-Computer Interaction, Intelligent Systems, and Software Engineering. I am particularly interested in:
-+ Context-aware interaction and body-centric interfaces for spatial computing
-+ ML-driven system optimization for mobile and cyber-physical platforms
-+ Large-scale software architecture for interactive and industrial systems
-+ I am also exploring how methodologies developed for consumer-facing systems (real-time coordination, fault detection, cross-device orchestration) can transfer to industrial contexts such as intelligent manufacturing and IoT.
+My research interests center on **system software for emerging computing platforms**. As mobile devices evolve from standalone smartphones into hubs that coordinate wearables, extended reality (XR) headsets, vehicle infotainment, and industrial IoT endpoints, the OS and framework layers must manage increasingly heterogeneous hardware, real-time constraints, and cross-device state under tight resource budgets. I am interested in understanding and improving how these system-level mechanisms shape end-to-end user experience across new form factors. Specific areas I hope to explore include:
++ Cross-device system architecture for wearable and XR platforms, where phone-tethered designs create new demands on display management, process scheduling, and real-time communication
++ Context-aware interaction and body-centric interfaces for spatial computing, bridging OS-level sensing with adaptive user experiences
++ Software quality and evolution of large-scale mobile platforms, including automated defect detection, compatibility analysis, and reliability engineering at scale
++ System-level support for intelligent user experience, such as adaptive notification routing, context-sensitive display management, and ML-driven optimization for resource-constrained environments
++ Transfer of large-scale mobile system methodologies (real-time coordination, fault detection, cross-device orchestration) to cyber-physical and industrial contexts
 
 I am currently the project lead of a Xiaomi Open-Competition Research Program (200,000+ CNY funding), an industry-academia collaboration initiative focused on advancing intelligent system architecture. With 19 patents spanning ML-systems integration and HCI innovation, I remain committed to bridging rigorous research with impactful engineering.
 
@@ -149,7 +150,7 @@ Merged into AOSP main branch, deployed to 1.5+ billion active Android devices wo
 Pioneered an independent rear-screen system and software ecosystem for the Xiaomi 17 series, driving smartphone form-factor and interaction innovation. Architected a secondary display Launcher based on Android SECONDARY_HOME with deep Framework customization. Delivered three critical components: *interaction framework adaptation* (dual-screen synchronization, keep-alive, auto-start mechanisms), *intelligent Service Assistant* (SystemUI notification transformation engine supporting 14 scenario-specific cards including music, navigation, and fitness), and *cross-screen sticky notes* (AI assistant integration with pioneering transition animations). Generated 10+ HCI/system patents, establishing industry-leading standards for dual-screen interaction paradigms. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Second Prize).
 
 ### Large-screen Application Casting (EV Infotainment & Cross-device Handoff)
-Pioneered ML-systems integration for intelligent cross-device experiences in electric vehicle infotainment systems and device handoff scenarios. Developed ML-based automatic fault detection and recovery system, implemented ML-driven security/privacy detection with intelligent navigation blocking, and created proactive intelligent sensing for application flow adaptation. Applied reinforcement learning (Multi-Armed Bandit) optimization to dynamic resource allocation. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Finalist Prize).
+Developed the Android Framework window management layer for Xiaomi's cross-device application casting system, enabling apps to be cast from smartphones to car infotainment screens, tablets, and PCs. Core work involved window lifecycle management, display configuration adaptation, and multi-window scheduling for cast sessions across heterogeneous target devices. Filed multiple patents applying ML to casting fault detection, security/privacy analysis, and intelligent navigation blocking. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Finalist Prize).
 
 ### Dynamic Application Adaptation -- Rule-Based Transformation Framework
 Developed a rule-based transformation engine achieving 100% compatibility across heterogeneous display environments. Conducted systematic experiments across 1,000+ device configurations to create a structured taxonomy of adaptation patterns, establishing a new methodological framework for multi-terminal display interactions.
@@ -173,12 +174,6 @@ Technical owner of multiple Android Framework subsystems across Xiaomi's main Ge
 + National Encouragement Scholarship (2017, Ministry of Education of the PRC)
 + Merit Student (2017, SXAU)
 + Second-class Academic Scholarship (2017, SXAU)
-
-## Technical Skills
-
-+ **Systems**: Android Framework (WindowManagerService, ActivityManagerService, SurfaceFlinger), Display & Window Management, Process & Activity Management, Rendering & Drawing, Distributed Systems
-+ **AI/ML**: Reinforcement Learning, Adversarial Attacks, Deep Learning, Causal Inference, TensorFlow, PyTorch
-+ **Development**: Vue, Spring, MySQL, Redis, Git, Linux
 
 ## Qualifications & Membership
 
