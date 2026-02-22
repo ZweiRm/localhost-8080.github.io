@@ -100,7 +100,7 @@ Awarded a competitive research grant through Xiaomi's enterprise-wide open-compe
 
 ## Patents
 
-19 patents in System/HCI and/with ML (7 as 1st/2nd inventor, 6 as co-inventor, others as contributor). Selected highlights below.
+19 patents in System/HCI and/with ML. Selected highlights below.
 
 ### Selected Patents -- Machine Learning with Systems
 
