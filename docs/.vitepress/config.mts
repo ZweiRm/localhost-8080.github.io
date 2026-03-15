@@ -191,6 +191,7 @@ export default defineConfig({
         '/framework/':[{
             text: 'Android Frameworks', link: 'framework/index',
             items: [
+                { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
                 { text: 'Activity 启动流程', link: 'framework/activity-launching-process' },
                 { text: 'performTraversal', link: 'framework/performTraversal' },
                 { text: 'Android 12 容器层级', link: 'framework/container'},

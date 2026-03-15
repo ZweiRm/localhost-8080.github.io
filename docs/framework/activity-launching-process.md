@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Framework'
-    link: 'framework/index'
+    text: 'WMS 架构与运行原理分析'
+    link: 'framework/basic-with-wms'
 next:
     text: 'performTraversal'
     link: 'framework/performTraversal'

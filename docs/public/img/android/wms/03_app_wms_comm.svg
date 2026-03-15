@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 310" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="arrFwd" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4a7fb5"/>
+    </marker>
+    <marker id="arrBack" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- App Process -->
+  <rect x="20" y="15" width="330" height="280" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <text x="185" y="38" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">App 进程</text>
+
+  <rect x="45" y="55" width="280" height="44" rx="3" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="185" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ViewRootImpl</text>
+
+  <rect x="45" y="118" width="280" height="40" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="185" y="134" text-anchor="middle" font-size="10" fill="#343a40">mWindowSession</text>
+  <text x="185" y="149" text-anchor="middle" font-size="9" fill="#868e96">IWindowSession.Proxy (Binder 代理)</text>
+
+  <rect x="45" y="178" width="280" height="40" rx="3" fill="white" stroke="#c0392b" stroke-width="1"/>
+  <text x="185" y="194" text-anchor="middle" font-size="10" fill="#343a40">mWindow (W extends IWindow.Stub)</text>
+  <text x="185" y="209" text-anchor="middle" font-size="9" fill="#868e96">Binder 实体 · 接收 WMS 回调</text>
+
+  <!-- system_server Process -->
+  <rect x="430" y="15" width="330" height="280" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <text x="595" y="38" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">system_server 进程</text>
+
+  <rect x="455" y="55" width="280" height="44" rx="3" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="595" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">WindowManagerService</text>
+
+  <rect x="455" y="118" width="280" height="40" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="595" y="134" text-anchor="middle" font-size="10" fill="#343a40">Session</text>
+  <text x="595" y="149" text-anchor="middle" font-size="9" fill="#868e96">IWindowSession.Stub (Binder 实体)</text>
+
+  <rect x="455" y="178" width="280" height="40" rx="3" fill="white" stroke="#c0392b" stroke-width="1"/>
+  <text x="595" y="194" text-anchor="middle" font-size="10" fill="#343a40">IWindow.Proxy</text>
+  <text x="595" y="209" text-anchor="middle" font-size="9" fill="#868e96">Binder 代理 · 向 App 发送回调</text>
+
+  <!-- Forward arrow: IWindowSession -->
+  <line x1="325" y1="133" x2="455" y2="133" stroke="#4a7fb5" stroke-width="1.8" marker-end="url(#arrFwd)"/>
+  <text x="390" y="126" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4a7fb5">IWindowSession</text>
+  <text x="390" y="150" text-anchor="middle" font-size="8" fill="#868e96">relayout / addToDisplay / ...</text>
+
+  <!-- Backward arrow: IWindow -->
+  <line x1="455" y1="198" x2="325" y2="198" stroke="#c0392b" stroke-width="1.8" marker-end="url(#arrBack)"/>
+  <text x="390" y="191" text-anchor="middle" font-size="9.5" font-weight="600" fill="#c0392b">IWindow</text>
+  <text x="390" y="215" text-anchor="middle" font-size="8" fill="#868e96">dispatchConfig / insetsChanged / ...</text>
+</svg>

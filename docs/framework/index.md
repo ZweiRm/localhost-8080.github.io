@@ -1,8 +1,8 @@
 ---
 prev: false
-next: 
-    text: 'Activity 启动流程'
-    link: '/framework/activity-launching-process'
+next:
+    text: 'WMS 架构与运行原理分析'
+    link: '/framework/basic-with-wms'
 ---
 
 # Android Frameworks

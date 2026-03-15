@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 470" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+
+  <!-- Process labels -->
+  <text x="90" y="78" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Home</text>
+  <text x="90" y="188" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">SystemUI</text>
+  <text x="90" y="298" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">system_server</text>
+  <text x="90" y="408" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">SurfaceFlinger</text>
+
+  <!-- Dashed swim-lane borders -->
+  <line x1="170" y1="30" x2="780" y2="30" stroke="#adb5bd" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="170" y1="125" x2="780" y2="125" stroke="#adb5bd" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="170" y1="240" x2="780" y2="240" stroke="#adb5bd" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="170" y1="350" x2="780" y2="350" stroke="#adb5bd" stroke-width="1" stroke-dasharray="6,4"/>
+  <line x1="170" y1="450" x2="780" y2="450" stroke="#adb5bd" stroke-width="1" stroke-dasharray="6,4"/>
+
+  <!-- ===== Home row ===== -->
+  <rect x="210" y="56" width="26" height="22" rx="2" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="223" y="72" text-anchor="middle" font-size="10" fill="#343a40">T</text>
+  <!-- timeline -->
+  <line x1="236" y1="67" x2="740" y2="67" stroke="#7ba0c4" stroke-width="1.2"/>
+  <!-- labels -->
+  <text x="340" y="58" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">setXXX</text>
+  <text x="570" y="58" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">merge</text>
+  <text x="700" y="58" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">apply</text>
+  <!-- dots -->
+  <circle cx="570" cy="67" r="3" fill="#7ba0c4"/>
+  <circle cx="700" cy="67" r="3" fill="#7ba0c4"/>
+
+  <!-- ===== SystemUI row ===== -->
+  <rect x="250" y="166" width="26" height="22" rx="2" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="263" y="182" text-anchor="middle" font-size="10" fill="#343a40">T</text>
+  <!-- timeline -->
+  <line x1="276" y1="177" x2="620" y2="177" stroke="#7ba0c4" stroke-width="1.2"/>
+  <!-- labels -->
+  <text x="390" y="168" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">setXXX</text>
+  <text x="575" y="168" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">merge</text>
+  <!-- dot -->
+  <circle cx="575" cy="177" r="3" fill="#7ba0c4"/>
+
+  <!-- ===== system_server row ===== -->
+  <rect x="290" y="276" width="26" height="22" rx="2" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="303" y="292" text-anchor="middle" font-size="10" fill="#343a40">T</text>
+  <!-- timeline -->
+  <line x1="316" y1="287" x2="500" y2="287" stroke="#7ba0c4" stroke-width="1.2"/>
+  <!-- label -->
+  <text x="420" y="278" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">setXXX</text>
+
+  <!-- ===== SurfaceFlinger row ===== -->
+  <rect x="688" y="391" width="26" height="22" rx="2" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="701" y="407" text-anchor="middle" font-size="10" fill="#343a40">T</text>
+  <text x="701" y="430" text-anchor="middle" font-size="10.5" font-style="italic" fill="#c0392b">process</text>
+
+  <!-- ===== Two-level merge arrows ===== -->
+  <!-- Level 1: system_server end → SystemUI merge point (diagonal up) -->
+  <line x1="500" y1="287" x2="575" y2="177" stroke="#7ba0c4" stroke-width="1.2"/>
+
+  <!-- Level 2: SystemUI end → Home merge point (diagonal up) -->
+  <line x1="620" y1="177" x2="570" y2="67" stroke="#7ba0c4" stroke-width="1.2"/>
+
+  <!-- apply: Home → SurfaceFlinger (vertical down) -->
+  <line x1="700" y1="67" x2="700" y2="391" stroke="#7ba0c4" stroke-width="1.2"/>
+</svg>

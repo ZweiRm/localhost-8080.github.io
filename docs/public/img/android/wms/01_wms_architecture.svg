@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 920" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+
+  <!-- ===== Layer 1: Applications ===== -->
+  <rect x="25" y="10" width="910" height="72" rx="4" fill="#f8f9fa" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="480" y="30" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Applications</text>
+
+  <rect x="48" y="42" width="82" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="89" y="61" text-anchor="middle" font-size="10" fill="#495057">Camera</text>
+
+  <rect x="148" y="42" width="82" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="189" y="61" text-anchor="middle" font-size="10" fill="#495057">Dialer</text>
+
+  <!-- SystemUI containing WM Shell -->
+  <rect x="255" y="40" width="185" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="310" y="61" text-anchor="middle" font-size="10" fill="#495057">SystemUI</text>
+  <rect x="358" y="45" width="74" height="22" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.9"/>
+  <text x="395" y="60" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">WM Shell</text>
+
+  <rect x="462" y="42" width="82" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="503" y="61" text-anchor="middle" font-size="10" fill="#495057">Home</text>
+
+  <rect x="562" y="42" width="82" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="603" y="61" text-anchor="middle" font-size="10" fill="#495057">Settings</text>
+
+  <rect x="662" y="42" width="88" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="706" y="61" text-anchor="middle" font-size="10" fill="#495057">Wallpaper</text>
+
+  <!-- ===== Layer 2: Applications Framework ===== -->
+  <rect x="25" y="96" width="910" height="118" rx="4" fill="#f8f9fa" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="480" y="116" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Applications Framework</text>
+
+  <!-- 绘制单元 -->
+  <rect x="42" y="124" width="148" height="80" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="116" y="138" text-anchor="middle" font-size="10" font-weight="600" fill="#555">绘制单元</text>
+  <rect x="52" y="146" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="115" y="161" text-anchor="middle" font-size="9.5" fill="#495057">RenderThread</text>
+  <rect x="52" y="174" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="115" y="189" text-anchor="middle" font-size="9.5" fill="#495057">Choreographer</text>
+
+  <!-- 布局测量单元 -->
+  <rect x="202" y="124" width="148" height="80" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="276" y="138" text-anchor="middle" font-size="10" font-weight="600" fill="#555">布局测量单元</text>
+  <rect x="212" y="146" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="275" y="161" text-anchor="middle" font-size="9.5" fill="#495057">ViewRootImpl</text>
+  <rect x="212" y="174" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="275" y="189" text-anchor="middle" font-size="9.5" fill="#495057">Views</text>
+
+  <!-- 界面控制单元 -->
+  <rect x="362" y="124" width="148" height="80" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="436" y="138" text-anchor="middle" font-size="10" font-weight="600" fill="#555">界面控制单元</text>
+  <rect x="372" y="146" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="435" y="161" text-anchor="middle" font-size="9.5" fill="#495057">ActivityThread</text>
+  <rect x="372" y="174" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="435" y="189" text-anchor="middle" font-size="9.5" fill="#495057">Activity</text>
+
+  <!-- 窗口控制单元 -->
+  <rect x="522" y="124" width="148" height="80" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="596" y="138" text-anchor="middle" font-size="10" font-weight="600" fill="#555">窗口控制单元</text>
+  <rect x="532" y="146" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="595" y="161" text-anchor="middle" font-size="9.5" fill="#495057">windows</text>
+  <rect x="532" y="174" width="126" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="595" y="189" text-anchor="middle" font-size="9.5" fill="#495057">Insets</text>
+
+  <!-- API接口单元 -->
+  <rect x="682" y="124" width="138" height="80" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="751" y="138" text-anchor="middle" font-size="10" font-weight="600" fill="#555">API接口单元</text>
+  <rect x="700" y="160" width="100" height="26" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.9"/>
+  <text x="750" y="178" text-anchor="middle" font-size="9.5" font-weight="600" fill="#c0392b">WM Jetpack</text>
+
+  <!-- ===== Layer 3: WM Core ===== -->
+  <rect x="25" y="228" width="910" height="292" rx="4" fill="#f8f9fa" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="60" y="248" text-anchor="start" font-size="13" font-weight="600" fill="#343a40">WM Core</text>
+
+  <!-- 大屏兼容框架 (collapsed, label only) -->
+  <rect x="42" y="260" width="348" height="38" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="216" y="284" text-anchor="middle" font-size="10.5" font-weight="600" fill="#555">大屏兼容框架</text>
+
+  <!-- 系统动画框架 -->
+  <rect x="404" y="260" width="168" height="120" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="488" y="275" text-anchor="middle" font-size="10" font-weight="600" fill="#555">系统动画框架</text>
+  <rect x="416" y="284" width="140" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="486" y="299" text-anchor="middle" font-size="9.5" fill="#495057">打断动画框架</text>
+  <rect x="416" y="312" width="140" height="22" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.9"/>
+  <text x="486" y="327" text-anchor="middle" font-size="9.5" font-weight="600" fill="#c0392b">Shell动画框架</text>
+  <rect x="416" y="340" width="140" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="486" y="355" text-anchor="middle" font-size="9.5" fill="#495057">窗口动画框架</text>
+
+  <!-- 互联互通框架 -->
+  <rect x="586" y="260" width="180" height="120" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="676" y="275" text-anchor="middle" font-size="10" font-weight="600" fill="#555">互联互通框架</text>
+  <rect x="600" y="284" width="150" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="675" y="299" text-anchor="middle" font-size="9.5" fill="#495057">大屏投屏框架</text>
+  <rect x="600" y="312" width="150" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="675" y="327" text-anchor="middle" font-size="9.5" fill="#495057">隐私投屏框架</text>
+  <rect x="600" y="340" width="150" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="675" y="355" text-anchor="middle" font-size="9.5" fill="#495057">多设备管理框架</text>
+
+  <!-- 窗口基础框架 -->
+  <rect x="42" y="394" width="890" height="115" rx="3" fill="none" stroke="#bbb" stroke-width="0.7" stroke-dasharray="4,3"/>
+  <text x="480" y="410" text-anchor="middle" font-size="10" font-weight="600" fill="#555">窗口基础框架</text>
+  <!-- Row 1 -->
+  <rect x="56" y="418" width="140" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="126" y="434" text-anchor="middle" font-size="9.5" fill="#495057">KeyguardController</text>
+  <rect x="210" y="418" width="110" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="265" y="434" text-anchor="middle" font-size="9.5" fill="#495057">InsetsPolicy</text>
+  <rect x="334" y="418" width="155" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="411" y="434" text-anchor="middle" font-size="9.5" fill="#495057">ActivityTaskManager</text>
+  <rect x="503" y="418" width="135" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="570" y="434" text-anchor="middle" font-size="9.5" fill="#495057">WindowManager</text>
+  <rect x="652" y="418" width="152" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="728" y="434" text-anchor="middle" font-size="9.5" fill="#495057">WallpaperController</text>
+  <!-- Row 2 -->
+  <rect x="56" y="452" width="125" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="118" y="468" text-anchor="middle" font-size="9.5" fill="#495057">Shell Transition</text>
+  <rect x="195" y="452" width="145" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="267" y="468" text-anchor="middle" font-size="9.5" fill="#495057">ActivityEmbedding</text>
+  <rect x="354" y="452" width="105" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="406" y="468" text-anchor="middle" font-size="9.5" fill="#495057">Freeform</text>
+  <rect x="473" y="452" width="115" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="530" y="468" text-anchor="middle" font-size="9.5" fill="#495057">multi-window</text>
+  <rect x="602" y="452" width="130" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="667" y="468" text-anchor="middle" font-size="9.5" fill="#495057">Screen Rotation</text>
+
+  <!-- ===== Layer 4: Natives + Android Runtime ===== -->
+  <rect x="25" y="534" width="572" height="100" rx="4" fill="#eef1f5" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="50" y="553" text-anchor="start" font-size="13" font-weight="600" fill="#343a40">Natives</text>
+  <rect x="42" y="562" width="112" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="98" y="578" text-anchor="middle" font-size="9.5" fill="#495057">HWUI</text>
+  <rect x="166" y="562" width="125" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="228" y="578" text-anchor="middle" font-size="9.5" fill="#495057">SurfaceFlinger</text>
+  <rect x="303" y="562" width="115" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="360" y="578" text-anchor="middle" font-size="9.5" fill="#495057">InputFlinger</text>
+  <rect x="42" y="596" width="112" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="98" y="612" text-anchor="middle" font-size="9.5" fill="#495057">HWComposer</text>
+  <rect x="166" y="596" width="125" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="228" y="612" text-anchor="middle" font-size="9.5" fill="#495057">RenderEngine</text>
+  <rect x="303" y="596" width="148" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="377" y="612" text-anchor="middle" font-size="9.5" fill="#495057">CompositionEngine</text>
+
+  <!-- Android Runtime -->
+  <rect x="607" y="534" width="328" height="100" rx="4" fill="#eef5f1" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="632" y="553" text-anchor="start" font-size="13" font-weight="600" fill="#343a40">Android Runtime</text>
+  <rect x="630" y="566" width="155" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="707" y="582" text-anchor="middle" font-size="9.5" fill="#495057">android_view_*</text>
+  <rect x="630" y="600" width="155" height="24" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="707" y="616" text-anchor="middle" font-size="9.5" fill="#495057">core libraries</text>
+
+  <!-- ===== Layer 5: HAL ===== -->
+  <rect x="25" y="648" width="910" height="55" rx="4" fill="#f3eef8" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="480" y="667" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">HAL</text>
+  <rect x="52" y="675" width="330" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="217" y="690" text-anchor="middle" font-size="9" fill="#495057">android.hardware.graphics.mapper@1.0</text>
+  <rect x="510" y="675" width="370" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="695" y="690" text-anchor="middle" font-size="9" fill="#495057">vendor.xiaomi.hardware.displayfeature@1.0</text>
+
+  <!-- ===== Layer 6: Libraries ===== -->
+  <rect x="25" y="717" width="910" height="55" rx="4" fill="#fdf2f2" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="480" y="736" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Libraries</text>
+  <rect x="72" y="744" width="200" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="172" y="759" text-anchor="middle" font-size="9.5" fill="#495057">Skia</text>
+  <rect x="372" y="744" width="200" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="472" y="759" text-anchor="middle" font-size="9.5" fill="#495057">OpenGL ES</text>
+  <rect x="672" y="744" width="200" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="772" y="759" text-anchor="middle" font-size="9.5" fill="#495057">Vulkan</text>
+
+  <!-- ===== Layer 7: Hardware ===== -->
+  <rect x="25" y="786" width="910" height="55" rx="4" fill="#fef8ee" stroke="#ced4da" stroke-width="1.2"/>
+  <text x="480" y="805" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Hardware</text>
+  <rect x="72" y="813" width="200" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="172" y="828" text-anchor="middle" font-size="9.5" fill="#495057">CPU</text>
+  <rect x="372" y="813" width="200" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="472" y="828" text-anchor="middle" font-size="9.5" fill="#495057">GPU</text>
+  <rect x="672" y="813" width="200" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="772" y="828" text-anchor="middle" font-size="9.5" fill="#495057">Physic Display</text>
+</svg>
