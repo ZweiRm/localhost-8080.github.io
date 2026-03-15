@@ -85,10 +85,10 @@ Beijing, 12/2023 - 03/2024 | Supervisor: Prof. Osman Yagan, Carnegie Mellon Univ
 
 Investigated the exploration-exploitation trade-off in food recommendation scenarios with limited user interactions. Developed and validated a novel Upper Confidence Bound (UCB) algorithm variant that balances preference learning efficiency against recommendation accuracy. Designed and implemented a WeChat-based experimental framework for real-world data collection, enabling controlled experiments with human subjects to validate the algorithm's performance against baseline approaches. This work resulted in an IEEE conference publication.
 
-### Xiaomi Open-Competition Research Program ("Jiebang Guashuai" Research Initiative)
+### CausalAdapt -- Xiaomi Open-Competition Research Program ("Jiebang Guashuai" Research Initiative)
 2025 | Project Lead | Competitive Research Grant: 200,000+ CNY
 
-Awarded a competitive research grant through Xiaomi's enterprise-wide open-competition research program for innovative technology development. Leading an industry-academia collaboration initiative to advance intelligent system architecture for mobile platforms. The project is currently in the initiation phase with ongoing efforts to establish partnerships with research universities.
+Leading a competitive research initiative on automated UI adaptation for heterogeneous screen form factors (tablets, foldables, flip phones, etc.). Developing a deep learning and causal inference framework to replace manual developer adaptation with intelligent zero-code decision-making, in collaboration with university partners. Targeting CCF-A venue publication (AAAI-IAAI/UbiComp/CHI).
 
 ## Publication
 
@@ -100,7 +100,7 @@ Awarded a competitive research grant through Xiaomi's enterprise-wide open-compe
 
 ## Patents
 
-19 patents in System/HCI and/with ML. Selected highlights below.
+19 patents in System/HCI and/with ML.
 
 ### Selected Patents -- Machine Learning with Systems
 
@@ -113,18 +113,18 @@ Awarded a competitive research grant through Xiaomi's enterprise-wide open-compe
 
 ### Selected Patents -- Machine Learning and/with Human-Computer Interaction
 
++ **Unified Authentication Engine with Multimodal Biometric Fusion and Continuous Confidence Scoring** *(Under review by Xiaomi's IPR)*
 + **Deep Learning-based Notification Fatigue Prediction and Privacy-adaptive Distribution for Dual-screen** -- Developed a deep learning model to predict user notification fatigue and adaptively distribute notifications across dual-screen terminals with privacy-aware policies. *(Under review by Xiaomi's IPR)*
 + **AI Assistant-powered Cross-screen Sticky Notes for Dual-screen Terminals** -- application No.: 2025113509677, preliminary review approved by CNIPA
 + **Intelligent Notification Privacy Management Based on Contextual Awareness** -- application No.: 2025113506310, preliminary review approved by CNIPA
 + **Device Posture-aware Ringing Notification and Intelligent Management for Dual-screen** -- application No.: 2025113675821, preliminary review approved by CNIPA
 + **Multi-layer Spatial Management and Intelligent Display for Dual-screen Notifications** -- application No.: 2025113520869, preliminary review approved by CNIPA
-+ **Safe Interaction and Persistence Management for Car Control on Secondary Screen** -- application No.: 2025113509520, preliminary review approved by CNIPA
++ **Safe Interaction and Persistence Management for Car Control on Secondary Screen** -- application No.: 2025113509520, preliminary review approved by CNIPA; also filed at EPO and USPTO via Paris Convention
 + **Application Permission Management Control Framework for Dual-screen Devices** -- application No.: 2025113861990, preliminary review approved by CNIPA
 + **Information Display on Backlit Screen When Screen is Off** -- application No.: 2025113506414, preliminary review approved by CNIPA
 + **Low-Memory Solution for Loading Circular Lists** -- application No.: 2025113506240, preliminary review approved by CNIPA
 + **Dual-Screen Electronic Pet Interaction Solution** -- application No.: 2025113520229, preliminary review approved by CNIPA
 + **Dual-Screen Dual-Desktop Interactive Animation Solution** -- application No.: 2025113500846, preliminary review approved by CNIPA
-+ **Unified Facial Recognition Engine for Secondary Screen of Dual-Screen Terminals** -- *(Under review by Xiaomi's IPR)*
 + **Window-Based Distortion Animation Method** -- application No.: 202211691403.6, open to public
 
 ## Open Source Contributions
