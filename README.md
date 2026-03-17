@@ -1,6 +1,5 @@
 # localhost-8080.io
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d6b902cf-3d6b-4de8-af48-326fde396dde/deploy-status)](https://app.netlify.com/sites/localhost-8080/deploys)
 [![GitHub contributors](https://img.shields.io/github/contributors/ZweiRm/localhost-8080.github.io)](https://github.com/ZweiRm/localhost-8080.github.io/graphs/contributors)
 [![License: CC BY-NC-SA 4.0](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 
