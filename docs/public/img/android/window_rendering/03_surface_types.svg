@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 200" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="sc" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- WindowState -->
+  <rect x="280" y="10" width="180" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="370" y="33" text-anchor="middle" font-size="11" font-weight="600" fill="#4a7fb5">WindowState</text>
+
+  <line x1="320" y1="45" x2="150" y2="75" stroke="#555" stroke-width="1" marker-end="url(#sc)"/>
+  <line x1="420" y1="45" x2="590" y2="75" stroke="#555" stroke-width="1" marker-end="url(#sc)"/>
+
+  <!-- Container type -->
+  <rect x="25" y="75" width="250" height="110" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="150" y="95" text-anchor="middle" font-size="10.5" font-weight="600" fill="#343a40">ContainerLayer（容器类型）</text>
+  <line x1="35" y1="102" x2="265" y2="102" stroke="#dee2e6"/>
+  <text x="40" y="118" font-size="9.5" fill="#495057">创建时机：addWindow 流程</text>
+  <text x="40" y="135" font-size="9.5" fill="#495057">作用：挂载到窗口层级树</text>
+  <text x="40" y="152" font-size="9.5" fill="#495057">能否显示：否（仅作为容器）</text>
+  <text x="40" y="169" font-size="9.5" fill="#868e96">WindowState 挂载时自动创建</text>
+
+  <!-- Buffer type -->
+  <rect x="465" y="75" width="265" height="110" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="597" y="95" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2e7d32">BufferStateLayer（Buffer 类型）</text>
+  <line x1="475" y1="102" x2="720" y2="102" stroke="#c8e6c9"/>
+  <text x="480" y="118" font-size="9.5" fill="#495057">创建时机：relayoutWindow 流程</text>
+  <text x="480" y="135" font-size="9.5" fill="#495057">作用：承载绘制数据</text>
+  <text x="480" y="152" font-size="9.5" fill="#495057">能否显示：是（真正的绘制图层）</text>
+  <text x="480" y="169" font-size="9.5" fill="#2e7d32">应用端拿到的就是这个 Surface</text>
+</svg>

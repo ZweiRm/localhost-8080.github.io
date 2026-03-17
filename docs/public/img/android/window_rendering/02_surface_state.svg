@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 870 130" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="sm" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <rect x="8" y="25" width="130" height="48" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="73" y="45" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">NO_SURFACE</text>
+  <text x="73" y="62" text-anchor="middle" font-size="8.5" fill="#868e96">state = 0</text>
+
+  <line x1="138" y1="49" x2="168" y2="49" stroke="#868e96" stroke-width="1.2" marker-end="url(#sm)"/>
+  <text x="153" y="80" text-anchor="middle" font-size="8" fill="#6c757d">createSurfaceLocked</text>
+
+  <rect x="172" y="25" width="130" height="48" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="237" y="45" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DRAW_PENDING</text>
+  <text x="237" y="62" text-anchor="middle" font-size="8.5" fill="#868e96">state = 1</text>
+
+  <line x1="302" y1="49" x2="332" y2="49" stroke="#868e96" stroke-width="1.2" marker-end="url(#sm)"/>
+  <text x="317" y="80" text-anchor="middle" font-size="8" fill="#6c757d">finishDrawingLocked</text>
+
+  <rect x="336" y="25" width="150" height="48" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="411" y="41" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">COMMIT_DRAW</text>
+  <text x="411" y="54" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">_PENDING</text>
+  <text x="411" y="67" text-anchor="middle" font-size="8.5" fill="#868e96">state = 2</text>
+
+  <line x1="486" y1="49" x2="516" y2="49" stroke="#868e96" stroke-width="1.2" marker-end="url(#sm)"/>
+  <text x="501" y="80" text-anchor="middle" font-size="8" fill="#6c757d">commitFinish...</text>
+
+  <rect x="520" y="25" width="140" height="48" rx="3" fill="#eef5f1" stroke="#adb5bd" stroke-width="1"/>
+  <text x="590" y="45" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">READY_TO_SHOW</text>
+  <text x="590" y="62" text-anchor="middle" font-size="8.5" fill="#868e96">state = 3</text>
+
+  <line x1="660" y1="49" x2="690" y2="49" stroke="#868e96" stroke-width="1.2" marker-end="url(#sm)"/>
+  <text x="675" y="80" text-anchor="middle" font-size="8" fill="#6c757d">performShowLocked</text>
+
+  <rect x="694" y="25" width="125" height="48" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="756" y="45" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">HAS_DRAWN</text>
+  <text x="756" y="62" text-anchor="middle" font-size="8.5" fill="#868e96">state = 4</text>
+
+  <!-- Annotations -->
+  <text x="204" y="110" text-anchor="middle" font-size="8" fill="#4a7fb5">relayoutWindow</text>
+  <text x="390" y="110" text-anchor="middle" font-size="8" fill="#c0392b">finishDrawingWindow</text>
+  <rect x="155" y="100" width="100" height="14" rx="2" fill="none" stroke="#4a7fb5" stroke-width="0.6" stroke-dasharray="3,2"/>
+  <rect x="325" y="100" width="130" height="14" rx="2" fill="none" stroke="#c0392b" stroke-width="0.6" stroke-dasharray="3,2"/>
+</svg>

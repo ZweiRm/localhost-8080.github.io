@@ -193,6 +193,7 @@ export default defineConfig({
             items: [
                 { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
                 { text: '应用启动流程', link: 'framework/activity-launching-process' },
+                { text: 'WMS 窗口显示流程', link: 'framework/window-rendering-process' },
                 { text: 'performTraversal', link: 'framework/performTraversal' },
                 { text: 'Android 12 容器层级', link: 'framework/container'},
                 { text: 'Android 16 新特性', link: 'framework/android16'},
