@@ -1,3 +1,12 @@
+---
+prev:
+    text: 'Android Frameworks'
+    link: 'framework/index'
+next:
+    text: '应用启动流程'
+    link: 'framework/activity-launching-process'
+---
+
 # WMS 架构与运行原理分析
 
 ## 1. 概述

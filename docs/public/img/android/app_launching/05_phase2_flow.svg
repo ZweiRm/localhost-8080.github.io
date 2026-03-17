@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 520" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="ff" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="fg" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- Launcher -->
+  <rect x="15" y="10" width="200" height="180" rx="4" fill="#eef1f5" fill-opacity="0.4" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="115" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="#4a7fb5">Launcher 进程</text>
+
+  <rect x="35" y="50" width="160" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="115" y="70" text-anchor="middle" font-size="10" fill="#343a40">执行 pause</text>
+  <line x1="115" y1="80" x2="115" y2="105" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+  <rect x="35" y="105" width="160" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="115" y="125" text-anchor="middle" font-size="10" fill="#343a40">完成 pause</text>
+
+  <!-- Arrow to system_server -->
+  <line x1="195" y1="120" x2="290" y2="60" stroke="#555" stroke-width="1.2" marker-end="url(#ff)"/>
+
+  <!-- system_server -->
+  <rect x="255" y="10" width="510" height="500" rx="4" fill="#fef8ee" fill-opacity="0.4" stroke="#e07070" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="510" y="30" text-anchor="middle" font-size="11" font-weight="600" fill="#c0392b">system_server 进程</text>
+
+  <rect x="290" y="45" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="65" text-anchor="middle" font-size="10" fill="#343a40">completePause</text>
+
+  <line x1="385" y1="75" x2="385" y2="100" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <!-- 第一步 -->
+  <rect x="280" y="100" width="210" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="385" y="120" text-anchor="middle" font-size="10" fill="#4a7fb5">① 显示顶层 Activity</text>
+
+  <line x1="385" y1="130" x2="385" y2="155" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <rect x="290" y="155" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="175" text-anchor="middle" font-size="10" fill="#343a40">resumeTopActivity</text>
+
+  <line x1="385" y1="185" x2="385" y2="210" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <rect x="290" y="210" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="230" text-anchor="middle" font-size="10" fill="#343a40">startSpecificActivity</text>
+
+  <!-- 判断进程 -->
+  <path d="M385,255 L435,275 L385,295 L335,275 Z" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="278" text-anchor="middle" font-size="8.5" fill="#343a40">进程存在?</text>
+  <line x1="385" y1="240" x2="385" y2="255" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <line x1="335" y1="275" x2="280" y2="275" stroke="#868e96" stroke-width="1" marker-end="url(#fg)"/>
+  <text x="295" y="268" font-size="8" fill="#868e96">否: 等阶段三</text>
+
+  <line x1="435" y1="275" x2="530" y2="275" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+  <text x="480" y="268" font-size="8" fill="#343a40">是</text>
+  <rect x="530" y="260" width="180" height="30" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/>
+  <text x="620" y="280" text-anchor="middle" font-size="10" fill="#2e7d32">realStartActivityLocked</text>
+
+  <!-- 第二步 -->
+  <rect x="280" y="325" width="210" height="30" rx="3" fill="#fef8ee" stroke="#e07070" stroke-width="1"/>
+  <text x="385" y="345" text-anchor="middle" font-size="10" fill="#c0392b">② 确保 Activity 可见性</text>
+
+  <line x1="385" y1="295" x2="385" y2="325" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <line x1="385" y1="355" x2="385" y2="380" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <rect x="290" y="380" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="400" text-anchor="middle" font-size="10" fill="#343a40">ensureActivitiesVisible</text>
+
+  <line x1="385" y1="410" x2="385" y2="435" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <!-- 遍历所有 AR -->
+  <rect x="290" y="435" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="455" text-anchor="middle" font-size="10" fill="#343a40">遍历所有 ActivityRecord</text>
+
+  <line x1="480" y1="450" x2="530" y2="450" stroke="#555" stroke-width="1" marker-end="url(#ff)"/>
+
+  <!-- TargetActivity -->
+  <rect x="530" y="420" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="625" y="435" text-anchor="middle" font-size="9" fill="#343a40">Launcher → makeInvisible</text>
+  <rect x="530" y="455" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="625" y="470" text-anchor="middle" font-size="9" fill="#343a40">Target → startSpecificActivity</text>
+</svg>

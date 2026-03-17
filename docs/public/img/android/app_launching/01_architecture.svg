@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 220" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#4a7fb5"/>
+    </marker>
+    <marker id="a2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#c0392b"/>
+    </marker>
+    <marker id="a3" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- Launcher 进程 -->
+  <rect x="20" y="30" width="200" height="160" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <text x="120" y="52" text-anchor="middle" font-size="11" fill="#868e96">Launcher 进程</text>
+  <rect x="45" y="65" width="150" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="120" y="95" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">SourceActivity</text>
+
+  <!-- system_server 进程 -->
+  <rect x="290" y="10" width="220" height="195" rx="4" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <text x="400" y="32" text-anchor="middle" font-size="11" fill="#868e96">system_server 进程</text>
+  <rect x="320" y="65" width="160" height="50" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="1.2"/>
+  <text x="400" y="86" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">AMS</text>
+  <text x="400" y="103" text-anchor="middle" font-size="8.5" fill="#868e96">ATMS / AMS / ActivityStarter ...</text>
+
+  <!-- 电话进程 -->
+  <rect x="580" y="30" width="220" height="160" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <text x="690" y="52" text-anchor="middle" font-size="11" fill="#868e96">目标应用进程</text>
+  <rect x="610" y="65" width="160" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="690" y="95" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">TargetActivity</text>
+
+  <!-- Arrows -->
+  <line x1="195" y1="80" x2="320" y2="80" stroke="#4a7fb5" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="257" y="73" text-anchor="middle" font-size="9" fill="#4a7fb5">发起启动请求</text>
+
+  <line x1="320" y1="100" x2="195" y2="155" stroke="#c0392b" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text x="230" y="140" text-anchor="middle" font-size="9" fill="#c0392b">通知 pause</text>
+
+  <line x1="480" y1="85" x2="610" y2="85" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#a3)"/>
+  <text x="545" y="78" text-anchor="middle" font-size="9" fill="#2e7d32">启动进程</text>
+
+  <!-- 注: Launcher 需要 pause -->
+  <rect x="30" y="150" width="180" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="120" y="169" text-anchor="middle" font-size="9" fill="#868e96">执行 pause 后通知 AMS</text>
+</svg>
