@@ -7,299 +7,347 @@ next:
     link: 'framework/window-rendering-process'
 ---
 
-# 应用启动流程分析
+# Activity 启动全流程分析与 Activity 生命周期
 
-## 1. 整体介绍
+> 基于 AOSP 源码，完整分析从 Launcher 点击应用图标到目标 Activity 完成 `onResume` 的全过程。
 
-本文基于 AOSP V 版本源码，以 Launcher 点击「电话」图标冷启动应用为场景，分析 Activity 启动的完整流程。
+## 前言
 
-### 1.1 三模块架构
+### 三个核心模块
 
-启动流程涉及 3 个模块、3 个进程：
+应用启动流程涉及 3 个核心模块，分别运行在 3 个不同的进程中：
 
 | 模块 | 所在进程 | 职责 |
 |------|---------|------|
-| **SourceActivity** | Launcher 进程 | 发起 `startActivity` 请求的 Activity |
-| **AMS** | system_server 进程 | 不仅指 AMS 这一个类，而是指 system_server 进程中参与处理的所有相关类（ATMS、ActivityStarter、RootWindowContainer 等） |
-| **TargetActivity** | 目标应用进程 | 被启动的 Activity（电话 MainActivity） |
+| SourceActivity | Launcher 进程 | 发起启动请求，执行 pause 流程 |
+| AMS（ATMS / AMS） | system_server 进程 | 处理启动请求，管理 Activity 生命周期，管理窗口层级 |
+| TargetActivity | 目标应用进程 | 被启动的目标 Activity |
 
-SourceActivity 和 TargetActivity 互相不知道对方的业务，所有协调由 AMS 管理——类似于公司里两个不同部门的人需要通过管理者来协调工作。
+**类比说明**：可以把这三个模块想象成一个公司的协作流程。SourceActivity 是"提出需求的部门"，AMS 是"管理层"（负责审批、调度资源、分配任务），TargetActivity 是"执行部门"。管理层（AMS）收到需求后，先通知原部门暂停手头工作（pause），同时安排新部门做准备（创建进程），一切就绪后才让新部门正式开始工作（启动 Activity）。
 
-![三模块架构](/img/android/app_launching/01_architecture.svg)
+![三个核心模块](/img/android/app_launching/01_three_modules.svg)
 
-> AMS 对 Launcher 多了一个返回箭头，因为 Launcher 需要执行 pause，但 pause 的时机 Launcher 自身无法控制，只能由 AMS 控制。
+## 总体流程概览
 
-### 1.2 四阶段总览
+### 4 阶段总览
 
-整个流程分为 4 个阶段：
+整个启动流程分为 4 个阶段：
 
-![四阶段总览](/img/android/app_launching/02_overall_flow.svg)
+![4 阶段总览图](/img/android/app_launching/02_four_phase_overview.svg)
 
-**阶段一**：Launcher 发起请求 → AMS 创建 ActivityRecord 和 Task 并挂载到窗口层级树 → 异步触发 Launcher pause + 目标进程创建
 
-**阶段二**：Launcher 执行完 pause → 通知 AMS → AMS 试图启动 TargetActivity
+| 阶段 | 名称 | 关键操作 | 触发方 |
+|------|------|----------|--------|
+| 1 | Launcher 发起启动请求 | 创建 ActivityRecord/Task，触发 pause + 进程创建 | Launcher → system_server |
+| 2 | completePause | Launcher 完成 onPause，AMS 尝试启动目标 Activity | system_server |
+| 3 | 创建应用进程 | Zygote fork 新进程，attachApplication 通知 AMS | Zygote → 新进程 → system_server |
+| 4 | 真正启动 Activity | realStartActivityLocked → onCreate → onResume | system_server → 新进程 |
 
-**阶段三**：Zygote 创建目标应用进程 → 进程 attach 到 AMS → AMS 试图启动 TargetActivity
+### 阶段二/三的异步竞争关系
 
-**阶段四**：`realStartActivityLocked` 条件满足 → 通过事务触发应用端创建 Activity → onCreate → onResume
+**这是理解启动流程最关键的一点**：阶段一结束时会**同时**触发两条异步路径——Launcher 的 pause（阶段二）和目标应用进程的创建（阶段三）。两者执行顺序不确定。
 
-**关键机制——阶段二和阶段三的竞争关系：**
+成功启动 TargetActivity 必须**同时满足 2 个先决条件**：
+1. 目标应用进程创建完毕
+2. Launcher（SourceActivity）执行完 pause
 
-阶段一结束时同时异步触发了 pause（阶段二）和进程创建（阶段三），两者执行顺序不确定。但成功启动 TargetActivity 必须同时满足 2 个条件：
+无论阶段二还是阶段三先完成，最终都会调用 `realStartActivityLocked` 方法。如果另一个条件尚未满足，该方法会直接 return，等待条件满足后再次触发。
 
-1. 目标进程创建完毕
-2. Launcher 执行完 pause
+#### 场景分析：谁先完成？
 
-这意味着存在两种可能的执行路径：
+**情况一：completePause 先完成（阶段二先于阶段三）**
 
-**情况一：Launcher 先完成 pause。** completePause 流程来到 `startSpecificActivity`，发现进程没创建好，触发一次进程创建请求（之前已触发过，不会重复创建）。然后由阶段三的流程创建好进程后走到 `realStartActivityLocked`，此时 pause 已完成，成功启动。
+Launcher 先完成 pause，流程走到 `startSpecificActivity`。此时进程还没创建好，`wpc.hasThread()` 为 false，所以不会执行 `realStartActivityLocked`，而是再次触发 `startProcessAsync`（当然之前已经触发过了，不会重复创建）。之后等阶段三进程创建好，走到 `RootWindowContainer.attachApplication()` 时，发现 pause 已完成，`realStartActivityLocked` 成功执行，触发 TargetActivity 启动。
 
-**情况二：进程先创建完。** 阶段三创建进程后走到 `realStartActivityLocked`，发现还有 Activity 正在 pause，直接 return。然后等 completePause 流程走到 `startSpecificActivity`，发现进程已就绪，执行 `realStartActivityLocked` 成功启动。
+**情况二：进程创建先完成（阶段三先于阶段二）**
 
-> 无论哪种情况，最终都会执行到 `realStartActivityLocked`，且只有两个条件同时满足时才会真正启动。
+进程先创建好，走到 `realStartActivityLocked`，但发现 Launcher 还没执行完 pause（`allPausedActivitiesComplete()` 返回 false），所以直接 return。之后等 Launcher 完成 pause，completePause 流程走到 `startSpecificActivity`，此时发现进程已经创建好，直接执行 `realStartActivityLocked`，触发 TargetActivity 启动。
 
-## 2. 阶段一：桌面点击图标启动应用
+> 无论哪种情况，最终结果一样：两个条件都满足后，TargetActivity 被启动。区别只是由哪条路径最终触发了 `realStartActivityLocked` 的成功执行。
 
-### 2.1 Launcher 端流程
+![异步竞争关系](/img/android/app_launching/03_async_competition.svg)
 
-从用户点击图标到跨进程调用的完整调用链：
 
+### 完整流程图
+
+下图展示了跨 4 个进程（Launcher / system_server / Zygote / 目标应用）的完整调用路径。图中标注了：
+- 每个关键方法在哪个进程中执行
+- 各进程间的 Binder IPC 交互
+- 阶段二（pause）和阶段三（进程创建）的并行分支
+- 关键 events 日志标签（(a)~(k)），可与附录 B 的日志示例对照
+- 编号步骤 1~6，对应文档1原始流程图中的 6 个阶段标注
+
+![完整流程图](/img/android/app_launching/04_full_process_overview.svg)
+
+## 一、阶段一：Launcher 发起启动请求
+
+### 1.1 应用端处理（Launcher → ATMS）
+
+当用户在 Launcher 中点击应用图标时，经过 Launcher 内部调用链，最终通过 `Instrumentation.execStartActivity()` 跨进程调用到 `ActivityTaskManagerService.startActivity()`。
+
+调用链：
 ```
-ItemClickHandler::onClick
-  ItemClickHandler::onClickAppShortcut
-    ItemClickHandler::startAppShortcutOrInfoActivity
-      QuickstepLauncher::startActivitySafely
-        Launcher::startActivitySafely
-          AppLauncher::startActivitySafely
-            BaseQuickstepLauncher::getActivityLaunchOptions  ← 构建 ActivityOptions
-              Activity::startActivity
-                Activity::startActivity
-                  Activity::startActivityForResult
-                    Instrumentation::execStartActivity
-                      ActivityTaskManagerService::startActivity  ← 跨进程 IPC
+Launcher.startActivitySafely()
+  → Activity.startActivity()
+    → Activity.startActivityForResult()
+      → Instrumentation.execStartActivity()
+        → ATMS.startActivity()  [Binder IPC: Launcher 进程 → system_server 进程]
 ```
 
-正常通过 `startActivity` 传递 Intent 的流程也是一样的，最终都汇聚到 `Instrumentation::execStartActivity`。Launcher 多了 `getActivityLaunchOptions` 构建 `ActivityOptions`（包含 `RemoteAnimationAdapter` 等启动参数）。
+![Launcher 请求 ATMS 流程](/img/android/app_launching/05_launcher_to_atms.svg)
 
-核心代码：
+
+#### startActivitySafely
+
+Launcher 调用 `startActivitySafely()` 方法，为 Intent 添加 `FLAG_ACTIVITY_NEW_TASK` 标志（在新的 Task 中启动 Activity），然后调用 `Activity.startActivity()`。
+
+```java
+// ActivityStartable.java
+default RunnableList startActivitySafely(
+        View v, Intent intent, @Nullable ItemInfo item) {
+    // 添加 FLAG_ACTIVITY_NEW_TASK
+    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+    ...
+    context.startActivity(intent, optsBundle);
+    ...
+}
+```
+
+#### startActivityForResult
+
+`startActivity()` 最终调用 `startActivityForResult()`，传入 `requestCode = -1` 表示 Launcher 不需要知道目标 Activity 的启动结果。
 
 ```java
 // Activity.java
-public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+public void startActivityForResult(@RequiresPermission Intent intent, int requestCode,
+        @Nullable Bundle options) {
     if (mParent == null) {
         options = transferSpringboardActivityOptions(options);
         Instrumentation.ActivityResult ar =
             mInstrumentation.execStartActivity(
                 this, mMainThread.getApplicationThread(), mToken, this,
                 intent, requestCode, options);
-        ......
+        ...
     }
 }
+```
 
+#### Instrumentation 跨进程调用 ATMS
+
+`Instrumentation` 负责调用 Activity 和 Application 的生命周期，具有跟踪生命周期的功能。每个 Activity 都持有 `Instrumentation` 对象的引用，但整个进程只存在一个 `Instrumentation` 对象。
+
+```java
 // Instrumentation.java
-public ActivityResult execStartActivity(Context who, IBinder contextThread, IBinder token,
-        Activity target, Intent intent, int requestCode, Bundle options) {
-    ......
-    // 跨进程调用到 ATMS
-    int result = ActivityTaskManager.getService().startActivity(whoThread,
-            who.getOpPackageName(), who.getAttributionTag(), intent,
-            intent.resolveTypeIfNeeded(who.getContentResolver()), token,
-            target != null ? target.mEmbeddedID : null, requestCode, 0, null, options);
-    // 检查启动结果
-    checkStartActivityResult(result, intent);
-    ......
-}
-```
-
-> `checkStartActivityResult` 中包含常见报错，如未在 `AndroidManifest.xml` 注册 Activity 导致的 `ActivityNotFoundException`（`START_CLASS_NOT_FOUND`），以及权限不足的 `SecurityException`（`START_PERMISSION_DENIED`）等。
-
-> **调试提示**：MIUI 已包含 log 开关，打开方式（仅支持 `ro.debuggable=1` 的包）：
-> `adb root; adb remount; adb shell setprop persist.wm.debug.start_activity true; adb shell stop; adb shell start;`
-
-### 2.2 system_server 端处理
-
-system_server 收到启动请求后需要完成 4 件事：解析请求参数、处理窗口层级树、触发 SourceActivity pause、触发创建进程。
-
-缩略调用链：
-
-```
-ActivityTaskManagerService::startActivity
-  ATMS::startActivityAsUser × 2
-    ActivityStartController::obtainStarter                    ← 构建 ActivityStarter
-      ActivityStarter::execute
-        Request::resolveActivity                              ← 解析启动参数
-        ActivityStarter::executeRequest                       ← 创建 ActivityRecord
-          ActivityStarter::startActivityUnchecked
-            ActivityStarter::startActivityInner               ← 核心函数
-              getOrCreateRootTask                             ← 创建 Task
-              setNewTask                                      ← AR 挂载到 Task
-              Task::moveToFront                               ← 移到栈顶
-              RootWindowContainer::resumeFocusedTasksTopActivities  ← 显示 Activity
-                Task::resumeTopActivityUncheckedLocked
-                  Task::resumeTopActivityInnerLocked
-                    TaskFragment::resumeTopActivity
-                      TaskDisplayArea::pauseBackTasks         ← pause Launcher
-                      ATMS::startProcessAsync                 ← 创建目标进程
-```
-
-![阶段一 system_server 处理流程](/img/android/app_launching/04_phase1_summary.svg)
-
-> 流程来到 `ATMS::startActivityAsUser` 时会构建 `ActivityStartController`。`obtainStarter` 返回 `ActivityStarter` 对象，后面的 Builder 模式都是在构建 `ActivityStarter` 内部的 `Request`。
-
-#### 2.2.1 请求参数构建
-
-```java
-// ActivityTaskManagerService.java
-private int startActivityAsUser(IApplicationThread caller, String callingPackage, ...) {
-    ......
-    return getActivityStartController().obtainStarter(intent, "startActivityAsUser")
-            .setCaller(caller)
-            .setCallingPackage(callingPackage)
-            .setResolvedType(resolvedType)
-            .setResultTo(resultTo)
-            .setRequestCode(requestCode)
-            .setActivityOptions(bOptions)
-            .setUserId(userId)
-            .execute();
-}
-```
-
-Builder 模式将参数设置到 `mRequest` 中。但 `activityInfo` 并没有通过 setter 设置，所以在 `execute` 中需要先解析：
-
-```java
-// ActivityStarter.java
-int execute() {
-    ......
-    if (mRequest.activityInfo == null) {
-        mRequest.resolveActivity(mSupervisor);  // 解析获取 activityInfo
+public ActivityResult execStartActivity(
+        Context who, IBinder contextThread, IBinder token, Activity target,
+        Intent intent, int requestCode, Bundle options) {
+    ...
+    try {
+        // 通过 Binder 跨进程调用 ATMS 的 startActivity 方法
+        int result = ActivityTaskManager.getService().startActivity(whoThread,
+                who.getOpPackageName(), who.getAttributionTag(), intent,
+                intent.resolveTypeIfNeeded(who.getContentResolver()), token,
+                target != null ? target.mEmbeddedID : null,
+                requestCode, 0, null, options);
+        // 检查启动结果，失败则抛出异常
+        checkStartActivityResult(result, intent);
+    } catch (RemoteException e) {
+        throw new RuntimeException("Failure from system", e);
     }
-    res = executeRequest(mRequest);              // 执行启动逻辑
-    ......
+    return null;
 }
 ```
 
-`Request::resolveActivity` 内部通过 `ActivityTaskSupervisor::resolveIntent` 和 `resolveActivity` 解析出 `resolveInfo` 和 `activityInfo`，其中包含 TargetActivity 的进程包名和完整类路径。
-
-#### 2.2.2 创建 ActivityRecord
-
-`executeRequest` 是一个关键方法，内部创建 `ActivityRecord` 对象：
+`ActivityTaskManager.getService()` 获取 ATMS 的代理对象。ATMS 位于 `system_server` 进程，通过 Binder IPC 进行跨进程调用：
 
 ```java
-// ActivityStarter.java
-private int executeRequest(Request request) {
-    ActivityInfo aInfo = request.activityInfo;
-    ......
-    // 打印关键日志（搜索 "START u" 可定位 Activity 启动）
-    if (err == ActivityManager.START_SUCCESS) {
-        request.logMessage.append("START u").append(userId).append(" {")
-            .append(intent.toShortString(true, true, true, false))
-            .append("} with ").append(launchModeToString(launchMode))
-            .append(" from uid ").append(callingUid);
+// ActivityTaskManager.java
+public static IActivityTaskManager getService() {
+    return IActivityTaskManagerSingleton.get();
+}
+
+private static final Singleton<IActivityTaskManager> IActivityTaskManagerSingleton =
+        new Singleton<IActivityTaskManager>() {
+            @Override
+            protected IActivityTaskManager create() {
+                final IBinder b = ServiceManager.getService(Context.ACTIVITY_TASK_SERVICE);
+                return IActivityTaskManager.Stub.asInterface(b);
+            }
+        };
+```
+
+#### checkStartActivityResult
+
+IPC 调用返回后，`checkStartActivityResult` 检查错误码。常见的**未在 AndroidManifest.xml 中注册 Activity** 导致的 `ActivityNotFoundException` 就是在这里抛出的：
+
+```java
+// Instrumentation.java (line 2456)
+public static void checkStartActivityResult(int res, Object intent) {
+    if (!ActivityManager.isStartResultFatalError(res)) {
+        return;
     }
-    ......
-    // 构造 ActivityRecord
-    final ActivityRecord r = new ActivityRecord.Builder(mService)
-            .setCaller(callerApp)
-            .setLaunchedFromPid(callingPid)
-            .setLaunchedFromUid(callingUid)
-            .setIntent(intent)
-            .setActivityInfo(aInfo)
-            .setSourceRecord(sourceRecord)
-            .build();
-    ......
-    // 继续主流程
-    mLastStartActivityResult = startActivityUnchecked(r, sourceRecord, ...);
-}
-```
 
-`ActivityRecord` 构造时调用父类 `WindowToken` 的构造函数，创建匿名 Token：
-
-```java
-// ActivityRecord.java
-private ActivityRecord(ActivityTaskManagerService _service, ......) {
-    super(_service.mWindowManager, new Token(), TYPE_APPLICATION, true,
-          null /* displayContent */, false);
-    packageName = info.applicationInfo.packageName;
-    ......
-}
-
-// WindowToken.java
-protected WindowToken(WindowManagerService service, IBinder _token, int type, ...) {
-    super(service);
-    token = _token;       // Token 赋值
-    windowType = type;
-    ......
-    if (dc != null) {
-        dc.addWindowToken(token, this);  // 挂载到窗口树
+    switch (res) {
+        case ActivityManager.START_INTENT_NOT_RESOLVED:
+        case ActivityManager.START_CLASS_NOT_FOUND:
+            if (intent instanceof Intent && ((Intent)intent).getComponent() != null)
+                throw new ActivityNotFoundException(
+                        "Unable to find explicit activity class "
+                        + ((Intent)intent).getComponent().toShortString()
+                        + "; have you declared this activity in your AndroidManifest.xml"
+                        + ", or does your intent not match its declared <intent-filter>?");
+            throw new ActivityNotFoundException(
+                    "No Activity found to handle " + intent);
+        case ActivityManager.START_PERMISSION_DENIED:
+            throw new SecurityException("Not allowed to start activity " + intent);
+        case ActivityManager.START_FORWARD_AND_REQUEST_CONFLICT:
+            throw new AndroidRuntimeException(
+                    "FORWARD_RESULT_FLAG used while also requesting a result");
+        case ActivityManager.START_CANCELED:
+            throw new AndroidRuntimeException("Activity could not be started for " + intent);
+        default:
+            throw new AndroidRuntimeException("Unknown error code " + res + " when starting " + intent);
     }
 }
 ```
 
-这个 Token 就是 Activity 在 system_server 中的**唯一标识符**。注意：`DisplayContent::addWindowToken` 内部对 `ActivityRecord` 做了判断，`ActivityRecord` 刚创建后**不会**挂载到窗口树，需要后续单独处理。
+### 1.2 system_server 处理请求
 
-#### 2.2.3 窗口层级树处理（startActivityInner）
+ATMS 收到启动请求后，通过 `ActivityStarter` 类处理 Activity 的启动逻辑。
 
-`ActivityStarter::startActivityInner` 是启动流程中最重要的函数之一。在 Launcher 界面和启动电话后的窗口层级树对比：
+调用链：
+```
+ATMS.startActivity()
+  → ActivityStarter.execute()
+    → ActivityStarter$Request.resolveActivity()  -- 解析 resolveInfo / activityInfo
+    → ActivityStarter.executeRequest()           -- 创建 ActivityRecord
+      → ActivityStarter.startActivityUnchecked()
+        → ActivityStarter.startActivityInner()
+```
 
-![窗口层级树变化](/img/android/app_launching/03_window_hierarchy.svg)
+`Request.resolveActivity()` 解析 `resolveInfo` 和 `activityInfo`。TargetActivity 所在的进程包名和 TargetActivity 的完整路径都保存在 `activityInfo` 中。如果 `activityInfo` 为 `null`，说明 PackageManagerService 无法解析该 Intent，会导致启动失败（详见附录 C.5）。
 
-该方法依次执行 4 个操作：
+### 1.3 创建 ActivityRecord
+
+在 `executeRequest()` 中创建 `ActivityRecord`，它包含了目标 Activity 的所有信息：
 
 ```java
-// ActivityStarter.java
+// ActivityStarter.java # executeRequest
+final ActivityRecord r = new ActivityRecord.Builder(mService)
+        .setCaller(callerApp)
+        .setLaunchedFromPid(callingPid)
+        .setLaunchedFromUid(callingUid)
+        .setLaunchedFromPackage(callingPackage)
+        .setLaunchedFromFeature(callingFeatureId)
+        .setIntent(intent)
+        .setResolvedType(resolvedType)
+        .setActivityInfo(aInfo)
+        .setConfiguration(mService.getGlobalConfiguration())
+        .setResultTo(resultRecord)
+        .setResultWho(resultWho)
+        .setRequestCode(requestCode)
+        .setComponentSpecified(request.componentSpecified)
+        .setRootVoiceInteraction(voiceSession != null)
+        .setActivityOptions(checkedOptions)
+        .setSourceRecord(sourceRecord)
+        .build();
+```
+
+**ActivityRecord 的 Token 机制**：`ActivityRecord` 的父类是 `WindowToken`，在构造时会创建一个 Token（匿名 Binder 对象），保存在 `WindowToken` 中。Token 是 Activity 在 system_server 里的**唯一标识符**，贯穿整个 Activity 的生命周期管理。
+
+> `"START u"` 日志就在 `executeRequest` 方法中打印，这是分析 Activity 启动流程的关键日志。
+
+### 1.4 窗口层级树操作
+
+`startActivityInner` 是 Activity 启动流程中**最重要的函数之一**，负责在窗口层级树上完成 3 个操作：
+
+1. **创建 Task** — `getOrCreateRootTask()`
+2. **挂载 ActivityRecord** — `setNewTask()`
+3. **移动到栈顶** — `moveToFront()`
+
+```java
+// ActivityStarter.java # startActivityInner
 int startActivityInner(final ActivityRecord r, ActivityRecord sourceRecord, ...) {
-    final Task targetTask = reusedTask != null ? reusedTask : computeTargetTask();
-    final boolean newTask = targetTask == null;  // 冷启动为 true
-    ......
+    ...
+    // 1. 计算启动模式（Task 标志）
+    computeLaunchingTaskFlags();
+
     if (mTargetRootTask == null) {
-        // 1. 创建 Task
-        mTargetRootTask = getOrCreateRootTask(mStartActivity, mLaunchFlags, ...);
+        // 2. 创建 Task，挂载到 DefaultTaskDisplayArea
+        mTargetRootTask = getOrCreateRootTask(mStartActivity, mLaunchFlags, targetTask,
+                mOptions);
     }
+
     if (newTask) {
-        // 2. 将 ActivityRecord 挂载到 Task
+        // 3. 将 ActivityRecord 挂载到层级结构树
         setNewTask(taskToAffiliate);
     }
-    if (!mAvoidMoveToFront && mDoResume) {
-        // 3. 移动 Task 到栈顶
-        mTargetRootTask.getRootTask().moveToFront("reuseOrNewTask", targetTask);
-    }
+    ...
+    // 4. 显示启动窗口（Starting Window）
+    mTargetRootTask.startActivityLocked(mStartActivity, ...);
+
     if (mDoResume) {
-        // 4. 显示顶部 Activity（触发 pause + 创建进程）
+        // 5. 触发 Pause Launcher + Resume 新 Activity
         mRootWindowContainer.resumeFocusedTasksTopActivities(
                 mTargetRootTask, mStartActivity, mOptions, mTransientLaunch);
     }
+
+    // 6. 更新最近任务列表
+    mSupervisor.mRecentTasks.add(startedTask);
+    ...
+    return START_SUCCESS;
 }
 ```
 
-**操作 1：创建 Task**（`getOrCreateRootTask`）
+#### getOrCreateRootTask — 创建 Task
 
-调用链经过 `RootWindowContainer` → `TaskDisplayArea::getOrCreateRootTask`，最终通过 `Task.Builder` 创建：
+调用链：`ActivityStarter.getOrCreateRootTask()` → `TaskDisplayArea.getOrCreateRootTask()` → `Task.Builder.build()`
+
+在 `Task.Builder.build()` 中，Task 被创建后通过 `setParent()` 挂载到 `DefaultTaskDisplayArea` 下：
 
 ```java
-// TaskDisplayArea.java
-Task getOrCreateRootTask(int windowingMode, int activityType, boolean onTop, ...) {
-    ......
-    return new Task.Builder(mAtmService)
-            .setWindowingMode(windowingMode)
-            .setActivityType(activityType)
-            .setOnTop(onTop)
-            .setParent(this)       // this = DefaultTaskDisplayArea，Task 直接挂载到此处
-            .setSourceTask(sourceTask)
-            .build();
+// Task.java # Builder.build() (line 8225)
+Task build() {
+    if (mParent != null && mParent instanceof TaskDisplayArea) {
+        validateRootTask((TaskDisplayArea) mParent);
+    }
+    ...
+    final Task task = buildInner();
+    ...
+    // 通过 setParent 挂载到 DefaultTaskDisplayArea
+    if (mParent != null) {
+        if (mParent instanceof Task) {
+            ...
+        } else {
+            mParent.addChild(task, onTop ? POSITION_TOP : POSITION_BOTTOM);
+        }
+    }
+    return task;
 }
 ```
 
-`build()` 内部先 `new Task()`，然后通过 `mParent.addChild(task, POSITION_TOP)` 挂载到 `DefaultTaskDisplayArea`。
+#### setNewTask — 挂载 ActivityRecord 到 Task
 
-**操作 2：ActivityRecord 挂载到 Task**（`setNewTask`）
+`ActivityStarter.setNewTask()` 调用 `addOrReparentStartingActivity()`，将 `ActivityRecord` 挂载到新创建的 Task 中，位于顶部（`POSITION_TOP`）。
 
 ```java
 // ActivityStarter.java
-private void addOrReparentStartingActivity(Task task, String reason) {
+private void setNewTask(Task taskToAffiliate) {
+    final boolean toTop = !mLaunchTaskBehind && !avoidMoveToFront();
+    // mTargetRootTask.reuseOrCreateTask 创建子 Task
+    final Task task = mTargetRootTask.reuseOrCreateTask(
+            mStartActivity.info, mIntent, mVoiceSession, ...);
+    // 将 ActivityRecord 挂载到 Task 中
+    addOrReparentStartingActivity(task, "setTaskFromReuseOrCreateNewTask");
+}
+
+// ActivityStarter.java
+private void addOrReparentStartingActivity(@NonNull Task task, String reason) {
     TaskFragment newParent = task;
+    ...
     if (mStartActivity.getTaskFragment() == null
             || mStartActivity.getTaskFragment() == newParent) {
-        // 将 ActivityRecord 挂载到 Task 顶部
+        // 重点：将 ActivityRecord 挂在到新创建的 Task 中，并且是顶部
         newParent.addChild(mStartActivity, POSITION_TOP);
     } else {
         mStartActivity.reparent(newParent, newParent.getChildCount(), reason);
@@ -307,425 +355,1069 @@ private void addOrReparentStartingActivity(Task task, String reason) {
 }
 ```
 
-> 日志：`"Starting new activity %s in new task %s"` 在 `setNewTask` 中通过 ProtoLog 打印，可确认 ActivityRecord 挂载到了哪个 Task。
+#### moveToFront — 移动 Task 到栈顶
 
-**操作 3：移动 Task 到栈顶**（`moveToFront`）
+将新建的目标应用 Task 移到 `DefaultTaskDisplayArea` 的最上方。
 
-将新建的 Task 移动到 `DefaultTaskDisplayArea` 最前面。冷启动时 Task 创建即在栈顶，这一步实际无移动操作，但对其他场景（如从后台恢复）是关键方法。
+调用链：`Task.moveToFront(reason)` → `Task.moveToFront(reason, task)` → `task.getParent().positionChildAt()`
 
 ```java
-// Task.java
+// Task.java (line 6048)
 void moveToFront(String reason, Task task) {
-    if (task == null) { task = this; }
-    // 把 Task 移动到父容器（DefaultTaskDisplayArea）的最前面
-    task.getParent().positionChildAt(POSITION_TOP, task, true);
+    ...
+    if (!isAttached()) {
+        return;
+    }
+    ...
+    final TaskDisplayArea taskDisplayArea = getDisplayArea();
+    final Task lastFocusedTask = isRootTask() ? taskDisplayArea.getFocusedRootTask() : null;
+    if (task == null) {
+        // 当前场景 task 为 null，所以赋值为 this（即 mTargetRootTask）
+        task = this;
+    }
+    // getParent() 返回 DefaultTaskDisplayArea，将 Task 移到最前面
+    task.getParent().positionChildAt(POSITION_TOP, task, true /* includingParents */);
+    taskDisplayArea.updateLastFocusedRootTask(lastFocusedTask, reason);
 }
 ```
 
-**操作 4：显示顶部 Activity**（`resumeFocusedTasksTopActivities`）
+> 实际上在当前冷启动场景下，由于 Task 在 `getOrCreateRootTask` 时就已经以 `POSITION_TOP` 创建，所以 `moveToFront` 并不会改变什么。但对于其他场景（如从后台切到前台），这一步是必要的。
 
-经过 `resumeTopActivityUncheckedLocked` → `resumeTopActivityInnerLocked` → `TaskFragment::resumeTopActivity`。这个方法是 Framework 中非常常见的方法，功能是**显示顶层 Activity**，以后会经常看到。
+#### 窗口层级树变化
 
-当前场景中，启动 TargetActivity 的两个条件都不满足（进程未创建、Launcher 未 pause），所以执行两个异步操作：
+**启动前**：只有 Launcher 的 Task
+
+![启动前窗口层级树](/img/android/app_launching/06_window_hierarchy_before.svg)
+
+
+**启动后**：多了目标应用的 Task 和 ActivityRecord，位于 Launcher 之上
+
+![启动后窗口层级树](/img/android/app_launching/07_window_hierarchy_after.svg)
+
+
+### 1.5 触发 Pause 与进程创建
+
+`resumeFocusedTasksTopActivities` 最终调用到 `TaskFragment.resumeTopActivity()`，这是 Framework 中非常常见的方法，功能是**显示顶层 Activity**。
+
+在当前场景下，系统检查发现 Launcher 仍处于 Resumed 状态，因此需要先通知 Launcher 进入 Paused 状态。同时异步触发目标应用进程的创建。
+
+```java
+// RootWindowContainer.java
+boolean resumeFocusedTasksTopActivities(
+        Task targetRootTask, ActivityRecord target, ActivityOptions targetOptions,
+        boolean deferPause) {
+    if (!mTaskSupervisor.readyToResume()) {
+        return false;
+    }
+    boolean result = false;
+    if (targetRootTask != null && (targetRootTask.isTopRootTaskInDisplayArea()
+            || getTopDisplayFocusedRootTask() == targetRootTask)) {
+        result = targetRootTask.resumeTopActivityUncheckedLocked(target, targetOptions,
+                deferPause);
+    }
+    ...
+    return result;
+}
+```
+
+#### pauseBackTasks → startPausing
+
+`TaskFragment.resumeTopActivity()` 方法名的含义是"显示顶层 Activity"。在当前场景下：
+- `next` 返回的是 TargetActivity 的 ActivityRecord（它是 DefaultTaskDisplayArea 下顶层 Task 中的顶层 Activity）
+- 但是 TargetActivity 的进程还没创建，也没有执行 pause，所以需要先处理 pause 和进程创建
+
+关键逻辑：
 
 ```java
 // TaskFragment.java
 final boolean resumeTopActivity(ActivityRecord prev, ActivityOptions options,
         boolean deferPause) {
-    ActivityRecord next = topRunningActivity(true);  // 电话的 ActivityRecord
-    ......
-    // 1. pause 当前 Activity（Launcher）
+    // next 返回的是 TargetActivity 的 ActivityRecord
+    ActivityRecord next = topRunningActivity(true /* focusableOnly */);
+    ...
+    // pausing = true，因为 pauseBackTasks 触发了 Launcher 的 pause
     boolean pausing = !deferPause && taskDisplayArea.pauseBackTasks(next);
-    ......
+    ...
     if (pausing) {
-        ......
-        if (!next.isProcessRunning()) {
-            // 2. 异步创建目标进程
-            final boolean isTop = this == taskDisplayArea.getFocusedRootTask();
-            mAtmService.startProcessAsync(next, false, isTop,
-                    isTop ? HostingRecord.HOSTING_TYPE_NEXT_TOP_ACTIVITY
-                          : HostingRecord.HOSTING_TYPE_NEXT_ACTIVITY);
-        }
-        return true;  // pausing 为 true 时直接 return
+        // 有 Activity 正在 pausing，先返回
+        // 等 pause 完成后会再次走到这里
+        return true;
     }
-    ......  // 后面还有重要逻辑，当前被 return 跳过
+    ...
+    if (next.attachedToProcess()) {
+        // 进程已存在（当前冷启动场景不走这里）
+    } else if (!next.isProcessRunning()) {
+        // 进程不存在，异步启动新进程
+        mAtmService.startProcessAsync(next, ...);
+    }
 }
 ```
 
-#### 2.2.4 pause 流程
+`pauseBackTasks` 遍历 `DefaultTaskDisplayArea` 下每个叶子 Task，调用 `pauseActivityIfNeeded`：
 
-`pauseBackTasks` 遍历 `DefaultTaskDisplayArea` 下每个叶子 `TaskFragment` 执行 `startPausing`：
+```java
+// TaskDisplayArea.java
+boolean pauseBackTasks(ActivityRecord resuming) {
+    final int[] someActivityPaused = {0};
+    forAllLeafTasks(leafTask -> {
+        if (leafTask.pauseActivityIfNeeded(resuming, "pauseBackTasks")) {
+            someActivityPaused[0]++;
+        }
+    }, true /* traverseTopToBottom */);
+    return someActivityPaused[0] > 0;
+}
+```
+
+`Task.pauseActivityIfNeeded` 内部通过 `forAllLeafTaskFragments` 遍历每个 `TaskFragment`，找到持有 Resumed Activity 的 TaskFragment 执行 pause：
+
+```java
+// Task.java (line 1668)
+boolean pauseActivityIfNeeded(@Nullable ActivityRecord resuming, @NonNull String reason) {
+    ...
+    final int[] someActivityPaused = {0};
+    // 遍历所有叶子 TaskFragment
+    forAllLeafTaskFragments((taskFrag) -> {
+        final ActivityRecord resumedActivity = taskFrag.getResumedActivity();
+        if (resumedActivity != null && !taskFrag.canBeResumed(resuming)) {
+            // 当前 TaskFragment 中有 Resumed 的 Activity，且不能继续保持 Resume
+            if (taskFrag.startPausing(false /* uiSleeping */, resuming, reason)) {
+                someActivityPaused[0]++;
+            }
+        }
+    }, true /* traverseTopToBottom */);
+    return someActivityPaused[0] > 0;
+}
+```
+
+`TaskFragment.startPausing()` 设置 Launcher 状态为 `PAUSING`，通过 `schedulePauseActivity` 构建 `PauseActivityItem` 发送到 Launcher 进程：
 
 ```java
 // TaskFragment.java
-boolean startPausing(boolean userLeaving, boolean uiSleeping,
-        ActivityRecord resuming, String reason) {
-    ActivityRecord prev = mResumedActivity;  // Launcher 的 ActivityRecord
-    ......
-    prev.setState(PAUSING, "startPausingLocked");
-    ......
-    // 构建 PauseActivityItem 触发 Launcher 的 pause
-    schedulePauseActivity(prev, userLeaving, pauseImmediately, false, reason);
-}
+boolean startPausing(boolean userLeaving, boolean uiSleeping, ActivityRecord resuming,
+        String reason) {
+    ...
+    // prev 就是 Launcher 的 ActivityRecord
+    ActivityRecord prev = mResumedActivity;
+    ...
+    // 设置 Pausing Activity
+    mPausingActivity = prev;
+    mLastPausedActivity = prev;
 
-void schedulePauseActivity(ActivityRecord prev, ...) {
-    mAtmService.getLifecycleManager().scheduleTransaction(
-            prev.app.getThread(), prev.token,
-            PauseActivityItem.obtain(prev.finishing, userLeaving, ...));
+    // 设置状态为 PAUSING
+    prev.setState(PAUSING, "startPausingLocked");
+    prev.getTask().touchActiveTime();
+
+    if (prev.attachedToProcess()) {
+        // Launcher 的进程肯定是存在的，走这里
+        // 跨进程通知 Launcher Pause
+        schedulePauseActivity(prev, userLeaving, pauseImmediately,
+                false /* autoEnteringPip */, reason);
+    }
+    ...
 }
 ```
 
-`PauseActivityItem` 在应用端的执行分两步：
+#### startProcessAsync（异步）
+
+`TaskFragment.resumeTopActivity()` 中同时触发 TargetActivity 所在进程的创建：
+
+```java
+// TaskFragment.java # resumeTopActivity
+if (next.attachedToProcess()) {
+    // 进程已存在
+    next.app.updateProcessInfo(false, true, false, false);
+} else if (!next.isProcessRunning()) {
+    // 进程不存在，异步启动新进程
+    final boolean isTop = this == taskDisplayArea.getFocusedRootTask();
+    mAtmService.startProcessAsync(next, false /* knownToBeDead */, isTop,
+            isTop ? HostingRecord.HOSTING_TYPE_NEXT_TOP_ACTIVITY
+                    : HostingRecord.HOSTING_TYPE_NEXT_ACTIVITY);
+}
+```
+
+### 1.6 阶段一小结
+
+1. Launcher 进程构建启动参数（`ActivityOptions`），通过 Bundle 经 Binder IPC 传递到 system_server
+2. AMS 解析参数，放在 `Request` 类中保存
+3. AMS 构建 `ActivityRecord`（Activity 在 system_server 端的代表，同时也是一个窗口容器）
+4. 创建 `Task` 挂载到窗口层级树的 `DefaultTaskDisplayArea` 下
+5. 将 `ActivityRecord` 挂载到 `Task` 中（这样 ActivityRecord 也就挂载到了窗口层级树中）
+6. 触发 Launcher 执行 pause 逻辑（→ 阶段二）
+7. 异步触发目标应用进程创建（→ 阶段三）
+
+system_server 端的完整调用堆栈：
+
+```
+ActivityTaskManagerService.startActivity()
+  ActivityTaskManagerService.startActivityAsUser()
+    ActivityStartController.obtainStarter()
+      ActivityStarter.execute()
+        ActivityStarter$Request.resolveActivity()       -- 解析启动请求参数
+        ActivityStarter.executeRequest()                -- 创建 ActivityRecord
+          ActivityStarter.startActivityUnchecked()
+            ActivityStarter.startActivityInner()        -- 关键函数
+              ActivityStarter.getOrCreateRootTask()     -- 创建 Task
+              ActivityStarter.setNewTask()              -- ActivityRecord 挂载到 Task
+              Task.moveToFront()                        -- 移动 Task 到栈顶
+              RootWindowContainer.resumeFocusedTasksTopActivities()  -- 显示 Activity
+                Task.resumeTopActivityUncheckedLocked()
+                  Task.resumeTopActivityInnerLocked()
+                    TaskFragment.resumeTopActivity()    -- 显示顶层 Activity
+                      TaskDisplayArea.pauseBackTasks()  -- pause Launcher
+                      ATMS.startProcessAsync()          -- 创建目标应用进程
+```
+
+## 二、阶段二：completePause
+
+### 2.1 Launcher onPause 执行
+
+system_server 通过 `ClientLifecycleManager.scheduleTransactionItem()` 跨进程发送 `PauseActivityItem` 到 Launcher 进程。
+
+![scheduleTransactionItem 流程](/img/android/app_launching/08_schedule_transaction_pause.svg)
+
+
+`PauseActivityItem` 有两个关键方法：
+- **execute**：触发 `handlePauseActivity` → `performPause` → `onPause()`
+- **postExecute**：调用 `activityPaused()` 通知 system_server pause 已完成
 
 ```java
 // PauseActivityItem.java
-public void execute(ClientTransactionHandler client, ActivityClientRecord r, ...) {
-    client.handlePauseActivity(r, ...);  // 1. 执行 Launcher 的 pause
-}
-
-public void postExecute(ClientTransactionHandler client, IBinder token, ...) {
-    ActivityClient.getInstance().activityPaused(token);  // 2. 通知 AMS pause 完成（触发阶段二）
+@Override
+public void execute(@NonNull ClientTransactionHandler client, @NonNull ActivityClientRecord r,
+        @NonNull PendingTransactionActions pendingActions) {
+    Trace.traceBegin(TRACE_TAG_ACTIVITY_MANAGER, "activityPause");
+    client.handlePauseActivity(r, mFinished, mUserLeaving, mAutoEnteringPip,
+            pendingActions, "PAUSE_ACTIVITY_ITEM");
+    Trace.traceEnd(TRACE_TAG_ACTIVITY_MANAGER);
 }
 ```
 
-### 2.3 阶段一总结
+Launcher 执行完 `onPause()` 后的回调链：
 
-1. Launcher 构建 `ActivityOptions` 参数，通过 Bundle 跨进程传递到 system_server
-2. AMS 解析参数到 `Request`，构建 `ActivityRecord`（持有 Token，Activity 的唯一标识）
-3. 创建 Task 挂载到 `DefaultTaskDisplayArea`，将 ActivityRecord 挂载到 Task 顶部
-4. 移动 Task 到栈顶
-5. 触发 Launcher pause（阶段二）和目标进程创建（阶段三），两者异步
-
-此时窗口层级树已更新，但用户仍看到 Launcher，因为 TargetActivity 进程还没创建、Activity 还没启动。
-
-## 3. 阶段二：completePause
-
-### 3.1 入口
-
-Launcher 完成 pause 后，通过 `PauseActivityItem::postExecute` → `ActivityClient::activityPaused` 跨进程通知 system_server。
+```
+PauseActivityItem.postExecute()
+  → ActivityClientController.activityPaused()
+    → ActivityRecord.activityPaused()
+      → TaskFragment.completePause()
+```
 
 ```java
-// ActivityRecord.java
-void activityPaused(boolean timeout) {
-    if (pausingActivity == this) {
-        ProtoLog.v(WM_DEBUG_STATES, "Moving to PAUSED: %s %s", this,
-                (timeout ? "(due to timeout)" : " (pause complete)"));
-        ......
-        taskFragment.completePause(true /* resumeNext */, null);
-    }
+// Activity.java
+final void performPause() {
+    ...
+    dispatchActivityPrePaused();
+    mFragments.dispatchPause();
+    mCalled = false;
+    onPause();  // 执行 Activity 的 onPause 方法
+    ...
+    mResumed = false;
+    dispatchActivityPostPaused();
 }
 ```
 
-> 日志：`"Moving to PAUSED: ActivityRecord{...} (pause complete)"` 可确认 pause 完成。
+### 2.2 completePause 后的两条路径
 
-### 3.2 completePause 的两条路径
+`completePause` 中设置 Launcher 状态为 `PAUSED`，然后触发两个关键操作：
 
 ```java
 // TaskFragment.java
 void completePause(boolean resumeNext, ActivityRecord resuming) {
     ActivityRecord prev = mPausingActivity;
-    prev.setState(PAUSED, "completePausedLocked");
-    ......
+    if (prev != null) {
+        prev.setState(PAUSED, "completePausedLocked");
+        mPausingActivity = null;
+    }
+
     if (resumeNext) {
-        // 路径一：显示顶层 Activity
+        // 路径1: 显示顶层 Activity
         mRootWindowContainer.resumeFocusedTasksTopActivities(topRootTask, prev, null);
     }
-    ......
-    // 路径二：确保所有 Activity 正确可见性
+
+    // 路径2: 确保 Activity 可见性
     mRootWindowContainer.ensureActivitiesVisible(resuming, 0, !PRESERVE_WINDOWS);
 }
 ```
 
-两条路径都可能触发 `startSpecificActivity` 试图启动 TargetActivity。
+两条路径**都可能**触发 `startSpecificActivity` 来尝试启动 TargetActivity：
 
-![阶段二 completePause 流程](/img/android/app_launching/05_phase2_flow.svg)
+1. **路径1: `resumeFocusedTasksTopActivities`** → `TaskFragment.resumeTopActivity()` → `startSpecificActivity`
+2. **路径2: `ensureActivitiesVisible`** → `EnsureActivitiesVisibleHelper` → `makeVisibleAndRestartIfNeeded` → `startSpecificActivity`
 
-#### 路径一：resumeFocusedTasksTopActivities
+#### attachedToProcess 的含义
 
-这次执行 `TaskFragment::resumeTopActivity` 与阶段一不同：`pausing = false`（没有需要 pause 的 Activity 了），不会走 `if (pausing)` 内部的 return 逻辑，而是走到下面的 `startSpecificActivity`：
+在路径1中，`resumeTopActivity` 会检查 `next.attachedToProcess()`：
 
 ```java
-// TaskFragment.java - resumeTopActivity
-if (next.attachedToProcess()) {
-    ......  // 冷启动不会走这里
-} else {
-    ProtoLog.d(WM_DEBUG_STATES, "resumeTopActivity: Restarting %s", next);
-    mTaskSupervisor.startSpecificActivity(next, true, true);
+// ActivityRecord.java (line 2960)
+boolean attachedToProcess() {
+    return hasProcess() && app.hasThread();
 }
 ```
 
-> 日志：`"resumeTopActivity: Restarting ActivityRecord{...}"` 可确认走了 `startSpecificActivity`。
+`ActivityRecord.app` 通过 `setProcess()` 方法设置，而 `setProcess()` 在 `realStartActivityLocked` 中调用。因此**冷启动没执行到 `realStartActivityLocked` 之前，`attachedToProcess()` 肯定返回 `false`**。
 
-#### 路径二：ensureActivitiesVisible
+这与 `startSpecificActivity` 中的判断方式不同——后者通过 `mService.getProcessController(processName, uid)` 获取 `WindowProcessController`，判断**进程是否存在**。两者的区别：
 
-遍历所有屏幕 → 所有根 Task → 所有叶子 Task → 所有 ActivityRecord，根据条件处理可见性：
+| 方法 | 含义 | 冷启动进程已创建但未 realStart 时 |
+|------|------|-----------------------------------|
+| `attachedToProcess()` | ActivityRecord 是否已绑定到进程 | **false**（setProcess 还没调用） |
+| `wpc != null && wpc.hasThread()` | 进程是否存在且有通信线程 | **true**（进程已创建完毕） |
 
-```
-RootWindowContainer::ensureActivitiesVisible
-  DisplayContent::ensureActivitiesVisible
-    forAllRootTasks → Task::ensureActivitiesVisible
-      forAllLeafTasks → TaskFragment::updateActivityVisibilities
-        EnsureActivitiesVisibleHelper::process
-          对每个 ActivityRecord 调用 setActivityVisibilityState
-```
-
-`setActivityVisibilityState` 对不同 Activity 的处理：
+#### startSpecificActivity 方法
 
 ```java
-// EnsureActivitiesVisibleHelper.java
-private void setActivityVisibilityState(ActivityRecord r, ...) {
-    if (reallyVisible) {
-        if (!r.attachedToProcess()) {
-            // TargetActivity：进程没就绪，试图启动
-            makeVisibleAndRestartIfNeeded(mStarting, mConfigChanges, isTop, ...);
-        } else {
-            // 其他已就绪的 Activity：处理可见性
-        }
-    } else {
-        r.makeInvisible();  // SourceActivity（Launcher）：触发 onStop
-    }
-}
-
-private void makeVisibleAndRestartIfNeeded(..., ActivityRecord r) {
-    r.setVisibility(true);                                       // 设置可见
-    mTaskFragment.mTaskSupervisor.startSpecificActivity(r, ...); // 试图启动
-}
-```
-
-### 3.3 关键方法：startSpecificActivity
-
-无论从哪条路径进入，最终都走到这个方法：
-
-```java
-// ActivityTaskSupervisor.java
+// ActivityTaskSupervisor.java (line 1194)
 void startSpecificActivity(ActivityRecord r, boolean andResume, boolean checkConfig) {
+    // 获取目标进程信息
     final WindowProcessController wpc =
             mService.getProcessController(r.processName, r.info.applicationInfo.uid);
+
     if (wpc != null && wpc.hasThread()) {
-        // 进程已就绪 → 进入阶段四
+        // 进程已存在 → 直接启动 Activity
         realStartActivityLocked(r, wpc, andResume, checkConfig);
         return;
     }
-    // 进程未就绪 → 触发创建进程
-    mService.startProcessAsync(r, knownToBeDead, isTop, ...);
+
+    // 进程不存在 → 触发创建进程
+    mService.startProcessAsync(r, knownToBeDead, isTop,
+            isTop ? HostingRecord.HOSTING_TYPE_TOP_ACTIVITY
+                    : HostingRecord.HOSTING_TYPE_ACTIVITY);
 }
 ```
 
-### 3.4 关于 attachedToProcess 的说明
+### 2.3 ensureActivitiesVisible 流程
 
-`TaskFragment::resumeTopActivity` 中用 `next.attachedToProcess()` 判断，`startSpecificActivity` 中用 `ATMS::getProcessController` 判断。两者的差异在于：
+`ensureActivitiesVisible` 遍历所有屏幕、所有 Task、所有 ActivityRecord，确保可见性正确。
+
+调用链：
+```
+RootWindowContainer.ensureActivitiesVisible()
+  → DisplayContent.ensureActivitiesVisible()
+    → forAllRootTasks → Task.ensureActivitiesVisible()
+      → forAllLeafTasks → TaskFragment.updateActivityVisibilities()
+        → EnsureActivitiesVisibleHelper.process()
+```
+
+```java
+// RootWindowContainer.java (line 2133)
+void ensureActivitiesVisible(ActivityRecord starting, boolean notifyClients) {
+    ...
+    mTaskSupervisor.beginActivityVisibilityUpdate();
+    try {
+        for (int displayNdx = getChildCount() - 1; displayNdx >= 0; --displayNdx) {
+            final DisplayContent display = getChildAt(displayNdx);
+            display.ensureActivitiesVisible(starting, notifyClients);
+        }
+    } finally {
+        mTaskSupervisor.endActivityVisibilityUpdate();
+    }
+}
+```
+
+```java
+// DisplayContent.java (line 7484)
+void ensureActivitiesVisible(ActivityRecord starting, boolean notifyClients) {
+    ...
+    mInEnsureActivitiesVisible = true;
+    forAllRootTasks(rootTask -> {
+        rootTask.ensureActivitiesVisible(starting, notifyClients);
+    });
+    ...
+}
+```
+
+#### EnsureActivitiesVisibleHelper 处理
+
+`process()` 方法遍历容器下所有子元素，对每个 `ActivityRecord` 调用 `setActivityVisibilityState()`：
+
+```java
+// EnsureActivitiesVisibleHelper.java (line 72)
+void process(@Nullable ActivityRecord starting, boolean notifyClients) {
+    ...
+    for (int i = mTaskFragment.mChildren.size() - 1; i >= 0; --i) {
+        final WindowContainer child = mTaskFragment.mChildren.get(i);
+        final TaskFragment childTaskFragment = child.asTaskFragment();
+        if (childTaskFragment != null) {
+            // 子 TaskFragment 递归处理
+            childTaskFragment.updateActivityVisibilities(starting, notifyClients);
+        } else if (child.asActivityRecord() != null) {
+            // ActivityRecord 处理可见性
+            setActivityVisibilityState(child.asActivityRecord(), starting, resumeTopActivity);
+        }
+    }
+}
+```
+
+`setActivityVisibilityState` 对不同的 Activity 有不同处理：
+
+```java
+// EnsureActivitiesVisibleHelper.java (line 135)
+private void setActivityVisibilityState(ActivityRecord r, ActivityRecord starting,
+        final boolean resumeTopActivity) {
+    ...
+    r.updateVisibilityIgnoringKeyguard(mBehindFullyOccludedContainer);
+    final boolean reallyVisible = r.shouldBeVisibleUnchecked();
+
+    if (r.visibleIgnoringKeyguard) {
+        if (r.occludesParent()) {
+            // 该 Activity 完全遮挡，后面的 Activity 不需要显示了
+            mBehindFullyOccludedContainer = true;
+        }
+    }
+
+    if (reallyVisible) {
+        if (!r.attachedToProcess()) {
+            // 情况1: TargetActivity — 需要显示但进程还没绑定
+            // → 调用 makeVisibleAndRestartIfNeeded，尝试启动
+            makeVisibleAndRestartIfNeeded(mStarting, resumeTopActivity && isTop, r);
+        } else if (r.isVisibleRequested()) {
+            // 情况2: 已经可见的 Activity — 无需处理
+        } else {
+            // 情况3: 需要变为可见的 Activity
+            r.makeVisibleIfNeeded(mStarting, mNotifyClients);
+        }
+    } else {
+        // 情况4: Launcher — 不应该可见了
+        // → 调用 makeInvisible，加入 Stopping 队列
+        r.makeInvisible();
+    }
+}
+```
+
+总结遍历效果：
+- **TargetActivity**（`reallyVisible = true`, `!attachedToProcess()`）：调用 `makeVisibleAndRestartIfNeeded()`，设置 visibility 为 true 并尝试启动
+- **Launcher**（被 TargetActivity 完全遮挡，`reallyVisible = false`）：调用 `makeInvisible()`，加入 Stopping 队列等待后续 idle 时执行 onStop
+
+```java
+// EnsureActivitiesVisibleHelper.java (line 192)
+if (!r.attachedToProcess()) {
+    makeVisibleAndRestartIfNeeded(mStarting, resumeTopActivity && isTop, r);
+}
+```
+
+```java
+// EnsureActivitiesVisibleHelper.java (line 242)
+private void makeVisibleAndRestartIfNeeded(ActivityRecord starting,
+        boolean andResume, ActivityRecord r) {
+    if (!r.isVisibleRequested() || r.mLaunchTaskBehind) {
+        r.setVisibility(true);
+    }
+    if (r != starting) {
+        mTaskFragment.mTaskSupervisor.startSpecificActivity(r, andResume,
+                true /* checkConfig */);
+    }
+}
+```
+
+#### makeInvisible（触发 Launcher onStop）
+
+Launcher 被设置为不可见后，加入 Stopping 队列：
 
 ```java
 // ActivityRecord.java
-boolean attachedToProcess() {
-    return hasProcess() && app.hasThread();  // app 通过 setProcess 赋值
+void makeInvisible() {
+    ...
+    setVisibility(false);
+
+    switch (getState()) {
+        case RESUMED:
+        case PAUSING:
+        case PAUSED:
+        case STARTED:
+            // 加入 Stopping 队列，等待后续 idle 时执行 onStop
+            addToStopping(true /* scheduleIdle */,
+                    canEnterPictureInPicture /* idleDelayed */, "makeInvisible");
+            break;
+        ...
+    }
 }
 ```
 
-`app` 字段通过 `ActivityRecord::setProcess` 设置，而 `setProcess` 在 `realStartActivityLocked` 中调用。因此**冷启动在首次执行 `realStartActivityLocked` 之前，`attachedToProcess` 一定返回 `false`**。而 `getProcessController` 是从全局的 `mProcessMap` 中查询，进程一旦创建就能查到。
+### 2.4 阶段二小结
 
-这解释了为什么可能出现 `resumeTopActivity` 中 `attachedToProcess` 返回 false，但紧接着 `startSpecificActivity` 中却发现进程已就绪的情况。
+Launcher 完成 pause 后，AMS 执行两步操作：
+1. **显示顶层 Activity**（`resumeFocusedTasksTopActivities`）
+2. **确保系统 Activity 可见性**（`ensureActivitiesVisible`）
 
-## 4. 阶段三：触发进程创建
+两个流程都可能触发 `startSpecificActivity`。如果此时目标进程已经创建好（阶段三先完成），则直接进入 `realStartActivityLocked`；否则会再次触发进程创建。
 
-### 4.1 创建进程
-
-阶段一中 `TaskFragment::resumeTopActivity` 触发的 `startProcessAsync`，通过 Handler 发送消息到 AMS：
-
-```java
-// ActivityTaskManagerService.java
-void startProcessAsync(ActivityRecord activity, ...) {
-    final Message m = PooledLambda.obtainMessage(
-            ActivityManagerInternal::startProcess, mAmInternal,
-            activity.processName, activity.info.applicationInfo, ...);
-    mH.sendMessage(m);
-}
-```
-
-完整调用链：
+completePause 的完整调用堆栈：
 
 ```
-ATMS::startProcessAsync
-  AMS$LocalService::startProcess
-    AMS::startProcessLocked
-      ProcessList::startProcessLocked
-        ProcessList::handleProcessStart
-          Process.start()                                   ← 实际创建进程
-          ProcessList::handleProcessStartedLocked          ← 设置 PID、更新状态
-            AMS::reportUidInfoMessageLocked                ← 打印关键日志
+ActivityClientController.activityPaused()
+  ActivityRecord.activityPaused()
+    TaskFragment.completePause()
+      路径1: RootWindowContainer.resumeFocusedTasksTopActivities()  -- 显示顶层 Activity
+        Task.resumeTopActivityUncheckedLocked()
+          Task.resumeTopActivityInnerLocked()
+            TaskFragment.resumeTopActivity()
+              ActivityTaskSupervisor.startSpecificActivity()       -- 试图启动 Activity
+      路径2: RootWindowContainer.ensureActivitiesVisible()         -- 确保 Activity 可见性
+        DisplayContent.ensureActivitiesVisible()
+          forAllRootTasks → Task.ensureActivitiesVisible()
+            forAllLeafTasks → TaskFragment.updateActivityVisibilities()
+              EnsureActivitiesVisibleHelper.process()
+                EnsureActivitiesVisibleHelper.setActivityVisibilityState()
+                  EnsureActivitiesVisibleHelper.makeVisibleAndRestartIfNeeded()
+                    ActivityTaskSupervisor.startSpecificActivity()  -- 试图启动 Activity
 ```
 
-> **关键日志**：`"Start proc <pid>:<processName>/<uid> for <type> {<component>}"`，在 `reportUidInfoMessageLocked` 中打印，搜索 `"Start proc"` 可定位进程创建时间。
+> **注意**：`ensureActivitiesVisible` 流程并不是针对某一个 Activity，而是遍历整个设备上所有的 Activity，让它们该显示的显示，该隐藏的隐藏。在当前场景下，TargetActivity 会被设置为 visible 并尝试启动，Launcher 会被 `makeInvisible()` 加入 Stopping 队列。
 
-> **源码差异**：当前代码使用 `Process.start()` 启动进程，而非 `Process.startProcess`。
+## 三、阶段三：创建应用进程
 
-### 4.2 应用端处理
+### 3.1 进程创建链路
 
-进程创建后执行 `ActivityThread::main`：
+进程创建的触发点是阶段一中 `TaskFragment.resumeTopActivity()` 调用的 `startProcessAsync()`。
+
+调用链：
+```
+ActivityTaskManagerService.startProcessAsync()
+  → ActivityManagerService$LocalService.startProcess()
+    → ActivityManagerService.startProcessLocked()
+      → ProcessList.startProcessLocked()
+        → ProcessList.handleProcessStart()
+          → Process.start()  -- 启动进程（Zygote fork）
+```
+
+**关键日志**：
+```
+ActivityManager: Start proc <pid>:<processName>/<uid> for <type> {<component>}
+```
+
+### 3.2 应用端处理
+
+Zygote 创建应用进程后，执行 `ActivityThread.main()`：
 
 ```java
 // ActivityThread.java
-final ApplicationThread mAppThread = new ApplicationThread();
-
 public static void main(String[] args) {
+    ...
     Looper.prepareMainLooper();
+
     ActivityThread thread = new ActivityThread();
     thread.attach(false, startSeq);
+
     Looper.loop();
+    throw new RuntimeException("Main thread loop unexpectedly exited");
 }
 
 private void attach(boolean system, long startSeq) {
-    final IActivityManager mgr = ActivityManager.getService();
-    // 将 mAppThread 告知 AMS，用于后续通信
-    mgr.attachApplication(mAppThread, startSeq);
+    sCurrentActivityThread = this;
+    ...
+    if (!system) {
+        final IActivityManager mgr = ActivityManager.getService();
+        try {
+            // 通过 Binder 跨进程调用 AMS 的 attachApplication 方法
+            mgr.attachApplication(mAppThread, startSeq);
+        } catch (RemoteException ex) {
+            throw ex.rethrowFromSystemServer();
+        }
+    }
+    ...
 }
 ```
 
-`mAppThread`（`ApplicationThread`）是 AMS 与应用进程通信的 Binder 对象。
+`mAppThread` 是 `ApplicationThread` 类型（继承 `IApplicationThread.Stub`），是 AMS 与应用进程通信的 Binder 对象。
 
-### 4.3 system_server 端处理
+### 3.3 system_server 端处理
 
-![阶段三 + 阶段四流程](/img/android/app_launching/06_phase3_4.svg)
+#### AMS.attachApplicationLocked
 
 ```java
 // ActivityManagerService.java
 public final void attachApplication(IApplicationThread thread, long startSeq) {
+    ...
     synchronized (this) {
-        int callingPid = Binder.getCallingPid();
         attachApplicationLocked(thread, callingPid, callingUid, startSeq);
     }
 }
 
-private boolean attachApplicationLocked(IApplicationThread thread, int pid, ...) {
-    ProcessRecord app;
-    synchronized (mPidsSelfLocked) {
-        app = mPidsSelfLocked.get(pid);  // 通过 PID 获取 ProcessRecord
-    }
-    ......
-    // 1. 通知应用端初始化 Application
+private void attachApplicationLocked(@NonNull IApplicationThread thread,
+        int pid, int callingUid, long startSeq) {
+    ...
+    // 1. 跨进程调用应用进程，创建绑定 Application
     thread.bindApplication(processName, appInfo, ...);
-    ......
-    // 2. 触发启动 Activity
-    if (!mConstants.mEnableWaitForFinishAttachApplication) {
-        finishAttachApplicationInner(startSeq, callingUid, pid);
-    }
+    ...
+    // 2. 完成 attach，触发后续的 Activity 启动
+    finishAttachApplicationInner(startSeq, callingUid, pid);
+    ...
 }
 ```
 
-`finishAttachApplicationInner` → `mAtmInternal.attachApplication` → `RootWindowContainer::attachApplication`：
+#### RootWindowContainer.attachApplication
 
-> **源码差异**：当前代码中 `RootWindowContainer::attachApplication` 直接遍历 `mStartingProcessActivities` 列表逐个匹配 uid 和进程名后调用 `realStartActivityLocked`，而非使用 `AttachApplicationHelper` 遍历整棵窗口层级树。这通过维护一个待启动 Activity 列表避免全树遍历，提高了效率。
-
-完整调用链：
+`finishAttachApplicationInner()` 通过 `mAtmInternal.attachApplication()` 调用到 `RootWindowContainer.attachApplication()`，后者遍历待启动的 Activity 列表，对匹配的 Activity 调用 `realStartActivityLocked()`。
 
 ```
-AMS::attachApplication
-  AMS::attachApplicationLocked
-    ActivityThread::bindApplication                        ← 通知应用端初始化
-    AMS::finishAttachApplicationInner
-      ATMS$LocalService::attachApplication
-        RootWindowContainer::attachApplication
-          遍历 mStartingProcessActivities 列表
-            ActivityTaskSupervisor::realStartActivityLocked ← 试图启动 Activity
+AMS.finishAttachApplicationInner()
+  → ATMS$LocalService.attachApplication()
+    → RootWindowContainer.attachApplication()
+      → 遍历 mStartingProcessActivities 列表
+        → 匹配 uid 和进程名
+          → ActivityTaskSupervisor.realStartActivityLocked()
 ```
 
-## 5. 阶段四：真正启动 Activity
+> `RootWindowContainer.attachApplication()` 直接遍历 `mStartingProcessActivities` 列表（在 `startProcessAsync` 时加入），逐个匹配 uid 和进程名后调用 `realStartActivityLocked`。这比遍历整棵窗口层级树更高效。
 
-### 5.1 realStartActivityLocked
+### 3.4 阶段三小结
 
-无论从阶段二还是阶段三进入，最终汇聚到此方法：
+应用进程启动后，在 `ActivityThread.main()` 中执行 `attach`，将自己的 `ApplicationThread` Binder 对象告知 AMS。AMS 收到后：
+1. 调用 `thread.bindApplication()` 通知应用端初始化 Application
+2. 遍历待启动 Activity 列表，触发 `realStartActivityLocked()`
+
+## 四、阶段四：真正启动 Activity
+
+### 4.1 realStartActivityLocked
+
+无论是阶段二（completePause）还是阶段三（attachApplication）触发，最终都会走到 `realStartActivityLocked`。
 
 ```java
 // ActivityTaskSupervisor.java
 boolean realStartActivityLocked(ActivityRecord r, WindowProcessController proc,
         boolean andResume, boolean checkConfig) throws RemoteException {
-    // 1. 前置检查：还有 Activity 正在 pause → 直接 return
+
+    // 1. 检查是否所有 Activity 已 Paused
     if (!mRootWindowContainer.allPausedActivitiesComplete()) {
-        ProtoLog.v(WM_DEBUG_STATES,
-                "realStartActivityLocked: Skipping start of r=%s"
-                + " some activities pausing...", r);
         return false;
     }
-
-    // 2. 关联进程（此后 attachedToProcess 返回 true）
+    ...
+    // 2. 将 ActivityRecord 绑定到进程（此后 attachedToProcess 返回 true）
     r.setProcess(proc);
+    ...
+    try {
+        // 3. 创建 LaunchActivityItem（触发 onCreate）
+        final LaunchActivityItem launchActivityItem = LaunchActivityItem.obtain(r.token,
+                r.intent, System.identityHashCode(r), r.info, ...);
 
-    // 3. event 日志
-    EventLogTags.writeWmRestartActivity(r.mUserId,
-            System.identityHashCode(r), task.mTaskId, r.shortComponentName);
+        // 4. 创建最终生命周期状态 Item
+        final ActivityLifecycleItem lifecycleItem;
+        if (andResume) {
+            lifecycleItem = ResumeActivityItem.obtain(r.token, isTransitionForward,
+                    r.shouldSendCompatFakeFocus());
+        } else {
+            lifecycleItem = StopActivityItem.obtain(r.token);
+        }
 
-    // 4. 构建事务
-    //   - LaunchActivityItem：触发 Activity 创建和 onCreate
-    //   - ResumeActivityItem：将生命周期推进到 onResume
-    final ActivityLifecycleItem lifecycleItem;
-    if (andResume) {
-        lifecycleItem = ResumeActivityItem.obtain(isTransitionForward);
-    } else {
-        lifecycleItem = PauseActivityItem.obtain();
+        // 5. 发送事务到应用进程
+        mService.getLifecycleManager().scheduleTransactionAndLifecycleItems(
+                proc.getThread(), launchActivityItem, lifecycleItem,
+                true /* shouldDispatchImmediately */);
+        ...
+    } catch (RemoteException e) {
+        ...
     }
-
-    // 5. 调度执行
-    mService.getLifecycleManager().scheduleTransactionAndLifecycleItems(...);
+    return true;
 }
 ```
 
-> **源码差异**：当前代码使用 `scheduleTransactionAndLifecycleItems()` API 调度事务，而非显式创建 `ClientTransaction` 再手动添加 callback 和 setLifecycleStateRequest。这是更新的 API 封装，内部仍基于 `ClientTransaction` 机制。
+**关键点**：
+- `allPausedActivitiesComplete()` 检查：如果 Launcher 还在 pausing，直接返回 `false`，等待 completePause 后再次触发
+- `r.setProcess(proc)` (line 910)：标记 ActivityRecord 已绑定到进程
+- 通过 `scheduleTransactionAndLifecycleItems` 将 `LaunchActivityItem` + `ResumeActivityItem` 组合发送
 
-> 日志：`"realStartActivityLocked: Skipping start of r=..."` 表示因 pause 未完成而跳过启动。`wm_restart_activity` event 日志表示真正开始启动。
+### 4.2 onCreate
 
-### 5.2 应用端创建 Activity
-
-`LaunchActivityItem::execute` 在应用端触发 Activity 创建：
+应用进程收到事务后，`TransactionExecutor` 处理事务项：
 
 ```java
-// LaunchActivityItem.java
-public void execute(ClientTransactionHandler client, IBinder token, ...) {
-    ActivityClientRecord r = new ActivityClientRecord(token, mIntent, ...);
-    client.handleLaunchActivity(r, pendingActions, null);
+// TransactionExecutor.java
+public void executeTransactionItems(@NonNull ClientTransaction transaction) {
+    final List<ClientTransactionItem> items = transaction.getTransactionItems();
+    for (int i = 0; i < size; i++) {
+        final ClientTransactionItem item = items.get(i);
+        if (item.isActivityLifecycleItem()) {
+            executeLifecycleItem(transaction, (ActivityLifecycleItem) item);
+        } else {
+            executeNonLifecycleItem(transaction, item, ...);
+        }
+    }
 }
 ```
 
-这里的 `token` 就是阶段一创建 `ActivityRecord` 时生成的匿名 Token，贯穿整个流程。
+对于 `LaunchActivityItem`（非生命周期项），执行 `handleLaunchActivity()` → `performLaunchActivity()`：
+
+```
+LaunchActivityItem.execute()
+  → ActivityThread.handleLaunchActivity()
+    → ActivityThread.performLaunchActivity()
+      → Instrumentation.newActivity()     -- 通过反射创建 Activity 实例
+      → Activity.attach()                 -- 创建 PhoneWindow，设置 WindowManager
+      → Instrumentation.callActivityOnCreate()  -- 执行 onCreate
+        → Activity.performCreate()
+          → Activity.onCreate()
+```
+
+![onCreate 流程](/img/android/app_launching/09_activity_oncreate.svg)
+
+
+#### Activity 反射创建
 
 ```java
-// ActivityThread.java
-public Activity handleLaunchActivity(ActivityClientRecord r, ...) {
-    final Activity a = performLaunchActivity(r, customIntent);
-    ......
+// Instrumentation.java (line 1451)
+public Activity newActivity(ClassLoader cl, String className, Intent intent)
+        throws InstantiationException, IllegalAccessException, ClassNotFoundException {
+    String pkg = intent != null && intent.getComponent() != null
+            ? intent.getComponent().getPackageName() : null;
+    return getFactory(pkg).instantiateActivity(cl, className, intent);
 }
+```
 
+内部通过 `AppComponentFactory.instantiateActivity()` 使用 ClassLoader 反射创建 Activity 实例。
+
+#### Activity.attach — 创建 Window
+
+```java
+// Activity.java (line 9058)
+final void attach(Context context, ActivityThread aThread,
+        Instrumentation instr, IBinder token, int ident,
+        Application application, Intent intent, ActivityInfo info,
+        CharSequence title, Activity parent, String id, ...) {
+    attachBaseContext(context);
+    mFragments.attachHost(null);
+
+    // 创建 PhoneWindow
+    mWindow = new PhoneWindow(this, window, activityConfigCallback);
+    mWindow.setWindowControllerCallback(mWindowControllerCallback);
+    mWindow.setCallback(this);
+    mWindow.setOnWindowDismissedCallback(this);
+    ...
+    // 设置 WindowManager
+    mWindow.setWindowManager(
+            (WindowManager)context.getSystemService(Context.WINDOW_SERVICE),
+            mToken, mComponent.flattenToString(), ...);
+    ...
+    mToken = token;
+    mApplication = application;
+    ...
+}
+```
+
+#### performLaunchActivity 关键流程
+
+```java
+// ActivityThread.java (line 4279)
 private Activity performLaunchActivity(ActivityClientRecord r, Intent customIntent) {
+    ...
     Activity activity = null;
+    try {
+        java.lang.ClassLoader cl = activityBaseContext.getClassLoader();
+        // 1. 反射创建 Activity
+        activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent);
+    } catch (Exception e) {
+        ...
+    }
 
-    // 1. 反射创建 Activity
-    java.lang.ClassLoader cl = appContext.getClassLoader();
-    activity = mInstrumentation.newActivity(cl, component.getClassName(), r.intent);
+    try {
+        Application app = r.packageInfo.makeApplicationInner(false, mInstrumentation);
+        ...
+        if (activity != null) {
+            // 2. attach — 创建 Window
+            activity.attach(activityBaseContext, this, getInstrumentation(), r.token,
+                    r.ident, app, r.intent, r.activityInfo, title, r.parent, ...);
+            ...
+            // 3. 触发 onCreate
+            if (r.isPersistable()) {
+                mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);
+            } else {
+                mInstrumentation.callActivityOnCreate(activity, r.state);
+            }
+        }
+    } catch (Exception e) {
+        ...
+    }
+    return activity;
+}
+```
 
-    // 2. 执行 attach（创建 PhoneWindow，设置 WindowManager）
-    activity.attach(appContext, this, getInstrumentation(), r.token,
-            r.ident, app, r.intent, r.activityInfo, title, r.parent,
-            r.embeddedID, r.lastNonConfigurationInstances, config,
-            r.referrer, r.voiceInteractor, window, r.activityConfigCallback,
-            r.assistToken, r.shareableActivityToken);
+### 4.3 onStart → onResume
 
-    // 3. 执行 onCreate
-    if (r.isPersistable()) {
-        mInstrumentation.callActivityOnCreate(activity, r.state, r.persistentState);
-    } else {
-        mInstrumentation.callActivityOnCreate(activity, r.state);
+`LaunchActivityItem` 执行完 `onCreate` 后，接下来处理 `ResumeActivityItem`（生命周期项），通过 `executeLifecycleItem()` 处理：
+
+```java
+// TransactionExecutor.java
+private void executeLifecycleItem(@NonNull ClientTransaction transaction,
+        @NonNull ActivityLifecycleItem lifecycleItem) {
+    final IBinder token = lifecycleItem.getActivityToken();
+    final ActivityClientRecord r = mTransactionHandler.getActivityClient(token);
+    ...
+    // 执行中间状态（ON_CREATE → ON_START）
+    cycleToPath(r, lifecycleItem.getTargetState(), true /* excludeLastState */, transaction);
+    // 执行最终状态（ON_RESUME）
+    lifecycleItem.execute(mTransactionHandler, mPendingActions);
+    lifecycleItem.postExecute(mTransactionHandler, mPendingActions);
+}
+```
+
+#### cycleToPath 生命周期路径计算
+
+由于 `onCreate` 完成后状态为 `ON_CREATE`（1），目标状态为 `ON_RESUME`（3），`excludeLastState = true`：
+
+1. **getLifecyclePath** 计算路径：`ON_CREATE → ON_START → ON_RESUME`，移除最后一个 `ON_RESUME` 后剩 `[ON_START]`
+2. **performLifecycleSequence** 执行 `ON_START` → `handleStartActivity()` → `performStart()` → `onStart()`
+3. **lifecycleItem.execute()** 执行 `ResumeActivityItem.execute()` → `handleResumeActivity()` → `performResume()` → `onResume()`
+
+```java
+// TransactionExecutorHelper.java
+public IntArray getLifecyclePath(int start, int finish, boolean excludeLastState) {
+    ...
+    mLifecycleSequence.clear();
+    if (finish >= start) {
+        // 添加 start 到 finish 之间的生命周期状态
+        for (int i = start + 1; i <= finish; i++) {
+            mLifecycleSequence.add(i);
+        }
+    }
+    ...
+    if (excludeLastState && mLifecycleSequence.size() != 0) {
+        mLifecycleSequence.remove(mLifecycleSequence.size() - 1);
+    }
+    return mLifecycleSequence;
+}
+```
+
+```java
+// ResumeActivityItem.java
+@Override
+public void execute(@NonNull ClientTransactionHandler client, @NonNull ActivityClientRecord r,
+        @NonNull PendingTransactionActions pendingActions) {
+    Trace.traceBegin(TRACE_TAG_ACTIVITY_MANAGER, "activityResume");
+    client.handleResumeActivity(r, true /* finalStateRequest */, mIsForward,
+            mShouldSendCompatFakeFocus, "RESUME_ACTIVITY");
+    Trace.traceEnd(TRACE_TAG_ACTIVITY_MANAGER);
+}
+```
+
+### 4.4 idle → onStop（前一个 Activity）
+
+TargetActivity 完成 `onResume` 后，应用进程在主线程空闲时通过 `Looper.myQueue().addIdleHandler()` 通知 system_server。
+
+system_server 收到 `IDLE_NOW_MSG` 后，调用 `processStoppingAndFinishingActivities()` 处理 Stopping 队列中的 Activity（即 Launcher），触发其 onStop。
+
+```java
+// ActivityTaskSupervisor.java
+case IDLE_NOW_MSG: {
+    activityIdleFromMessage((ActivityRecord) msg.obj, false /* fromTimeout */);
+} break;
+
+void activityIdleInternal(ActivityRecord r, boolean fromTimeout,
+        boolean processPausingActivities, Configuration config) {
+    processStoppingAndFinishingActivities(r, processPausingActivities, "idle");
+}
+```
+
+加入 Stopping 队列的 Activity 必须等动画执行完毕才会真正执行 onStop：
+
+```java
+// ActivityTaskSupervisor.java # processStoppingAndFinishingActivities
+for (int i = 0; i < mStoppingActivities.size(); i++) {
+    final ActivityRecord s = mStoppingActivities.get(i);
+    final boolean animating = s.isInTransition()
+            && s.getTask() != null && !s.getTask().isForceHidden();
+    // 满足条件才能 stop：动画完成 或 关机场景
+    if ((!animating && !displaySwapping) || mService.mShuttingDown
+            || s.getRootTask().isForceHiddenForPinnedTask()) {
+        readyToStopActivities.add(s);
+        mStoppingActivities.remove(i);
+        i--;
     }
 }
 ```
 
-`callActivityOnCreate` → `Activity::performCreate` → `Activity::onCreate`，最终执行开发者重写的 `onCreate`。
+### 4.5 阶段四小结
 
-随后 `ResumeActivityItem` 执行，将生命周期推进到 `onResume`。至此 TargetActivity 完成启动，用户看到目标应用界面。
+无论阶段二还是阶段三先完成，只要两个先决条件（进程已创建 + pause 已完成）都满足，就会通过 `realStartActivityLocked` 触发应用端 Activity 的创建和生命周期执行：
 
-## 6. 全流程总结
+**onCreate** → **onStart** → **onResume** → idle → 前一个 Activity **onStop**
 
-| 阶段    | 触发点 | 核心操作 | 关键方法 | 关键日志 |
-|-------|--------|---------|---------|---------|
-| **1** | 用户点击图标 | 解析参数、创建 AR/Task、挂载窗口树 | `startActivityInner` | `"START u"` |
-| **2** | Launcher 完成 pause | completePause → 两条路径试图启动 | `startSpecificActivity` | `"Moving to PAUSED"` |
-| **3** | 进程创建完成 | attachApplication → 遍历待启动列表 | `attachApplicationLocked` | `"Start proc"` |
-| **4** | 两个条件同时满足 | realStartActivityLocked → 事务 | `realStartActivityLocked` | `wm_restart_activity` |
+## 附录 A：生命周期状态常量表
+
+| 常量 | 值 | 说明 |
+|------|------|------|
+| `ON_CREATE` | 1 | Activity 已创建 |
+| `ON_START` | 2 | Activity 已启动（可见但不可交互） |
+| `ON_RESUME` | 3 | Activity 已恢复（可见且可交互） |
+| `ON_PAUSE` | 4 | Activity 已暂停 |
+| `ON_STOP` | 5 | Activity 已停止（不可见） |
+| `ON_DESTROY` | 6 | Activity 已销毁 |
+| `ON_RESTART` | 7 | Activity 正在重新启动 |
+
+## 附录 B：events 日志分析指南
+
+### 系统侧 vs 应用侧日志区分
+
+Events 日志中，系统侧日志由 system_server 打印，应用侧日志由应用进程打印。两者视角不同：
+- **系统侧**：`wm_create_activity`、`wm_pause_activity`、`wm_restart_activity` 等——表示系统**发出了指令**
+- **应用侧**：`wm_on_create_called`、`wm_on_paused_called`、`wm_on_resume_called` 等——表示应用**执行了回调**
+
+两者的时间差就是 IPC 传输 + 应用端执行的耗时。
+
+### events 日志完整示例
+
+```
+// ========== 系统侧：创建 Task 和 Activity ==========
+16:59:35.138  system  I wm_task_created: 344
+16:59:35.141  system  I wm_create_task: [0,344,344,0]
+16:59:35.141  system  I wm_create_activity: [0,253354194,344,com.example.app/.MainActivity,...]
+
+// ========== 系统侧：Pause Launcher ==========
+16:59:35.143  system  I wm_pause_activity: [0,206561781,com.example.launcher/.Launcher,userLeaving=true,pauseBackTasks]
+
+// ========== 应用侧：Launcher Pause 回调 ==========
+16:59:35.149  app     I wm_on_top_resumed_lost_called: [206561781,com.example.launcher.Launcher,topStateChangedWhenResumed]
+16:59:35.151  app     I wm_on_paused_called: [0,206561781,com.example.launcher.Launcher,performPause,2]
+
+// ========== 系统侧：Launcher 加入 Stopping 队列 ==========
+16:59:35.155  system  I wm_add_to_stopping: [0,206561781,com.example.launcher/.Launcher,makeInvisible]
+
+// ========== 系统侧：创建应用进程 ==========
+16:59:35.185  system  I am_proc_start: [0,32076,10262,com.example.app,next-top-activity,{...}]
+16:59:35.208  system  I am_proc_bound: [0,32076,com.example.app]
+
+// ========== 系统侧：启动 Activity ==========
+16:59:35.216  system  I wm_restart_activity: [0,253354194,344,com.example.app/.MainActivity]
+16:59:35.219  system  I wm_set_resumed_activity: [0,com.example.app/.MainActivity,...]
+
+// ========== 应用侧：Activity 生命周期回调 ==========
+16:59:35.371  app     I wm_on_create_called: [0,253354194,com.example.app.MainActivity,performCreate,62]
+16:59:35.427  app     I wm_on_start_called: [0,253354194,com.example.app.MainActivity,handleStartActivity,55]
+16:59:35.433  app     I wm_on_resume_called: [0,253354194,com.example.app.MainActivity,RESUME_ACTIVITY,5]
+
+// ========== 应用侧：获得 Top Resumed 状态 ==========
+16:59:35.532  app     I wm_on_top_resumed_gained_called: [253354194,com.example.app.MainActivity,...]
+
+// ========== 系统侧：记录启动耗时 ==========
+16:59:35.544  system  I wm_activity_launch_time: [0,253354194,com.example.app/.MainActivity,404]
+
+// ========== 应用侧：Idle ==========
+16:59:35.575  app     I wm_on_idle_called: com.example.app.MainActivity
+
+// ========== 系统侧和应用侧：Stop Launcher ==========
+16:59:35.879  system  I wm_stop_activity: [0,206561781,com.example.launcher/.Launcher]
+16:59:35.892  app     I wm_on_stop_called: [0,206561781,com.example.launcher.Launcher,STOP_ACTIVITY_ITEM,3]
+```
+
+**日志规律**：
+- 启动 A 会停止 B
+- 如果 A 是**全屏遮挡**页面，B 会执行 `onPause` → `onStop`
+- 如果 A 是**半遮挡**页面（如透明 Activity、Dialog Activity），B 只会执行到 `onPause`
+
+### "START u" 日志解读
+
+分析启动 Activity 时携带的 Flag，可搜索 `"START u"` 日志：
+
+```
+START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER]
+    flg=0x10200000 cmp=com.example.app/.MainActivity ...}
+    with LAUNCH_SINGLE_TOP from uid 10137 ... result code=0
+```
+
+其中 `u0` 表示主空间用户，`u10` 表示分身空间用户。
+
+### result code 含义
+
+| 范围 | 含义 | 典型值 |
+|------|------|--------|
+| -100 ~ -1 | 启动出现 Error | `START_CLASS_NOT_FOUND`(-2)、`START_INTENT_NOT_RESOLVED`(-1)、`START_PERMISSION_DENIED`(-3) |
+| 0 ~ 99 | 启动成功 | `START_SUCCESS`(0)、`START_TASK_TO_FRONT`(2)、`START_DELIVERED_TO_TOP`(3) |
+| 100 ~ 199 | 不允许启动（非 Error） | `START_SWITCHES_CANCELED`(100)、`START_ABORTED`(102) |
+
+相关常量定义在 `ActivityManager.java` 中：
+
+```java
+// ActivityManager.java
+public static final int START_SUCCESS = 0;
+public static final int START_RETURN_INTENT_TO_CALLER = 1;
+public static final int START_TASK_TO_FRONT = 2;
+public static final int START_DELIVERED_TO_TOP = 3;
+public static final int START_SWITCHES_CANCELED = 100;
+public static final int START_RETURN_LOCK_TASK_MODE_VIOLATION = 101;
+public static final int START_ABORTED = 102;
+```
+
+## 附录 C：典型问题案例
+
+### C.1 后台启动被禁
+
+**场景**：系统侧只有 "START u" 日志，无 `wm_create_activity` 等 events 日志。
+
+**日志特征**：
+```
+W ActivityTaskManager: Background activity launch blocked
+    [callingPackage: com.example.app; callingUid: 10180; appSwitchState: 2;
+     callingUidHasAnyVisibleWindow: false; ...]
+E ActivityTaskManager: Abort background activity starts from 10180
+I ActivityTaskManager: START u0 {...} result code=102
+```
+
+**分析方向**：检查调用方是否具有后台启动 Activity 的权限，确认 `callingUidHasAnyVisibleWindow` 是否为 `false`。`result code=102`（`START_ABORTED`）表示启动被中止。
+
+### C.2 进程启动失败/冻结
+
+**场景**：系统侧 events 日志只走到 `wm_create_activity`，后续生命周期缺失。
+
+**可能原因 1：Package 被冻结**
+```
+E ActivityManager: Failure starting process com.example.app
+E ActivityManager: java.lang.SecurityException: Package com.example.app is currently frozen!
+W PackageFreezer: Freeze package com.example.app about 26.51 seconds for reason: installPackageLI
+```
+
+**可能原因 2：进程启动耗时过长**
+```
+// 从 am_proc_start 到 am_proc_bound 间隔 10 秒
+18:57:53.238  I am_proc_start: [0,15810,10182,com.example.app,...]
+18:58:04.972  I am_proc_bound: [0,15810,com.example.app]
+```
+
+### C.3 进程冻结导致回调缺失
+
+**场景**：系统侧生命周期完整，但应用侧无生命周期输出。
+
+系统不受冻结影响，因此系统侧日志正常，但应用侧回调延迟或缺失：
+```
+// 系统侧在 13:57:27 发出 resume
+13:57:27.204 system I wm_resume_activity: [0,195528257,240,com.example.app/.DetailActivity]
+
+// 应用侧直到 13:58:10 才执行 onRestart（延迟约 43 秒）
+13:58:10.631 app    I wm_on_restart_called: [0,195528257,com.example.app.DetailActivity,,0]
+```
+
+**排查方法**：搜索 `FZ`（Freeze）或 `THAW`（解冻）日志确认进程冻结和解冻时机。
+
+### C.4 onStop 延迟（idle/动画）
+
+#### 原因 1：当前页面 onResume 耗时导致 idle 延迟
+
+onStop 的执行依赖于新 Activity 进入 idle 状态。如果新 Activity 的 `onResume` 耗时过长，会导致 idle 延迟，进而延迟前一个页面的 onStop。
+
+```
+// 新 Activity 的 onResume 耗时 10 秒
+16:49:33.938 app    I wm_on_start_called: [0,6508537,...,handleStartActivity,1]
+16:49:43.945 app    I wm_on_resume_called: [0,6508537,...,RESUME_ACTIVITY,10006]
+// idle 触发后才 stop Launcher
+16:49:43.790 system I wm_stop_activity: [0,37392378,com.example.launcher/.Launcher]
+```
+
+**原理**：应用进程在 `onResume` 后通过 `Looper.myQueue().addIdleHandler()` 通知系统侧 idle，系统收到 `IDLE_NOW_MSG` 后调用 `processStoppingAndFinishingActivities()` 处理 Stopping 队列。
+
+#### 原因 2：动画耗时
+
+加入 Stopping 队列的 Activity 必须等动画执行完毕才会执行 onStop（见 4.4 节代码）。
+
+### C.5 Intent 解析失败
+
+```
+W ActivityTaskManager: aInfo is null for resolve intent: Intent { act=... cmp=... }
+```
+
+**原因**：`activityInfo` 为 `null` 是因为 `resolveInfo` 为 `null`，即 PackageManagerService 无法解析该 Intent。
+
+**分析方向**：
+- Intent 的 `component`、`action`、`category`、`data` 是否正确
+- 目标应用是否已安装且未被禁用
+- 是否存在 PackageManager 层面的匹配问题
+
+### C.6 不同 Android 版本 "START u" 日志输出时机差异
+
+Android U（Android 14）中，`START u` 日志在系统侧流程完成后才打印，而之前版本在系统侧流程开始时打印。因此 U 版本的 `START u` 时间戳较之前版本偏后，这是正常行为，不代表 AMS 系统侧耗时。应以 events 日志为准判断实际耗时。

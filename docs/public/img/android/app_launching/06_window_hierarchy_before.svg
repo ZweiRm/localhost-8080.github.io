@@ -1,0 +1,14 @@
+<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <!-- DefaultTaskDisplayArea -->
+  <rect x="10" y="10" width="260" height="120" rx="3" fill="none" stroke="#bbb" stroke-dasharray="5,3"/>
+  <text x="20" y="26" font-size="9" fill="#868e96">DefaultTaskDisplayArea</text>
+
+  <!-- Task (Launcher) -->
+  <rect x="50" y="38" width="180" height="80" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="140" y="54" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">Task (Launcher)</text>
+
+  <!-- ActivityRecord -->
+  <rect x="75" y="64" width="130" height="42" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="140" y="82" text-anchor="middle" font-size="9" fill="#495057">ActivityRecord</text>
+  <text x="140" y="96" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Launcher</text>
+</svg>

@@ -1,0 +1,169 @@
+<svg viewBox="0 0 860 1380" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- ==================== Lifeline Headers ==================== -->
+  <rect x="60" y="10" width="120" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="120" y="31" text-anchor="middle" font-size="10.5" font-weight="600" fill="#343a40">Launcher 进程</text>
+
+  <rect x="310" y="10" width="140" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="380" y="31" text-anchor="middle" font-size="10.5" font-weight="600" fill="#343a40">system_server 进程</text>
+
+  <rect x="560" y="10" width="110" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="615" y="31" text-anchor="middle" font-size="10.5" font-weight="600" fill="#343a40">Zygote 进程</text>
+
+  <rect x="720" y="10" width="120" height="32" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="780" y="31" text-anchor="middle" font-size="10.5" font-weight="600" fill="#343a40">目标应用进程</text>
+
+  <!-- ==================== Lifelines ==================== -->
+  <line x1="120" y1="42" x2="120" y2="1370" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="380" y1="42" x2="380" y2="1370" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="615" y1="42" x2="615" y2="1370" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="780" y1="42" x2="780" y2="1370" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- 用户点击应用图标 -->
+  <rect x="66" y="54" width="108" height="18" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="120" y="67" text-anchor="middle" font-size="8.5" fill="#495057">用户点击应用图标</text>
+
+  <!-- ==================== Section 1: startActivity ==================== -->
+  <rect x="40" y="80" width="450" height="196" rx="3" fill="#eef1f5" stroke="none" opacity="0.35"/>
+  <text x="52" y="98" font-size="9.5" font-weight="600" fill="#4a7fb5">1. startActivity</text>
+
+  <rect x="68" y="108" width="104" height="38" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="125" text-anchor="middle" font-size="8.5" fill="#495057">startActivitySafely</text>
+  <text x="120" y="138" text-anchor="middle" font-size="8.5" fill="#495057">→ execStartActivity</text>
+
+  <line x1="172" y1="127" x2="374" y2="127" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="273" y="119" text-anchor="middle" font-size="8.5" fill="#495057">ATMS.startActivity() [Binder]</text>
+
+  <rect x="296" y="152" width="208" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="400" y="167" text-anchor="middle" font-size="8.5" fill="#495057">ActivityStarter.execute() → executeRequest()</text>
+  <text x="516" y="160" font-size="7.5" fill="#868e96">(a) wm_create_task</text>
+  <text x="516" y="172" font-size="7.5" fill="#868e96">(b) wm_create_activity</text>
+
+  <rect x="310" y="184" width="180" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="400" y="200" text-anchor="middle" font-size="8.5" fill="#495057">startActivityInner()</text>
+  <text x="400" y="214" text-anchor="middle" font-size="8.5" fill="#495057">getOrCreateRootTask · setNewTask · moveToFront</text>
+
+  <rect x="306" y="230" width="188" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="400" y="245" text-anchor="middle" font-size="8.5" fill="#495057">resumeFocusedTasksTopActivities</text>
+
+  <!-- ===== Parallel fork indicator ===== -->
+  <text x="380" y="278" text-anchor="middle" font-size="9.5" font-weight="600" fill="#555">同时触发 pause 和进程创建</text>
+
+  <!-- Parallel bracket: left vertical bar -->
+  <rect x="22" y="296" width="4" height="550" rx="2" fill="#868e96"/>
+  <text x="16" y="572" text-anchor="middle" font-size="9" fill="#868e96" transform="rotate(-90,16,572)">par (并行)</text>
+
+  <!-- ==================== Phase 2: Pause Launcher ==================== -->
+  <rect x="36" y="296" width="480" height="260" rx="3" fill="none" stroke="#c49040" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <rect x="36" y="296" width="480" height="260" rx="3" fill="#fef8ee" stroke="none" opacity="0.15"/>
+  <text x="50" y="316" font-size="10" font-weight="600" fill="#9e6b20">阶段二：暂停 Launcher (pauseBackTasks → startPausing)</text>
+
+  <line x1="380" y1="336" x2="126" y2="336" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="253" y="329" text-anchor="middle" font-size="8.5" fill="#495057">schedulePauseActivity [PauseActivityItem]</text>
+  <text x="470" y="343" font-size="7.5" fill="#868e96">(c) wm_pause_activity</text>
+
+  <rect x="72" y="352" width="96" height="38" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="369" text-anchor="middle" font-size="8.5" fill="#495057">handlePauseActivity</text>
+  <text x="120" y="382" text-anchor="middle" font-size="8.5" fill="#495057">→ onPause()</text>
+  <text x="44" y="380" font-size="7" fill="#868e96">(d)</text>
+
+  <line x1="120" y1="398" x2="374" y2="398" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="247" y="391" text-anchor="middle" font-size="8.5" fill="#495057">activityPaused() [Binder]</text>
+
+  <rect x="300" y="414" width="200" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="400" y="430" text-anchor="middle" font-size="8.5" fill="#495057">completePause()</text>
+  <text x="400" y="444" text-anchor="middle" font-size="8.5" fill="#495057">→ resumeFocused... → ensureActivitiesVisible</text>
+
+  <rect x="312" y="466" width="178" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="401" y="481" text-anchor="middle" font-size="8.5" fill="#495057">makeInvisible → addToStopping</text>
+
+  <text x="312" y="504" font-size="7.5" fill="#868e96">(e) wm_add_to_stopping (Launcher 加入 Stopping 队列)</text>
+
+  <!-- ==================== Phase 3: Create Process ==================== -->
+  <rect x="36" y="572" width="820" height="274" rx="3" fill="none" stroke="#2e7d32" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <rect x="36" y="572" width="820" height="274" rx="3" fill="#eef5f1" stroke="none" opacity="0.15"/>
+  <text x="50" y="592" font-size="10" font-weight="600" fill="#2e7d32">阶段三：创建应用进程 (startProcessAsync)</text>
+
+  <text x="390" y="618" font-size="8.5" fill="#868e96">2. 发送创建进程的请求</text>
+  <line x1="380" y1="626" x2="609" y2="626" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="494" y="642" text-anchor="middle" font-size="8.5" fill="#495057">startProcessAsync → Process.start()</text>
+
+  <text x="626" y="664" font-size="8.5" fill="#868e96">3. fork 新进程并执行 main 方法</text>
+  <line x1="615" y1="672" x2="774" y2="672" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <rect x="730" y="686" width="100" height="38" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="780" y="703" text-anchor="middle" font-size="8.5" fill="#495057">new ActivityThread</text>
+  <text x="780" y="716" text-anchor="middle" font-size="8.5" fill="#495057">→ attach()</text>
+
+  <text x="480" y="742" font-size="8.5" fill="#868e96">4. attachApplication</text>
+  <line x1="780" y1="746" x2="386" y2="746" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="583" y="760" text-anchor="middle" font-size="8.5" fill="#495057">mgr.attachApplication(mAppThread) [Binder]</text>
+
+  <text x="390" y="784" font-size="8.5" fill="#868e96">5. bindApplication</text>
+  <line x1="380" y1="792" x2="774" y2="792" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="577" y="806" text-anchor="middle" font-size="8.5" fill="#495057">thread.bindApplication() [Binder]</text>
+
+  <rect x="716" y="820" width="128" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="780" y="835" text-anchor="middle" font-size="8.5" fill="#495057">handleBindApp → App.onCreate()</text>
+
+  <!-- ==================== Phase 4: Real Start ==================== -->
+  <rect x="280" y="862" width="576" height="310" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="568" y="884" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">阶段四：真正启动 Activity（需要等待 onPause 执行结束）</text>
+
+  <rect x="318" y="900" width="172" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="404" y="915" text-anchor="middle" font-size="8.5" fill="#495057">RWC.attachApplication()</text>
+
+  <rect x="318" y="932" width="172" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="404" y="947" text-anchor="middle" font-size="8.5" fill="#495057">realStartActivityLocked()</text>
+  <text x="504" y="943" font-size="8" fill="#868e96">allPausedActivitiesComplete()?</text>
+  <text x="504" y="958" font-size="7.5" fill="#868e96">(f) wm_restart_activity</text>
+
+  <text x="430" y="982" font-size="8.5" fill="#868e96">6. LaunchActivityItem + ResumeActivityItem</text>
+  <line x1="380" y1="990" x2="774" y2="990" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="577" y="1006" text-anchor="middle" font-size="8.5" fill="#495057">scheduleTransactionAndLifecycleItems [Binder]</text>
+
+  <rect x="716" y="1018" width="132" height="72" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="782" y="1034" text-anchor="middle" font-size="8.5" fill="#495057">handleLaunchActivity</text>
+  <text x="782" y="1048" text-anchor="middle" font-size="8.5" fill="#495057">→ newActivity() 反射创建</text>
+  <text x="782" y="1062" text-anchor="middle" font-size="8.5" fill="#495057">→ Activity.attach() 创建 Window</text>
+  <text x="782" y="1080" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">→ Activity.onCreate()</text>
+  <text x="706" y="1078" font-size="7.5" fill="#868e96">(g)</text>
+
+  <rect x="736" y="1100" width="88" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="780" y="1115" text-anchor="middle" font-size="8.5" fill="#495057">→ onStart()</text>
+  <text x="726" y="1114" font-size="7.5" fill="#868e96">(h)</text>
+
+  <rect x="730" y="1132" width="100" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="780" y="1149" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">→ onResume()</text>
+  <text x="720" y="1148" font-size="7.5" fill="#868e96">(i)</text>
+
+  <!-- Activity startup complete -->
+  <rect x="730" y="1166" width="100" height="18" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="780" y="1179" text-anchor="middle" font-size="8" font-weight="600" fill="#2e7d32">Activity 启动完成</text>
+
+  <!-- ==================== Idle → onStop ==================== -->
+  <rect x="36" y="1196" width="820" height="120" rx="3" fill="#f8f9fa" stroke="none"/>
+  <text x="50" y="1216" font-size="9" fill="#868e96">idle 后触发 Launcher onStop</text>
+
+  <rect x="740" y="1226" width="80" height="18" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="780" y="1239" text-anchor="middle" font-size="8" fill="#495057">Looper idle</text>
+
+  <line x1="780" y1="1248" x2="386" y2="1248" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="583" y="1243" text-anchor="middle" font-size="8" fill="#495057">activityIdle() [Binder]</text>
+
+  <rect x="318" y="1260" width="184" height="18" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="410" y="1273" text-anchor="middle" font-size="8" fill="#495057">processStoppingAndFinishingActivities</text>
+
+  <line x1="380" y1="1282" x2="126" y2="1282" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="253" y="1277" text-anchor="middle" font-size="8" fill="#495057">StopActivityItem</text>
+  <text x="500" y="1290" font-size="7.5" fill="#868e96">(j) wm_stop_activity</text>
+
+  <rect x="80" y="1292" width="80" height="18" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="1305" text-anchor="middle" font-size="8.5" fill="#495057">onStop()</text>
+  <text x="50" y="1304" font-size="7.5" fill="#868e96">(k)</text>
+</svg>

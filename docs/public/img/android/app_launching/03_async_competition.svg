@@ -1,0 +1,150 @@
+<svg viewBox="0 0 780 820" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+    <marker id="aR" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#c0392b"/>
+    </marker>
+    <marker id="aG" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Top: Two prerequisites ===== -->
+  <rect x="220" y="8" width="340" height="70" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="390" y="28" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">阶段一结束，同时触发两条异步路径</text>
+  <text x="390" y="48" text-anchor="middle" font-size="9.5" fill="#495057">成功启动 TargetActivity 必须同时满足 2 个先决条件：</text>
+  <text x="390" y="64" text-anchor="middle" font-size="9.5" fill="#495057">❶ Launcher 执行完 pause　　❷ 目标应用进程创建完毕</text>
+
+  <!-- Fork arrows -->
+  <line x1="295" y1="78" x2="195" y2="106" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <line x1="485" y1="78" x2="585" y2="106" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ===== Scenario A (Left): completePause 先完成 ===== -->
+  <rect x="14" y="106" width="370" height="600" rx="3" fill="none" stroke="#c49040" stroke-width="1.2"/>
+  <rect x="14" y="106" width="370" height="28" rx="3" fill="#fef8ee" stroke="#c49040" stroke-width="1.2"/>
+  <text x="199" y="125" text-anchor="middle" font-size="10.5" font-weight="600" fill="#9e6b20">情况一：completePause 先完成</text>
+
+  <!-- Step A1 -->
+  <rect x="80" y="150" width="230" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="195" y="168" text-anchor="middle" font-size="9.5" fill="#495057">Launcher onPause 完成 → completePause</text>
+  <line x1="195" y1="176" x2="195" y2="196" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step A2 -->
+  <rect x="94" y="196" width="202" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="195" y="214" text-anchor="middle" font-size="9.5" fill="#495057">→ startSpecificActivity()</text>
+  <line x1="195" y1="222" x2="195" y2="244" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Diamond A: wpc.hasThread()? -->
+  <path d="M195,244 L280,272 L195,300 L110,272 Z" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="195" y="269" text-anchor="middle" font-size="8.5" fill="#495057">wpc.hasThread()</text>
+  <text x="195" y="281" text-anchor="middle" font-size="8.5" fill="#495057">进程就绪?</text>
+
+  <!-- A: No → process not ready -->
+  <line x1="195" y1="300" x2="195" y2="324" stroke="#c0392b" stroke-width="1.2" marker-end="url(#aR)"/>
+  <text x="205" y="314" font-size="8.5" fill="#c0392b">否</text>
+
+  <rect x="90" y="324" width="210" height="42" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="195" y="342" text-anchor="middle" font-size="9" fill="#c0392b">进程还没创建好</text>
+  <text x="195" y="357" text-anchor="middle" font-size="8.5" fill="#868e96">→ startProcessAsync (已触发, 不重复)</text>
+
+  <!-- A: Waiting -->
+  <line x1="195" y1="366" x2="195" y2="398" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="132" y="398" width="126" height="24" rx="12" fill="white" stroke="#868e96" stroke-dasharray="4,3"/>
+  <text x="195" y="414" text-anchor="middle" font-size="9" fill="#868e96">⏳ 等待阶段三…</text>
+
+  <!-- A: Phase 3 completes -->
+  <line x1="195" y1="422" x2="195" y2="448" stroke="#2e7d32" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#aG)"/>
+
+  <rect x="64" y="448" width="262" height="26" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="195" y="466" text-anchor="middle" font-size="9.5" fill="#2e7d32">阶段三完成：进程创建好了</text>
+  <line x1="195" y1="474" x2="195" y2="498" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- A: attachApplication → realStart -->
+  <rect x="58" y="498" width="274" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="195" y="516" text-anchor="middle" font-size="9.5" fill="#495057">RWC.attachApplication() → realStartActivityLocked</text>
+  <line x1="195" y1="524" x2="195" y2="548" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- A: Check pause -->
+  <rect x="62" y="548" width="266" height="26" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="195" y="566" text-anchor="middle" font-size="9" fill="#495057">allPausedActivitiesComplete() = true ✓</text>
+  <line x1="195" y1="574" x2="195" y2="596" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- A: Success -->
+  <rect x="74" y="596" width="242" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="195" y="616" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">✓ realStartActivityLocked 成功执行</text>
+
+  <!-- A: trigger label -->
+  <rect x="84" y="640" width="222" height="22" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="195" y="655" text-anchor="middle" font-size="8.5" fill="#868e96">由阶段三的 attachApplication 路径触发</text>
+
+  <!-- ===== Scenario B (Right): 进程创建先完成 ===== -->
+  <rect x="396" y="106" width="370" height="600" rx="3" fill="none" stroke="#2e7d32" stroke-width="1.2"/>
+  <rect x="396" y="106" width="370" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="581" y="125" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2e7d32">情况二：进程创建先完成</text>
+
+  <!-- Step B1 -->
+  <rect x="450" y="150" width="262" height="26" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="581" y="168" text-anchor="middle" font-size="9.5" fill="#495057">Zygote fork → attachApplication 完成</text>
+  <line x1="581" y1="176" x2="581" y2="196" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step B2 -->
+  <rect x="448" y="196" width="266" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="581" y="214" text-anchor="middle" font-size="9.5" fill="#495057">RWC.attachApplication() → realStartActivityLocked</text>
+  <line x1="581" y1="222" x2="581" y2="244" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Diamond B: allPausedComplete? -->
+  <path d="M581,244 L672,272 L581,300 L490,272 Z" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="581" y="268" text-anchor="middle" font-size="8.5" fill="#495057">allPausedActivities</text>
+  <text x="581" y="280" text-anchor="middle" font-size="8.5" fill="#495057">Complete()?</text>
+
+  <!-- B: No → pause not done -->
+  <line x1="581" y1="300" x2="581" y2="324" stroke="#c0392b" stroke-width="1.2" marker-end="url(#aR)"/>
+  <text x="591" y="314" font-size="8.5" fill="#c0392b">否</text>
+
+  <rect x="476" y="324" width="210" height="42" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="581" y="342" text-anchor="middle" font-size="9" fill="#c0392b">Launcher 还没执行完 pause</text>
+  <text x="581" y="357" text-anchor="middle" font-size="8.5" fill="#868e96">→ 直接 return false</text>
+
+  <!-- B: Waiting -->
+  <line x1="581" y1="366" x2="581" y2="398" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3"/>
+  <rect x="518" y="398" width="126" height="24" rx="12" fill="white" stroke="#868e96" stroke-dasharray="4,3"/>
+  <text x="581" y="414" text-anchor="middle" font-size="9" fill="#868e96">⏳ 等待阶段二…</text>
+
+  <!-- B: Phase 2 completes -->
+  <line x1="581" y1="422" x2="581" y2="448" stroke="#9e6b20" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#a)"/>
+
+  <rect x="454" y="448" width="254" height="26" rx="3" fill="#fef8ee" stroke="#c49040"/>
+  <text x="581" y="466" text-anchor="middle" font-size="9.5" fill="#9e6b20">阶段二完成：Launcher pause 完成</text>
+  <line x1="581" y1="474" x2="581" y2="498" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- B: completePause → startSpecificActivity -->
+  <rect x="448" y="498" width="266" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="581" y="516" text-anchor="middle" font-size="9.5" fill="#495057">completePause → startSpecificActivity()</text>
+  <line x1="581" y1="524" x2="581" y2="548" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- B: Check process -->
+  <rect x="448" y="548" width="266" height="26" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="581" y="566" text-anchor="middle" font-size="9" fill="#495057">wpc.hasThread() = true ✓ 进程已就绪</text>
+  <line x1="581" y1="574" x2="581" y2="596" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- B: Success -->
+  <rect x="460" y="596" width="242" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="581" y="616" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">✓ realStartActivityLocked 成功执行</text>
+
+  <!-- B: trigger label -->
+  <rect x="458" y="640" width="246" height="22" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="581" y="655" text-anchor="middle" font-size="8.5" fill="#868e96">由阶段二的 completePause 路径触发</text>
+
+  <!-- ===== Bottom: Same result ===== -->
+  <line x1="195" y1="670" x2="195" y2="728" stroke="#555" stroke-width="1"/>
+  <line x1="581" y1="670" x2="581" y2="728" stroke="#555" stroke-width="1"/>
+  <line x1="195" y1="728" x2="581" y2="728" stroke="#555" stroke-width="1"/>
+  <line x1="390" y1="728" x2="390" y2="746" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="210" y="746" width="360" height="60" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="390" y="768" text-anchor="middle" font-size="10.5" font-weight="600" fill="#2e7d32">最终结果相同</text>
+  <text x="390" y="786" text-anchor="middle" font-size="9.5" fill="#495057">两个条件都满足 → onCreate → onStart → onResume</text>
+  <text x="390" y="800" text-anchor="middle" font-size="8.5" fill="#868e96">区别仅在于由哪条路径最终触发了 realStartActivityLocked 的成功执行</text>
+</svg>

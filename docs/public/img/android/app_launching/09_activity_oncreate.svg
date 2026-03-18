@@ -1,0 +1,166 @@
+<svg viewBox="0 0 790 820" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- Headers: Zygote, AT, AMS, ATMS, RWC, Sup, TE -->
+  <rect x="8" y="8" width="60" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="38" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Zygote</text>
+
+  <rect x="104" y="8" width="90" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="149" y="22" text-anchor="middle" font-size="8" fill="#343a40">ActivityThread</text>
+  <text x="149" y="34" text-anchor="middle" font-size="7" fill="#868e96">(新进程)</text>
+
+  <rect x="230" y="8" width="68" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="264" y="22" text-anchor="middle" font-size="8.5" fill="#343a40">AMS</text>
+  <text x="264" y="34" text-anchor="middle" font-size="7" fill="#868e96">system_server</text>
+
+  <rect x="324" y="8" width="60" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="354" y="28" text-anchor="middle" font-size="8.5" fill="#343a40">ATMS</text>
+
+  <rect x="410" y="8" width="66" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="443" y="22" text-anchor="middle" font-size="7.5" fill="#343a40">RootWindow</text>
+  <text x="443" y="34" text-anchor="middle" font-size="7.5" fill="#343a40">Container</text>
+
+  <rect x="502" y="8" width="76" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="540" y="22" text-anchor="middle" font-size="7.5" fill="#343a40">ActivityTask</text>
+  <text x="540" y="34" text-anchor="middle" font-size="7.5" fill="#343a40">Supervisor</text>
+
+  <rect x="618" y="8" width="100" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="668" y="22" text-anchor="middle" font-size="8" fill="#343a40">Transaction</text>
+  <text x="668" y="34" text-anchor="middle" font-size="7" fill="#868e96">Executor (新进程)</text>
+
+  <!-- Lifelines -->
+  <line x1="38" y1="38" x2="38" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="149" y1="38" x2="149" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="264" y1="38" x2="264" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="354" y1="38" x2="354" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="443" y1="38" x2="443" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="540" y1="38" x2="540" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="668" y1="38" x2="668" y2="810" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- 1. Zygote → AT -->
+  <line x1="38" y1="62" x2="143" y2="62" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="90" y="55" text-anchor="middle" font-size="8" fill="#495057">fork → main()</text>
+
+  <!-- 2. AT self: new ActivityThread() -->
+  <path d="M149,76 L186,76 L186,92 L154,92" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="194" y="86" font-size="7.5" fill="#495057">new ActivityThread()</text>
+
+  <!-- 3. AT self: attach -->
+  <path d="M149,106 L186,106 L186,120 L154,120" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="194" y="115" font-size="7.5" fill="#495057">attach(false, startSeq)</text>
+
+  <!-- 4. AT → AMS [Binder] -->
+  <line x1="149" y1="138" x2="258" y2="138" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="203" y="131" text-anchor="middle" font-size="8" fill="#495057">attachApplication(mAppThread) [Binder]</text>
+
+  <!-- 5. AMS self: attachApplicationLocked -->
+  <path d="M264,152 L300,152 L300,166 L269,166" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="308" y="162" font-size="7.5" fill="#495057">attachApplicationLocked()</text>
+
+  <!-- 6. AMS → AT: bindApplication [Binder] -->
+  <line x1="264" y1="182" x2="155" y2="182" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="209" y="176" text-anchor="middle" font-size="8" fill="#495057">bindApplication() [Binder]</text>
+
+  <!-- 7. AMS self: finishAttach -->
+  <path d="M264,200 L300,200 L300,214 L269,214" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="308" y="210" font-size="7.5" fill="#495057">finishAttachApplicationInner()</text>
+
+  <!-- 8. AMS → ATMS -->
+  <line x1="264" y1="232" x2="348" y2="232" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="306" y="225" text-anchor="middle" font-size="7.5" fill="#495057">mAtmInternal.attachApplication()</text>
+
+  <!-- 9. ATMS → RWC -->
+  <line x1="354" y1="248" x2="437" y2="248" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="395" y="241" text-anchor="middle" font-size="7.5" fill="#495057">attachApplication(wpc)</text>
+
+  <!-- 10. RWC → Sup: realStartActivityLocked -->
+  <line x1="443" y1="266" x2="534" y2="266" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="488" y="259" text-anchor="middle" font-size="7.5" fill="#495057">realStartActivityLocked()</text>
+
+  <!-- 11. Note: check -->
+  <rect x="484" y="278" width="172" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="570" y="290" text-anchor="middle" font-size="7.5" fill="#868e96">检查 allPausedActivitiesComplete()</text>
+
+  <!-- 12. Sup self: create LaunchActivityItem -->
+  <path d="M540,306 L578,306 L578,320 L545,320" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="586" y="316" font-size="7.5" fill="#495057">创建 LaunchActivityItem</text>
+
+  <!-- 13. Sup self: create ResumeActivityItem -->
+  <path d="M540,334 L578,334 L578,348 L545,348" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="586" y="344" font-size="7.5" fill="#495057">创建 ResumeActivityItem</text>
+
+  <!-- 14. Sup → AT [Binder] -->
+  <line x1="540" y1="366" x2="155" y2="366" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="347" y="359" text-anchor="middle" font-size="8" fill="#495057">scheduleTransactionAndLifecycleItems() [Binder]</text>
+
+  <!-- 15. AT → TE -->
+  <line x1="149" y1="386" x2="662" y2="386" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="405" y="380" text-anchor="middle" font-size="8" fill="#495057">execute(ClientTransaction)</text>
+
+  <!-- 16. TE self: executeTransactionItems -->
+  <path d="M668,400 L706,400 L706,414 L673,414" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="714" y="410" font-size="7.5" fill="#495057">executeTransactionItems()</text>
+
+  <!-- ===== LaunchActivityItem section ===== -->
+  <rect x="606" y="430" width="146" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="679" y="442" text-anchor="middle" font-size="7.5" fill="#868e96">LaunchActivityItem (非生命周期项)</text>
+
+  <!-- 18. TE self: executeNonLifecycleItem -->
+  <path d="M668,456 L706,456 L706,470 L673,470" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="714" y="466" font-size="7.5" fill="#495057">executeNonLifecycleItem()</text>
+
+  <!-- 19. TE → AT: handleLaunchActivity -->
+  <line x1="668" y1="488" x2="155" y2="488" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="411" y="482" text-anchor="middle" font-size="8" fill="#495057">handleLaunchActivity()</text>
+
+  <!-- 20. AT self: performLaunchActivity -->
+  <path d="M149,502 L186,502 L186,516 L154,516" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="194" y="512" font-size="7.5" fill="#495057">performLaunchActivity()</text>
+
+  <!-- 21. AT self: Activity.onCreate -->
+  <path d="M149,530 L186,530 L186,546 L154,546" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="194" y="541" font-size="8" font-weight="600" fill="#2e7d32">Activity.onCreate()</text>
+
+  <!-- ===== ResumeActivityItem section ===== -->
+  <rect x="606" y="564" width="146" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="679" y="576" text-anchor="middle" font-size="7.5" fill="#868e96">ResumeActivityItem (生命周期项)</text>
+
+  <!-- 23. TE self: executeLifecycleItem -->
+  <path d="M668,592 L706,592 L706,606 L673,606" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="714" y="602" font-size="7.5" fill="#495057">executeLifecycleItem()</text>
+
+  <!-- 24. TE self: cycleToPath -->
+  <path d="M668,620 L706,620 L706,634 L673,634" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="714" y="630" font-size="7.5" fill="#495057">cycleToPath(ON_CREATE→ON_RESUME)</text>
+
+  <!-- Note: 中间状态 -->
+  <rect x="618" y="644" width="100" height="14" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="668" y="654" text-anchor="middle" font-size="7" fill="#868e96">中间状态: ON_START</text>
+
+  <!-- 26. TE → AT: handleStartActivity -->
+  <line x1="668" y1="672" x2="155" y2="672" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="411" y="666" text-anchor="middle" font-size="8" fill="#495057">handleStartActivity()</text>
+
+  <!-- 27. AT self: onStart -->
+  <path d="M149,686 L186,686 L186,700 L154,700" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="194" y="696" font-size="8" font-weight="600" fill="#2e7d32">Activity.onStart()</text>
+
+  <!-- Note: ResumeActivityItem.execute() -->
+  <rect x="612" y="714" width="112" height="14" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="668" y="724" text-anchor="middle" font-size="7" fill="#868e96">ResumeActivityItem.execute()</text>
+
+  <!-- 29. TE → AT: handleResumeActivity -->
+  <line x1="668" y1="742" x2="155" y2="742" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="411" y="736" text-anchor="middle" font-size="8" fill="#495057">handleResumeActivity()</text>
+
+  <!-- 30. AT self: onResume -->
+  <path d="M149,756 L186,756 L186,772 L154,772" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="194" y="768" font-size="8.5" font-weight="600" fill="#2e7d32">Activity.onResume()</text>
+</svg>

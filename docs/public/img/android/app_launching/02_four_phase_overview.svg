@@ -1,0 +1,111 @@
+<svg viewBox="0 0 740 740" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- ===== Phase 1 ===== -->
+  <rect x="150" y="8" width="440" height="148" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="370" y="30" text-anchor="middle" font-size="12" font-weight="600" fill="#4a7fb5">阶段一：Launcher 发起启动请求</text>
+
+  <rect x="240" y="44" width="260" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="370" y="62" text-anchor="middle" font-size="10" fill="#495057">Launcher 调用 startActivity</text>
+  <line x1="370" y1="70" x2="370" y2="84" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="190" y="84" width="360" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="370" y="102" text-anchor="middle" font-size="10" fill="#495057">AMS 创建 ActivityRecord，创建 Task 并挂载到窗口层级树</text>
+
+  <line x1="290" y1="110" x2="290" y2="130" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="450" y1="110" x2="450" y2="130" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="200" y="130" width="180" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="290" y="146" text-anchor="middle" font-size="9.5" fill="#495057">触发 Launcher 的 pause 流程</text>
+
+  <rect x="380" y="130" width="140" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="450" y="146" text-anchor="middle" font-size="9.5" fill="#495057">异步创建目标应用进程</text>
+
+  <!-- ===== Phase 2 (left) ===== -->
+  <line x1="290" y1="156" x2="200" y2="180" stroke="#555" stroke-width="1"/>
+  <line x1="200" y1="178" x2="200" y2="180" stroke="#9e6b20" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="20" y="180" width="360" height="172" rx="3" fill="#fef8ee" stroke="#c49040" stroke-width="1.2"/>
+  <text x="200" y="200" text-anchor="middle" font-size="12" font-weight="600" fill="#9e6b20">阶段二：completePause</text>
+
+  <rect x="62" y="214" width="196" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="160" y="230" text-anchor="middle" font-size="9.5" fill="#495057">Launcher 执行完 onPause</text>
+  <line x1="160" y1="238" x2="160" y2="252" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="62" y="252" width="196" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="160" y="268" text-anchor="middle" font-size="9.5" fill="#495057">completePause 回调 AMS</text>
+  <line x1="160" y1="276" x2="160" y2="290" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="38" y="290" width="324" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="200" y="306" text-anchor="middle" font-size="9" fill="#495057">resumeFocusedTasksTopActivities + ensureActivitiesVisible</text>
+  <line x1="200" y1="314" x2="200" y2="328" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="82" y="328" width="196" height="20" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="180" y="342" text-anchor="middle" font-size="9.5" fill="#495057">尝试 startSpecificActivity</text>
+
+  <!-- ===== Phase 3 (right) ===== -->
+  <line x1="450" y1="156" x2="540" y2="180" stroke="#555" stroke-width="1"/>
+  <line x1="540" y1="178" x2="540" y2="180" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="380" y="180" width="340" height="172" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="550" y="200" text-anchor="middle" font-size="12" font-weight="600" fill="#2e7d32">阶段三：创建应用进程</text>
+
+  <rect x="440" y="214" width="180" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="530" y="230" text-anchor="middle" font-size="9.5" fill="#495057">Zygote fork 新进程</text>
+  <line x1="530" y1="238" x2="530" y2="252" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="440" y="252" width="180" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="530" y="268" text-anchor="middle" font-size="9.5" fill="#495057">ActivityThread.main()</text>
+  <line x1="530" y1="276" x2="530" y2="290" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="420" y="290" width="220" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="530" y="306" text-anchor="middle" font-size="9.5" fill="#495057">attachApplication 通知 AMS</text>
+  <line x1="530" y1="314" x2="530" y2="328" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="400" y="328" width="220" height="20" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="510" y="342" text-anchor="middle" font-size="9.5" fill="#495057">尝试 realStartActivityLocked</text>
+
+  <!-- ===== Converge to Phase 4 ===== -->
+  <line x1="200" y1="352" x2="200" y2="382" stroke="#555" stroke-width="1"/>
+  <line x1="200" y1="382" x2="370" y2="382" stroke="#555" stroke-width="1"/>
+  <line x1="530" y1="352" x2="530" y2="382" stroke="#555" stroke-width="1"/>
+  <line x1="530" y1="382" x2="372" y2="382" stroke="#555" stroke-width="1"/>
+  <line x1="370" y1="382" x2="370" y2="400" stroke="#c0392b" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ===== Phase 4 ===== -->
+  <rect x="140" y="400" width="460" height="330" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="370" y="424" text-anchor="middle" font-size="12" font-weight="600" fill="#c0392b">阶段四：真正启动 Activity</text>
+
+  <rect x="270" y="442" width="200" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="370" y="461" text-anchor="middle" font-size="10.5" font-weight="600" fill="#343a40">realStartActivityLocked</text>
+  <line x1="370" y1="470" x2="370" y2="490" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Diamond -->
+  <path d="M370,490 L466,524 L370,558 L274,524 Z" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="370" y="520" text-anchor="middle" font-size="9.5" fill="#495057">allPausedActivities</text>
+  <text x="370" y="534" text-anchor="middle" font-size="9.5" fill="#495057">Complete?</text>
+
+  <!-- No branch -->
+  <line x1="466" y1="524" x2="540" y2="524" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="503" y="516" text-anchor="middle" font-size="9" fill="#868e96">否</text>
+  <rect x="540" y="508" width="52" height="32" rx="3" fill="white" stroke="#e07070" stroke-dasharray="4,3"/>
+  <text x="566" y="522" text-anchor="middle" font-size="8.5" fill="#c0392b">return</text>
+  <text x="566" y="534" text-anchor="middle" font-size="8" fill="#868e96">等待</text>
+
+  <!-- Yes branch -->
+  <line x1="370" y1="558" x2="370" y2="582" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="384" y="572" font-size="9" fill="#868e96">是</text>
+
+  <rect x="210" y="582" width="320" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="370" y="602" text-anchor="middle" font-size="10" fill="#495057">发送 LaunchActivityItem + ResumeActivityItem</text>
+  <line x1="370" y1="612" x2="370" y2="636" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="210" y="636" width="320" height="82" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="370" y="662" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">onCreate</text>
+  <text x="370" y="682" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">↓ onStart</text>
+  <text x="370" y="702" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">↓ onResume</text>
+</svg>

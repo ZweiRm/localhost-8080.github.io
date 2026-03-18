@@ -1,0 +1,114 @@
+<svg viewBox="0 0 780 680" xmlns="http://www.w3.org/2000/svg" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- Headers: SS, CLM, AT, TE, PAI, Act -->
+  <rect x="12" y="8" width="80" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="52" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">system_server</text>
+
+  <rect x="128" y="8" width="90" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="173" y="22" text-anchor="middle" font-size="7.5" fill="#343a40">ClientLifecycle</text>
+  <text x="173" y="34" text-anchor="middle" font-size="7.5" fill="#343a40">Manager</text>
+
+  <rect x="264" y="8" width="96" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="312" y="22" text-anchor="middle" font-size="8" fill="#343a40">ActivityThread</text>
+  <text x="312" y="34" text-anchor="middle" font-size="7" fill="#868e96">(Launcher 进程)</text>
+
+  <rect x="404" y="8" width="90" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="449" y="22" text-anchor="middle" font-size="8" fill="#343a40">Transaction</text>
+  <text x="449" y="34" text-anchor="middle" font-size="8" fill="#343a40">Executor</text>
+
+  <rect x="536" y="8" width="96" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="584" y="22" text-anchor="middle" font-size="8" fill="#343a40">PauseActivity</text>
+  <text x="584" y="34" text-anchor="middle" font-size="8" fill="#343a40">Item</text>
+
+  <rect x="680" y="8" width="80" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="720" y="28" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Activity</text>
+
+  <!-- Lifelines -->
+  <line x1="52" y1="38" x2="52" y2="670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="173" y1="38" x2="173" y2="670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="312" y1="38" x2="312" y2="670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="449" y1="38" x2="449" y2="670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="584" y1="38" x2="584" y2="670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="720" y1="38" x2="720" y2="670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- 1. SS → CLM -->
+  <line x1="52" y1="62" x2="167" y2="62" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="110" y="55" text-anchor="middle" font-size="8" fill="#495057">scheduleTransaction(PauseActivityItem)</text>
+
+  <!-- 2. CLM → AT [Binder] -->
+  <line x1="173" y1="84" x2="306" y2="84" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="240" y="77" text-anchor="middle" font-size="8" fill="#495057">schedule(ClientTransaction) [Binder IPC]</text>
+
+  <rect x="178" y="92" width="200" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="278" y="104" text-anchor="middle" font-size="7.5" fill="#868e96">跨进程通知 Launcher Pause</text>
+
+  <!-- 3. AT → TE -->
+  <line x1="312" y1="126" x2="443" y2="126" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="377" y="119" text-anchor="middle" font-size="8" fill="#495057">execute(ClientTransaction)</text>
+
+  <!-- 4. TE self: executeLifecycleState -->
+  <path d="M449,142 L486,142 L486,158 L454,158" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="494" y="152" font-size="7.5" fill="#495057">executeLifecycleState()</text>
+
+  <!-- 5. TE → PAI: execute -->
+  <line x1="449" y1="176" x2="578" y2="176" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="513" y="169" text-anchor="middle" font-size="8" fill="#495057">execute(client, token, pendingActions)</text>
+
+  <!-- 6. PAI → AT: handlePauseActivity -->
+  <line x1="584" y1="198" x2="318" y2="198" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="450" y="192" text-anchor="middle" font-size="8" fill="#495057">handlePauseActivity()</text>
+
+  <!-- 7. AT self: performPauseActivity -->
+  <path d="M312,216 L350,216 L350,232 L317,232" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="358" y="226" font-size="7.5" fill="#495057">performPauseActivity()</text>
+
+  <!-- 8. AT → Act: performPause -->
+  <line x1="312" y1="250" x2="714" y2="250" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="516" y="244" text-anchor="middle" font-size="8" fill="#495057">performPause()</text>
+
+  <!-- 9. Act self: onPause -->
+  <path d="M720,266 L756,266 L756,284 L725,284" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="764" y="278" font-size="8.5" font-weight="600" fill="#343a40">onPause()</text>
+
+  <!-- Note: onPause complete -->
+  <rect x="666" y="296" width="108" height="16" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="720" y="308" text-anchor="middle" font-size="7.5" fill="#2e7d32">Launcher onPause 完成</text>
+
+  <!-- 10. PAI self: postExecute -->
+  <path d="M584,330 L622,330 L622,346 L589,346" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="630" y="340" font-size="7.5" fill="#495057">postExecute()</text>
+
+  <!-- 11. PAI → SS: activityPaused [Binder] -->
+  <line x1="584" y1="364" x2="58" y2="364" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="318" y="357" text-anchor="middle" font-size="8" fill="#495057">activityPaused() [Binder IPC]</text>
+
+  <rect x="200" y="372" width="180" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="290" y="384" text-anchor="middle" font-size="7.5" fill="#868e96">回调通知 system_server</text>
+
+  <!-- 12-17. SS self-calls -->
+  <path d="M52,406 L92,406 L92,422 L57,422" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="100" y="416" font-size="7.5" fill="#495057">ActivityRecord.activityPaused()</text>
+
+  <path d="M52,438 L92,438 L92,454 L57,454" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="100" y="448" font-size="7.5" fill="#495057">TaskFragment.completePause()</text>
+
+  <path d="M52,470 L92,470 L92,486 L57,486" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="100" y="480" font-size="7.5" fill="#495057">设置状态为 PAUSED</text>
+
+  <path d="M52,502 L92,502 L92,518 L57,518" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="100" y="512" font-size="7.5" fill="#495057">resumeFocusedTasksTopActivities()</text>
+
+  <path d="M52,534 L92,534 L92,550 L57,550" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="100" y="544" font-size="7.5" fill="#495057">ensureActivitiesVisible()</text>
+
+  <path d="M52,566 L92,566 L92,582 L57,582" stroke="#868e96" stroke-width="1" fill="none" marker-end="url(#ag)"/>
+  <text x="100" y="576" font-size="7.5" fill="#495057">makeInvisible() → addToStopping()</text>
+</svg>
