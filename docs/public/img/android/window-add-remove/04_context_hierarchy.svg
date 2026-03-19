@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 240" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow4" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="none" stroke="#555" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- Context -->
+  <rect x="90" y="20" width="140" height="65" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="160" y="38" text-anchor="middle" font-size="8.5" fill="#868e96">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="160" y="55" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Context</text>
+  <line x1="90" y1="62" x2="230" y2="62" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="100" y="78" font-size="9" fill="#495057">+ getSystemService()</text>
+
+  <!-- Extends arrow -->
+  <line x1="160" y1="85" x2="160" y2="140" stroke="#555" stroke-width="1"/>
+  <line x1="160" y1="140" x2="160" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arrow4)"/>
+  <text x="170" y="118" font-size="8" fill="#868e96">Extends</text>
+  <!-- Hollow triangle at bottom of line going up -->
+  <polygon points="150,85 160,95 170,85" fill="none" stroke="#555" stroke-width="1" transform="translate(0,55)"/>
+
+  <!-- ContextImpl -->
+  <rect x="90" y="145" width="140" height="70" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="160" y="168" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ContextImpl</text>
+  <line x1="90" y1="176" x2="230" y2="176" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="100" y="192" font-size="9" fill="#495057">+ getSystemService()</text>
+  <text x="100" y="206" font-size="9" fill="#868e96">  delegates to</text>
+  <text x="100" y="206" font-size="9" fill="#495057">  SystemServiceRegistry</text>
+</svg>

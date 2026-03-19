@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '应用启动流程'
-    link: 'framework/activity-launching-process'
+    text: 'WMS 窗口添加和移除'
+    link: 'framework/window-add-remove'
 next:
     text: 'performTraversal'
     link: 'framework/performTraversal'

@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="triangle" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto">
+      <polygon points="0,0 10,4 0,8" fill="none" stroke="#555" stroke-width="1"/>
+    </marker>
+  </defs>
+
+  <!-- View -->
+  <rect x="30" y="100" width="100" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="80" y="124" text-anchor="middle" font-size="11" fill="#495057">View</text>
+
+  <!-- ViewGroup -->
+  <rect x="20" y="200" width="120" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="80" y="216" text-anchor="middle" font-size="8.5" fill="#868e96">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="80" y="233" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ViewGroup</text>
+  <!-- Extends arrow View <- ViewGroup -->
+  <line x1="80" y1="200" x2="80" y2="140" stroke="#555" stroke-width="1" marker-end="url(#triangle)"/>
+  <text x="60" y="175" font-size="8" fill="#868e96">Extends</text>
+
+  <!-- ViewManager interface -->
+  <rect x="200" y="120" width="150" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="275" y="136" text-anchor="middle" font-size="8.5" fill="#868e96">&lt;&lt;interface&gt;&gt;</text>
+  <text x="275" y="153" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ViewManager</text>
+  <!-- implement arrow ViewGroup -> ViewManager -->
+  <line x1="140" y1="215" x2="200" y2="150" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#triangle)"/>
+  <text x="155" y="178" font-size="8" fill="#868e96">implement</text>
+
+  <!-- WindowManager interface -->
+  <rect x="200" y="210" width="150" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="275" y="226" text-anchor="middle" font-size="8.5" fill="#868e96">&lt;&lt;interface&gt;&gt;</text>
+  <text x="275" y="243" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">WindowManager</text>
+  <!-- Extends arrow ViewManager <- WindowManager -->
+  <line x1="275" y1="210" x2="275" y2="165" stroke="#555" stroke-width="1" marker-end="url(#triangle)"/>
+  <text x="282" y="192" font-size="8" fill="#868e96">Extends</text>
+
+  <!-- ViewGroup.LayoutParams -->
+  <rect x="500" y="30" width="195" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="597" y="50" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ViewGroup.LayoutParams</text>
+  <line x1="500" y1="58" x2="695" y2="58" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="510" y="74" font-size="9" fill="#495057">+ field: Type</text>
+
+  <!-- WindowManager.LayoutParams -->
+  <rect x="500" y="120" width="195" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="597" y="140" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">WindowManager.LayoutParams</text>
+  <line x1="500" y1="148" x2="695" y2="148" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="510" y="164" font-size="9" fill="#495057">+ setTitle(String)</text>
+  <!-- Extends -->
+  <line x1="597" y1="120" x2="597" y2="85" stroke="#555" stroke-width="1" marker-end="url(#triangle)"/>
+  <text x="603" y="106" font-size="8" fill="#868e96">Extends</text>
+
+  <!-- WindowManagerImpl -->
+  <rect x="110" y="310" width="250" height="140" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="235" y="330" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">WindowManagerImpl</text>
+  <line x1="110" y1="338" x2="360" y2="338" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="120" y="354" font-size="9" fill="#495057">+ mGlobal: WindowManagerGlobal</text>
+  <text x="120" y="368" font-size="9" fill="#495057">+ mParentWindow: Window</text>
+  <text x="120" y="382" font-size="9" fill="#495057">+ mContext: Context</text>
+  <text x="120" y="396" font-size="9" fill="#495057">- mDefaultToken: IBinder</text>
+  <text x="120" y="410" font-size="9" fill="#495057">- mWindowContextToken: IBinder</text>
+  <line x1="110" y1="418" x2="360" y2="418" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="120" y="434" font-size="9" fill="#495057">+ addView / removeView / updateViewLayout</text>
+  <!-- implement arrow -->
+  <line x1="275" y1="310" x2="275" y2="255" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#triangle)"/>
+  <text x="282" y="285" font-size="8" fill="#868e96">implement</text>
+
+  <!-- Window (abstract) -->
+  <rect x="20" y="340" width="70" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="55" y="355" text-anchor="middle" font-size="8.5" fill="#868e96">&lt;&lt;abstract&gt;&gt;</text>
+  <text x="55" y="372" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Window</text>
+  <text x="55" y="388" text-anchor="middle" font-size="8" fill="#495057">PhoneWindow</text>
+
+  <!-- WindowManagerGlobal -->
+  <rect x="410" y="310" width="290" height="175" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="555" y="330" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">WindowManagerGlobal</text>
+  <line x1="410" y1="338" x2="700" y2="338" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="420" y="354" font-size="9" fill="#495057">+ sDefaultWindowManager: WindowManagerGlobal</text>
+  <text x="420" y="368" font-size="9" fill="#495057">+ sWindowManagerService: IWindowManager</text>
+  <text x="420" y="382" font-size="9" fill="#495057">+ sWindowSession: IWindowSession</text>
+  <text x="420" y="396" font-size="9" fill="#495057">+ mViews: ArrayList&lt;View&gt;</text>
+  <text x="420" y="410" font-size="9" fill="#495057">+ mRoots: ArrayList&lt;ViewRootImpl&gt;</text>
+  <text x="420" y="424" font-size="9" fill="#495057">+ mParams: ArrayList&lt;LayoutParams&gt;</text>
+  <text x="420" y="438" font-size="9" fill="#495057">+ mDyingViews: ArrayList&lt;View&gt;</text>
+  <line x1="410" y1="446" x2="700" y2="446" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="420" y="462" font-size="9" fill="#495057">+ getInstance / getWindowManagerService</text>
+  <text x="420" y="476" font-size="9" fill="#495057">+ addView / updateViewLayout / removeView</text>
+
+  <!-- Arrow from Impl to Global -->
+  <line x1="360" y1="380" x2="410" y2="380" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+</svg>
