@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 100" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- States -->
+  <rect x="10" y="30" width="130" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="75" y="47" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">NO_SURFACE</text>
+  <text x="75" y="59" text-anchor="middle" font-size="7.5" fill="#868e96">初始状态</text>
+
+  <rect x="175" y="30" width="130" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="240" y="47" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">DRAW_PENDING</text>
+  <text x="240" y="59" text-anchor="middle" font-size="7.5" fill="#868e96">Surface 已创建</text>
+
+  <rect x="340" y="30" width="130" height="36" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="405" y="47" text-anchor="middle" font-size="9" fill="#c0392b" font-weight="600">COMMIT_DRAW_PENDING</text>
+  <text x="405" y="59" text-anchor="middle" font-size="7.5" fill="#868e96">客户端已绘制完成</text>
+
+  <rect x="505" y="30" width="130" height="36" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="570" y="47" text-anchor="middle" font-size="9" fill="#c0392b" font-weight="600">READY_TO_SHOW</text>
+  <text x="570" y="59" text-anchor="middle" font-size="7.5" fill="#868e96">等待显示</text>
+
+  <rect x="670" y="30" width="100" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="720" y="47" text-anchor="middle" font-size="9" fill="#2e7d32" font-weight="600">HAS_DRAWN</text>
+  <text x="720" y="59" text-anchor="middle" font-size="7.5" fill="#868e96">已显示</text>
+
+  <!-- Arrows -->
+  <line x1="140" y1="48" x2="173" y2="48" stroke="#555" stroke-width="1" marker-end="url(#arr5)"/>
+  <line x1="305" y1="48" x2="338" y2="48" stroke="#555" stroke-width="1" marker-end="url(#arr5)"/>
+  <line x1="470" y1="48" x2="503" y2="48" stroke="#555" stroke-width="1" marker-end="url(#arr5)"/>
+  <line x1="635" y1="48" x2="668" y2="48" stroke="#555" stroke-width="1" marker-end="url(#arr5)"/>
+
+  <!-- Transition labels -->
+  <text x="156" y="25" text-anchor="middle" font-size="7" fill="#868e96">createSurface</text>
+  <text x="321" y="25" text-anchor="middle" font-size="7" fill="#868e96">finishDrawing</text>
+  <text x="486" y="25" text-anchor="middle" font-size="7" fill="#868e96">commitFinishDrawing</text>
+  <text x="651" y="25" text-anchor="middle" font-size="7" fill="#868e96">performShow</text>
+</svg>

@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 560" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="70" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowSurfacePlacer</text>
+  <rect x="150" y="10" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="215" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">RootWindowContainer</text>
+  <rect x="300" y="10" width="100" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="350" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">DisplayContent</text>
+  <rect x="420" y="10" width="85" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="462" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">DisplayArea</text>
+  <rect x="525" y="10" width="105" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="577" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowContainer</text>
+  <rect x="650" y="10" width="85" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="692" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowState</text>
+  <rect x="755" y="10" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="815" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowStateAnimator</text>
+  <rect x="895" y="10" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="960" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowSurfaceController</text>
+
+  <!-- Lifelines -->
+  <line x1="70" y1="38" x2="70" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="215" y1="38" x2="215" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="350" y1="38" x2="350" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="462" y1="38" x2="462" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="577" y1="38" x2="577" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="692" y1="38" x2="692" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="815" y1="38" x2="815" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="960" y1="38" x2="960" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Trigger note -->
+  <rect x="5" y="52" width="125" height="20" rx="2" fill="#fff0f0" stroke="#e07070"/>
+  <text x="67" y="65" text-anchor="middle" font-size="7.5" fill="#c0392b">requestTraversal 再次请求布局</text>
+
+  <!-- 1. requestTraversal -->
+  <text x="22" y="88" font-size="9" fill="#495057">1 requestTraversal</text>
+  <path d="M 70,90 L 115,90 L 115,103 L 72,103" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 2-5 condensed: surface placement loop -->
+  <text x="80" y="123" font-size="9" fill="#495057">2-5 performSurfacePlacement → Loop</text>
+  <line x1="70" y1="125" x2="213" y2="125" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 6. performSurfacePlacement (RWC) -->
+  <text x="120" y="148" font-size="9" fill="#495057">6 performSurfacePlacement</text>
+  <line x1="215" y1="150" x2="260" y2="150" stroke="#555" stroke-width="1"/>
+  <path d="M 215,150 L 260,150 L 260,163 L 217,163" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 7. performSurfacePlacementNoTrace -->
+  <text x="225" y="183" font-size="9" fill="#495057">7 performSurfacePlacementNoTrace</text>
+  <path d="M 215,185 L 260,185 L 260,198 L 217,198" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 8. applySurfaceChangesTransaction -->
+  <text x="225" y="218" font-size="8.5" fill="#495057">8 applySurfaceChangesTransaction</text>
+  <path d="M 215,220 L 260,220 L 260,233 L 217,233" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 9. applySurfaceChangesTransaction (DC) -->
+  <text x="225" y="253" font-size="8.5" fill="#495057">9 applySurfaceChangesTransaction</text>
+  <line x1="215" y1="255" x2="348" y2="255" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 10. prepareSurfaces (DC) -->
+  <text x="360" y="278" font-size="9" fill="#495057">10 prepareSurfaces</text>
+  <path d="M 350,280 L 395,280 L 395,293 L 352,293" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- Note: calls parent class -->
+  <rect x="290" y="300" width="140" height="20" rx="2" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="360" y="313" text-anchor="middle" font-size="7.5" fill="#868e96">调用父类 prepareSurfaces</text>
+
+  <!-- 11. prepareSurfaces (DA) -->
+  <text x="360" y="338" font-size="9" fill="#495057">11 prepareSurfaces</text>
+  <line x1="350" y1="340" x2="460" y2="340" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 12. prepareSurfaces (WC) -->
+  <text x="472" y="363" font-size="9" fill="#495057">12 prepareSurfaces</text>
+  <line x1="462" y1="365" x2="575" y2="365" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- Note: loop children -->
+  <rect x="485" y="372" width="170" height="20" rx="2" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="570" y="385" text-anchor="middle" font-size="7.5" fill="#868e96">循环调用所有子容器的 prepareSurfaces</text>
+
+  <!-- 13. mChildren.get(i).prepareSurfaces() -->
+  <text x="587" y="408" font-size="8.5" fill="#495057">13 prepareSurfaces</text>
+  <line x1="577" y1="410" x2="690" y2="410" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 14. prepareSurfaceLocked -->
+  <text x="700" y="438" font-size="8.5" fill="#495057">14 prepareSurfaceLocked</text>
+  <line x1="692" y1="440" x2="813" y2="440" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+  <rect x="720" y="445" width="150" height="15" rx="2" fill="#f8f9fa" stroke="none"/>
+  <text x="795" y="456" text-anchor="middle" font-size="7.5" fill="#868e96">控制 Surface 的可见性</text>
+
+  <!-- 15. showRobustly -->
+  <text x="825" y="478" font-size="9" fill="#495057">15 showRobustly</text>
+  <line x1="815" y1="480" x2="958" y2="480" stroke="#555" stroke-width="1" marker-end="url(#arr4)"/>
+
+  <!-- 16. t.show -->
+  <rect x="910" y="492" width="100" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="960" y="507" text-anchor="middle" font-size="9" fill="#2e7d32" font-weight="600">16 t.show</text>
+  <rect x="910" y="516" width="100" height="15" rx="2" fill="#f8f9fa" stroke="none"/>
+  <text x="960" y="527" text-anchor="middle" font-size="7.5" fill="#2e7d32">Surface 最终显示</text>
+</svg>

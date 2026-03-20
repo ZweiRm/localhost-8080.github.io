@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 360" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arr1d" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- Participants - Client Side -->
+  <rect x="20" y="20" width="100" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="70" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">ActivityThread</text>
+  <rect x="140" y="20" width="90" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="185" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">ViewManager</text>
+  <rect x="250" y="20" width="120" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">WindowManagerImpl</text>
+  <rect x="390" y="20" width="130" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="455" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">WindowManagerGlobal</text>
+  <rect x="540" y="20" width="100" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="590" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">ViewRootImpl</text>
+
+  <!-- Participants - Server Side -->
+  <rect x="680" y="20" width="70" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="715" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">Session</text>
+  <rect x="770" y="20" width="140" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="840" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">WindowManagerService</text>
+  <rect x="930" y="20" width="100" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="980" y="38" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">WindowState</text>
+
+  <!-- Lifelines -->
+  <line x1="70" y1="48" x2="70" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="185" y1="48" x2="185" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="310" y1="48" x2="310" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="455" y1="48" x2="455" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="590" y1="48" x2="590" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="715" y1="48" x2="715" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="840" y1="48" x2="840" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="980" y1="48" x2="980" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Binder boundary -->
+  <line x1="650" y1="48" x2="650" y2="330" stroke="#e07070" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="650" y="345" text-anchor="middle" font-size="8" fill="#e07070">Binder</text>
+
+  <!-- Messages -->
+  <!-- 1. handleResumeActivity -->
+  <text x="15" y="78" font-size="9" fill="#495057">1</text>
+  <line x1="25" y1="80" x2="68" y2="80" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+  <text x="30" y="73" font-size="9" fill="#495057">handleResumeActivity</text>
+
+  <!-- 2. addView -->
+  <text x="78" y="108" font-size="9" fill="#495057">2 addView</text>
+  <line x1="70" y1="110" x2="183" y2="110" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+
+  <!-- 3. addView -->
+  <text x="198" y="138" font-size="9" fill="#495057">3 addView</text>
+  <line x1="185" y1="140" x2="308" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+
+  <!-- 4. addView -->
+  <text x="320" y="168" font-size="9" fill="#495057">4 addView</text>
+  <line x1="310" y1="170" x2="453" y2="170" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+
+  <!-- 5. setView -->
+  <text x="465" y="198" font-size="9" fill="#495057">5 setView</text>
+  <line x1="455" y1="200" x2="588" y2="200" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+
+  <!-- 6. addToDisplayAsUser (Binder call) -->
+  <text x="600" y="228" font-size="9" fill="#495057">6 addToDisplayAsUser</text>
+  <line x1="590" y1="230" x2="713" y2="230" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr1d)"/>
+
+  <!-- 7. addWindow -->
+  <text x="725" y="258" font-size="9" fill="#495057">7 addWindow</text>
+  <line x1="715" y1="260" x2="838" y2="260" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+
+  <!-- 8. new WindowState -->
+  <text x="850" y="288" font-size="9" fill="#495057">8 new WindowState</text>
+  <line x1="840" y1="290" x2="978" y2="290" stroke="#555" stroke-width="1" marker-end="url(#arr1)"/>
+
+  <!-- Labels -->
+  <rect x="20" y="56" width="80" height="16" rx="2" fill="#eef1f5" stroke="none"/>
+  <text x="60" y="66" text-anchor="middle" font-size="8" fill="#4a7fb5">客户端 (App)</text>
+  <rect x="700" y="56" width="100" height="16" rx="2" fill="#fef8ee" stroke="none"/>
+  <text x="750" y="66" text-anchor="middle" font-size="8" fill="#856404">服务端 (system_server)</text>
+</svg>

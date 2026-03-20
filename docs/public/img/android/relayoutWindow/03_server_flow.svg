@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arr3r" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7,0 0,2.5 7,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="60" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="40" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">Session</text>
+  <rect x="90" y="10" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="155" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowManagerService</text>
+  <rect x="240" y="10" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="300" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowSurfacePlacer</text>
+  <rect x="380" y="10" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="445" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">RootWindowContainer</text>
+  <rect x="530" y="10" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="585" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">DisplayContent</text>
+  <rect x="680" y="10" width="90" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="725" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">DisplayPolicy</text>
+  <rect x="790" y="10" width="90" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="835" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowLayout</text>
+  <rect x="900" y="10" width="85" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="942" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowState</text>
+  <rect x="1010" y="10" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="1070" y="28" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">WindowStateAnimator</text>
+
+  <!-- Lifelines -->
+  <line x1="40" y1="38" x2="40" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="155" y1="38" x2="155" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="300" y1="38" x2="300" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="445" y1="38" x2="445" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="585" y1="38" x2="585" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="725" y1="38" x2="725" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="835" y1="38" x2="835" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="942" y1="38" x2="942" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="1070" y1="38" x2="1070" y2="800" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. relayoutWindow -->
+  <text x="50" y="63" font-size="9" fill="#495057">1 relayoutWindow</text>
+  <line x1="40" y1="65" x2="153" y2="65" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 2. createSurfaceControl -->
+  <rect x="100" y="72" width="110" height="18" rx="2" fill="#fff0f0" stroke="#e07070"/>
+  <text x="155" y="85" text-anchor="middle" font-size="8" fill="#c0392b">2 createSurfaceControl</text>
+  <path d="M 155,90 L 200,90 L 200,100 L 157,100" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 3. performSurfacePlacement -->
+  <text x="165" y="123" font-size="9" fill="#495057">3 performSurfacePlacement</text>
+  <line x1="155" y1="125" x2="298" y2="125" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 4. performSurfacePlacementLoop -->
+  <text x="205" y="148" font-size="9" fill="#495057">4 performSurfacePlacementLoop</text>
+  <path d="M 300,150 L 345,150 L 345,163 L 302,163" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 5. performSurfacePlacement (RWC) -->
+  <text x="310" y="183" font-size="9" fill="#495057">5 performSurfacePlacement</text>
+  <line x1="300" y1="185" x2="443" y2="185" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 6. performSurfacePlacementNoTrace -->
+  <text x="355" y="208" font-size="9" fill="#495057">6 performSurfacePlacementNoTrace</text>
+  <path d="M 445,210 L 490,210 L 490,223 L 447,223" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 7. applySurfaceChangesTransaction (RWC) -->
+  <text x="455" y="243" font-size="9" fill="#495057">7 applySurfaceChangesTransaction</text>
+  <path d="M 445,245 L 490,245 L 490,258 L 447,258" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 8. applySurfaceChangesTransaction (DC) -->
+  <text x="455" y="278" font-size="9" fill="#495057">8 applySurfaceChangesTransaction</text>
+  <line x1="445" y1="280" x2="583" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- Phase: 布局计算 -->
+  <rect x="540" y="293" width="80" height="18" rx="2" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="580" y="305" text-anchor="middle" font-size="8" fill="#2e7d32">执行布局</text>
+
+  <!-- 9. performLayout -->
+  <text x="595" y="323" font-size="9" fill="#495057">9 performLayout</text>
+  <path d="M 585,325 L 630,325 L 630,338 L 587,338" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 10. forAllWindows(mPerformLayout) -->
+  <text x="595" y="358" font-size="8.5" fill="#495057">10 forAllWindows(mPerformLayout)</text>
+  <path d="M 585,360 L 635,360 L 635,373 L 587,373" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+  <rect x="540" y="378" width="90" height="15" rx="2" fill="#f8f9fa" stroke="none"/>
+  <text x="585" y="389" text-anchor="middle" font-size="7.5" fill="#868e96">对所有顶级窗口布局</text>
+
+  <!-- 11. forAllWindows(mPerformLayoutAttached) -->
+  <text x="595" y="408" font-size="8.5" fill="#495057">11 forAllWindows(mPerformLayoutAttached)</text>
+  <path d="M 585,410 L 635,410 L 635,423 L 587,423" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+  <rect x="540" y="428" width="90" height="15" rx="2" fill="#f8f9fa" stroke="none"/>
+  <text x="585" y="439" text-anchor="middle" font-size="7.5" fill="#868e96">处理子窗口布局</text>
+
+  <!-- 12. layoutWindowLw -->
+  <text x="595" y="458" font-size="9" fill="#495057">12 layoutWindowLw</text>
+  <line x1="585" y1="460" x2="723" y2="460" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 13. computeFrames -->
+  <text x="735" y="478" font-size="9" fill="#495057">13 computeFrames</text>
+  <line x1="725" y1="480" x2="833" y2="480" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+  <rect x="760" y="485" width="100" height="15" rx="2" fill="#fff0f0" stroke="none"/>
+  <text x="810" y="496" text-anchor="middle" font-size="7.5" fill="#c0392b">计算窗口布局大小</text>
+
+  <!-- 14. setFrames -->
+  <text x="735" y="516" font-size="9" fill="#495057">14 setFrames</text>
+  <line x1="725" y1="518" x2="940" y2="518" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+  <rect x="840" y="523" width="130" height="15" rx="2" fill="#f8f9fa" stroke="none"/>
+  <text x="905" y="534" text-anchor="middle" font-size="7.5" fill="#868e96">将布局参数赋值给 windowFrames</text>
+
+  <!-- Phase: PostLayoutPolicy -->
+  <rect x="540" y="548" width="80" height="18" rx="2" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="580" y="560" text-anchor="middle" font-size="8" fill="#2e7d32">策略应用</text>
+
+  <!-- 15. beginPostLayoutPolicyLw -->
+  <text x="595" y="580" font-size="8.5" fill="#495057">15 beginPostLayoutPolicyLw</text>
+  <line x1="585" y1="582" x2="723" y2="582" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 16. applyPostLayoutPolicyLw -->
+  <text x="595" y="605" font-size="8.5" fill="#495057">16 applyPostLayoutPolicyLw</text>
+  <line x1="585" y1="607" x2="723" y2="607" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 17. finishPostLayoutPolicyLw -->
+  <text x="595" y="630" font-size="8.5" fill="#495057">17 finishPostLayoutPolicyLw</text>
+  <line x1="585" y1="632" x2="723" y2="632" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- Phase: Surface状态变更 -->
+  <rect x="540" y="648" width="80" height="18" rx="2" fill="#fff0f0" stroke="#e07070"/>
+  <text x="580" y="660" text-anchor="middle" font-size="8" fill="#c0392b">Surface 状态</text>
+
+  <!-- 18. forAllWindows(mApplySurfaceChangesTransaction) -->
+  <text x="440" y="680" font-size="8.5" fill="#495057">18 forAllWindows(mApplySurfaceChangesTransaction)</text>
+  <path d="M 585,682 L 635,682 L 635,695 L 587,695" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- 19. commitFinishDrawingLocked -->
+  <text x="595" y="715" font-size="8.5" fill="#495057">19 commitFinishDrawingLocked</text>
+  <line x1="585" y1="717" x2="1068" y2="717" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+  <rect x="980" y="722" width="120" height="15" rx="2" fill="#fff0f0" stroke="none"/>
+  <text x="1040" y="733" text-anchor="middle" font-size="7.5" fill="#c0392b">READY_TO_SHOW</text>
+
+  <!-- 20. prepareSurfaces -->
+  <text x="595" y="753" font-size="9" fill="#495057">20 prepareSurfaces</text>
+  <path d="M 585,755 L 630,755 L 630,768 L 587,768" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr3)"/>
+
+  <!-- Show Surface label -->
+  <rect x="540" y="778" width="90" height="18" rx="2" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="585" y="790" text-anchor="middle" font-size="8" fill="#2e7d32">Show Surface</text>
+</svg>

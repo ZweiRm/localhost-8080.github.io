@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arr2d" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="30" y="10" width="130" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="95" y="28" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">WindowManagerGlobal</text>
+  <rect x="185" y="10" width="100" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="235" y="28" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">ViewRootImpl</text>
+  <rect x="340" y="10" width="80" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="380" y="28" text-anchor="middle" font-size="10" fill="#343a40" font-weight="600">Session</text>
+
+  <!-- Lifelines -->
+  <line x1="95" y1="38" x2="95" y2="500" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="235" y1="38" x2="235" y2="500" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="380" y1="38" x2="380" y2="500" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. setView -->
+  <text x="105" y="68" font-size="9.5" fill="#495057">1 setView</text>
+  <line x1="95" y1="70" x2="233" y2="70" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- 2. requestLayout (self call) -->
+  <text x="245" y="98" font-size="9.5" fill="#495057">2 requestLayout</text>
+  <path d="M 235,100 L 280,100 L 280,115 L 237,115" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- 3. scheduleTraversals -->
+  <text x="245" y="138" font-size="9.5" fill="#495057">3 scheduleTraversals</text>
+  <path d="M 235,140 L 280,140 L 280,155 L 237,155" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- Choreographer note -->
+  <rect x="290" y="145" width="140" height="20" rx="2" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="360" y="158" text-anchor="middle" font-size="8" fill="#868e96">通过 Choreographer 回调</text>
+
+  <!-- 4. TraversalRunnable.run -->
+  <text x="245" y="188" font-size="9.5" fill="#495057">4 TraversalRunnable.run</text>
+  <path d="M 235,190 L 280,190 L 280,205 L 237,205" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- 5. doTraversal -->
+  <text x="245" y="228" font-size="9.5" fill="#495057">5 doTraversal</text>
+  <path d="M 235,230 L 280,230 L 280,245 L 237,245" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- 6. performTraversals -->
+  <text x="245" y="268" font-size="9.5" fill="#495057">6 performTraversals</text>
+  <path d="M 235,270 L 280,270 L 280,285 L 237,285" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- View绘制流程 note -->
+  <rect x="60" y="278" width="100" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="110" y="293" text-anchor="middle" font-size="9" fill="#2e7d32">View 绘制流程</text>
+
+  <!-- 7. relayoutWindow -->
+  <text x="245" y="318" font-size="9.5" fill="#495057">7 relayoutWindow</text>
+  <path d="M 235,320 L 280,320 L 280,335 L 237,335" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr2)"/>
+
+  <!-- Binder boundary -->
+  <line x1="315" y1="340" x2="315" y2="430" stroke="#e07070" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="318" y="350" font-size="7" fill="#e07070">Binder</text>
+
+  <!-- 8. relayout -->
+  <text x="245" y="368" font-size="9.5" fill="#495057">8 relayout</text>
+  <line x1="235" y1="370" x2="378" y2="370" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr2d)"/>
+  <rect x="325" y="372" width="110" height="18" rx="2" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="380" y="385" text-anchor="middle" font-size="8" fill="#856404">通过 Session 与服务端通信</text>
+
+  <!-- 9. addToDisplayAsUser -->
+  <text x="245" y="418" font-size="9.5" fill="#495057">9 addToDisplayAsUser</text>
+  <line x1="235" y1="420" x2="378" y2="420" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr2d)"/>
+  <rect x="325" y="425" width="90" height="18" rx="2" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="370" y="437" text-anchor="middle" font-size="8" fill="#856404">窗口添加操作</text>
+
+  <!-- Phase labels -->
+  <rect x="10" y="55" width="55" height="400" rx="3" fill="none" stroke="#4a7fb5" stroke-dasharray="4,3"/>
+  <text x="20" y="255" font-size="8" fill="#4a7fb5" transform="rotate(-90,20,255)">客户端（App 进程）</text>
+</svg>

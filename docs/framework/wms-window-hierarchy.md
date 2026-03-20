@@ -3,8 +3,8 @@ prev:
     text: 'WMS - 窗口添加和移除'
     link: '/framework/window-add-remove'
 next:
-    text: 'ViewRootImpl 中 performTraversal() 梳理'
-    link: '/framework/performTraversal'
+    text: 'WMS 窗口布局流程 relayoutWindow'
+    link: '/framework/relayoutWindow'
 ---
 
 # WMS 窗口层级管理
