@@ -11,8 +11,6 @@ next:
 
 ## 背景
 
-> WindowManager controls window objects, which are containers for view objects. Window objects are always backed by surface objects. WindowManager oversees lifecycles, input and focus events, screen orientation, transitions, animations, position, transforms, z-order, and many other aspects of a window. WindowManager sends all of the window metadata to SurfaceFlinger so SurfaceFlinger can use that data to composite surfaces on the display.
-
 Android 的窗口系统由 WindowManagerService（WMS）管理，主要负责调度和控制 Window 对象，Window 同时也包含多个 View 对象。WMS 的职责还包含窗口生命周期（创建添加、移除窗口），确定窗口位置和大小，以及窗口切换和动画功能。
 
 本文档的主要内容围绕 WMS 对窗口添加和移除的窗口生命周期流程的介绍。
@@ -215,8 +213,6 @@ public void removeView(View view, boolean immediate) {
 }
 ```
 
----
-
 ### WindowManager.addView 流程分析
 
 无论是 Activity 启动还是没有 Activity 的应用，创建窗口的流程本质是对 View 的管理：一方面需要获取 WindowManager 的实例，另一方面需要通过 `addView` 将 View 添加到 WMS，并在系统服务当中完成显示工作。
@@ -349,8 +345,6 @@ WindowManager 提供了关于软键盘模式的 Window 窗口处理方式：
 | `SOFT_INPUT_ADJUST_PAN` | 当软键盘弹出时，窗口不需要调整大小，要确保输入焦点是可见的 |
 
 软键盘模式设置方式：`getWindow().setSoftInputMode`
-
----
 
 #### 2. 窗口添加内部机制
 
@@ -668,8 +662,6 @@ public int addWindow(Session session, IWindow client, LayoutParams attrs,
 }
 ```
 
----
-
 ### WindowManager.removeView 流程分析
 
 ![removeView 时序图](/img/android/window-add-remove/06_removeview_sequence.svg)
@@ -878,8 +870,95 @@ void removeClientToken(Session session, IBinder client) {
 
 - **Activity 启动中的窗口创建**：大多数应用会去创建和启动一个 Activity，一个 Activity 需要包含对 Window 的创建，这过程涉及 Activity、Window 以及 WindowManager 的关联，并且通过 `Activity#setContentView` 去创建 DecorView 给到当前的 Window 内，从而进一步实现窗口和 View 的联系。
 
-- **无 Activity 的应用服务的窗口创建**：另一种少数应用不存在 Activity，可能是一个 Service，通过 `getSystemService` 获取 WindowManager 的实例，并且设置 LayoutParams 的窗口属性等，最后通过 `addView` 之间添加窗口。
+- **无 Activity 的应用服务的窗口创建**：另一种少数应用不存在 Activity，可能是一个 Service，通过 `getSystemService` 获取 WindowManager 的实例，并且设置 LayoutParams 的窗口属性等，最后通过 `addView` 添加窗口。
 
-- **Toast 的窗口创建**
+### Toast 的窗口创建
 
-- **Dialog 的窗口创建**
+Toast 的窗口创建与普通 `addView` 不同，它需要经过 `NotificationManagerService`（NMS）的中转。
+
+> 源码入口：`Toast.java` 行 198
+
+![Toast 窗口创建流程](/img/android/window-add-remove/07_toast_window_flow.svg)
+
+**关键步骤：**
+
+1. **Toast.show()**：不直接调用 `WindowManager.addView`，而是通过 IPC 调用 `INotificationManager.enqueueToast()`，将 Toast 请求交给系统服务 NMS。
+
+2. **NMS.enqueueToast()**：NMS 首先通过 `mWindowManagerInternal.addWindowToken(windowToken, TYPE_TOAST, displayId)` 在 WMS 中预注册一个 `TYPE_TOAST` 类型的 WindowToken，然后将 Toast 加入显示队列。
+
+3. **NMS.showNextToastLocked()**：从队列中取出第一个 Toast，通过 `ITransientNotification.show(windowToken)` 回调通知 APP 进程显示。
+
+4. **TN.handleShow()**：APP 进程中的 `TN`（Toast 的内部 Binder 回调类）收到通知后，调用 `ToastPresenter.show()` 开始实际的窗口添加。
+
+5. **ToastPresenter.createLayoutParams()**：创建 Toast 专用的窗口参数：
+
+```java
+// ToastPresenter.java 行 145
+WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+params.format = PixelFormat.TRANSLUCENT;
+params.windowAnimations = R.style.Animation_Toast;
+params.type = WindowManager.LayoutParams.TYPE_TOAST;
+params.setTitle("Toast");
+params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+        | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
+```
+
+6. **ToastPresenter.addToastView()**：调用 `windowManager.addView(mView, mParams)`，后续走标准的 `WindowManagerImpl` → `WindowManagerGlobal` → `ViewRootImpl` → `WMS.addWindow` 流程。
+
+**Toast 与普通窗口的关键区别：**
+- 窗口类型为 `TYPE_TOAST`（系统窗口，值 2005）
+- WindowToken 由 NMS 预先在 WMS 中注册，而非由应用自行创建
+- 默认不可获取焦点（`FLAG_NOT_FOCUSABLE`）且不可触摸（`FLAG_NOT_TOUCHABLE`）
+- NMS 会为 Toast 设置超时自动隐藏（`hideTimeoutMilliseconds`）
+
+### Dialog 的窗口创建
+
+Dialog 拥有自己的 `PhoneWindow` 和 `DecorView`，其窗口创建流程比较直接。
+
+> 源码入口：`Dialog.java` 行 207（构造），行 325（show）
+
+![Dialog 窗口创建流程](/img/android/window-add-remove/08_dialog_window_flow.svg)
+
+**构造阶段**（`new Dialog(context)`）：
+
+```java
+// Dialog.java 行 207-235
+mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+final Window w = new PhoneWindow(mContext);
+mWindow = w;
+w.setCallback(this);
+w.setWindowManager(mWindowManager, null, null);  // 创建绑定到此 Window 的本地 WM
+w.setGravity(Gravity.CENTER);
+```
+
+Dialog 在构造时就创建了自己的 `PhoneWindow`，并通过 `setWindowManager` 创建了一个绑定到该 Window 的本地 `WindowManagerImpl`（`createLocalWindowManager(this)`），这样后续 `addView` 时 `mParentWindow` 就指向 Dialog 自己的 Window。
+
+**show() 阶段**（`dialog.show()`）：
+
+1. **dispatchOnCreate()**：如果是首次显示，触发 `Dialog.onCreate()`，应用在此时调用 `setContentView` 设置 Dialog 内容。
+
+2. **mWindow.getDecorView()**：获取或创建 DecorView。如果 DecorView 尚未创建，`PhoneWindow` 会通过 `installDecor()` → `generateDecor()` 创建 `DecorView` 实例，并通过 `generateLayout()` 加载窗口布局。
+
+3. **mWindow.getAttributes()**：获取窗口参数，Dialog 的默认窗口类型为 `TYPE_APPLICATION`（值 2）。
+
+4. **mWindowManager.addView(mDecor, l)**：将 DecorView 添加到窗口管理器，后续走标准的 `WindowManagerImpl` → `WindowManagerGlobal` → `ViewRootImpl` → `WMS.addWindow` 流程。
+
+```java
+// Dialog.java 行 325-375 (show 方法关键逻辑)
+if (!mCreated) {
+    dispatchOnCreate(null);
+}
+mDecor = mWindow.getDecorView();
+WindowManager.LayoutParams l = mWindow.getAttributes();
+mWindowManager.addView(mDecor, l);
+mShowing = true;
+```
+
+**Dialog 与 Activity 窗口的关键区别：**
+- Dialog 拥有独立的 `PhoneWindow`，不共享 Activity 的 Window
+- Dialog 的窗口类型默认为 `TYPE_APPLICATION`（与 Activity 相同），而非特殊类型
+- Dialog 的 WindowToken 来自其关联的 Activity（通过 `parentWindow.adjustLayoutParamsForSubWindow` 设置），因此 Dialog 依赖于 Activity 的存在
+- Dialog 直接调用 `WindowManager.addView`，不经过 NMS 等系统服务中转

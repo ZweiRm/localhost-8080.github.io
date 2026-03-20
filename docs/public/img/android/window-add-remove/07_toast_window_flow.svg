@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a7" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Process boundaries -->
+  <rect x="5" y="35" width="350" height="355" rx="3" fill="#f8f9fa" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="180" y="52" text-anchor="middle" font-size="9" fill="#868e96">APP 进程</text>
+
+  <rect x="370" y="35" width="195" height="355" rx="3" fill="#fef8ee" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="467" y="52" text-anchor="middle" font-size="9" fill="#868e96">system_server 进程</text>
+
+  <rect x="580" y="35" width="190" height="355" rx="3" fill="#f8f9fa" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="675" y="52" text-anchor="middle" font-size="9" fill="#868e96">APP 进程 (回调)</text>
+
+  <!-- Step 1: Toast.show() -->
+  <rect x="20" y="70" width="140" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="90" y="91" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Toast.show()</text>
+
+  <!-- Arrow to NMS -->
+  <line x1="160" y1="86" x2="385" y2="86" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+  <text x="272" y="80" text-anchor="middle" font-size="8.5" fill="#495057">IPC: enqueueToast()</text>
+
+  <!-- Step 2: NMS -->
+  <rect x="390" y="70" width="160" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="470" y="91" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">NMS.enqueueToast()</text>
+
+  <!-- Step 2a: addWindowToken -->
+  <rect x="390" y="118" width="160" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="470" y="135" text-anchor="middle" font-size="8.5" fill="#495057">addWindowToken(</text>
+  <text x="470" y="148" text-anchor="middle" font-size="8.5" fill="#495057">token, TYPE_TOAST)</text>
+  <line x1="470" y1="102" x2="470" y2="118" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+
+  <!-- Step 3: showNextToastLocked -->
+  <rect x="390" y="174" width="160" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="470" y="194" text-anchor="middle" font-size="9" fill="#495057">showNextToastLocked()</text>
+  <line x1="470" y1="158" x2="470" y2="174" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+
+  <!-- Step 4: callback.show -->
+  <line x1="550" y1="190" x2="595" y2="190" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+  <text x="573" y="184" text-anchor="middle" font-size="7.5" fill="#868e96">IPC</text>
+
+  <!-- Step 5: TN.show/handleShow -->
+  <rect x="600" y="174" width="155" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="677" y="194" text-anchor="middle" font-size="9" fill="#495057">TN.handleShow()</text>
+
+  <!-- Step 6: ToastPresenter.show -->
+  <rect x="600" y="222" width="155" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="677" y="242" text-anchor="middle" font-size="9" fill="#495057">ToastPresenter.show()</text>
+  <line x1="677" y1="206" x2="677" y2="222" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+
+  <!-- Step 6a: createLayoutParams -->
+  <rect x="600" y="268" width="155" height="45" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
+  <text x="677" y="283" text-anchor="middle" font-size="8.5" fill="#c0392b">createLayoutParams()</text>
+  <text x="677" y="296" text-anchor="middle" font-size="8" fill="#495057">type = TYPE_TOAST</text>
+  <text x="677" y="308" text-anchor="middle" font-size="8" fill="#495057">NOT_FOCUSABLE | NOT_TOUCHABLE</text>
+  <line x1="677" y1="254" x2="677" y2="268" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+
+  <!-- Step 7: WM.addView -->
+  <rect x="600" y="328" width="155" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="677" y="348" text-anchor="middle" font-size="9" fill="#495057">WM.addView(view, params)</text>
+  <line x1="677" y1="313" x2="677" y2="328" stroke="#555" stroke-width="1" marker-end="url(#a7)"/>
+
+  <!-- Step 8: standard path -->
+  <line x1="600" y1="344" x2="165" y2="344" stroke="#868e96" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#a7)"/>
+  <text x="382" y="338" text-anchor="middle" font-size="8" fill="#868e96">后续走 addView 标准流程 → WMS.addWindow</text>
+
+  <!-- Standard path boxes (small) -->
+  <rect x="20" y="328" width="130" height="50" rx="3" fill="white" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="85" y="346" text-anchor="middle" font-size="8" fill="#495057">WindowManagerImpl</text>
+  <text x="85" y="358" text-anchor="middle" font-size="8" fill="#495057">→ WMGlobal</text>
+  <text x="85" y="370" text-anchor="middle" font-size="8" fill="#495057">→ ViewRootImpl → WMS</text>
+</svg>

@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a8" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title area -->
+  <text x="340" y="20" text-anchor="middle" font-size="9" fill="#868e96">全部在 APP 进程内完成，最后跨进程调用 WMS</text>
+
+  <!-- Phase 1: Constructor -->
+  <rect x="15" y="35" width="310" height="130" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="170" y="52" text-anchor="middle" font-size="9" fill="#868e96">Dialog 构造阶段</text>
+
+  <rect x="30" y="62" width="130" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="95" y="81" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">new Dialog(ctx)</text>
+
+  <line x1="160" y1="76" x2="185" y2="76" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="190" y="62" width="120" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="250" y="81" text-anchor="middle" font-size="8.5" fill="#495057">new PhoneWindow()</text>
+
+  <rect x="30" y="105" width="130" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="95" y="124" text-anchor="middle" font-size="8.5" fill="#495057">getSystemService()</text>
+
+  <line x1="160" y1="119" x2="185" y2="119" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="190" y="105" width="120" height="42" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="250" y="122" text-anchor="middle" font-size="8.5" fill="#495057">setWindowManager()</text>
+  <text x="250" y="138" text-anchor="middle" font-size="8" fill="#868e96">→ createLocalWM</text>
+
+  <!-- Phase 2: show() -->
+  <rect x="15" y="185" width="650" height="220" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="340" y="202" text-anchor="middle" font-size="9" fill="#868e96">Dialog.show() 执行阶段</text>
+
+  <!-- Step 1: dispatchOnCreate -->
+  <rect x="30" y="215" width="130" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="95" y="234" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Dialog.show()</text>
+
+  <line x1="95" y1="243" x2="95" y2="260" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="30" y="262" width="130" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="95" y="281" text-anchor="middle" font-size="8.5" fill="#495057">dispatchOnCreate()</text>
+
+  <!-- Step 2: getDecorView -->
+  <line x1="160" y1="276" x2="185" y2="276" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="190" y="262" width="140" height="42" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="260" y="279" text-anchor="middle" font-size="8.5" fill="#495057">mWindow.getDecorView()</text>
+  <text x="260" y="296" text-anchor="middle" font-size="8" fill="#868e96">→ installDecor → generateDecor</text>
+
+  <!-- Step 3: getAttributes -->
+  <line x1="260" y1="304" x2="260" y2="322" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="190" y="324" width="140" height="35" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
+  <text x="260" y="339" text-anchor="middle" font-size="8.5" fill="#c0392b">getAttributes()</text>
+  <text x="260" y="352" text-anchor="middle" font-size="8" fill="#495057">type = TYPE_APPLICATION</text>
+
+  <!-- Step 4: addView -->
+  <line x1="330" y1="341" x2="370" y2="341" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="375" y="215" width="140" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="445" y="235" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WM.addView(decor, l)</text>
+
+  <!-- Arrow down to standard path -->
+  <line x1="445" y1="247" x2="445" y2="270" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="375" y="272" width="140" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="445" y="291" text-anchor="middle" font-size="8.5" fill="#495057">WindowManagerGlobal</text>
+
+  <line x1="445" y1="300" x2="445" y2="318" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <rect x="375" y="320" width="140" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="445" y="339" text-anchor="middle" font-size="8.5" fill="#495057">ViewRootImpl.setView()</text>
+
+  <line x1="445" y1="348" x2="445" y2="368" stroke="#555" stroke-width="1" marker-end="url(#a8)"/>
+
+  <!-- WMS -->
+  <rect x="375" y="370" width="140" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="445" y="389" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WMS.addWindow</text>
+  <text x="530" y="389" font-size="8" fill="#868e96">IPC</text>
+
+  <!-- Note: Dialog holds PhoneWindow -->
+  <rect x="380" y="60" width="270" height="95" rx="3" fill="white" stroke="#ced4da" stroke-width="1"/>
+  <text x="515" y="78" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Dialog 持有关系</text>
+  <text x="395" y="96" font-size="9" fill="#495057">Dialog</text>
+  <text x="395" y="112" font-size="9" fill="#495057">  └─ mWindow: PhoneWindow</text>
+  <text x="395" y="128" font-size="9" fill="#495057">       └─ mDecor: DecorView</text>
+  <text x="395" y="144" font-size="9" fill="#495057">  └─ mWindowManager: WindowManagerImpl</text>
+</svg>
