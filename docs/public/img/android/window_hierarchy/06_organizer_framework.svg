@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="oa" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- App / SystemUI Process -->
+  <rect x="10" y="10" width="350" height="320" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="20" y="28" font-size="10" fill="#4a7fb5" font-weight="600">App / SystemUI Process (API 层)</text>
+
+  <!-- system_server Process -->
+  <rect x="400" y="10" width="350" height="320" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="410" y="28" font-size="10" fill="#868e96" font-weight="600">system_server (服务层)</text>
+
+  <!-- WindowOrganizer -->
+  <rect x="30" y="50" width="160" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="110" y="73" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowOrganizer</text>
+
+  <!-- DisplayAreaOrganizer -->
+  <rect x="30" y="110" width="160" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="110" y="128" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaOrganizer</text>
+  <text x="110" y="145" font-size="8" fill="#868e96" text-anchor="middle">registerOrganizer(featureId)</text>
+  <text x="110" y="155" font-size="8" fill="#868e96" text-anchor="middle">extends WindowOrganizer</text>
+  <line x1="110" y1="86" x2="110" y2="110" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+
+  <!-- DisplayAreaAppearedInfo -->
+  <rect x="30" y="190" width="160" height="42" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="110" y="208" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaAppearedInfo</text>
+  <text x="110" y="224" font-size="8" fill="#868e96" text-anchor="middle">DisplayAreaInfo + SurfaceControl</text>
+  <line x1="110" y1="160" x2="110" y2="190" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+  <text x="120" y="178" font-size="7" fill="#868e96">onDisplayAreaAppeared()</text>
+
+  <!-- Concrete organizer -->
+  <rect x="30" y="260" width="310" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="185" y="278" font-size="9" fill="#2e7d32" font-weight="600" text-anchor="middle">OneHandedDisplayAreaOrganizer</text>
+  <text x="185" y="295" font-size="8" fill="#868e96" text-anchor="middle">管理 FEATURE_ONE_HANDED 的 DisplayArea</text>
+  <line x1="110" y1="232" x2="185" y2="260" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+
+  <!-- AIDL interfaces -->
+  <rect x="230" y="50" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="3,2"/>
+  <text x="290" y="64" font-size="8" fill="#343a40" text-anchor="middle">IWindowOrganizer</text>
+  <text x="290" y="77" font-size="8" fill="#343a40" text-anchor="middle">Controller (AIDL)</text>
+
+  <rect x="230" y="110" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="3,2"/>
+  <text x="290" y="124" font-size="8" fill="#343a40" text-anchor="middle">IDisplayAreaOrganizer</text>
+  <text x="290" y="137" font-size="8" fill="#343a40" text-anchor="middle">Controller (AIDL)</text>
+
+  <rect x="230" y="170" width="120" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="3,2"/>
+  <text x="290" y="189" font-size="8" fill="#343a40" text-anchor="middle">IDisplayAreaOrganizer</text>
+
+  <!-- Server-side -->
+  <rect x="420" y="50" width="180" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="510" y="73" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">WindowOrganizerController</text>
+
+  <rect x="420" y="110" width="180" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="510" y="128" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaOrganizerController</text>
+  <text x="510" y="145" font-size="8" fill="#868e96" text-anchor="middle">register / unregister</text>
+  <line x1="510" y1="86" x2="510" y2="110" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+
+  <!-- DisplayArea (server) -->
+  <rect x="420" y="190" width="180" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="510" y="213" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayArea (Feature节点)</text>
+  <line x1="510" y1="160" x2="510" y2="190" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+
+  <!-- Cross-process arrows -->
+  <line x1="350" y1="68" x2="420" y2="68" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#oa)"/>
+  <line x1="350" y1="135" x2="420" y2="135" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#oa)"/>
+  <line x1="420" y1="185" x2="350" y2="185" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#oa)"/>
+  <text x="370" y="182" font-size="7" fill="#4a7fb5">callback</text>
+</svg>

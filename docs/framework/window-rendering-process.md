@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'WMS 窗口添加和移除'
-    link: 'framework/window-add-remove'
+    text: 'Activity 启动全流程分析与 Activity 生命周期'
+    link: 'framework/activity-launching-process'
 next:
-    text: 'performTraversal'
-    link: 'framework/performTraversal'
+    text: 'WMS - 窗口添加和移除'
+    link: 'framework/window-add-remove'
 ---
 
 # WMS 窗口显示流程

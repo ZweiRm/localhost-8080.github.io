@@ -195,6 +195,7 @@ export default defineConfig({
                 { text: 'Activity 启动全流程分析与 Activity 生命周期', link: 'framework/activity-launching-process' },
                 { text: 'WMS 窗口显示流程', link: 'framework/window-rendering-process' },
                 { text: 'WMS 窗口添加和移除', link: 'framework/window-add-remove' },
+                { text: 'WMS 窗口层级管理', link: 'framework/wms-window-hierarchy' },
                 { text: 'performTraversal', link: 'framework/performTraversal' },
                 { text: 'Android 12 容器层级', link: 'framework/container'},
                 { text: 'Android 16 新特性', link: 'framework/android16'},

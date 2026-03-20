@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Activity 启动流程'
-    link: '/framework/activity-launching-process'
+    text: 'WMS 窗口层级管理'
+    link: '/framework/wms-window-hierarchy'
 next:
     text: 'Android 12 容器层级'
     link: '/framework/container'

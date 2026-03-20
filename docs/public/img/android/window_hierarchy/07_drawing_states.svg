@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 120" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="da" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- States -->
+  <rect x="10" y="30" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="70" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">NO_SURFACE</text>
+  <text x="70" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 0</text>
+
+  <rect x="180" y="30" width="120" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="240" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">DRAW_PENDING</text>
+  <text x="240" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 1</text>
+
+  <rect x="350" y="30" width="150" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="425" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">COMMIT_DRAW_PENDING</text>
+  <text x="425" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 2</text>
+
+  <rect x="550" y="30" width="130" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="615" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">READY_TO_SHOW</text>
+  <text x="615" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 3</text>
+
+  <rect x="730" y="30" width="120" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="790" y="47" font-size="9.5" fill="#2e7d32" font-weight="600" text-anchor="middle">HAS_DRAWN</text>
+  <text x="790" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 4</text>
+
+  <!-- Arrows -->
+  <line x1="130" y1="48" x2="180" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+  <line x1="300" y1="48" x2="350" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+  <line x1="500" y1="48" x2="550" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+  <line x1="680" y1="48" x2="730" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- Transition labels -->
+  <text x="155" y="40" font-size="7" fill="#868e96" text-anchor="middle">relayout</text>
+  <text x="155" y="90" font-size="7" fill="#868e96" text-anchor="middle">createSurface</text>
+
+  <text x="325" y="40" font-size="7" fill="#868e96" text-anchor="middle">finish</text>
+  <text x="325" y="90" font-size="7" fill="#868e96" text-anchor="middle">Drawing</text>
+
+  <text x="525" y="40" font-size="7" fill="#868e96" text-anchor="middle">commit</text>
+  <text x="525" y="90" font-size="7" fill="#868e96" text-anchor="middle">FinishDrawing</text>
+
+  <text x="705" y="40" font-size="7" fill="#868e96" text-anchor="middle">perform</text>
+  <text x="705" y="90" font-size="7" fill="#868e96" text-anchor="middle">ShowLocked</text>
+</svg>

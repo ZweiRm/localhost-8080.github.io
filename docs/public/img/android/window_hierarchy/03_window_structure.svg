@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 300" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#4a7fb5"/>
+    </marker>
+  </defs>
+
+  <!-- App Process boundary -->
+  <rect x="10" y="10" width="400" height="280" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="20" y="28" font-size="10" fill="#4a7fb5" font-weight="600">App Process</text>
+
+  <!-- system_server boundary -->
+  <rect x="430" y="10" width="380" height="280" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="440" y="28" font-size="10" fill="#868e96" font-weight="600">system_server</text>
+
+  <!-- Activity -->
+  <rect x="30" y="50" width="120" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="90" y="73" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">Activity</text>
+
+  <!-- PhoneWindow -->
+  <rect x="30" y="110" width="120" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="90" y="133" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">PhoneWindow</text>
+  <line x1="90" y1="86" x2="90" y2="110" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="100" y="103" font-size="8" fill="#868e96">attach()</text>
+
+  <!-- DecorView -->
+  <rect x="30" y="170" width="120" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="90" y="193" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DecorView</text>
+  <line x1="90" y1="146" x2="90" y2="170" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="100" y="163" font-size="8" fill="#868e96">setContentView()</text>
+
+  <!-- ViewRootImpl -->
+  <rect x="200" y="110" width="140" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="270" y="133" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">ViewRootImpl</text>
+  <line x1="150" y1="188" x2="200" y2="133" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="185" y="158" font-size="8" fill="#868e96">onResume()</text>
+
+  <!-- IWindowSession / IWindow -->
+  <rect x="200" y="170" width="140" height="50" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="270" y="188" font-size="9" fill="#343a40" text-anchor="middle">IWindowSession →</text>
+  <text x="270" y="202" font-size="9" fill="#343a40" text-anchor="middle">← IWindow</text>
+  <text x="270" y="215" font-size="8" fill="#868e96" text-anchor="middle">Binder 双向通道</text>
+
+  <!-- Task -->
+  <rect x="460" y="50" width="120" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="520" y="73" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">Task</text>
+
+  <!-- ActivityRecord -->
+  <rect x="460" y="110" width="120" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="520" y="133" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">ActivityRecord</text>
+  <line x1="520" y1="86" x2="520" y2="110" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- WindowState -->
+  <rect x="460" y="170" width="120" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="520" y="193" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowState</text>
+  <line x1="520" y1="146" x2="520" y2="170" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- SurfaceControl -->
+  <rect x="460" y="240" width="120" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="520" y="263" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">SurfaceControl</text>
+  <line x1="520" y1="206" x2="520" y2="240" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- SurfaceFlinger -->
+  <rect x="640" y="240" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="700" y="263" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">SurfaceFlinger</text>
+  <line x1="580" y1="258" x2="640" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="610" y="252" font-size="8" fill="#868e96">Layer</text>
+
+  <!-- Connection arrows -->
+  <line x1="340" y1="195" x2="460" y2="188" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#a2)"/>
+</svg>
