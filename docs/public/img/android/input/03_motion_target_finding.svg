@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 850" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="340" y="25" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">findTouchedWindowTargetsLocked 流程</text>
+
+  <!-- Step 1: Get TouchState -->
+  <rect x="210" y="45" width="260" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="67" text-anchor="middle" font-size="9.5" fill="#495057">获取/创建 TouchState (tempTouchState)</text>
+  <line x1="340" y1="80" x2="340" y2="100" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 2: shouldSplitTouch -->
+  <rect x="210" y="100" width="260" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="122" text-anchor="middle" font-size="9.5" fill="#495057">判断是否需要 Split (shouldSplitTouch)</text>
+  <line x1="340" y1="135" x2="340" y2="155" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 3: Hover preprocessing -->
+  <rect x="210" y="155" width="260" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="177" text-anchor="middle" font-size="9.5" fill="#495057">Hover 事件前处理 (清除旧 hover 状态)</text>
+  <line x1="340" y1="190" x2="340" y2="210" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Decision: newGesture or split POINTER_DOWN? -->
+  <path d="M 340,210 L 460,245 L 340,280 L 220,245 Z" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="242" text-anchor="middle" font-size="8.5" fill="#495057">newGesture 或</text>
+  <text x="340" y="254" text-anchor="middle" font-size="8.5" fill="#495057">split POINTER_DOWN?</text>
+
+  <!-- Yes branch (Case 1) -->
+  <line x1="220" y1="245" x2="100" y2="245" stroke="#555" stroke-width="1"/>
+  <line x1="100" y1="245" x2="100" y2="310" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="155" y="240" font-size="8" fill="#2e7d32">Case 1: 是</text>
+
+  <!-- No branch (Case 2) -->
+  <line x1="460" y1="245" x2="560" y2="245" stroke="#555" stroke-width="1"/>
+  <line x1="560" y1="245" x2="560" y2="310" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="490" y="240" font-size="8" fill="#c0392b">Case 2: 否</text>
+
+  <!-- Case 1 steps -->
+  <rect x="15" y="310" width="170" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="100" y="330" text-anchor="middle" font-size="8.5" fill="#495057">计算坐标 (resolveTouchedPosition)</text>
+
+  <line x1="100" y1="340" x2="100" y2="355" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="15" y="355" width="170" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="100" y="375" text-anchor="middle" font-size="8.5" fill="#495057">命中测试 (findTouchedWindowAtLocked)</text>
+
+  <line x1="100" y1="385" x2="100" y2="400" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="15" y="400" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="100" y="420" text-anchor="middle" font-size="8.5" fill="#495057">寻找 OUTSIDE 窗口</text>
+
+  <line x1="100" y1="430" x2="100" y2="445" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="15" y="445" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="100" y="465" text-anchor="middle" font-size="8.5" fill="#495057">寻找 Spy 窗口</text>
+
+  <line x1="100" y1="475" x2="100" y2="490" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="15" y="490" width="170" height="35" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="100" y="505" text-anchor="middle" font-size="8.5" fill="#495057">校验窗口能否接收 Motion</text>
+  <text x="100" y="517" text-anchor="middle" font-size="7" fill="#868e96">遮挡/暂停/无Channel/手写笔</text>
+
+  <line x1="100" y1="525" x2="100" y2="540" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="15" y="540" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="100" y="560" text-anchor="middle" font-size="8.5" fill="#495057">添加到 TouchState + 壁纸</text>
+
+  <line x1="100" y1="570" x2="100" y2="585" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="15" y="585" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="100" y="605" text-anchor="middle" font-size="8.5" fill="#495057">窃取指针处理 (pilfering)</text>
+
+  <!-- Case 2 steps -->
+  <rect x="475" y="310" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="330" text-anchor="middle" font-size="8.5" fill="#495057">一致性检查 (isDown?)</text>
+
+  <line x1="560" y1="340" x2="560" y2="355" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="475" y="355" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="375" text-anchor="middle" font-size="8.5" fill="#495057">HOVER_EXIT 处理</text>
+
+  <line x1="560" y1="385" x2="560" y2="400" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="475" y="400" width="170" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="560" y="415" text-anchor="middle" font-size="8.5" fill="#495057">SLIPPERY 滑出处理</text>
+  <text x="560" y="427" text-anchor="middle" font-size="7" fill="#868e96">旧窗口 CANCEL / 新窗口 DOWN</text>
+
+  <line x1="560" y1="435" x2="560" y2="450" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="475" y="450" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="470" text-anchor="middle" font-size="8.5" fill="#495057">非 Split 的 POINTER_DOWN</text>
+
+  <!-- Merge point -->
+  <line x1="100" y1="615" x2="100" y2="640" stroke="#555" stroke-width="1"/>
+  <line x1="100" y1="640" x2="340" y2="640" stroke="#555" stroke-width="1"/>
+  <line x1="560" y1="480" x2="560" y2="640" stroke="#555" stroke-width="1"/>
+  <line x1="560" y1="640" x2="340" y2="640" stroke="#555" stroke-width="1"/>
+  <line x1="340" y1="640" x2="340" y2="660" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Post-merge steps -->
+  <rect x="210" y="660" width="260" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="680" text-anchor="middle" font-size="9.5" fill="#495057">Hover 派发模式计算 (ENTER/EXIT/AS_IS)</text>
+
+  <line x1="340" y1="690" x2="340" y2="710" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="210" y="710" width="260" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="730" text-anchor="middle" font-size="9.5" fill="#495057">注入验证 + OUTSIDE uid 检查</text>
+
+  <line x1="340" y1="740" x2="340" y2="760" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="210" y="760" width="260" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="340" y="780" text-anchor="middle" font-size="9.5" fill="#495057">TouchedWindow → InputTarget 转换</text>
+
+  <line x1="340" y1="790" x2="340" y2="810" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="210" y="810" width="260" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="340" y="830" text-anchor="middle" font-size="9.5" font-weight="600" fill="#2e7d32">状态清理 + 返回 InputTarget 列表</text>
+</svg>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <text x="300" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">多窗口事件派发 (按 touchableRegion)</text>
+
+  <!-- Z+ axis -->
+  <line x1="50" y1="340" x2="50" y2="55" stroke="#555" stroke-width="1" marker-end="url(#az)"/>
+  <text x="45" y="50" font-size="9" fill="#555">Z+</text>
+  <defs>
+    <marker id="az" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Note -->
+  <rect x="380" y="40" width="200" height="35" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="480" y="55" text-anchor="middle" font-size="9" fill="#495057">绘制的部分都是窗口的</text>
+  <text x="480" y="68" text-anchor="middle" font-size="9" fill="#495057" font-weight="600">touchableRegion</text>
+
+  <!-- Window 1 (top, pink) - parallelogram for 3D effect -->
+  <path d="M 130,80 L 350,80 L 400,120 L 180,120 Z" fill="rgba(255,180,180,0.85)" stroke="#e07070" stroke-width="1"/>
+  <text x="270" y="105" text-anchor="middle" font-size="10" fill="#495057">1号窗口</text>
+  <!-- Finger 1 -->
+  <text x="230" y="100" font-size="16">👆</text>
+  <text x="227" y="97" font-size="8" fill="#c0392b" font-weight="600">1</text>
+
+  <!-- Window 3 (middle-left, green-ish) - behind window 1 -->
+  <path d="M 80,160 L 320,160 L 370,240 L 130,240 Z" fill="rgba(200,220,200,0.7)" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="210" text-anchor="middle" font-size="10" fill="#495057">3号窗口</text>
+  <!-- Finger 3 -->
+  <text x="175" y="205" font-size="16">👆</text>
+  <text x="172" y="202" font-size="8" fill="#c0392b" font-weight="600">3</text>
+
+  <!-- Window 2 (middle-right, yellow) - partially overlapping with 3 -->
+  <path d="M 230,150 L 430,150 L 480,220 L 280,220 Z" fill="rgba(255,240,180,0.8)" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="195" text-anchor="middle" font-size="10" fill="#495057">2号窗口</text>
+  <!-- Finger 2 -->
+  <text x="360" y="185" font-size="16">👆</text>
+  <text x="357" y="182" font-size="8" fill="#c0392b" font-weight="600">2</text>
+
+  <!-- Window 4 (bottom, very pale green) - fully covered -->
+  <path d="M 70" y="270" />
+  <path d="M 70,270 L 450,270 L 500,310 L 120,310 Z" fill="rgba(200,230,200,0.5)" stroke="#adb5bd" stroke-width="1"/>
+  <text x="280" y="295" text-anchor="middle" font-size="10" fill="#868e96">4号窗口</text>
+
+  <!-- Dispatch explanation -->
+  <rect x="100" y="340" width="420" height="70" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="310" y="358" text-anchor="middle" font-size="9" fill="#495057">1号手指 → 命中 1号窗口 (最上层)</text>
+  <text x="310" y="374" text-anchor="middle" font-size="9" fill="#495057">2号手指 → 穿透 1号 → 命中 2号窗口</text>
+  <text x="310" y="390" text-anchor="middle" font-size="9" fill="#495057">3号手指 → 穿透 1号 → 命中 3号窗口</text>
+  <text x="310" y="406" text-anchor="middle" font-size="9" fill="#868e96">4号窗口被完全遮挡，理论上永远不可能收到事件</text>
+</svg>

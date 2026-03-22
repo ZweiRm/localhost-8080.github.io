@@ -36,7 +36,8 @@ export default defineConfig({
                 ]},
                 { text: 'Android Frameworks', items: [
                     { text: 'Window/Activity Mng Svc', link: '/framework/basic-with-wms'},
-                    { text: '动画', link: '/framework/'},
+                    { text: '动画', link: '/framework/ShellTransition'},
+                    { text: 'Input Mng Svc', link: '/framework/input-system'},
                     { text: '性能与稳定性', link: '/framework/'},
                     { text: '新特性与其他', link: '/framework/performTraversal'},
                 ]},
@@ -274,6 +275,13 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         { text: 'ShellTransition', link: 'framework/ShellTransition' },
+                    ]
+                },
+                {
+                    text: 'Input Mng Svc',
+                    collapsed: false,
+                    items: [
+                        { text: 'Android Input 系统', link: 'framework/input-system' },
                     ]
                 },
                 {

@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 360" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <text x="200" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Frame vs TouchableRegion</text>
+
+  <!-- Frame (blue rectangle, phone-like) -->
+  <rect x="80" y="45" width="240" height="280" rx="3" fill="#4a90d9"/>
+  <text x="200" y="130" text-anchor="middle" font-size="14" fill="white" opacity="0.7">Frame</text>
+
+  <!-- TouchableRegion (green L-shape, not matching Frame) -->
+  <!-- L-shape: top-left part + bottom-right part -->
+  <path d="M 80,175 L 80,325 L 320,325 L 320,175 L 200,175 L 200,45 L 80,45 Z" fill="rgba(76,175,80,0.0)"/>
+  <path d="M 160,180 L 320,180 L 320,325 L 80,325 L 80,180 L 160,180 Z" fill="rgba(76,175,80,0.75)" stroke="#2e7d32" stroke-width="1.5"/>
+  <path d="M 160,180 L 160,45 L 80,45 L 80,180 Z" fill="rgba(76,175,80,0.75)" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="220" y="270" text-anchor="middle" font-size="12" fill="white">Touchable Region</text>
+
+  <!-- Annotation lines -->
+  <text x="10" y="350" font-size="8.5" fill="#495057">Frame(蓝色) 和 TouchableRegion(绿色) 独立存在</text>
+  <text x="10" y="362" font-size="8.5" fill="#495057">事件派发按 TouchableRegion 判断，非 TouchableRegion</text>
+  <text x="10" y="374" font-size="8.5" fill="#495057">区域的点击会穿透到下方窗口</text>
+</svg>

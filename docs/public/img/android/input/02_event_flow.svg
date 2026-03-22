@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 280" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Phase labels -->
+  <text x="135" y="25" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">事件上报与读取</text>
+  <text x="400" y="25" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">事件派发</text>
+  <text x="665" y="25" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">事件接收与响应</text>
+
+  <!-- Phase separators -->
+  <line x1="265" y1="15" x2="265" y2="270" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="535" y1="15" x2="535" y2="270" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- Phase 1: Event Reporting & Reading -->
+  <rect x="20" y="45" width="110" height="40" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="75" y="62" text-anchor="middle" font-size="9" fill="#495057">硬件事件上报</text>
+  <text x="75" y="75" text-anchor="middle" font-size="8" fill="#868e96">/dev/input/eventX</text>
+
+  <line x1="130" y1="65" x2="155" y2="65" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="155" y="45" width="95" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="202" y="62" text-anchor="middle" font-size="9" fill="#495057">EventHub</text>
+  <text x="202" y="75" text-anchor="middle" font-size="8" fill="#868e96">epoll_wait + read</text>
+
+  <line x1="202" y1="85" x2="202" y2="110" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="215" y="102" font-size="7" fill="#868e96">RawEvent</text>
+
+  <rect x="140" y="110" width="120" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="200" y="127" text-anchor="middle" font-size="9" fill="#495057">InputReader</text>
+  <text x="200" y="140" text-anchor="middle" font-size="8" fill="#868e96">InputMapper 解析</text>
+
+  <line x1="200" y1="150" x2="200" y2="175" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="215" y="167" font-size="7" fill="#868e96">NotifyArgs</text>
+
+  <rect x="130" y="175" width="140" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="200" y="195" text-anchor="middle" font-size="9" fill="#495057">KeyEvent / MotionEvent</text>
+
+  <!-- Phase 2: Event Dispatch -->
+  <line x1="270" y1="190" x2="295" y2="190" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+
+  <rect x="295" y="45" width="110" height="40" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="350" y="62" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">InboundQueue</text>
+  <text x="350" y="75" text-anchor="middle" font-size="8" fill="#868e96">iq: 事件入队</text>
+
+  <line x1="350" y1="85" x2="350" y2="110" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="290" y="110" width="120" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="350" y="128" text-anchor="middle" font-size="9" fill="#495057">寻找派发目标</text>
+  <text x="350" y="142" text-anchor="middle" font-size="8" fill="#868e96">Key→焦点窗口</text>
+  <text x="350" y="154" text-anchor="middle" font-size="8" fill="#868e96">Motion→坐标命中</text>
+
+  <line x1="350" y1="160" x2="350" y2="180" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="295" y="180" width="110" height="40" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="350" y="197" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">OutboundQueue</text>
+  <text x="350" y="210" text-anchor="middle" font-size="8" fill="#868e96">oq: 写入 Channel</text>
+
+  <line x1="350" y1="220" x2="350" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="295" y="240" width="110" height="30" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="350" y="260" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">WaitQueue</text>
+
+  <!-- Window info from SF -->
+  <rect x="430" y="110" width="95" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="477" y="125" text-anchor="middle" font-size="8" fill="#495057">窗口信息</text>
+  <text x="477" y="137" text-anchor="middle" font-size="7" fill="#868e96">from SurfaceFlinger</text>
+  <line x1="430" y1="130" x2="410" y2="130" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Phase 3: Event Reception -->
+  <line x1="405" y1="200" x2="555" y2="200" stroke="#555" stroke-width="1.5" marker-end="url(#arr)"/>
+  <text x="480" y="195" font-size="7" fill="#868e96">InputMessage via Socket</text>
+
+  <rect x="555" y="45" width="120" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="615" y="62" text-anchor="middle" font-size="9" fill="#495057">InputConsumer</text>
+  <text x="615" y="75" text-anchor="middle" font-size="8" fill="#868e96">读取 InputMessage</text>
+
+  <rect x="555" y="110" width="120" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="615" y="127" text-anchor="middle" font-size="9" fill="#495057">InputEventReceiver</text>
+  <text x="615" y="140" text-anchor="middle" font-size="8" fill="#868e96">JNI → Java</text>
+
+  <rect x="555" y="175" width="120" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="615" y="192" text-anchor="middle" font-size="9" fill="#495057">ViewRootImpl</text>
+  <text x="615" y="205" text-anchor="middle" font-size="8" fill="#868e96">View Tree 派发</text>
+
+  <rect x="555" y="240" width="120" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="615" y="260" text-anchor="middle" font-size="9" fill="#495057">应用处理事件</text>
+
+  <line x1="615" y1="85" x2="615" y2="110" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="615" y1="150" x2="615" y2="175" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="615" y1="215" x2="615" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Finish signal back -->
+  <path d="M 615,270 L 615,278 L 350,278 L 350,270" fill="none" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr)"/>
+  <text x="480" y="276" font-size="7" fill="#868e96">finishInputEvent → 移除 wq</text>
+</svg>

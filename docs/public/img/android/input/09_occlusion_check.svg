@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 380" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a9" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="325" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">窗口遮挡检查机制</text>
+
+  <!-- Screen with stacked windows -->
+  <rect x="20" y="45" width="260" height="320" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="150" y="65" text-anchor="middle" font-size="9" fill="#868e96">窗口层级 (从上到下)</text>
+
+  <!-- Untrusted overlay -->
+  <rect x="40" y="80" width="220" height="50" rx="3" fill="rgba(255,240,240,0.7)" stroke="#e07070"/>
+  <text x="150" y="100" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">不受信任的透明窗口</text>
+  <text x="150" y="115" text-anchor="middle" font-size="7.5" fill="#868e96">uid=1001, alpha=0.8, NOT_TOUCHABLE</text>
+
+  <!-- Target window -->
+  <rect x="40" y="150" width="220" height="60" rx="3" fill="rgba(238,245,241,0.7)" stroke="#2e7d32"/>
+  <text x="150" y="175" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">目标窗口 (点击的位置)</text>
+  <text x="150" y="192" text-anchor="middle" font-size="7.5" fill="#868e96">uid=1002, 前台窗口</text>
+
+  <!-- Touch point -->
+  <circle cx="150" cy="140" r="6" fill="#c0392b" opacity="0.8"/>
+  <text x="150" y="143" text-anchor="middle" font-size="7" fill="white" font-weight="600">!</text>
+
+  <!-- Other windows -->
+  <rect x="40" y="230" width="220" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="150" y="255" text-anchor="middle" font-size="9" fill="#495057">Window C (uid=1002)</text>
+
+  <rect x="40" y="290" width="220" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="150" y="315" text-anchor="middle" font-size="9" fill="#868e96">Wallpaper</text>
+
+  <!-- Occlusion check flow -->
+  <rect x="320" y="45" width="310" height="320" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="475" y="67" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">遮挡判定逻辑</text>
+
+  <text x="340" y="92" font-size="9" fill="#495057" font-weight="600">canBeObscuredBy 条件 (全部满足):</text>
+  <text x="350" y="110" font-size="8.5" fill="#495057">1. 不是同一个窗口 (token 不同)</text>
+  <text x="350" y="126" font-size="8.5" fill="#495057">2. 窗口可见 (无 NOT_VISIBLE)</text>
+  <text x="350" y="142" font-size="8.5" fill="#495057">3. 若不可点击，透明度须 > 0</text>
+  <text x="350" y="158" font-size="8.5" fill="#495057">4. 不同 uid</text>
+  <text x="350" y="174" font-size="8.5" fill="#495057">5. 不是 TRUSTED_OVERLAY</text>
+  <text x="350" y="190" font-size="8.5" fill="#495057">6. 在同一个 Display 上</text>
+
+  <line x1="340" y1="202" x2="610" y2="202" stroke="#ced4da" stroke-width="0.5"/>
+
+  <text x="340" y="222" font-size="9" fill="#495057" font-weight="600">遮挡模式:</text>
+
+  <rect x="340" y="232" width="270" height="35" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="475" y="248" text-anchor="middle" font-size="8.5" fill="#c0392b" font-weight="600">BLOCK_UNTRUSTED</text>
+  <text x="475" y="261" text-anchor="middle" font-size="7.5" fill="#495057">直接阻止点击 → 事件被丢弃</text>
+
+  <rect x="340" y="278" width="270" height="45" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="475" y="294" text-anchor="middle" font-size="8.5" fill="#495057" font-weight="600">USE_OPACITY</text>
+  <text x="475" y="308" text-anchor="middle" font-size="7.5" fill="#495057">累计同 uid 全部遮挡窗口的不透明度</text>
+  <text x="475" y="320" text-anchor="middle" font-size="7.5" fill="#868e96">opacity(A,B) = 1 - (1-A) * (1-B)</text>
+
+  <text x="340" y="350" font-size="8.5" fill="#495057">超过 mMaximumObscuringOpacityForTouch</text>
+  <text x="340" y="363" font-size="8.5" fill="#c0392b">→ 点击不受信，事件被丢弃</text>
+</svg>

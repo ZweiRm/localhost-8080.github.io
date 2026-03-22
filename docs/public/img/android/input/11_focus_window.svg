@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 320" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <text x="250" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">焦点窗口查找</text>
+
+  <!-- 3D stacked windows -->
+  <!-- Window A (top-left, green, NOT_FOCUSABLE) -->
+  <path d="M 60,60 L 220,60 L 270,100 L 110,100 Z" fill="rgba(200,230,200,0.8)" stroke="#adb5bd" stroke-width="1"/>
+  <text x="160" y="78" text-anchor="middle" font-size="10" fill="#495057">A</text>
+  <text x="160" y="93" text-anchor="middle" font-size="8" fill="#868e96">NOT_FOCUSABLE</text>
+
+  <!-- Window B (lower-right, pink, NOT_VISIBLE) - dotted border -->
+  <path d="M 160,110 L 380,110 L 420,180 L 200,180 Z" fill="rgba(255,200,200,0.5)" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="290" y="140" text-anchor="middle" font-size="10" fill="#495057">B</text>
+  <text x="290" y="160" text-anchor="middle" font-size="8" fill="#868e96">NOT_VISIBLE</text>
+
+  <!-- Window C (small, dotted, middle) -->
+  <path d="M 180,125 L 280,125 L 310,155 L 210,155 Z" fill="rgba(255,255,255,0.3)" stroke="#555" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="245" y="143" text-anchor="middle" font-size="9" fill="#555">C</text>
+
+  <!-- Results -->
+  <rect x="40" y="210" width="420" height="100" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="250" y="232" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">焦点请求结果</text>
+  <text x="60" y="252" font-size="9" fill="#c0392b">为 A 请求焦点 → 失败 (NOT_FOCUSABLE，不可获得焦点)</text>
+  <text x="60" y="270" font-size="9" fill="#c0392b">为 B 请求焦点 → 失败 (NOT_VISIBLE，不可见)</text>
+  <text x="60" y="288" font-size="9" fill="#2e7d32" font-weight="600">为 C 请求焦点 → 成功 (可见 + 可获焦)</text>
+  <text x="60" y="306" font-size="9" fill="#868e96">为 D 请求焦点 → 失败 (窗口不存在于列表中)</text>
+</svg>

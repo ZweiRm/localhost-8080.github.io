@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 280" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a10" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a10r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#c0392b"/>
+    </marker>
+    <marker id="a10g" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <text x="325" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">SLIPPERY 机制 (手势滑出转移)</text>
+
+  <!-- Phase 1: Initial state -->
+  <rect x="20" y="45" width="180" height="220" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="110" y="65" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">阶段1: 初始状态</text>
+
+  <!-- Window A with SLIPPERY -->
+  <rect x="35" y="80" width="150" height="50" rx="3" fill="white" stroke="#e07070"/>
+  <text x="110" y="100" text-anchor="middle" font-size="8.5" fill="#495057">窗口 A (桌面)</text>
+  <text x="110" y="115" text-anchor="middle" font-size="7" fill="#c0392b">FLAG_SLIPPERY</text>
+
+  <!-- Window B (not yet visible) -->
+  <rect x="35" y="145" width="150" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-dasharray="3,2"/>
+  <text x="110" y="170" text-anchor="middle" font-size="8.5" fill="#868e96">窗口 B (通知栏)</text>
+  <text x="110" y="185" text-anchor="middle" font-size="7" fill="#868e96">尚未出现</text>
+
+  <!-- Finger on A -->
+  <circle cx="110" cy="100" r="5" fill="#c0392b" opacity="0.8"/>
+  <text x="110" y="230" text-anchor="middle" font-size="8" fill="#495057">手指在 A 上下滑</text>
+  <path d="M 110,105 L 110,135" fill="none" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3,2" marker-end="url(#a10r)"/>
+
+  <!-- Phase 2: Transition -->
+  <rect x="230" y="45" width="180" height="220" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="320" y="65" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">阶段2: 手势转移</text>
+
+  <rect x="245" y="80" width="150" height="50" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="320" y="100" text-anchor="middle" font-size="8.5" fill="#c0392b">窗口 A → CANCEL</text>
+  <text x="320" y="115" text-anchor="middle" font-size="7" fill="#868e96">SLIPPERY_EXIT</text>
+
+  <rect x="245" y="145" width="150" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="320" y="165" text-anchor="middle" font-size="8.5" fill="#2e7d32">窗口 B → DOWN</text>
+  <text x="320" y="180" text-anchor="middle" font-size="7" fill="#868e96">SLIPPERY_ENTER</text>
+
+  <!-- Finger moving to B -->
+  <circle cx="320" cy="155" r="5" fill="#2e7d32" opacity="0.8"/>
+  <text x="320" y="230" text-anchor="middle" font-size="8" fill="#495057">MOVE 落入 B 的区域</text>
+
+  <!-- Phase 3: After -->
+  <rect x="440" y="45" width="180" height="220" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="530" y="65" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">阶段3: 后续事件</text>
+
+  <rect x="455" y="80" width="150" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-dasharray="3,2"/>
+  <text x="530" y="105" text-anchor="middle" font-size="8.5" fill="#868e96">窗口 A 不再接收事件</text>
+
+  <rect x="455" y="145" width="150" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="530" y="165" text-anchor="middle" font-size="8.5" fill="#2e7d32">窗口 B 持续接收</text>
+  <text x="530" y="180" text-anchor="middle" font-size="7" fill="#868e96">MOVE ... UP</text>
+
+  <circle cx="530" cy="155" r="5" fill="#2e7d32" opacity="0.8"/>
+  <text x="530" y="230" text-anchor="middle" font-size="8" fill="#495057">继续在 B 上滑动</text>
+
+  <!-- Arrows between phases -->
+  <line x1="200" y1="155" x2="230" y2="155" stroke="#555" stroke-width="1.5" marker-end="url(#a10)"/>
+  <line x1="410" y1="155" x2="440" y2="155" stroke="#555" stroke-width="1.5" marker-end="url(#a10)"/>
+
+  <!-- Use case -->
+  <text x="325" y="270" text-anchor="middle" font-size="8.5" fill="#868e96">典型场景：桌面向下滑动 → 通知/控制中心出现后继续接收手势</text>
+</svg>

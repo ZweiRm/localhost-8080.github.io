@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 340" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <text x="350" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">按键事件上报 (以电源键为例)</text>
+
+  <!-- Phone - key down -->
+  <rect x="30" y="45" width="100" height="120" rx="8" fill="#4a90d9" stroke="#3a7bc0" stroke-width="2"/>
+  <rect x="38" y="55" width="84" height="95" rx="3" fill="#5a9fe0"/>
+  <!-- Power button -->
+  <rect x="130" y="80" width="8" height="25" rx="2" fill="#f57c00"/>
+  <text x="148" y="97" font-size="8" fill="#868e96">↓按下</text>
+
+  <!-- getevent output - key down -->
+  <rect x="200" y="45" width="470" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="215" y="62" font-size="9" fill="#868e96" font-family="monospace">$ adb shell getevent -lrt</text>
+  <text x="215" y="78" font-size="9" fill="#f57c00" font-family="monospace">// 电源键按下</text>
+  <text x="215" y="94" font-size="9" fill="#495057" font-family="monospace">[ 31271.593769] /dev/input/event0: <tspan fill="#c0392b" font-weight="600">EV_KEY</tspan>  <tspan fill="#4a7fb5" font-weight="600">KEY_POWER</tspan>  DOWN</text>
+  <text x="215" y="110" font-size="9" fill="#868e96" font-family="monospace">// 上报同步信号，表示此次数据包结束</text>
+  <text x="215" y="126" font-size="9" fill="#495057" font-family="monospace">[ 31271.593769] /dev/input/event0: <tspan fill="#c0392b">EV_SYN</tspan>  SYN_REPORT  00000000</text>
+
+  <!-- Phone - key up -->
+  <rect x="30" y="185" width="100" height="120" rx="8" fill="#4a90d9" stroke="#3a7bc0" stroke-width="2"/>
+  <rect x="38" y="195" width="84" height="95" rx="3" fill="#5a9fe0"/>
+  <!-- Power button released -->
+  <rect x="130" y="220" width="8" height="25" rx="2" fill="#2e7d32"/>
+  <text x="148" y="237" font-size="8" fill="#868e96">↑抬起</text>
+
+  <!-- getevent output - key up -->
+  <rect x="200" y="185" width="470" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="215" y="202" font-size="9" fill="#2e7d32" font-family="monospace">// 电源键抬起</text>
+  <text x="215" y="218" font-size="9" fill="#495057" font-family="monospace">[ 31271.660291] /dev/input/event0: <tspan fill="#c0392b" font-weight="600">EV_KEY</tspan>  <tspan fill="#4a7fb5" font-weight="600">KEY_POWER</tspan>  UP</text>
+  <text x="215" y="234" font-size="9" fill="#868e96" font-family="monospace">// 上报同步信号，表示此次数据包结束</text>
+  <text x="215" y="250" font-size="9" fill="#495057" font-family="monospace">[ 31271.660291] /dev/input/event0: <tspan fill="#c0392b">EV_SYN</tspan>  SYN_REPORT  00000000</text>
+
+  <!-- Summary -->
+  <text x="350" y="310" text-anchor="middle" font-size="9.5" fill="#495057">一次按键事件 = 按下(EV_KEY DOWN) + SYN_REPORT + 抬起(EV_KEY UP) + SYN_REPORT</text>
+  <text x="350" y="330" text-anchor="middle" font-size="8.5" fill="#868e96">value: DOWN=1, UP=0; EV_SYN 表示本次数据包上报完成</text>
+</svg>

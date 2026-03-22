@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 440" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <text x="375" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">触摸事件上报 (单次点击)</text>
+
+  <!-- Phone - touch down -->
+  <rect x="20" y="40" width="120" height="170" rx="8" fill="#4a90d9" stroke="#3a7bc0" stroke-width="2"/>
+  <rect x="30" y="50" width="100" height="140" rx="3" fill="#5a9fe0"/>
+  <!-- Finger icon -->
+  <text x="80" y="120" text-anchor="middle" font-size="24">👆</text>
+
+  <!-- getevent output - touch down -->
+  <rect x="170" y="40" width="560" height="170" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="185" y="57" font-size="8.5" fill="#868e96" font-family="monospace">$ adb shell getevent -lrt</text>
+  <text x="185" y="72" font-size="8.5" fill="#f57c00" font-family="monospace">// 手指接触屏幕，分配新的 trackingId</text>
+  <text x="185" y="87" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.609456] /dev/input/event7: <tspan fill="#c0392b">EV_ABS</tspan>  ABS_MT_TRACKING_ID  000016b8</text>
+  <text x="185" y="100" font-size="8.5" fill="#868e96" font-family="monospace">// 有意义的触摸发生，BTN_TOUCH 设为 1</text>
+  <text x="185" y="113" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.609456] /dev/input/event7: <tspan fill="#c0392b">EV_KEY</tspan>  BTN_TOUCH            DOWN</text>
+  <text x="185" y="126" font-size="8.5" fill="#868e96" font-family="monospace">// 标记接触工具为手指</text>
+  <text x="185" y="139" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.609456] /dev/input/event7: <tspan fill="#c0392b">EV_KEY</tspan>  BTN_TOOL_FINGER      DOWN</text>
+  <text x="185" y="152" font-size="8.5" fill="#868e96" font-family="monospace">// 上报 X/Y 坐标</text>
+  <text x="185" y="165" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.609456] /dev/input/event7: <tspan fill="#c0392b">EV_ABS</tspan>  ABS_MT_POSITION_X    0000bf68</text>
+  <text x="185" y="178" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.609456] /dev/input/event7: <tspan fill="#c0392b">EV_ABS</tspan>  ABS_MT_POSITION_Y    00019640</text>
+  <text x="185" y="191" font-size="8.5" fill="#868e96" font-family="monospace">// 同步信号</text>
+  <text x="185" y="204" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.609456] /dev/input/event7: <tspan fill="#c0392b">EV_SYN</tspan>  SYN_REPORT           00000000</text>
+
+  <!-- Phone - touch up -->
+  <rect x="20" y="240" width="120" height="170" rx="8" fill="#4a90d9" stroke="#3a7bc0" stroke-width="2"/>
+  <rect x="30" y="250" width="100" height="140" rx="3" fill="#5a9fe0"/>
+  <text x="80" y="330" text-anchor="middle" font-size="18" fill="white">☝</text>
+  <text x="80" y="355" text-anchor="middle" font-size="8" fill="white">抬起</text>
+
+  <!-- getevent output - touch up -->
+  <rect x="170" y="240" width="560" height="150" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="185" y="257" font-size="8.5" fill="#2e7d32" font-family="monospace">// 手指抬起，trackingId 设为 -1 (ffffffff)</text>
+  <text x="185" y="272" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.642537] /dev/input/event7: <tspan fill="#c0392b">EV_ABS</tspan>  ABS_MT_TRACKING_ID   ffffffff</text>
+  <text x="185" y="285" font-size="8.5" fill="#868e96" font-family="monospace">// 触摸结束，BTN_TOUCH 设为 0</text>
+  <text x="185" y="298" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.642537] /dev/input/event7: <tspan fill="#c0392b">EV_KEY</tspan>  BTN_TOUCH            UP</text>
+  <text x="185" y="311" font-size="8.5" fill="#868e96" font-family="monospace">// 清除工具类型</text>
+  <text x="185" y="324" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.642537] /dev/input/event7: <tspan fill="#c0392b">EV_KEY</tspan>  BTN_TOOL_FINGER      UP</text>
+  <text x="185" y="337" font-size="8.5" fill="#868e96" font-family="monospace">// 同步信号</text>
+  <text x="185" y="350" font-size="8.5" fill="#495057" font-family="monospace">[ 32036.642537] /dev/input/event7: <tspan fill="#c0392b">EV_SYN</tspan>  SYN_REPORT           00000000</text>
+
+  <!-- Note -->
+  <text x="375" y="420" text-anchor="middle" font-size="9" fill="#495057">滑动事件：在抬起之前重复上报 ABS_MT_POSITION_X/Y 的新坐标即可</text>
+  <text x="375" y="436" text-anchor="middle" font-size="8.5" fill="#868e96">ABS_MT_TRACKING_ID 在开机后持续递增，抬起时上报 -1 (0xffffffff)</text>
+</svg>

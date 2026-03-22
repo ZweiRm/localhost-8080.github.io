@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 480" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a8n" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- === Part 1: Event Enqueue (top half) === -->
+  <text x="390" y="22" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">事件入队</text>
+
+  <!-- InputReader -->
+  <rect x="15" y="50" width="100" height="80" rx="3" fill="#4a90d9"/>
+  <text x="65" y="95" text-anchor="middle" font-size="10" fill="white">InputReader</text>
+
+  <line x1="115" y1="90" x2="145" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#a8n)"/>
+
+  <!-- InputDispatcher boundary -->
+  <rect x="145" y="35" width="610" height="110" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-dasharray="5,3"/>
+  <text x="160" y="52" font-size="9" fill="#4a7fb5">InputDispatcher</text>
+
+  <!-- notifyKey / notifyMotion / notifyXXX -->
+  <rect x="165" y="60" width="105" height="28" rx="3" fill="#4caf50"/>
+  <text x="217" y="79" text-anchor="middle" font-size="9" fill="white">notifyKey</text>
+
+  <rect x="165" y="92" width="105" height="28" rx="3" fill="#4caf50"/>
+  <text x="217" y="111" text-anchor="middle" font-size="9" fill="white">notifyMotion</text>
+
+  <!-- Bracket -->
+  <path d="M 270,74 L 285,74 L 285,106 M 270,106 L 285,106" fill="none" stroke="#555" stroke-width="1"/>
+  <line x1="285" y1="90" x2="320" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#a8n)"/>
+
+  <!-- InboundQueue (drum/cylinder) -->
+  <ellipse cx="380" cy="78" rx="50" ry="12" fill="#f57c00"/>
+  <rect x="330" y="78" width="100" height="30" fill="#f57c00"/>
+  <ellipse cx="380" cy="108" rx="50" ry="12" fill="#e06800"/>
+  <text x="380" y="98" text-anchor="middle" font-size="10" fill="white" font-weight="600">InboundQueue</text>
+
+  <line x1="430" y1="90" x2="480" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#a8n)"/>
+
+  <!-- mLooper->wake() -->
+  <rect x="490" y="76" width="140" height="28" rx="3" fill="#4caf50"/>
+  <text x="560" y="95" text-anchor="middle" font-size="9" fill="white">mLooper-&gt;wake()</text>
+
+  <!-- === Part 2: Event Dispatch Flow (bottom half) === -->
+  <text x="390" y="180" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">事件派发流程</text>
+
+  <!-- Two process areas -->
+  <!-- InputDispatcher area -->
+  <rect x="15" y="195" width="480" height="275" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-dasharray="5,3"/>
+  <text x="30" y="212" font-size="9" fill="#4a7fb5">InputDispatcher (in system_server)</text>
+
+  <!-- APP Process area -->
+  <rect x="540" y="195" width="220" height="275" rx="4" fill="#eef1f5" stroke="#2e7d32" stroke-dasharray="5,3"/>
+  <text x="555" y="212" font-size="9" fill="#2e7d32">APP Process</text>
+
+  <!-- InboundQueue -->
+  <ellipse cx="120" cy="230" rx="45" ry="10" fill="#f57c00"/>
+  <rect x="75" y="230" width="90" height="22" fill="#f57c00"/>
+  <ellipse cx="120" cy="252" rx="45" ry="10" fill="#e06800"/>
+  <text x="120" y="246" text-anchor="middle" font-size="8.5" fill="white">InboundQueue</text>
+
+  <line x1="120" y1="262" x2="120" y2="280" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+
+  <!-- Diamond: 判断事件类型 -->
+  <path d="M 120,280 L 180,305 L 120,330 L 60,305 Z" fill="#2e7d32" stroke="#1b5e20"/>
+  <text x="120" y="303" text-anchor="middle" font-size="7.5" fill="white">判断</text>
+  <text x="120" y="314" text-anchor="middle" font-size="7.5" fill="white">事件类型</text>
+
+  <!-- Left: Key event -->
+  <line x1="60" y1="305" x2="20" y2="305" stroke="#555" stroke-width="1"/>
+  <line x1="20" y1="305" x2="20" y2="350" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+  <text x="35" y="300" font-size="7" fill="#868e96">按键事件</text>
+  <rect x="5" y="350" width="80" height="25" rx="3" fill="#4a90d9"/>
+  <text x="45" y="367" text-anchor="middle" font-size="7.5" fill="white">寻找焦点窗口</text>
+
+  <!-- Right: Pointer event -->
+  <line x1="180" y1="305" x2="220" y2="305" stroke="#555" stroke-width="1"/>
+  <line x1="220" y1="305" x2="220" y2="350" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+  <text x="190" y="300" font-size="7" fill="#868e96">指针事件</text>
+  <rect x="175" y="350" width="80" height="25" rx="3" fill="#4a90d9"/>
+  <text x="215" y="367" text-anchor="middle" font-size="7.5" fill="white">寻找点击目标</text>
+
+  <!-- Merge -->
+  <line x1="45" y1="375" x2="45" y2="395" stroke="#555" stroke-width="1"/>
+  <line x1="45" y1="395" x2="315" y2="395" stroke="#555" stroke-width="1"/>
+  <line x1="215" y1="375" x2="215" y2="395" stroke="#555" stroke-width="1"/>
+  <line x1="315" y1="395" x2="315" y2="405" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+
+  <!-- outboundQueue -->
+  <ellipse cx="315" cy="412" rx="42" ry="9" fill="#f57c00"/>
+  <rect x="273" y="412" width="84" height="18" fill="#f57c00"/>
+  <ellipse cx="315" cy="430" rx="42" ry="9" fill="#e06800"/>
+  <text x="315" y="426" text-anchor="middle" font-size="7.5" fill="white">outboundQueue</text>
+
+  <line x1="357" y1="420" x2="390" y2="420" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+
+  <!-- sendMessage -->
+  <rect x="390" y="408" width="85" height="25" rx="3" fill="#4a90d9"/>
+  <text x="432" y="425" text-anchor="middle" font-size="7.5" fill="white">sendMessage</text>
+
+  <!-- Arrow to app: InputMessage -->
+  <line x1="475" y1="420" x2="560" y2="420" stroke="#555" stroke-width="1.2" marker-end="url(#a8n)"/>
+  <text x="517" y="414" font-size="7" fill="#868e96">InputMessage</text>
+
+  <!-- APP side -->
+  <rect x="560" y="225" width="180" height="25" rx="3" fill="#4a90d9"/>
+  <text x="650" y="242" text-anchor="middle" font-size="8" fill="white">dispatchInputEvent</text>
+
+  <rect x="560" y="315" width="180" height="25" rx="3" fill="#4a90d9"/>
+  <text x="650" y="332" text-anchor="middle" font-size="8" fill="white">receiveMessage</text>
+
+  <line x1="650" y1="340" x2="650" y2="250" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+
+  <!-- receiveMessage gets InputMessage -->
+  <line x1="560" y1="330" x2="540" y2="420" stroke="#555" stroke-width="0" />
+
+  <!-- App side: receive from sendMessage -->
+  <rect x="560" y="408" width="180" height="25" rx="3" fill="#4a90d9"/>
+  <text x="650" y="425" text-anchor="middle" font-size="8" fill="white">receiveMessage</text>
+  <line x1="650" y1="408" x2="650" y2="250" stroke="#555" stroke-width="1" marker-end="url(#a8n)"/>
+
+  <!-- waitQueue -->
+  <ellipse cx="315" cy="447" rx="42" ry="9" fill="#f57c00"/>
+  <text x="315" y="450" text-anchor="middle" font-size="7" fill="white">waitQueue</text>
+
+  <!-- Finish signal back -->
+  <path d="M 560,435 L 540,450 L 380,450" fill="none" stroke="#2e7d32" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a8n)"/>
+  <text x="460" y="462" text-anchor="middle" font-size="6.5" fill="#2e7d32">finish → 移除 waitQueue 事件</text>
+
+  <!-- Add to waitQueue label -->
+  <text x="400" y="448" font-size="6.5" fill="#868e96">新增等待</text>
+</svg>
