@@ -40,7 +40,7 @@
       链表的插入和删除操作本身只需更改指针信息，而无须移动元素，其时间复杂度为 `O(1)`.
 
 ### 源码分析
-以 Java 语言为例，对于[数组](/java/grammars.html#_2-7-数组)本身请参考 Java 相关笔记。
+以 Java 语言为例，对于[数组](/java/grammars-arrays.html#_2-7-数组)本身请参考 Java 相关笔记。
 
 观察 Java 其提供的容器类 `ArrayList` 和 `LinkedList`.  
 

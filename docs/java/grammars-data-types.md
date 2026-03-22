@@ -65,7 +65,7 @@ next:
 **默认值**：`false`
 
 ### 2.3.2 引用数据类型
-[类](./object-oriented.html#_3-2-1-类)、[接口](./object-oriented.html#_3-11-接口)和[数组](#_2-7-数组)  
+[类](./oo-classes-objects.html#_3-2-1-类)、[接口](./oo-interfaces.html#_3-11-接口)和[数组](./grammars-arrays.html#_2-7-数组)  
 **默认值**：`null`  
 ::: tip
 `String`是一个引用数据类型，所以它并不包含在关键字中  
