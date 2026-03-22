@@ -1,7 +1,7 @@
 ---
 prev: 
     text: 'API-输入输出类库'
-    link: 'java/API-io'
+    link: 'java/api-io'
 next: 
     text: '参考文献或资料'
     link: 'java/references'

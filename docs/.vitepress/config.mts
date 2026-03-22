@@ -28,7 +28,18 @@ export default defineConfig({
         {
             text: '笔记',
             items: [
-                { text: 'Java', link: '/java/' },
+                { text: 'Java', items: [
+                    { text: '语法', link: '/java/grammars-basics' },
+                    { text: '面向对象', link: '/java/oo-classes-objects' },
+                    { text: 'API', link: '/java/api-introduction' },
+                    { text: 'JVM', link: '/java/jvm' },
+                ]},
+                { text: 'Android Frameworks', items: [
+                    { text: 'Window/Activity Mng Svc', link: '/framework/basic-with-wms'},
+                    { text: '动画', link: '/framework/'},
+                    { text: '性能与稳定性', link: '/framework/'},
+                    { text: '新特性与其他', link: '/framework/performTraversal'},
+                ]},
                 { text: '杂谈', link: '/hello-world/' }
             ]
         },
@@ -57,12 +68,6 @@ export default defineConfig({
                 ]},
                 { text: '大数据', items: [
                     { text: 'Hadoop', link: '/hadoop/' },
-                ]},
-                { text: 'Android Frameworks', items: [
-                    { text: 'Window/Activity Mng Svc', link: '/framework/basic-with-wms'},
-                    { text: '动画', link: '/framework/'},
-                    { text: '性能与稳定性', link: '/framework/'},
-                    { text: '新特性与其他', link: '/framework/performTraversal'},
                 ]}
             ]
         },
@@ -70,22 +75,79 @@ export default defineConfig({
         { text: '关于', link: '/about/' },
     ],
     sidebar: {
-        '/java/': [{
-            text: 'Java', link: 'java/index',
-            items: [
-                { text: '语法', link: 'java/grammars'},
-                { text: '面向对象', link: 'java/object-oriented'},
-                { text: 'API-介绍', link: 'java/API-introduction'},
-                { text: 'API-语言基础类库', link: 'java/API-lang'},
-                { text: 'API-语言基础类库2', link: 'java/API-lang2'},
-                { text: 'API-工具类库', link: 'java/API-util'},
-                { text: 'API-工具类库2', link: 'java/API-util2'},
-                { text: 'API-工具类库3', link: 'java/API-util3'},
-                { text: 'API-输入输出类库', link: 'java/API-io'},
-                { text: 'Java 虚拟机', link: 'java/jvm'},
-                { text: '参考文献或资料', link: 'java/references'}
-            ]
-        }],
+        '/java/': [
+            {
+                text: '语法',
+                collapsed: false,
+                items: [
+                    { text: '基本概念与常量变量', link: 'java/grammars-basics' },
+                    { text: '数据类型', link: 'java/grammars-data-types' },
+                    { text: '运算符', link: 'java/grammars-operators' },
+                    { text: '表达式与流程控制', link: 'java/grammars-flow-control' },
+                    { text: '数组', link: 'java/grammars-arrays' },
+                ]
+            },
+            {
+                text: '面向对象',
+                collapsed: false,
+                items: [
+                    { text: '类与对象', link: 'java/oo-classes-objects' },
+                    { text: '包与模块', link: 'java/oo-packages-modules' },
+                    { text: '封装继承与多态', link: 'java/oo-inheritance-polymorphism' },
+                    { text: '修饰符', link: 'java/oo-modifiers' },
+                    { text: '接口', link: 'java/oo-interfaces' },
+                    { text: '内部类与Lambda', link: 'java/oo-inner-classes' },
+                    { text: '泛型', link: 'java/oo-generics' },
+                ]
+            },
+            {
+                text: 'API',
+                collapsed: false,
+                items: [
+                    { text: 'API-介绍', link: 'java/api-introduction' },
+                    {
+                        text: '语言基础类库',
+                        collapsed: false,
+                        items: [
+                            { text: 'Object / System / 异常 / 枚举', link: 'java/api-lang-basics' },
+                            { text: 'String 类', link: 'java/api-lang-string' },
+                            { text: '包装类', link: 'java/api-lang-wrapper' },
+                            { text: 'Math 类', link: 'java/api-lang-math' },
+                            { text: '反射', link: 'java/api-lang-reflection' },
+                            { text: '线程', link: 'java/api-lang-thread' },
+                            { text: 'ThreadLocal', link: 'java/api-lang-threadlocal' },
+                        ]
+                    },
+                    {
+                        text: '工具类库',
+                        collapsed: false,
+                        items: [
+                            { text: '日期', link: 'java/api-util-date' },
+                            { text: '集合', link: 'java/api-util-collection' },
+                            { text: 'Map 接口', link: 'java/api-util-map' },
+                            { text: 'Stream', link: 'java/api-util-stream' },
+                            { text: '其他工具类', link: 'java/api-util-others' },
+                            {
+                                text: '并发',
+                                collapsed: false,
+                                items: [
+                                    { text: '线程池与 ExecutorService', link: 'java/api-util-concurrent-executor' },
+                                    { text: 'Lock 与锁机制', link: 'java/api-util-concurrent-lock' },
+                                    { text: '原子操作 atomic', link: 'java/api-util-concurrent-atomic' },
+                                    { text: 'Callable 与 Future', link: 'java/api-util-concurrent-callable-future' },
+                                    { text: '并发容器', link: 'java/api-util-concurrent-containers' },
+                                    { text: '同步工具', link: 'java/api-util-concurrent-sync-tools' },
+                                    { text: 'CAS 与 AQS', link: 'java/api-util-concurrent-cas-aqs' },
+                                ]
+                            },
+                        ]
+                    },
+                    { text: '输入输出类库', link: 'java/api-io' },
+                ]
+            },
+            { text: 'Java 虚拟机', link: 'java/jvm' },
+            { text: '参考文献或资料', link: 'java/references' },
+        ],
         '/hello-world/' :[{
             text: 'Hello World!', link: 'hello-world/index',
             items: [

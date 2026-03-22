@@ -1,7 +1,7 @@
 ---
-prev: 
-    text: 'API-工具类库3'
-    link: 'java/API-util3'
+prev:
+    text: 'CAS 与 AQS'
+    link: 'java/api-util-concurrent-cas-aqs'
 next: 
     text: 'Java 虚拟机'
     link: 'java/jvm'
