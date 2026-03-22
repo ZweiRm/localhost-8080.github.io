@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 600" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="70" y="10" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="130" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">ViewRootImpl</text>
+
+  <rect x="430" y="10" width="140" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="500" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">SurfaceSyncGroup</text>
+
+  <!-- Lifelines -->
+  <line x1="130" y1="38" x2="130" y2="590" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="500" y1="38" x2="500" y2="590" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. doTraversal -->
+  <line x1="130" y1="65" x2="132" y2="80" stroke="#555" stroke-width="1"/>
+  <text x="136" y="75" font-size="9.5" fill="#495057">1 doTraversal</text>
+
+  <!-- 2. performTraversals -->
+  <line x1="130" y1="90" x2="132" y2="105" stroke="#555" stroke-width="1"/>
+  <text x="136" y="100" font-size="9.5" fill="#495057">2 performTraversals</text>
+
+  <!-- 3-1. createSyncIfNeeded -->
+  <line x1="130" y1="130" x2="500" y2="130" stroke="#555" stroke-width="1.5" marker-end="url(#a5)"/>
+  <text x="315" y="125" font-size="9.5" fill="#495057" text-anchor="middle">3-1 createSyncIfNeeded</text>
+
+  <!-- Note: create mWmsRequestSyncGroup -->
+  <rect x="10" y="140" width="210" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="115" y="155" font-size="8.5" fill="#868e96" text-anchor="middle">创建 mWmsRequestSyncGroup</text>
+
+  <!-- 3-2. add -->
+  <line x1="130" y1="180" x2="500" y2="180" stroke="#555" stroke-width="1.5" marker-end="url(#a5)"/>
+  <text x="315" y="175" font-size="9.5" fill="#495057" text-anchor="middle">3-2 add</text>
+
+  <!-- 3-3. getOrCreateSurfaceSyncGroup -->
+  <line x1="500" y1="210" x2="130" y2="210" stroke="#555" stroke-width="1.5" marker-end="url(#a5)"/>
+  <text x="315" y="205" font-size="9.5" fill="#495057" text-anchor="middle">3-3 getOrCreateSurfaceSyncGroup</text>
+
+  <!-- Note: create mActiveSurfaceSyncGroup -->
+  <rect x="10" y="220" width="210" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="115" y="235" font-size="8.5" fill="#868e96" text-anchor="middle">创建 mActiveSurfaceSyncGroup</text>
+
+  <!-- 3-4. add -->
+  <line x1="500" y1="260" x2="502" y2="275" stroke="#555" stroke-width="1"/>
+  <text x="506" y="270" font-size="9.5" fill="#495057">3-4 add</text>
+
+  <!-- 3-5. addLocalSync -->
+  <line x1="500" y1="290" x2="502" y2="305" stroke="#555" stroke-width="1"/>
+  <text x="506" y="300" font-size="9.5" fill="#495057">3-5 addLocalSync</text>
+
+  <!-- 3-6. createTransactionReadyCallback -->
+  <line x1="500" y1="320" x2="502" y2="335" stroke="#555" stroke-width="1"/>
+  <text x="506" y="330" font-size="9.5" fill="#495057">3-6 createTransactionReadyCallback</text>
+
+  <!-- 3-7. setTransactionCallbackFromParent -->
+  <line x1="500" y1="350" x2="502" y2="365" stroke="#555" stroke-width="1"/>
+  <text x="506" y="360" font-size="9.5" fill="#495057">3-7 setTransactionCallbackFromParent</text>
+
+  <!-- Note: callback chain -->
+  <rect x="365" y="375" width="280" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="505" y="390" font-size="8.5" fill="#868e96" text-anchor="middle">将 request 的 callback 设到 active 中</text>
+
+  <!-- 4. performDraw -->
+  <line x1="130" y1="420" x2="132" y2="435" stroke="#555" stroke-width="1"/>
+  <text x="136" y="430" font-size="9.5" fill="#495057">4 performDraw</text>
+
+  <!-- 5. draw -->
+  <line x1="130" y1="450" x2="132" y2="465" stroke="#555" stroke-width="1"/>
+  <text x="136" y="460" font-size="9.5" fill="#495057">5 draw</text>
+
+  <!-- 6. registerCallbacksForSync -->
+  <line x1="130" y1="480" x2="132" y2="495" stroke="#555" stroke-width="1"/>
+  <text x="136" y="490" font-size="9.5" fill="#495057">6 registerCallbacksForSync</text>
+
+  <!-- Note: register callback -->
+  <rect x="10" y="505" width="240" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="519" font-size="8.5" fill="#868e96" text-anchor="middle">注册 RenderThread 帧回调</text>
+  <text x="130" y="533" font-size="8.5" fill="#868e96" text-anchor="middle">绘制完成后触发 markSyncReady</text>
+</svg>

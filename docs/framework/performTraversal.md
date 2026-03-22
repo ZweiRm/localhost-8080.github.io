@@ -1,7 +1,7 @@
 ---
 prev:
     text: 'WMS 窗口层级管理'
-    link: '/framework/wms-window-hierarchy'
+    link: '/framework/window-draw-state'
 next:
     text: 'Android 12 容器层级'
     link: '/framework/container'

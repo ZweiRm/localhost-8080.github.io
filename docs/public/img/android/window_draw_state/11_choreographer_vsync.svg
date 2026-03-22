@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 560" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a11" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a11d" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="70" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">MessageQueue</text>
+
+  <rect x="180" y="10" width="110" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="235" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">ViewRootImpl</text>
+
+  <rect x="370" y="10" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="430" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">Choreographer</text>
+
+  <rect x="580" y="10" width="170" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="665" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">DisplayEventReceiver</text>
+
+  <!-- Lifelines -->
+  <line x1="70" y1="38" x2="70" y2="550" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="235" y1="38" x2="235" y2="550" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="430" y1="38" x2="430" y2="550" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="665" y1="38" x2="665" y2="550" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. invalidate -->
+  <line x1="70" y1="65" x2="235" y2="65" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="152" y="60" font-size="9" fill="#495057" text-anchor="middle">1 invalidate</text>
+
+  <!-- 2. scheduleTraversals (self) -->
+  <line x1="235" y1="85" x2="237" y2="100" stroke="#555" stroke-width="1"/>
+  <text x="241" y="95" font-size="9" fill="#495057">2 scheduleTraversals</text>
+
+  <!-- 3. postSyncBarrier -->
+  <line x1="235" y1="115" x2="70" y2="115" stroke="#c0392b" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="152" y="110" font-size="9" fill="#c0392b" text-anchor="middle">3 postSyncBarrier</text>
+
+  <!-- 4. token (return) -->
+  <line x1="70" y1="135" x2="235" y2="135" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a11d)"/>
+  <text x="152" y="130" font-size="9" fill="#868e96" text-anchor="middle">4 token</text>
+
+  <!-- 5. postCallback(CALLBACK_TRAVERSAL) -->
+  <line x1="235" y1="160" x2="430" y2="160" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="332" y="155" font-size="8" fill="#495057" text-anchor="middle">5 postCallback(CALLBACK_TRAVERSAL)</text>
+
+  <!-- 6. addCallbackLocked -->
+  <line x1="430" y1="185" x2="432" y2="200" stroke="#555" stroke-width="1"/>
+  <text x="436" y="195" font-size="9" fill="#495057">6 addCallbackLocked</text>
+
+  <!-- 7. scheduleFrameLocked -->
+  <line x1="430" y1="210" x2="432" y2="225" stroke="#555" stroke-width="1"/>
+  <text x="436" y="220" font-size="9" fill="#495057">7 scheduleFrameLocked</text>
+
+  <!-- 8. scheduleVsyncLocked -->
+  <line x1="430" y1="235" x2="432" y2="250" stroke="#555" stroke-width="1"/>
+  <text x="436" y="245" font-size="9" fill="#495057">8 scheduleVsyncLocked</text>
+
+  <!-- 9. scheduleVsync -->
+  <line x1="430" y1="260" x2="665" y2="260" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="547" y="255" font-size="9" fill="#495057" text-anchor="middle">9 scheduleVsync</text>
+
+  <!-- 10. nativeScheduleVsync -->
+  <line x1="665" y1="280" x2="667" y2="295" stroke="#555" stroke-width="1"/>
+  <text x="671" y="290" font-size="9" fill="#495057">10 nativeScheduleVsync</text>
+  <circle cx="780" cy="290" r="6" fill="#343a40"/>
+
+  <!-- start_time label -->
+  <rect x="530" y="315" width="90" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="575" y="330" font-size="9" font-weight="600" fill="#2e7d32" text-anchor="middle">start_time</text>
+
+  <!-- 11. dispatchVsync -->
+  <line x1="780" y1="340" x2="665" y2="340" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="722" y="335" font-size="9" fill="#495057" text-anchor="middle">11 dispatchVsync</text>
+
+  <!-- 12. onVsync(timestamp) -->
+  <line x1="665" y1="360" x2="430" y2="360" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="547" y="355" font-size="9" fill="#495057" text-anchor="middle">12 onVsync(timestamp)</text>
+
+  <!-- 13. enqueueMessage(asynchronous) -->
+  <line x1="430" y1="385" x2="70" y2="385" stroke="#c0392b" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="250" y="380" font-size="8" fill="#c0392b" text-anchor="middle">13 enqueueMessage(asynchronous)</text>
+
+  <!-- 14. run -->
+  <line x1="70" y1="410" x2="235" y2="410" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="152" y="405" font-size="9" fill="#495057" text-anchor="middle">14 run</text>
+
+  <!-- 15. doFrame -->
+  <line x1="235" y1="435" x2="430" y2="435" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="332" y="430" font-size="9" fill="#495057" text-anchor="middle">15 doFrame</text>
+
+  <!-- end_time label -->
+  <rect x="500" y="440" width="85" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="542" y="455" font-size="9" font-weight="600" fill="#2e7d32" text-anchor="middle">end_time</text>
+
+  <!-- 16. doTraversal -->
+  <line x1="430" y1="475" x2="235" y2="475" stroke="#555" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="332" y="470" font-size="9" fill="#495057" text-anchor="middle">16 doTraversal</text>
+
+  <!-- 17. removeSyncBarrier(token) -->
+  <line x1="235" y1="500" x2="70" y2="500" stroke="#c0392b" stroke-width="1.5" marker-end="url(#a11)"/>
+  <text x="152" y="495" font-size="8" fill="#c0392b" text-anchor="middle">17 removeSyncBarrier(token)</text>
+
+  <!-- drop_frame formula -->
+  <rect x="550" y="475" width="280" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="690" y="491" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">drop_frame = (end_time - start_time) / 16ms</text>
+</svg>

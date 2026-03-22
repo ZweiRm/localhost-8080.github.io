@@ -3,7 +3,7 @@ prev:
     text: 'Android Frameworks'
     link: 'framework/index'
 next:
-    text: 'Activity 启动全流程分析与 Activity 生命周期'
+    text: 'Activity 启动流程与生命周期'
     link: 'framework/activity-launching-process'
 ---
 

@@ -197,6 +197,7 @@ export default defineConfig({
                 { text: '窗口添加和移除', link: 'framework/window-add-remove' },
                 { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
                 { text: '窗口布局流程 relayoutWindow', link: 'framework/relayoutWindow' },
+                { text: '窗口绘制状态', link: 'framework/window-draw-state' },
                 { text: 'performTraversal', link: 'framework/performTraversal' },
                 { text: 'Android 12 容器层级', link: 'framework/container'},
                 { text: 'Android 16 新特性', link: 'framework/android16'},

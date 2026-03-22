@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 580" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a9" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a9r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#c0392b"/>
+    </marker>
+    <marker id="a9g" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="20" y="20" width="110" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="75" y="41" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ViewRootImpl</text>
+
+  <rect x="170" y="20" width="80" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="210" y="41" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">WMS</text>
+
+  <rect x="290" y="20" width="120" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="350" y="41" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">WindowState</text>
+
+  <rect x="450" y="20" width="170" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="535" y="41" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">WindowStateAnimator</text>
+
+  <rect x="660" y="20" width="160" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="740" y="41" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">WindowSurfacePlacer</text>
+
+  <rect x="860" y="20" width="120" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="920" y="41" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">DisplayContent</text>
+
+  <!-- Lifelines -->
+  <line x1="75" y1="52" x2="75" y2="430" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="210" y1="52" x2="210" y2="430" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="350" y1="52" x2="350" y2="430" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="535" y1="52" x2="535" y2="430" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="740" y1="52" x2="740" y2="430" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="920" y1="52" x2="920" y2="430" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. setView → addWindow → 创建实例 -->
+  <line x1="75" y1="75" x2="210" y2="75" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="142" y="70" font-size="9" fill="#495057" text-anchor="middle">setView</text>
+  <line x1="210" y1="75" x2="350" y2="75" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="280" y="70" font-size="9" fill="#495057" text-anchor="middle">addWindow</text>
+  <line x1="350" y1="75" x2="535" y2="75" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="442" y="70" font-size="9" fill="#495057" text-anchor="middle">创建实例</text>
+
+  <!-- 2. relayoutWindow → createSurfaceLocked -->
+  <line x1="75" y1="120" x2="210" y2="120" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="142" y="115" font-size="9" fill="#495057" text-anchor="middle">relayoutWindow</text>
+  <line x1="210" y1="120" x2="535" y2="120" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="372" y="115" font-size="9" fill="#495057" text-anchor="middle">createSurfaceLocked</text>
+
+  <!-- 3. finishDrawingWindow → finishDrawingLocked -->
+  <line x1="75" y1="175" x2="210" y2="175" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="142" y="162" font-size="8.5" fill="#495057" text-anchor="middle">绘制完成执行</text>
+  <text x="142" y="172" font-size="8.5" fill="#495057" text-anchor="middle">finishDrawingWindow</text>
+  <line x1="210" y1="175" x2="535" y2="175" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="372" y="170" font-size="9" fill="#495057" text-anchor="middle">finishDrawingLocked</text>
+
+  <!-- 4. requestTraversal → performSurfacePlacement -->
+  <line x1="535" y1="195" x2="740" y2="195" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="637" y="190" font-size="9" fill="#495057" text-anchor="middle">requestTraversal</text>
+
+  <!-- applySurfaceChangesTransaction path -->
+  <line x1="740" y1="220" x2="920" y2="220" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="830" y="215" font-size="8" fill="#495057" text-anchor="middle">applySurfaceChangesTransaction</text>
+
+  <!-- DisplayContent side: performLayout + mApplySurfaceChangesTransaction -->
+  <rect x="845" y="235" width="150" height="38" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="920" y="250" font-size="8.5" fill="#495057" text-anchor="middle">performLayout</text>
+  <text x="920" y="263" font-size="8.5" fill="#495057" text-anchor="middle">先进行窗口大小计算</text>
+
+  <line x1="920" y1="273" x2="920" y2="290" stroke="#555" stroke-width="1"/>
+  <rect x="830" y="290" width="180" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="920" y="306" font-size="8.5" fill="#495057" text-anchor="middle">mApplySurfaceChangesTransaction</text>
+
+  <!-- commitFinishDrawingLocked -->
+  <line x1="920" y1="314" x2="535" y2="314" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="727" y="309" font-size="9" fill="#495057" text-anchor="middle">commitFinishDrawingLocked</text>
+
+  <!-- performShowLocked -->
+  <line x1="535" y1="340" x2="350" y2="340" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="442" y="335" font-size="9" fill="#495057" text-anchor="middle">performShowLocked</text>
+
+  <!-- applyEnterAnimationLocked + 设置窗口状态 -->
+  <line x1="350" y1="360" x2="535" y2="360" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="442" y="355" font-size="9" fill="#495057" text-anchor="middle">applyEnterAnimationLocked</text>
+
+  <!-- scheduleAnimationLocked -->
+  <text x="350" y="383" font-size="9" fill="#495057" text-anchor="middle">设置窗口状态</text>
+  <line x1="350" y1="395" x2="210" y2="395" stroke="#555" stroke-width="1.5" marker-end="url(#a9)"/>
+  <text x="280" y="390" font-size="8" fill="#495057" text-anchor="middle">scheduleAnimationLocked</text>
+
+  <!-- WindowAnimator box -->
+  <rect x="150" y="410" width="150" height="26" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.5"/>
+  <text x="225" y="428" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">WindowAnimator</text>
+
+  <!-- WindowAnimator → updateWindowsForAnimator -->
+  <line x1="300" y1="423" x2="920" y2="423" stroke="#c0392b" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#a9r)"/>
+  <text x="610" y="418" font-size="8" fill="#c0392b" text-anchor="middle">updateWindowsForAnimator → prepareSurfaces → prepareSurfaceLocked</text>
+
+  <!-- State boxes at bottom -->
+  <ellipse cx="80" cy="510" rx="65" ry="22" fill="#fff0f0" stroke="#e07070" stroke-width="1.5"/>
+  <text x="80" y="515" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">NO_SURFACE</text>
+
+  <ellipse cx="250" cy="510" rx="75" ry="22" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="250" y="515" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">DRAW_PENDING</text>
+
+  <ellipse cx="450" cy="510" rx="85" ry="22" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="450" y="508" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">COMMIT_DRAW_</text>
+  <text x="450" y="520" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">PENDING</text>
+
+  <ellipse cx="650" cy="510" rx="80" ry="22" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="650" y="515" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">READY_TO_SHOW</text>
+
+  <ellipse cx="840" cy="510" rx="65" ry="22" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="840" y="515" font-size="10" font-weight="600" fill="#2e7d32" text-anchor="middle">HAS_DRAWN</text>
+
+  <!-- Arrows from interactions to states -->
+  <line x1="535" y1="80" x2="80" y2="490" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a9g)"/>
+  <line x1="535" y1="125" x2="250" y2="490" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a9g)"/>
+  <line x1="535" y1="180" x2="450" y2="490" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a9g)"/>
+  <line x1="535" y1="320" x2="650" y2="490" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a9g)"/>
+  <line x1="350" y1="345" x2="840" y2="490" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a9g)"/>
+
+  <!-- Legend-free color coding note (using subtitle) -->
+  <text x="500" y="565" font-size="8.5" fill="#868e96" text-anchor="middle">实线 = 方法调用 | 虚线 = 状态转换 | 红色虚线 = WindowAnimator 动画回调路径</text>
+</svg>

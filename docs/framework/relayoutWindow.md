@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'WMS 窗口层级管理'
+    text: '窗口层级管理'
     link: '/framework/wms-window-hierarchy'
 next:
-    text: 'ViewRootImpl 中 performTraversal() 梳理'
-    link: '/framework/performTraversal'
+    text: '窗口绘制状态'
+    link: '/framework/window-draw-state'
 ---
 
 # WMS 窗口布局流程 relayoutWindow

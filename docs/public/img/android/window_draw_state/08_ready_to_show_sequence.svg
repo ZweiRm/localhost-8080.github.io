@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a8" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="80" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="50" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">Session</text>
+
+  <rect x="110" y="10" width="70" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="145" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">WMS</text>
+
+  <rect x="210" y="10" width="145" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="282" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">WindowSurfacePlacer</text>
+
+  <rect x="380" y="10" width="160" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="460" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">RootWindowContainer</text>
+
+  <rect x="570" y="10" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="635" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">DisplayContent</text>
+
+  <rect x="730" y="10" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="785" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">WindowState</text>
+
+  <rect x="870" y="10" width="185" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="962" y="29" font-size="8.5" font-weight="600" fill="#343a40" text-anchor="middle">mApplySurfaceChangesTransaction</text>
+
+  <!-- Lifelines -->
+  <line x1="50" y1="38" x2="50" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="145" y1="38" x2="145" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="282" y1="38" x2="282" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="460" y1="38" x2="460" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="635" y1="38" x2="635" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="785" y1="38" x2="785" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="962" y1="38" x2="962" y2="410" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. finishDrawingWindow -->
+  <line x1="50" y1="65" x2="145" y2="65" stroke="#555" stroke-width="1.5" marker-end="url(#a8)"/>
+  <text x="97" y="60" font-size="9" fill="#495057" text-anchor="middle">1 finishDrawingWindow</text>
+
+  <!-- 2. requestTraversal -->
+  <line x1="145" y1="90" x2="282" y2="90" stroke="#555" stroke-width="1.5" marker-end="url(#a8)"/>
+  <text x="213" y="85" font-size="9" fill="#495057" text-anchor="middle">2 requestTraversal</text>
+
+  <!-- Note: binder → anim 线程 -->
+  <rect x="170" y="100" width="170" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="255" y="115" font-size="8.5" fill="#868e96" text-anchor="middle">binder → anim 线程</text>
+
+  <!-- 3. performSurfacePlacement -->
+  <line x1="282" y1="135" x2="284" y2="150" stroke="#555" stroke-width="1"/>
+  <text x="288" y="145" font-size="9" fill="#495057">3 performSurfacePlacement</text>
+
+  <!-- 4. performSurfacePlacement -->
+  <line x1="282" y1="160" x2="284" y2="175" stroke="#555" stroke-width="1"/>
+  <text x="288" y="170" font-size="9" fill="#495057">4 performSurfacePlacement</text>
+
+  <!-- 5. performSurfacePlacementLoop -->
+  <line x1="282" y1="185" x2="284" y2="200" stroke="#555" stroke-width="1"/>
+  <text x="288" y="195" font-size="9" fill="#495057">5 performSurfacePlacementLoop</text>
+
+  <!-- 6. performSurfacePlacement → RootWindowContainer -->
+  <line x1="282" y1="210" x2="460" y2="210" stroke="#555" stroke-width="1.5" marker-end="url(#a8)"/>
+  <text x="371" y="222" font-size="8.5" fill="#495057" text-anchor="middle">6 performSurfacePlacement</text>
+
+  <!-- 7. performSurfacePlacementNoTrace -->
+  <line x1="460" y1="240" x2="462" y2="255" stroke="#555" stroke-width="1"/>
+  <text x="466" y="250" font-size="9" fill="#495057">7 performSurfacePlacementNoTrace</text>
+
+  <!-- 8. applySurfaceChangesTransaction (Root) -->
+  <line x1="460" y1="265" x2="462" y2="280" stroke="#555" stroke-width="1"/>
+  <text x="466" y="275" font-size="9" fill="#495057">8 applySurfaceChangesTransaction</text>
+
+  <!-- 9. applySurfaceChangesTransaction (Display) -->
+  <line x1="460" y1="290" x2="635" y2="290" stroke="#555" stroke-width="1.5" marker-end="url(#a8)"/>
+  <text x="547" y="285" font-size="8" fill="#495057" text-anchor="middle">9 applySurfaceChangesTransaction</text>
+
+  <!-- 10. forAllWindows -->
+  <line x1="635" y1="315" x2="785" y2="315" stroke="#555" stroke-width="1.5" marker-end="url(#a8)"/>
+  <text x="710" y="310" font-size="9" fill="#495057" text-anchor="middle">10 forAllWindows</text>
+
+  <!-- 11-12. apply → accept -->
+  <line x1="785" y1="340" x2="962" y2="340" stroke="#555" stroke-width="1.5" marker-end="url(#a8)"/>
+  <text x="873" y="335" font-size="9" fill="#495057" text-anchor="middle">11 accept</text>
+
+  <!-- 13. commitFinishDrawingLocked -->
+  <line x1="962" y1="365" x2="964" y2="380" stroke="#555" stroke-width="1"/>
+  <text x="968" y="375" font-size="9" fill="#495057">12 commitFinishDrawingLocked</text>
+
+  <!-- State annotation -->
+  <rect x="900" y="388" width="125" height="16" rx="2" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="962" y="400" font-size="7.5" font-weight="600" fill="#c0392b" text-anchor="middle">→ READY_TO_SHOW</text>
+</svg>

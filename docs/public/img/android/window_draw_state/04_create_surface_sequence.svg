@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 480" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a4b" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7,0 0,2.5 7,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="70" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">ActivityThread</text>
+
+  <rect x="200" y="10" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="260" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">ViewRootImpl</text>
+
+  <rect x="400" y="10" width="100" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="450" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">Session</text>
+
+  <rect x="580" y="10" width="100" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="630" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">WMS</text>
+
+  <rect x="760" y="10" width="175" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="847" y="29" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">WindowStateAnimator</text>
+
+  <!-- Lifelines -->
+  <line x1="70" y1="38" x2="70" y2="470" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="260" y1="38" x2="260" y2="470" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="450" y1="38" x2="450" y2="470" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="630" y1="38" x2="630" y2="470" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="847" y1="38" x2="847" y2="470" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. handleResumeActivity -->
+  <line x1="70" y1="65" x2="260" y2="65" stroke="#555" stroke-width="1.5" marker-end="url(#a4)"/>
+  <text x="165" y="60" font-size="9" fill="#495057" text-anchor="middle">1 handleResumeActivity</text>
+
+  <!-- 2. addView + setView -->
+  <text x="266" y="85" font-size="9" fill="#495057">2 省略 addView 过程</text>
+
+  <!-- 3. setView -->
+  <line x1="260" y1="100" x2="262" y2="115" stroke="#555" stroke-width="1"/>
+  <text x="266" y="110" font-size="9" fill="#495057">3 setView</text>
+
+  <!-- 4. requestLayout (self) -->
+  <line x1="260" y1="125" x2="262" y2="140" stroke="#555" stroke-width="1"/>
+  <text x="266" y="135" font-size="9" fill="#495057">4 requestLayout</text>
+
+  <!-- 5. scheduleTraversals (self) -->
+  <line x1="260" y1="150" x2="262" y2="165" stroke="#555" stroke-width="1"/>
+  <text x="266" y="160" font-size="9" fill="#495057">5 scheduleTraversals</text>
+
+  <!-- Note: Vsync -->
+  <rect x="165" y="180" width="190" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="260" y="195" font-size="8.5" fill="#868e96" text-anchor="middle">省略 doFrame → doTraversal 过程</text>
+
+  <!-- 6. doTraversal -->
+  <line x1="260" y1="215" x2="262" y2="230" stroke="#555" stroke-width="1"/>
+  <text x="266" y="225" font-size="9" fill="#495057">6 doTraversal</text>
+
+  <!-- 7. performTraversals -->
+  <line x1="260" y1="240" x2="262" y2="255" stroke="#555" stroke-width="1"/>
+  <text x="266" y="250" font-size="9" fill="#495057">7 performTraversals</text>
+
+  <!-- 8. relayoutWindow -->
+  <line x1="260" y1="265" x2="262" y2="280" stroke="#555" stroke-width="1"/>
+  <text x="266" y="275" font-size="9" fill="#495057">8 relayoutWindow</text>
+
+  <!-- Process boundary -->
+  <rect x="330" y="290" width="205" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="432" y="305" font-size="8.5" fill="#868e96" text-anchor="middle">app 进程 → system_server 进程</text>
+
+  <!-- 9. relayout (IPC) -->
+  <line x1="260" y1="320" x2="450" y2="320" stroke="#555" stroke-width="1.5" marker-end="url(#a4)"/>
+  <text x="355" y="315" font-size="9" fill="#495057" text-anchor="middle">9 relayout</text>
+
+  <!-- 10. relayoutWindow (server) -->
+  <line x1="450" y1="345" x2="630" y2="345" stroke="#555" stroke-width="1.5" marker-end="url(#a4)"/>
+  <text x="540" y="340" font-size="9" fill="#495057" text-anchor="middle">10 relayoutWindow</text>
+
+  <!-- 11. relayoutWindowInner -->
+  <line x1="630" y1="360" x2="632" y2="375" stroke="#555" stroke-width="1"/>
+  <text x="636" y="370" font-size="9" fill="#495057">11 relayoutWindowInner</text>
+
+  <!-- 12. createSurfaceControl -->
+  <line x1="630" y1="385" x2="632" y2="400" stroke="#555" stroke-width="1"/>
+  <text x="636" y="395" font-size="9" fill="#495057">12 createSurfaceControl</text>
+
+  <!-- 13. createSurfaceLocked -->
+  <line x1="630" y1="410" x2="847" y2="410" stroke="#555" stroke-width="1.5" marker-end="url(#a4)"/>
+  <text x="738" y="405" font-size="9" fill="#495057" text-anchor="middle">13 createSurfaceLocked</text>
+
+  <!-- 14. resetDrawState -->
+  <line x1="847" y1="425" x2="849" y2="440" stroke="#555" stroke-width="1"/>
+  <text x="853" y="435" font-size="9" fill="#495057">14 resetDrawState</text>
+
+  <!-- State box -->
+  <rect x="760" y="447" width="175" height="22" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="847" y="462" font-size="9.5" font-weight="600" fill="#c0392b" text-anchor="middle">mDrawState = DRAW_PENDING</text>
+</svg>

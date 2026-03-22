@@ -1,9 +1,9 @@
 ---
 prev:
-    text: 'WMS 窗口显示流程'
+    text: '窗口显示流程'
     link: '/framework/activity-rendering-process'
 next:
-    text: 'WMS 窗口层级'
+    text: '窗口层级管理'
     link: '/framework/wms-window-hierarchy'
 ---
 

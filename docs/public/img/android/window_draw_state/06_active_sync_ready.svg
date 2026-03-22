@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 340" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a6" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="110" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="65" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">DrawFrameTask</text>
+
+  <rect x="150" y="10" width="110" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="205" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">CanvasContext</text>
+
+  <rect x="290" y="10" width="140" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="360" y="29" font-size="8.5" font-weight="600" fill="#343a40" text-anchor="middle">FrameDrawingCallback</text>
+
+  <rect x="460" y="10" width="140" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="530" y="29" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">SurfaceSyncGroup</text>
+
+  <rect x="630" y="10" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="690" y="29" font-size="8" font-weight="600" fill="#343a40" text-anchor="middle">TransactionReady</text>
+
+  <rect x="780" y="10" width="105" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="832" y="29" font-size="8" font-weight="600" fill="#343a40" text-anchor="middle">ITransactionReady</text>
+
+  <!-- Lifelines -->
+  <line x1="65" y1="38" x2="65" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="205" y1="38" x2="205" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="360" y1="38" x2="360" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="530" y1="38" x2="530" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="690" y1="38" x2="690" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="832" y1="38" x2="832" y2="330" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 1. postAndWait -->
+  <line x1="65" y1="65" x2="67" y2="80" stroke="#555" stroke-width="1"/>
+  <text x="71" y="75" font-size="9" fill="#495057">1 postAndWait</text>
+
+  <!-- 2. draw -->
+  <line x1="65" y1="90" x2="205" y2="90" stroke="#555" stroke-width="1.5" marker-end="url(#a6)"/>
+  <text x="135" y="85" font-size="9" fill="#495057" text-anchor="middle">2 draw</text>
+
+  <!-- 3. onFrameCommit -->
+  <line x1="205" y1="120" x2="360" y2="120" stroke="#555" stroke-width="1.5" marker-end="url(#a6)"/>
+  <text x="282" y="115" font-size="9" fill="#495057" text-anchor="middle">3 onFrameCommit</text>
+
+  <!-- 4. onFrameDraw -->
+  <line x1="360" y1="150" x2="362" y2="165" stroke="#555" stroke-width="1"/>
+  <text x="366" y="160" font-size="9" fill="#495057">4 onFrameDraw</text>
+
+  <!-- Note: mActiveSurfaceSyncGroup ready -->
+  <rect x="270" y="175" width="210" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="375" y="190" font-size="8.5" fill="#868e96" text-anchor="middle">mActiveSurfaceSyncGroup ready</text>
+
+  <!-- 5. markSyncReady -->
+  <line x1="360" y1="210" x2="530" y2="210" stroke="#555" stroke-width="1.5" marker-end="url(#a6)"/>
+  <text x="445" y="205" font-size="9" fill="#495057" text-anchor="middle">5 markSyncReady</text>
+
+  <!-- 6. checkIfSyncIsComplete -->
+  <line x1="530" y1="235" x2="532" y2="250" stroke="#555" stroke-width="1"/>
+  <text x="536" y="245" font-size="9" fill="#495057">6 checkIfSyncIsComplete</text>
+
+  <!-- 7. accept (mTransactionReadyConsumer) -->
+  <line x1="530" y1="265" x2="690" y2="265" stroke="#555" stroke-width="1.5" marker-end="url(#a6)"/>
+  <text x="610" y="260" font-size="9" fill="#495057" text-anchor="middle">7 accept</text>
+
+  <!-- Note -->
+  <rect x="625" y="280" width="170" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="710" y="295" font-size="8.5" fill="#868e96" text-anchor="middle">child 回调到 parent</text>
+
+  <!-- 8. onTransactionReady -->
+  <line x1="690" y1="310" x2="832" y2="310" stroke="#555" stroke-width="1.5" marker-end="url(#a6)"/>
+  <text x="761" y="305" font-size="9" fill="#495057" text-anchor="middle">8 onTransactionReady</text>
+</svg>

@@ -3,7 +3,7 @@ prev:
     text: 'WMS 架构与运行原理分析'
     link: 'framework/basic-with-wms'
 next:
-    text: 'WMS 窗口显示流程'
+    text: '窗口显示流程'
     link: 'framework/window-rendering-process'
 ---
 

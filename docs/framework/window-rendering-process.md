@@ -1,9 +1,9 @@
 ---
 prev:
-    text: 'Activity 启动全流程分析与 Activity 生命周期'
+    text: 'Activity 启动流程与生命周期'
     link: 'framework/activity-launching-process'
 next:
-    text: 'WMS - 窗口添加和移除'
+    text: '窗口添加和移除'
     link: 'framework/window-add-remove'
 ---
 

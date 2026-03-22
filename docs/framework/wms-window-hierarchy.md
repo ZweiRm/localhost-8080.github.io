@@ -1,9 +1,9 @@
 ---
 prev:
-    text: 'WMS - 窗口添加和移除'
+    text: '窗口添加和移除'
     link: '/framework/window-add-remove'
 next:
-    text: 'WMS 窗口布局流程 relayoutWindow'
+    text: '窗口布局流程 relayoutWindow'
     link: '/framework/relayoutWindow'
 ---
 
