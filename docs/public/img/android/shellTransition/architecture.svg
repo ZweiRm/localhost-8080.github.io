@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 580" font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="13">
+  <rect width="900" height="580" fill="#f8f9fa" rx="3"/>
+
+  <!-- Title -->
+  <text x="450" y="30" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Shell Transition 架构 (Core / Shell 模型)</text>
+
+  <!-- system_server box -->
+  <rect x="30" y="55" width="400" height="500" rx="3" fill="white" stroke="#4a7fb5" stroke-width="2"/>
+  <text x="230" y="78" text-anchor="middle" font-size="11" font-weight="bold" fill="#4a7fb5">system_server (WM Core)</text>
+
+  <!-- TransitionController -->
+  <rect x="55" y="100" width="350" height="90" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="230" y="120" text-anchor="middle" font-weight="600" fill="#333">TransitionController</text>
+  <text x="65" y="140" font-size="11" fill="#555">- createTransition() / requestStartTransition()</text>
+  <text x="65" y="155" font-size="11" fill="#555">- collect() / moveToCollecting()</text>
+  <text x="65" y="170" font-size="11" fill="#555">- finishTransition() / validateStates()</text>
+  <text x="65" y="185" font-size="11" fill="#555">- mCollectingTransition / mPlayingTransitions</text>
+
+  <!-- Transition -->
+  <rect x="55" y="205" width="350" height="85" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="230" y="225" text-anchor="middle" font-weight="600" fill="#333">Transition</text>
+  <text x="65" y="245" font-size="11" fill="#555">- implements TransactionReadyListener</text>
+  <text x="65" y="260" font-size="11" fill="#555">- onTransactionReady(): 构建 TransitionInfo</text>
+  <text x="65" y="275" font-size="11" fill="#555">- calculateTargets() / buildFinishTransaction()</text>
+  <text x="65" y="285" font-size="11" fill="#555">- finishTransition(): 提交可见性, 清理</text>
+
+  <!-- BLASTSyncEngine -->
+  <rect x="55" y="305" width="350" height="75" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="230" y="325" text-anchor="middle" font-weight="600" fill="#333">BLASTSyncEngine</text>
+  <text x="65" y="345" font-size="11" fill="#555">- SyncGroup: 管理同步集合</text>
+  <text x="65" y="360" font-size="11" fill="#555">- tryFinish() / finishNow() / onTimeout()</text>
+  <text x="65" y="375" font-size="11" fill="#555">- BLAST_TIMEOUT_DURATION = 5000ms</text>
+
+  <!-- WindowContainer tree -->
+  <rect x="55" y="395" width="350" height="70" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="230" y="415" text-anchor="middle" font-weight="600" fill="#333">WindowContainer 层级</text>
+  <text x="65" y="435" font-size="11" fill="#555">- Task / ActivityRecord / WindowState</text>
+  <text x="65" y="450" font-size="11" fill="#555">- 每个节点持有 SurfaceControl → SF Layer</text>
+  <text x="65" y="460" font-size="11" fill="#555">- mSyncTransaction 收集绘制缓冲</text>
+
+  <!-- IPC Arrow -->
+  <rect x="440" y="200" width="30" height="170" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4"/>
+  <line x1="430" y1="220" x2="480" y2="220" stroke="#e07070" stroke-width="2" marker-end="url(#arrowR)"/>
+  <text x="455" y="210" text-anchor="middle" font-size="10" fill="#b44">IPC</text>
+  <line x1="480" y1="260" x2="430" y2="260" stroke="#4a7fb5" stroke-width="2" marker-end="url(#arrowB)"/>
+  <text x="455" y="252" text-anchor="middle" font-size="10" fill="#4a7fb5">Binder</text>
+
+  <text x="455" y="290" text-anchor="middle" font-size="10" font-weight="600" fill="#333">ITransition</text>
+  <text x="455" y="305" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Player</text>
+
+  <line x1="430" y1="330" x2="480" y2="330" stroke="#e07070" stroke-width="2" marker-end="url(#arrowR)"/>
+  <text x="455" y="322" text-anchor="middle" font-size="10" fill="#b44">ready</text>
+  <line x1="480" y1="355" x2="430" y2="355" stroke="#4a7fb5" stroke-width="2" marker-end="url(#arrowB)"/>
+  <text x="455" y="347" text-anchor="middle" font-size="10" fill="#4a7fb5">finish</text>
+
+  <!-- SystemUI box -->
+  <rect x="490" y="55" width="380" height="500" rx="3" fill="white" stroke="#2e7d32" stroke-width="2"/>
+  <text x="680" y="78" text-anchor="middle" font-size="11" font-weight="bold" fill="#2e7d32">SystemUI (WM Shell)</text>
+
+  <!-- Transitions -->
+  <rect x="510" y="100" width="340" height="90" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="680" y="120" text-anchor="middle" font-weight="600" fill="#333">Transitions</text>
+  <text x="520" y="140" font-size="11" fill="#555">- onTransitionReady() 接收就绪通知</text>
+  <text x="520" y="155" font-size="11" fill="#555">- setupStartState() / setupAnimHierarchy()</text>
+  <text x="520" y="170" font-size="11" fill="#555">- dispatchTransition() → Handler 链</text>
+  <text x="520" y="185" font-size="11" fill="#555">- onFinish() → 通知 Core 完成</text>
+
+  <!-- Handler chain -->
+  <rect x="510" y="205" width="340" height="100" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="680" y="225" text-anchor="middle" font-weight="600" fill="#333">TransitionHandler 链 (优先级从高到低)</text>
+  <text x="520" y="245" font-size="11" fill="#555">1. RecentsTransitionHandler (最近任务)</text>
+  <text x="520" y="260" font-size="11" fill="#555">2. PipTransitionHandler (画中画)</text>
+  <text x="520" y="275" font-size="11" fill="#555">3. SplitScreenTransitionHandler (分屏)</text>
+  <text x="520" y="290" font-size="11" fill="#555">4. DefaultTransitionHandler (兜底默认动画)</text>
+
+  <!-- DefaultTransitionHandler -->
+  <rect x="510" y="320" width="340" height="80" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="680" y="340" text-anchor="middle" font-weight="600" fill="#333">DefaultTransitionHandler</text>
+  <text x="520" y="360" font-size="11" fill="#555">- startAnimation(): 加载窗口动画资源</text>
+  <text x="520" y="375" font-size="11" fill="#555">- ValueAnimator → SurfaceControl 变换</text>
+  <text x="520" y="390" font-size="11" fill="#555">- 处理旋转/缩放/裁剪/透明度动画</text>
+
+  <!-- SurfaceFlinger -->
+  <rect x="510" y="420" width="340" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="680" y="450" text-anchor="middle" font-weight="600" fill="#333">SurfaceControl.Transaction → SurfaceFlinger</text>
+
+  <!-- Arrows connecting -->
+  <line x1="680" y1="190" x2="680" y2="205" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrowG)"/>
+  <line x1="680" y1="305" x2="680" y2="320" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrowG)"/>
+  <line x1="680" y1="400" x2="680" y2="420" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- Core internal arrows -->
+  <line x1="230" y1="190" x2="230" y2="205" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrowG)"/>
+  <line x1="230" y1="290" x2="230" y2="305" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrowG)"/>
+  <line x1="230" y1="380" x2="230" y2="395" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrowG)"/>
+
+  <!-- Shared box: SurfaceFlinger -->
+  <rect x="200" y="510" width="520" height="38" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="460" y="534" text-anchor="middle" font-weight="600" fill="#333">SurfaceFlinger (Native, Layer 合成)</text>
+
+  <line x1="230" y1="465" x2="230" y2="510" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4"/>
+  <line x1="680" y1="470" x2="680" y2="510" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4"/>
+
+  <defs>
+    <marker id="arrowR" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07070"/>
+    </marker>
+    <marker id="arrowB" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a7fb5"/>
+    </marker>
+    <marker id="arrowG" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#adb5bd"/>
+    </marker>
+  </defs>
+</svg>

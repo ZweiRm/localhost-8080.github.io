@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380">
+  <defs>
+    <marker id="a8s" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="360" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">setupStartState() 窗口初始可见性设置</text>
+
+  <!-- Entry -->
+  <rect x="220" y="40" width="280" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="360" y="58" font-size="10" fill="#495057" text-anchor="middle">遍历 info.getChanges()（每个参与窗口）</text>
+  <line x1="360" y1="68" x2="360" y2="90" stroke="#555" stroke-width="1" marker-end="url(#a8s)"/>
+
+  <!-- Decision: mode -->
+  <path d="M 360 90 L 460 120 L 360 150 L 260 120 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="360" y="124" font-size="10" fill="#495057" text-anchor="middle">change.mode?</text>
+
+  <!-- OPEN / TO_FRONT -->
+  <line x1="260" y1="120" x2="100" y2="120" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#a8s)"/>
+  <text x="180" y="112" font-size="8" fill="#2e7d32">OPEN / TO_FRONT</text>
+
+  <rect x="15" y="100" width="85" height="65" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="57" y="118" font-size="9.5" font-weight="600" fill="#2e7d32" text-anchor="middle">显示</text>
+  <text x="57" y="136" font-size="8" fill="#495057" text-anchor="middle">t.show(leash)</text>
+  <text x="57" y="150" font-size="8" fill="#495057" text-anchor="middle">alpha = 1.0</text>
+  <text x="57" y="162" font-size="7.5" fill="#868e96" text-anchor="middle">初始位置在外</text>
+
+  <!-- CLOSE / TO_BACK -->
+  <line x1="460" y1="120" x2="600" y2="120" stroke="#e07070" stroke-width="1.2" marker-end="url(#a8s)"/>
+  <text x="530" y="112" font-size="8" fill="#c0392b">CLOSE / TO_BACK</text>
+
+  <rect x="600" y="100" width="105" height="65" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="652" y="118" font-size="9.5" font-weight="600" fill="#c0392b" text-anchor="middle">隐藏（延迟）</text>
+  <text x="652" y="138" font-size="8" fill="#495057" text-anchor="middle">finishT.hide(leash)</text>
+  <text x="652" y="155" font-size="7.5" fill="#868e96" text-anchor="middle">动画结束时执行</text>
+
+  <!-- CHANGE -->
+  <line x1="360" y1="150" x2="360" y2="180" stroke="#555" stroke-width="1" marker-end="url(#a8s)"/>
+  <text x="370" y="168" font-size="8" fill="#495057">CHANGE</text>
+
+  <rect x="280" y="182" width="160" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="200" font-size="9" fill="#495057" text-anchor="middle">保持当前状态</text>
+  <text x="360" y="213" font-size="8" fill="#868e96" text-anchor="middle">仅做变换动画</text>
+
+  <!-- Key point: finishT -->
+  <rect x="30" y="230" width="660" height="65" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="45" y="250" font-size="10" font-weight="600" fill="#343a40">关键理解：startT vs finishT</text>
+  <rect x="45" y="260" width="300" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="195" y="278" font-size="9" fill="#495057" text-anchor="middle">startT: 动画开始前立即 apply</text>
+  <rect x="375" y="260" width="300" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="525" y="278" font-size="9" fill="#495057" text-anchor="middle">finishT: 动画结束时 apply（恢复状态）</text>
+
+  <!-- Warning -->
+  <rect x="30" y="310" width="660" height="60" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="45" y="330" font-size="10" font-weight="600" fill="#c0392b">异常场景：finishT 未正确 apply</text>
+  <text x="50" y="348" font-size="9" fill="#495057">如果动画未正常 finish（堆积/abort/异常中断），finishT 中的 hide 操作不会执行，</text>
+  <text x="50" y="363" font-size="9" fill="#495057">但 startT 中对 TO_BACK 窗口的引用已生效 → Layer 留在动画期间的 hide/reparent 状态 → NOT_VISIBLE ANR</text>
+</svg>

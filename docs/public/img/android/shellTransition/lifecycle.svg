@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" font-family="Segoe UI, PingFang SC, Microsoft YaHei, sans-serif" font-size="13">
+  <rect width="960" height="420" fill="#f8f9fa" rx="3"/>
+
+  <!-- Title -->
+  <text x="480" y="32" text-anchor="middle" font-size="13" font-weight="bold" fill="#333">Shell Transition 生命周期</text>
+
+  <!-- CREATED -->
+  <rect x="30" y="70" width="120" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="90" y="100" text-anchor="middle" font-weight="600" fill="#333">CREATED</text>
+
+  <!-- Arrow -->
+  <line x1="150" y1="95" x2="198" y2="95" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="174" y="86" text-anchor="middle" font-size="11" fill="#666">createTransition</text>
+
+  <!-- COLLECTING -->
+  <rect x="200" y="70" width="130" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="265" y="100" text-anchor="middle" font-weight="600" fill="#333">COLLECTING</text>
+
+  <!-- Arrow -->
+  <line x1="330" y1="95" x2="388" y2="95" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="359" y="86" text-anchor="middle" font-size="11" fill="#666">setReady</text>
+
+  <!-- SYNCING -->
+  <rect x="390" y="70" width="110" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="445" y="100" text-anchor="middle" font-weight="600" fill="#333">SYNCING</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="95" x2="548" y2="95" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="524" y="86" text-anchor="middle" font-size="11" fill="#666">allDrawn</text>
+
+  <!-- PLAYING -->
+  <rect x="550" y="70" width="110" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="605" y="100" text-anchor="middle" font-weight="600" fill="#333">PLAYING</text>
+
+  <!-- Arrow -->
+  <line x1="660" y1="95" x2="718" y2="95" stroke="#adb5bd" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="689" y="86" text-anchor="middle" font-size="11" fill="#666">animEnd</text>
+
+  <!-- FINISHED -->
+  <rect x="720" y="70" width="110" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="775" y="100" text-anchor="middle" font-weight="600" fill="#333">FINISHED</text>
+
+  <!-- Arrow to ABORT -->
+  <line x1="445" y1="120" x2="445" y2="168" stroke="#e07070" stroke-width="1.5" marker-end="url(#arrowRed)"/>
+  <text x="470" y="152" font-size="11" fill="#b44">abort</text>
+
+  <!-- ABORT -->
+  <rect x="390" y="170" width="110" height="50" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.5"/>
+  <text x="445" y="200" text-anchor="middle" font-weight="600" fill="#b44">ABORTED</text>
+
+  <!-- Detail boxes for each stage -->
+  <!-- COLLECTING detail -->
+  <rect x="30" y="260" width="200" height="130" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="280" text-anchor="middle" font-weight="600" font-size="12" fill="#4a7fb5">Collecting</text>
+  <text x="40" y="298" font-size="11" fill="#555">- collect() 收集参与窗口</text>
+  <text x="40" y="314" font-size="11" fill="#555">- 记录 Change 信息</text>
+  <text x="40" y="330" font-size="11" fill="#555">- 超时: 5000ms (OPEN)</text>
+  <text x="40" y="346" font-size="11" fill="#555">- 超时: 2000ms (CHANGE)</text>
+  <text x="40" y="362" font-size="11" fill="#555">- BLASTSyncEngine 启动</text>
+  <text x="40" y="378" font-size="11" fill="#555">- 等待 App 绘制完成</text>
+
+  <!-- SYNCING detail -->
+  <rect x="260" y="260" width="200" height="130" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="280" text-anchor="middle" font-weight="600" font-size="12" fill="#adb5bd">Sync (BLASTSync)</text>
+  <text x="270" y="298" font-size="11" fill="#555">- 等待所有窗口 finishDrawing</text>
+  <text x="270" y="314" font-size="11" fill="#555">- onSurfacePlacement 检查</text>
+  <text x="270" y="330" font-size="11" fill="#555">- tryFinish() 逐个检查</text>
+  <text x="270" y="346" font-size="11" fill="#555">- 5s 超时强制 proceed</text>
+  <text x="270" y="362" font-size="11" fill="#555">- finishNow() 合并事务</text>
+  <text x="270" y="378" font-size="11" fill="#555">- 调用 onTransactionReady</text>
+
+  <!-- PLAYING detail -->
+  <rect x="490" y="260" width="200" height="130" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="590" y="280" text-anchor="middle" font-weight="600" font-size="12" fill="#2e7d32">Playing (Shell)</text>
+  <text x="500" y="298" font-size="11" fill="#555">- setupStartState()</text>
+  <text x="500" y="314" font-size="11" fill="#555">- setupAnimHierarchy()</text>
+  <text x="500" y="330" font-size="11" fill="#555">- Handler 选择和分发</text>
+  <text x="500" y="346" font-size="11" fill="#555">- 动画执行 (ValueAnimator)</text>
+  <text x="500" y="362" font-size="11" fill="#555">- merge 后续 transition</text>
+  <text x="500" y="378" font-size="11" fill="#555">- finishCallback 通知完成</text>
+
+  <!-- FINISHED detail -->
+  <rect x="720" y="260" width="200" height="130" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="820" y="280" text-anchor="middle" font-weight="600" font-size="12" fill="#2e7d32">Finishing (Core)</text>
+  <text x="730" y="298" font-size="11" fill="#555">- finishT.apply()</text>
+  <text x="730" y="314" font-size="11" fill="#555">- cleanupTransaction.apply()</text>
+  <text x="730" y="330" font-size="11" fill="#555">- commitVisibility</text>
+  <text x="730" y="346" font-size="11" fill="#555">- validateStates()</text>
+  <text x="730" y="362" font-size="11" fill="#555">- mStateValidators 检查</text>
+  <text x="730" y="378" font-size="11" fill="#555">- 触发下一个 transition</text>
+
+  <!-- Arrow markers -->
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#adb5bd"/>
+    </marker>
+    <marker id="arrowRed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e07070"/>
+    </marker>
+  </defs>
+</svg>

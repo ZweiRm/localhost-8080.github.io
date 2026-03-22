@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 450">
+  <defs>
+    <marker id="a6s" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="350" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">BLASTSyncEngine 同步机制</text>
+
+  <!-- SyncGroup creation -->
+  <rect x="200" y="40" width="300" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="350" y="62" font-size="10" fill="#495057" text-anchor="middle">创建 SyncGroup（mSyncId = N）</text>
+  <line x1="350" y1="75" x2="350" y2="95" stroke="#555" stroke-width="1" marker-end="url(#a6s)"/>
+
+  <!-- Add root members -->
+  <rect x="170" y="97" width="360" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="350" y="115" font-size="10" fill="#495057" text-anchor="middle">添加 mRootMembers（参与的 WindowContainer）</text>
+  <text x="350" y="130" font-size="8.5" fill="#868e96" text-anchor="middle">每个子窗口设置 SYNC_STATE_WAITING_FOR_DRAW</text>
+  <line x1="350" y1="137" x2="350" y2="157" stroke="#555" stroke-width="1" marker-end="url(#a6s)"/>
+
+  <!-- Post timeout -->
+  <rect x="480" y="97" width="200" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="580" y="115" font-size="9" fill="#c0392b" text-anchor="middle">postDelayed(timeout, 5000ms)</text>
+  <text x="580" y="130" font-size="8" fill="#868e96" text-anchor="middle">BLAST_TIMEOUT_DURATION</text>
+  <line x1="530" y1="117" x2="478" y2="117" stroke="#e07070" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Check loop -->
+  <rect x="150" y="159" width="400" height="75" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="160" y="178" font-size="10" font-weight="600" fill="#343a40">每次 applySurfaceChangesTransaction 后</text>
+  <text x="165" y="196" font-size="9" fill="#495057">onSurfacePlacement() → SyncGroup 检查所有 mRootMembers：</text>
+  <text x="175" y="214" font-size="9" fill="#495057">• 窗口 finishDrawing → SYNC_STATE_READY</text>
+  <text x="175" y="228" font-size="9" fill="#495057">• 所有窗口 ready → SyncGroup.Finished!</text>
+  <line x1="350" y1="234" x2="350" y2="254" stroke="#555" stroke-width="1" marker-end="url(#a6s)"/>
+
+  <!-- Decision: finished or timeout -->
+  <path d="M 350 254 L 440 280 L 350 306 L 260 280 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="350" y="284" font-size="9.5" fill="#495057" text-anchor="middle">完成方式?</text>
+
+  <!-- Normal finish -->
+  <line x1="260" y1="280" x2="100" y2="280" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#a6s)"/>
+  <text x="180" y="272" font-size="8" fill="#2e7d32">正常完成</text>
+  <rect x="15" y="262" width="85" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="57" y="280" font-size="9" fill="#2e7d32" text-anchor="middle">finishNow()</text>
+  <text x="57" y="292" font-size="7.5" fill="#868e96" text-anchor="middle">合并 Transaction</text>
+
+  <!-- Timeout -->
+  <line x1="440" y1="280" x2="580" y2="280" stroke="#e07070" stroke-width="1.2" marker-end="url(#a6s)"/>
+  <text x="510" y="272" font-size="8" fill="#c0392b">5s 超时</text>
+  <rect x="580" y="262" width="100" height="35" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="630" y="280" font-size="9" fill="#c0392b" text-anchor="middle">onTimeout()</text>
+  <text x="630" y="292" font-size="7.5" fill="#868e96" text-anchor="middle">强制 finishNow</text>
+
+  <!-- Both lead to onTransactionReady -->
+  <line x1="57" y1="297" x2="57" y2="340" stroke="#555" stroke-width="1"/>
+  <line x1="630" y1="297" x2="630" y2="340" stroke="#555" stroke-width="1"/>
+  <line x1="57" y1="340" x2="630" y2="340" stroke="#555" stroke-width="1"/>
+  <line x1="350" y1="340" x2="350" y2="360" stroke="#555" stroke-width="1" marker-end="url(#a6s)"/>
+
+  <!-- finishNow -->
+  <rect x="150" y="362" width="400" height="35" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="350" y="378" font-size="10" fill="#495057" text-anchor="middle">finishNow(): merge all sync transactions → StartTransaction</text>
+  <text x="350" y="393" font-size="8.5" fill="#868e96" text-anchor="middle">调用 mListener.onTransactionReady(mSyncId, merged)</text>
+
+  <line x1="350" y1="397" x2="350" y2="417" stroke="#555" stroke-width="1" marker-end="url(#a6s)"/>
+
+  <rect x="200" y="419" width="300" height="25" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="350" y="436" font-size="10" font-weight="600" fill="#2e7d32" text-anchor="middle">→ 进入 onTransactionReady 阶段</text>
+</svg>

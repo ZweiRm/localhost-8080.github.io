@@ -272,7 +272,9 @@ export default defineConfig({
                 {
                     text: '动画',
                     collapsed: false,
-                    items: []
+                    items: [
+                        { text: 'ShellTransition', link: 'framework/ShellTransition' },
+                    ]
                 },
                 {
                     text: '性能与稳定性',

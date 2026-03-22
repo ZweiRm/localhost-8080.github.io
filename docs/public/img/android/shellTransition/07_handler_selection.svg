@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 420">
+  <defs>
+    <marker id="a7h" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="340" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">Shell 侧 TransitionHandler 选择流程</text>
+
+  <!-- onTransitionReady -->
+  <rect x="200" y="40" width="280" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="340" y="60" font-size="10" fill="#495057" text-anchor="middle">Transitions.onTransitionReady(info)</text>
+  <line x1="340" y1="70" x2="340" y2="90" stroke="#555" stroke-width="1" marker-end="url(#a7h)"/>
+
+  <!-- Iterate handlers -->
+  <rect x="130" y="92" width="420" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="340" y="112" font-size="10" fill="#495057" text-anchor="middle">遍历 mHandlers 列表（优先级从高到低）</text>
+  <line x1="340" y1="122" x2="340" y2="142" stroke="#555" stroke-width="1" marker-end="url(#a7h)"/>
+
+  <!-- Handler list -->
+  <rect x="30" y="144" width="300" height="220" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="40" y="164" font-size="9.5" font-weight="600" fill="#343a40">handler.startAnimation(info, startT, finishT)</text>
+  <text x="40" y="182" font-size="8.5" fill="#868e96">返回 true → 由该 handler 接管动画</text>
+  <text x="40" y="196" font-size="8.5" fill="#868e96">返回 false → 尝试下一个 handler</text>
+
+  <rect x="45" y="210" width="270" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="55" y="225" font-size="8.5" fill="#495057">KeyguardTransitionHandler（锁屏）</text>
+
+  <rect x="45" y="236" width="270" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="55" y="251" font-size="8.5" fill="#495057">ActivityEmbeddingController（嵌入式 Activity）</text>
+
+  <rect x="45" y="262" width="270" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="55" y="277" font-size="8.5" fill="#495057">RecentsTransitionHandler（最近任务）</text>
+
+  <rect x="45" y="288" width="270" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="55" y="303" font-size="8.5" fill="#495057">PipTransition（画中画）</text>
+
+  <rect x="45" y="314" width="270" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="55" y="329" font-size="8.5" fill="#495057">RemoteTransitionHandler（远端动画）</text>
+
+  <rect x="45" y="340" width="270" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="355" font-size="8.5" font-weight="600" fill="#495057">DefaultTransitionHandler（兜底）</text>
+
+  <!-- No handler found → default -->
+  <rect x="370" y="160" width="280" height="90" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="180" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">DefaultTransitionHandler</text>
+  <text x="380" y="200" font-size="9" fill="#868e96">大多数普通 Activity 切换动画</text>
+  <text x="380" y="218" font-size="9" fill="#868e96">调用 setupStartState() 初始化窗口状态</text>
+  <text x="380" y="236" font-size="9" fill="#868e96">调用 setupAnimHierarchy() 调整层级</text>
+  <line x1="330" y1="350" x2="370" y2="210" stroke="#555" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Log -->
+  <rect x="370" y="270" width="280" height="45" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="380" y="288" font-size="9" font-weight="600" fill="#343a40">关键日志</text>
+  <text x="385" y="305" font-size="8" fill="#495057" font-family="monospace">WindowManagerShell: try handler xxx</text>
+
+  <rect x="370" y="325" width="280" height="45" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="380" y="343" font-size="9" font-weight="600" fill="#2e7d32">最终确认</text>
+  <text x="385" y="360" font-size="8" fill="#2e7d32" font-family="monospace">animated by DefaultTransitionHandler</text>
+</svg>
