@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420">
+  <defs>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="360" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">Layer 状态分析示例（dump SurfaceFlinger）</text>
+
+  <!-- Normal example -->
+  <rect x="20" y="40" width="330" height="260" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="185" y="60" font-size="11" font-weight="600" fill="#2e7d32" text-anchor="middle">正常状态（所有 Layer 可见）</text>
+
+  <text x="35" y="85" font-size="9" fill="#495057" font-family="monospace">--9-- Display 0 name="Built-in"#1</text>
+  <text x="55" y="100" font-size="8.5" fill="#2e7d32" font-family="monospace">flags=0x2 getAlpha=1.000</text>
+  <text x="35" y="118" font-size="9" fill="#495057" font-family="monospace">--8-- WindowedMagnification:0:31#2</text>
+  <text x="55" y="133" font-size="8.5" fill="#2e7d32" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="35" y="151" font-size="9" fill="#495057" font-family="monospace">  ...</text>
+  <text x="35" y="169" font-size="9" fill="#495057" font-family="monospace">--4-- DefaultTaskDisplayArea#7</text>
+  <text x="55" y="184" font-size="8.5" fill="#2e7d32" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="35" y="202" font-size="9" fill="#495057" font-family="monospace">--3-- Task=6302#258182</text>
+  <text x="55" y="217" font-size="8.5" fill="#2e7d32" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="35" y="235" font-size="9" fill="#495057" font-family="monospace">--2-- ActivityRecord{xxx}#258193</text>
+  <text x="55" y="250" font-size="8.5" fill="#2e7d32" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="35" y="268" font-size="9" fill="#495057" font-family="monospace">--1-- xxx com.example.app/...#258198</text>
+  <text x="55" y="283" font-size="8.5" fill="#2e7d32" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+
+  <!-- Abnormal example -->
+  <rect x="370" y="40" width="330" height="260" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="535" y="60" font-size="11" font-weight="600" fill="#c0392b" text-anchor="middle">异常状态（Layer 被 hide）</text>
+
+  <text x="385" y="85" font-size="9" fill="#495057" font-family="monospace">--9-- Display 0 name="Built-in"#1</text>
+  <text x="405" y="100" font-size="8.5" fill="#495057" font-family="monospace">flags=0x2 getAlpha=1.000</text>
+  <text x="385" y="118" font-size="9" fill="#495057" font-family="monospace">  ...</text>
+  <text x="385" y="136" font-size="9" fill="#495057" font-family="monospace">--4-- DefaultTaskDisplayArea#7</text>
+  <text x="405" y="151" font-size="8.5" fill="#495057" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="385" y="169" font-size="9" font-weight="600" fill="#c0392b" font-family="monospace">--3-- Task=6302#258182</text>
+  <text x="405" y="184" font-size="8.5" font-weight="600" fill="#c0392b" font-family="monospace">flags=0x1 getAlpha=1.000</text>
+  <text x="560" y="184" font-size="8" fill="#c0392b">← 末位奇数=hidden!</text>
+  <text x="385" y="202" font-size="9" fill="#495057" font-family="monospace">--2-- ActivityRecord{xxx}#258193</text>
+  <text x="405" y="217" font-size="8.5" fill="#495057" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="385" y="235" font-size="9" fill="#495057" font-family="monospace">--1-- xxx com.example.app/...#258198</text>
+  <text x="405" y="250" font-size="8.5" fill="#495057" font-family="monospace">flags=0x0 getAlpha=1.000</text>
+  <text x="385" y="268" font-size="9" fill="#495057" font-family="monospace">--0-- com.example.app/...#258199</text>
+  <text x="405" y="283" font-size="8.5" font-weight="600" fill="#c0392b" font-family="monospace">flags=0x103 getAlpha=1.000</text>
+  <text x="610" y="283" font-size="8" fill="#c0392b">← 末位奇数!</text>
+
+  <!-- Rules -->
+  <rect x="20" y="315" width="680" height="95" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="35" y="335" font-size="10" font-weight="600" fill="#343a40">判断规则</text>
+
+  <rect x="35" y="345" width="200" height="25" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
+  <text x="135" y="362" font-size="9" fill="#c0392b" text-anchor="middle">flags 末位奇数 = hidden</text>
+
+  <rect x="255" y="345" width="200" height="25" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
+  <text x="355" y="362" font-size="9" fill="#c0392b" text-anchor="middle">getAlpha=0.000 = 不可见</text>
+
+  <rect x="475" y="345" width="210" height="25" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
+  <text x="580" y="362" font-size="9" fill="#c0392b" text-anchor="middle">父级 Layer 异常 → 子级全不可见</text>
+
+  <text x="35" y="393" font-size="9" fill="#495057">批量检索命令：grep -rna -E "MI-SF   : --\d+-- .*flags=\d+[13579]" ./*</text>
+  <text x="35" y="408" font-size="9" fill="#495057">正常 Layer 层级应有 8-10 级，如仅 2-3 级则说明 reparent 异常导致窗口脱离层级树</text>
+</svg>

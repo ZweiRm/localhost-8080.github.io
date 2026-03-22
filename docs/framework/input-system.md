@@ -1,3 +1,12 @@
+---
+prev:
+    text: 'ShellTransition'
+    link: '/framework/ShellTransition'
+next:
+    text: '无焦点窗口 ANR'
+    link: '/framework/anr-no-focused'
+---
+
 # Android Input 系统：事件处理与 Motion 事件派发
 
 本文详细介绍 Android Framework 层 Input 模块的整体流程，包括事件的上报与读取、事件的派发（重点分析 Motion 事件寻找派发目标的完整逻辑），以及事件的接收与响应。同时提供常见的点击无响应问题的排查方法。

@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'WMS 窗口层级管理'
-    link: '/framework/window-draw-state'
+    text: '无焦点窗口 ANR'
+    link: '/framework/anr-no-focused'
 next:
     text: 'Android 12 容器层级'
     link: '/framework/container'

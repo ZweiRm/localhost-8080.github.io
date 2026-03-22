@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 450">
+  <defs>
+    <marker id="arrow8" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="410" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">渲染管线：从 VSync 到上屏</text>
+
+  <!-- VSync signal -->
+  <rect x="10" y="40" width="100" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="60" y="62" font-size="10" fill="#495057" text-anchor="middle">VSync 信号</text>
+
+  <line x1="110" y1="57" x2="135" y2="57" stroke="#555" stroke-width="1.2" marker-end="url(#arrow8)"/>
+
+  <!-- UIThread Section -->
+  <rect x="135" y="35" width="310" height="155" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="145" y="55" font-size="10" font-weight="600" fill="#4a7fb5">UIThread（主线程）</text>
+
+  <rect x="155" y="65" width="270" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="290" y="80" font-size="9.5" fill="#495057" text-anchor="middle">Choreographer.doFrame()</text>
+  <text x="290" y="93" font-size="8" fill="#868e96" text-anchor="middle">Input → Animation → Traversal → Commit</text>
+
+  <line x1="290" y1="100" x2="290" y2="112" stroke="#555" stroke-width="1" marker-end="url(#arrow8)"/>
+
+  <rect x="155" y="114" width="270" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="290" y="134" font-size="9.5" fill="#495057" text-anchor="middle">ViewRootImpl.performTraversals()</text>
+
+  <line x1="290" y1="144" x2="290" y2="155" stroke="#555" stroke-width="1" marker-end="url(#arrow8)"/>
+
+  <rect x="155" y="157" width="130" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="174" font-size="9" fill="#495057" text-anchor="middle">measure + layout</text>
+
+  <rect x="295" y="157" width="130" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="174" font-size="9" fill="#495057" text-anchor="middle">draw (记录命令)</text>
+
+  <!-- Arrow to RenderThread -->
+  <line x1="445" y1="170" x2="475" y2="170" stroke="#555" stroke-width="1.2" marker-end="url(#arrow8)"/>
+  <text x="460" y="162" font-size="8" fill="#868e96" text-anchor="middle">post</text>
+
+  <!-- RenderThread Section -->
+  <rect x="475" y="35" width="330" height="155" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="485" y="55" font-size="10" font-weight="600" fill="#868e96">RenderThread（渲染线程，进程单例）</text>
+
+  <rect x="495" y="65" width="290" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="85" font-size="9.5" fill="#495057" text-anchor="middle">1. syncFrameState — 同步 DisplayList</text>
+
+  <rect x="495" y="100" width="290" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="120" font-size="9.5" fill="#495057" text-anchor="middle">2. dequeueBuffer — 申请 GraphicBuffer</text>
+
+  <rect x="495" y="135" width="290" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="152" font-size="9.5" fill="#495057" text-anchor="middle">3. renderFrame — GPU 渲染（Skia）</text>
+
+  <rect x="495" y="163" width="290" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="180" font-size="9.5" fill="#495057" text-anchor="middle">4. queueBuffer — 提交 buffer 给 SF</text>
+
+  <!-- Arrow to SF -->
+  <line x1="640" y1="188" x2="640" y2="220" stroke="#555" stroke-width="1.2" marker-end="url(#arrow8)"/>
+
+  <!-- SurfaceFlinger Section -->
+  <rect x="135" y="215" width="670" height="110" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="145" y="235" font-size="10" font-weight="600" fill="#868e96">SurfaceFlinger（独立进程）</text>
+
+  <rect x="155" y="245" width="300" height="65" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="305" y="263" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">commit 阶段</text>
+  <text x="305" y="280" font-size="9" fill="#868e96" text-anchor="middle">处理 Transaction / latchBuffer</text>
+  <text x="305" y="295" font-size="9" fill="#868e96" text-anchor="middle">更新 Layer 属性和 Snapshot</text>
+
+  <line x1="455" y1="277" x2="485" y2="277" stroke="#555" stroke-width="1.2" marker-end="url(#arrow8)"/>
+
+  <rect x="485" y="245" width="300" height="65" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="635" y="263" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">composite 阶段</text>
+  <text x="635" y="280" font-size="9" fill="#868e96" text-anchor="middle">Layer 排序 / HWC 或 GPU 合成</text>
+  <text x="635" y="295" font-size="9" fill="#868e96" text-anchor="middle">上屏显示</text>
+
+  <!-- Draw state connection -->
+  <rect x="10" y="350" width="795" height="90" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="20" y="370" font-size="10" font-weight="600" fill="#343a40">与焦点窗口的关联（mDrawState 推进时机）</text>
+
+  <rect x="25" y="385" width="180" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="115" y="400" font-size="9" fill="#495057" text-anchor="middle">relayoutWindow()</text>
+  <text x="115" y="415" font-size="8.5" fill="#c0392b" text-anchor="middle">→ DRAW_PENDING</text>
+
+  <line x1="205" y1="405" x2="225" y2="405" stroke="#555" stroke-width="1" marker-end="url(#arrow8)"/>
+
+  <rect x="227" y="385" width="180" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="317" y="400" font-size="9" fill="#495057" text-anchor="middle">reportDrawFinished()</text>
+  <text x="317" y="415" font-size="8.5" fill="#868e96" text-anchor="middle">→ COMMIT_DRAW_PENDING</text>
+
+  <line x1="407" y1="405" x2="427" y2="405" stroke="#555" stroke-width="1" marker-end="url(#arrow8)"/>
+
+  <rect x="429" y="385" width="180" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="519" y="400" font-size="9" fill="#495057" text-anchor="middle">commitFinishDrawing()</text>
+  <text x="519" y="415" font-size="8.5" fill="#868e96" text-anchor="middle">→ READY_TO_SHOW</text>
+
+  <line x1="609" y1="405" x2="629" y2="405" stroke="#555" stroke-width="1" marker-end="url(#arrow8)"/>
+
+  <rect x="631" y="385" width="160" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="711" y="400" font-size="9" fill="#2e7d32" text-anchor="middle">performShowLocked()</text>
+  <text x="711" y="415" font-size="8.5" fill="#2e7d32" text-anchor="middle">→ HAS_DRAWN</text>
+</svg>

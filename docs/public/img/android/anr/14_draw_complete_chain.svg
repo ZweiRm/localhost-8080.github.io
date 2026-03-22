@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 400">
+  <defs>
+    <marker id="a14" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="390" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">窗口绘制完成回调链：App → WMS → 焦点生效</text>
+
+  <!-- App Process -->
+  <rect x="10" y="35" width="250" height="340" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="20" y="52" font-size="10" font-weight="600" fill="#4a7fb5">App 进程</text>
+
+  <rect x="25" y="65" width="220" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="83" font-size="9" fill="#495057" text-anchor="middle">Choreographer.doFrame()</text>
+
+  <line x1="135" y1="93" x2="135" y2="108" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="25" y="110" width="220" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="128" font-size="9" fill="#495057" text-anchor="middle">VRI.performTraversals()</text>
+
+  <line x1="135" y1="138" x2="135" y2="153" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="25" y="155" width="220" height="28" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="135" y="173" font-size="9" fill="#495057" text-anchor="middle">relayoutWindow() → DRAW_PENDING</text>
+
+  <line x1="135" y1="183" x2="135" y2="198" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="25" y="200" width="220" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="218" font-size="9" fill="#495057" text-anchor="middle">measure → layout → draw</text>
+
+  <line x1="135" y1="228" x2="135" y2="243" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <!-- cancelDraw branch -->
+  <path d="M 135 243 L 195 263 L 135 283 L 75 263 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="267" font-size="8.5" fill="#495057" text-anchor="middle">cancelDraw?</text>
+
+  <line x1="75" y1="263" x2="25" y2="263" stroke="#e07070" stroke-width="1"/>
+  <text x="50" y="255" font-size="7.5" fill="#c0392b">是</text>
+  <line x1="25" y1="263" x2="25" y2="110" stroke="#e07070" stroke-width="1" marker-end="url(#a14)"/>
+  <text x="13" y="190" font-size="7.5" fill="#c0392b" transform="rotate(-90 13 190)">重试</text>
+
+  <line x1="135" y1="283" x2="135" y2="300" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+  <text x="145" y="294" font-size="7.5" fill="#2e7d32">否</text>
+
+  <rect x="25" y="302" width="220" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="320" font-size="9" fill="#495057" text-anchor="middle">createSyncIfNeeded()</text>
+
+  <line x1="135" y1="330" x2="135" y2="345" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="25" y="347" width="220" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="135" y="365" font-size="9" font-weight="600" fill="#4a7fb5" text-anchor="middle">reportDrawFinished()</text>
+
+  <!-- Binder to WMS -->
+  <line x1="245" y1="361" x2="285" y2="361" stroke="#555" stroke-width="1.2" marker-end="url(#a14)"/>
+  <text x="265" y="353" font-size="7.5" fill="#868e96">Binder</text>
+
+  <!-- system_server -->
+  <rect x="280" y="35" width="490" height="340" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="290" y="52" font-size="10" font-weight="600" fill="#868e96">system_server</text>
+
+  <rect x="295" y="345" width="180" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="363" font-size="9" fill="#495057" text-anchor="middle">Session.finishDrawing()</text>
+
+  <line x1="475" y1="361" x2="505" y2="361" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="507" y="345" width="250" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="632" y="363" font-size="9" fill="#495057" text-anchor="middle">WMS.finishDrawingWindow() → win.finishDrawing()</text>
+
+  <line x1="632" y1="343" x2="632" y2="313" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <!-- finishDrawingLocked -->
+  <rect x="507" y="280" width="250" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="632" y="296" font-size="9" fill="#495057" text-anchor="middle">WindowStateAnimator.finishDrawingLocked()</text>
+  <text x="632" y="308" font-size="8" fill="#868e96" text-anchor="middle">DRAW_PENDING → COMMIT_DRAW_PENDING</text>
+
+  <line x1="632" y1="278" x2="632" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="507" y="225" width="250" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="632" y="241" font-size="9" fill="#495057" text-anchor="middle">requestTraversal() → commitFinishDrawingLocked()</text>
+  <text x="632" y="253" font-size="8" fill="#868e96" text-anchor="middle">→ READY_TO_SHOW → performShowLocked()</text>
+
+  <line x1="632" y1="223" x2="632" y2="203" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="507" y="170" width="250" height="32" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="632" y="186" font-size="9" font-weight="600" fill="#2e7d32" text-anchor="middle">mDrawState = HAS_DRAWN</text>
+  <text x="632" y="198" font-size="8" fill="#868e96" text-anchor="middle">showSurfaceRobustly → Surface 可见</text>
+
+  <line x1="632" y1="168" x2="632" y2="148" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <!-- SF update -->
+  <rect x="507" y="115" width="250" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="632" y="131" font-size="9" fill="#495057" text-anchor="middle">SF: updateInputFlinger() → NOT_VISIBLE 消除</text>
+  <text x="632" y="143" font-size="8" fill="#868e96" text-anchor="middle">窗口变为可见</text>
+
+  <line x1="632" y1="113" x2="632" y2="93" stroke="#555" stroke-width="1" marker-end="url(#a14)"/>
+
+  <rect x="507" y="65" width="250" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="632" y="83" font-size="9" font-weight="600" fill="#2e7d32" text-anchor="middle">Input: Focus entering → 焦点生效</text>
+
+  <!-- Log callouts -->
+  <rect x="295" y="65" width="195" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="305" y="82" font-size="9" font-weight="600" fill="#343a40">关键日志</text>
+  <text x="305" y="98" font-size="8" fill="#495057">Focus request [窗口]</text>
+  <text x="305" y="112" font-size="8" fill="#495057">Focus receive [窗口]</text>
+  <text x="305" y="126" font-size="8" fill="#495057">ignore ... NOT_VISIBLE</text>
+  <text x="305" y="140" font-size="8" fill="#2e7d32">Focus entering [窗口]</text>
+</svg>

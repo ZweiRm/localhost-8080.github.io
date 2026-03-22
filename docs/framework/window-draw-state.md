@@ -3,8 +3,8 @@ prev:
     text: '窗口布局流程 relayoutWindow'
     link: '/framework/relayoutWindow'
 next:
-    text: 'ViewRootImpl 中 performTraversal() 梳理'
-    link: '/framework/performTraversal'
+    text: 'ShellTransition'
+    link: '/framework/ShellTransition'
 ---
 
 # WMS 窗口绘制状态

@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 700">
+  <defs>
+    <marker id="arrow9" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="410" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">无焦点窗口 ANR 排查决策树</text>
+
+  <!-- Step 1 -->
+  <rect x="260" y="35" width="300" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="410" y="57" font-size="10" fill="#495057" text-anchor="middle">搜索 am_anr / ANR in → 确认 ANR 时间和窗口</text>
+
+  <line x1="410" y1="70" x2="410" y2="90" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+
+  <!-- Decision 1: onResume? -->
+  <path d="M 410 90 L 520 120 L 410 150 L 300 120 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="410" y="117" font-size="9.5" fill="#495057" text-anchor="middle">wm_on_resume_called</text>
+  <text x="410" y="131" font-size="9.5" fill="#495057" text-anchor="middle">目标窗口到达 onResume?</text>
+
+  <!-- No onResume -->
+  <line x1="300" y1="120" x2="140" y2="120" stroke="#e07070" stroke-width="1.2" marker-end="url(#arrow9)"/>
+  <text x="220" y="112" font-size="9" fill="#c0392b">否</text>
+
+  <rect x="20" y="100" width="120" height="80" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="80" y="118" font-size="9.5" font-weight="600" fill="#c0392b" text-anchor="middle">NO_WINDOW</text>
+  <text x="80" y="135" font-size="8.5" fill="#495057" text-anchor="middle">生命周期卡住</text>
+  <text x="80" y="148" font-size="8" fill="#868e96" text-anchor="middle">进程启动失败</text>
+  <text x="80" y="161" font-size="8" fill="#868e96" text-anchor="middle">进程被冻结</text>
+  <text x="80" y="174" font-size="8" fill="#868e96" text-anchor="middle">主线程阻塞</text>
+
+  <!-- Yes onResume -->
+  <line x1="410" y1="150" x2="410" y2="175" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+  <text x="420" y="165" font-size="9" fill="#2e7d32">是</text>
+
+  <!-- Decision 2: Focus entering? -->
+  <path d="M 410 175 L 520 205 L 410 235 L 300 205 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="410" y="202" font-size="9.5" fill="#495057" text-anchor="middle">input_focus 日志</text>
+  <text x="410" y="216" font-size="9.5" fill="#495057" text-anchor="middle">出现 Focus entering?</text>
+
+  <!-- Yes entering -->
+  <line x1="520" y1="205" x2="660" y2="205" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#arrow9)"/>
+  <text x="590" y="197" font-size="9" fill="#2e7d32">是</text>
+
+  <rect x="660" y="185" width="140" height="42" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="730" y="203" font-size="9.5" fill="#2e7d32" text-anchor="middle">焦点已到达 Input</text>
+  <text x="730" y="218" font-size="8" fill="#868e96" text-anchor="middle">检查应用自身响应</text>
+
+  <!-- No entering -->
+  <line x1="410" y1="235" x2="410" y2="260" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+  <text x="420" y="250" font-size="9" fill="#c0392b">否</text>
+
+  <!-- Decision 3: Focus request? -->
+  <path d="M 410 260 L 510 285 L 410 310 L 310 285 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="410" y="283" font-size="9.5" fill="#495057" text-anchor="middle">出现 Focus request?</text>
+
+  <!-- No request -->
+  <line x1="310" y1="285" x2="140" y2="285" stroke="#e07070" stroke-width="1.2" marker-end="url(#arrow9)"/>
+  <text x="220" y="277" font-size="9" fill="#c0392b">否</text>
+
+  <rect x="20" y="265" width="120" height="42" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="80" y="283" font-size="9" fill="#c0392b" text-anchor="middle">WMS 侧异常</text>
+  <text x="80" y="298" font-size="8" fill="#868e96" text-anchor="middle">canReceiveKeys=false</text>
+
+  <!-- Yes request, check dump -->
+  <line x1="410" y1="310" x2="410" y2="340" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+  <text x="420" y="328" font-size="9" fill="#2e7d32">是</text>
+
+  <rect x="260" y="342" width="300" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="410" y="362" font-size="10" fill="#495057" text-anchor="middle">检查 dump window 和 dump SurfaceFlinger</text>
+
+  <line x1="410" y1="372" x2="410" y2="395" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+
+  <!-- Decision 4: drawState? -->
+  <path d="M 410 395 L 510 420 L 410 445 L 310 420 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="410" y="418" font-size="9.5" fill="#495057" text-anchor="middle">mDrawState =</text>
+  <text x="410" y="432" font-size="9.5" fill="#495057" text-anchor="middle">HAS_DRAWN?</text>
+
+  <!-- Not HAS_DRAWN -->
+  <line x1="310" y1="420" x2="140" y2="420" stroke="#e07070" stroke-width="1.2" marker-end="url(#arrow9)"/>
+  <text x="220" y="412" font-size="9" fill="#c0392b">否</text>
+
+  <rect x="10" y="395" width="130" height="80" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="75" y="413" font-size="9" font-weight="600" fill="#c0392b" text-anchor="middle">绘制未完成</text>
+  <text x="75" y="430" font-size="8" fill="#868e96" text-anchor="middle">DRAW_PENDING:</text>
+  <text x="75" y="443" font-size="8" fill="#868e96" text-anchor="middle">cancelDraw/绘制卡住</text>
+  <text x="75" y="456" font-size="8" fill="#868e96" text-anchor="middle">READY_TO_SHOW:</text>
+  <text x="75" y="469" font-size="8" fill="#868e96" text-anchor="middle">等待同步超时</text>
+
+  <!-- HAS_DRAWN, check Layer -->
+  <line x1="410" y1="445" x2="410" y2="470" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+  <text x="420" y="460" font-size="9" fill="#2e7d32">是</text>
+
+  <rect x="260" y="472" width="300" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="492" font-size="10" fill="#495057" text-anchor="middle">检查 SF Layer 状态（MI-SF 日志）</text>
+
+  <line x1="410" y1="502" x2="410" y2="525" stroke="#555" stroke-width="1" marker-end="url(#arrow9)"/>
+
+  <!-- Layer status branches -->
+  <rect x="30" y="530" width="175" height="70" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="117" y="548" font-size="9" font-weight="600" fill="#c0392b" text-anchor="middle">Layer 被 hide</text>
+  <text x="117" y="565" font-size="8" fill="#868e96" text-anchor="middle">flags 末位奇数</text>
+  <text x="117" y="578" font-size="8" fill="#868e96" text-anchor="middle">Shell Transition 未 finish</text>
+  <text x="117" y="591" font-size="8" fill="#868e96" text-anchor="middle">TaskDisplayArea hide</text>
+
+  <rect x="225" y="530" width="175" height="70" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="312" y="548" font-size="9" font-weight="600" fill="#c0392b" text-anchor="middle">alpha = 0</text>
+  <text x="312" y="565" font-size="8" fill="#868e96" text-anchor="middle">getAlpha=0.000</text>
+  <text x="312" y="578" font-size="8" fill="#868e96" text-anchor="middle">小窗/自由窗口模式</text>
+  <text x="312" y="591" font-size="8" fill="#868e96" text-anchor="middle">动画设置透明度异常</text>
+
+  <rect x="420" y="530" width="175" height="70" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="507" y="548" font-size="9" font-weight="600" fill="#c0392b" text-anchor="middle">父 Layer 异常</text>
+  <text x="507" y="565" font-size="8" fill="#868e96" text-anchor="middle">Parents states 中</text>
+  <text x="507" y="578" font-size="8" fill="#868e96" text-anchor="middle">某一级 flags 异常</text>
+  <text x="507" y="591" font-size="8" fill="#868e96" text-anchor="middle">或 alpha=0</text>
+
+  <rect x="615" y="530" width="175" height="70" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="702" y="548" font-size="9" font-weight="600" fill="#c0392b" text-anchor="middle">层级异常 (reparent)</text>
+  <text x="702" y="565" font-size="8" fill="#868e96" text-anchor="middle">Parent 层级过浅</text>
+  <text x="702" y="578" font-size="8" fill="#868e96" text-anchor="middle">动画 reparent 未恢复</text>
+  <text x="702" y="591" font-size="8" fill="#868e96" text-anchor="middle">弹窗层级错乱</text>
+
+  <line x1="310" y1="525" x2="117" y2="528" stroke="#555" stroke-width="0.8"/>
+  <line x1="360" y1="525" x2="312" y2="528" stroke="#555" stroke-width="0.8"/>
+  <line x1="460" y1="525" x2="507" y2="528" stroke="#555" stroke-width="0.8"/>
+  <line x1="510" y1="525" x2="702" y2="528" stroke="#555" stroke-width="0.8"/>
+
+  <!-- System load branch -->
+  <rect x="260" y="630" width="300" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="648" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">系统性能问题（贯穿所有阶段）</text>
+  <text x="410" y="665" font-size="9" fill="#868e96" text-anchor="middle">高温限频 / 拔核 / IO繁忙 / 内存不足 / 进程冻结</text>
+  <text x="410" y="680" font-size="9" fill="#868e96" text-anchor="middle">检查 /proc/pressure/cpu 和温度日志</text>
+</svg>

@@ -1,0 +1,84 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 620">
+  <defs>
+    <marker id="arrow6" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="360" y="22" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">canReceiveKeys() 判断条件</text>
+
+  <!-- Main box -->
+  <rect x="20" y="40" width="680" height="560" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+
+  <!-- Condition 1: isVisibleRequestedOrAdding -->
+  <rect x="40" y="55" width="640" height="130" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="55" y="75" font-size="11" font-weight="600" fill="#343a40">条件 1: isVisibleRequestedOrAdding()</text>
+  <text x="55" y="95" font-size="9.5" fill="#495057">窗口可见或处于 addWindow ~ relayout 之间</text>
+
+  <!-- Sub-conditions -->
+  <rect x="60" y="105" width="295" height="30" rx="3" fill="#eef1f5" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="207" y="124" font-size="9" fill="#495057" text-anchor="middle">mHasSurface（Surface 已创建）</text>
+
+  <text x="368" y="124" font-size="9" fill="#868e96" text-anchor="middle">或</text>
+
+  <rect x="380" y="105" width="285" height="30" rx="3" fill="#eef1f5" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="522" y="124" font-size="9" fill="#495057" text-anchor="middle">!mRelayoutCalled && mViewVisibility == VISIBLE</text>
+
+  <text x="55" y="152" font-size="9" fill="#868e96">且 isVisibleByPolicy() && !isParentWindowHidden() && isVisibleRequested()</text>
+  <text x="55" y="167" font-size="9" fill="#868e96">且 !mAnimatingExit && !mDestroying</text>
+
+  <!-- Condition 2: View Visible -->
+  <rect x="40" y="200" width="310" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="218" font-size="11" font-weight="600" fill="#343a40">条件 2: mViewVisibility</text>
+  <text x="55" y="232" font-size="9.5" fill="#495057">== View.VISIBLE (客户端 View 可见)</text>
+
+  <!-- Condition 3: Not removing -->
+  <rect x="370" y="200" width="310" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="218" font-size="11" font-weight="600" fill="#343a40">条件 3: !mRemoveOnExit</text>
+  <text x="385" y="232" font-size="9.5" fill="#495057">退出动画已完成</text>
+
+  <!-- Condition 4: Not focusable flag -->
+  <rect x="40" y="255" width="310" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="273" font-size="11" font-weight="600" fill="#343a40">条件 4: 无 FLAG_NOT_FOCUSABLE</text>
+  <text x="55" y="287" font-size="9.5" fill="#495057">窗口属性允许获焦</text>
+
+  <!-- Condition 5: windowsAreFocusable -->
+  <rect x="370" y="255" width="310" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="273" font-size="11" font-weight="600" fill="#343a40">条件 5: windowsAreFocusable()</text>
+  <text x="385" y="287" font-size="9.5" fill="#495057">ActivityRecord 允许窗口获焦</text>
+
+  <!-- Condition 6: shouldIgnoreInput -->
+  <rect x="40" y="310" width="310" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="328" font-size="11" font-weight="600" fill="#343a40">条件 6: !shouldIgnoreInput()</text>
+  <text x="55" y="342" font-size="9.5" fill="#495057">Task 允许接收输入事件</text>
+
+  <!-- Condition 7: display trust -->
+  <rect x="370" y="310" width="310" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="328" font-size="11" font-weight="600" fill="#343a40">条件 7: Display 信任检查</text>
+  <text x="385" y="342" font-size="9.5" fill="#495057">isOnTop() || isTrusted() || fromUserTouch</text>
+
+  <!-- Special case: transition -->
+  <rect x="40" y="370" width="640" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="55" y="388" font-size="10" font-weight="600" fill="#2e7d32">特例: shouldKeepFocus(mActivityRecord) == true</text>
+  <text x="55" y="402" font-size="9" fill="#868e96">瞬态启动期间（transient launch），窗口即使不可见也保持可获焦 → 直接返回 true</text>
+
+  <!-- Result section -->
+  <rect x="40" y="430" width="300" height="75" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="190" y="452" font-size="11" font-weight="600" fill="#2e7d32" text-anchor="middle">全部满足 → true</text>
+  <text x="190" y="470" font-size="9.5" fill="#495057" text-anchor="middle">窗口可接收按键事件</text>
+  <text x="190" y="487" font-size="9.5" fill="#495057" text-anchor="middle">成为焦点窗口候选</text>
+
+  <rect x="380" y="430" width="300" height="75" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="530" y="452" font-size="11" font-weight="600" fill="#c0392b" text-anchor="middle">任一不满足 → false</text>
+  <text x="530" y="470" font-size="9.5" fill="#495057" text-anchor="middle">跳过此窗口，继续遍历下一个</text>
+  <text x="530" y="487" font-size="9.5" fill="#495057" text-anchor="middle">可通过 canReceiveKeysReason() 查看原因</text>
+
+  <!-- Debug hint -->
+  <rect x="40" y="520" width="640" height="65" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="540" font-size="10" font-weight="600" fill="#343a40">调试方法：查看 canReceiveKeysReason 日志</text>
+  <text x="55" y="558" font-size="9" fill="#495057">adb shell wm logging enable-text WM_DEBUG_FOCUS</text>
+  <text x="55" y="573" font-size="9" fill="#868e96">日志示例: Looking for focus: Window{xxx}, canReceive=false, reason=isVisibleRequestedOrAdding=false ...</text>
+</svg>

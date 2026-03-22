@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 420">
+  <defs>
+    <marker id="arrow10" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="410" y="18" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">Activity 启动过程中的焦点切换时间线</text>
+
+  <!-- Timeline -->
+  <line x1="40" y1="50" x2="790" y2="50" stroke="#adb5bd" stroke-width="1.5"/>
+
+  <!-- Time markers -->
+  <line x1="80" y1="45" x2="80" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="80" y="42" font-size="8" fill="#868e96" text-anchor="middle">T0</text>
+
+  <line x1="200" y1="45" x2="200" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="200" y="42" font-size="8" fill="#868e96" text-anchor="middle">T1</text>
+
+  <line x1="320" y1="45" x2="320" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="320" y="42" font-size="8" fill="#868e96" text-anchor="middle">T2</text>
+
+  <line x1="430" y1="45" x2="430" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="430" y="42" font-size="8" fill="#868e96" text-anchor="middle">T3</text>
+
+  <line x1="530" y1="45" x2="530" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="530" y="42" font-size="8" fill="#868e96" text-anchor="middle">T4</text>
+
+  <line x1="620" y1="45" x2="620" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="620" y="42" font-size="8" fill="#868e96" text-anchor="middle">T5</text>
+
+  <line x1="700" y1="45" x2="700" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="700" y="42" font-size="8" fill="#868e96" text-anchor="middle">T6</text>
+
+  <line x1="770" y1="45" x2="770" y2="55" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="770" y="42" font-size="8" fill="#868e96" text-anchor="middle">T7</text>
+
+  <!-- Row: App lifecycle -->
+  <text x="15" y="85" font-size="9" font-weight="600" fill="#4a7fb5" text-anchor="start">App</text>
+
+  <rect x="80" y="70" width="110" height="25" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="135" y="87" font-size="8" fill="#495057" text-anchor="middle">pause 旧 Activity</text>
+
+  <rect x="200" y="70" width="110" height="25" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="255" y="87" font-size="8" fill="#495057" text-anchor="middle">onCreate/onStart</text>
+
+  <rect x="320" y="70" width="100" height="25" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="87" font-size="8" font-weight="600" fill="#4a7fb5" text-anchor="middle">onResume</text>
+
+  <rect x="430" y="70" width="90" height="25" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="475" y="87" font-size="8" fill="#495057" text-anchor="middle">首帧绘制</text>
+
+  <rect x="530" y="70" width="80" height="25" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="570" y="87" font-size="8" fill="#495057" text-anchor="middle">drawFinished</text>
+
+  <!-- Row: WMS -->
+  <text x="15" y="130" font-size="9" font-weight="600" fill="#343a40" text-anchor="start">WMS</text>
+
+  <rect x="80" y="115" width="70" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="115" y="132" font-size="7.5" fill="#495057" text-anchor="middle">focus=null</text>
+
+  <rect x="320" y="115" width="100" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="370" y="132" font-size="7.5" fill="#495057" text-anchor="middle">findFocusedWindow</text>
+
+  <rect x="430" y="115" width="90" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="475" y="128" font-size="7.5" fill="#495057" text-anchor="middle">DRAW_PENDING</text>
+
+  <rect x="530" y="115" width="80" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="570" y="128" font-size="7.5" fill="#495057" text-anchor="middle">COMMIT_DRAW</text>
+
+  <rect x="620" y="115" width="70" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="655" y="128" font-size="7.5" fill="#495057" text-anchor="middle">showSurface</text>
+
+  <!-- Row: Focus Events -->
+  <text x="15" y="175" font-size="9" font-weight="600" fill="#868e96" text-anchor="start">焦点</text>
+
+  <rect x="80" y="160" width="110" height="25" rx="3" fill="white" stroke="#e07070" stroke-width="0.8"/>
+  <text x="135" y="177" font-size="8" fill="#c0392b" text-anchor="middle">Focus leaving 旧窗口</text>
+
+  <rect x="320" y="160" width="100" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="370" y="177" font-size="8" fill="#495057" text-anchor="middle">Focus request</text>
+
+  <rect x="620" y="160" width="70" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="655" y="177" font-size="8" fill="#495057" text-anchor="middle">Focus receive</text>
+
+  <rect x="700" y="160" width="70" height="25" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="735" y="177" font-size="8" fill="#2e7d32" text-anchor="middle">entering</text>
+
+  <!-- Row: Input -->
+  <text x="15" y="220" font-size="9" font-weight="600" fill="#868e96" text-anchor="start">Input</text>
+
+  <rect x="80" y="205" width="630" height="25" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <text x="395" y="222" font-size="8.5" fill="#c0392b" text-anchor="middle">无焦点窗口期间 — 按键事件等待派发</text>
+
+  <rect x="700" y="205" width="70" height="25" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="735" y="222" font-size="8" fill="#2e7d32" text-anchor="middle">正常派发</text>
+
+  <!-- ANR danger zone -->
+  <rect x="80" y="250" width="630" height="30" rx="3" fill="none" stroke="#c0392b" stroke-width="1.2" stroke-dasharray="6,3"/>
+  <text x="395" y="270" font-size="9.5" font-weight="600" fill="#c0392b" text-anchor="middle">如果 T0 → T7 超过 5 秒 → 触发 ANR</text>
+
+  <!-- Legend -->
+  <text x="40" y="310" font-size="10" font-weight="600" fill="#343a40">各阶段耗时来源</text>
+
+  <rect x="40" y="320" width="350" height="90" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="340" font-size="9" fill="#495057">T0→T1: App pause + 新进程启动 (进程未启动时较慢)</text>
+  <text x="55" y="356" font-size="9" fill="#495057">T1→T2: Activity 生命周期回调</text>
+  <text x="55" y="372" font-size="9" fill="#495057">T2→T4: 首帧绘制 (cancelDraw 会导致反复重试)</text>
+  <text x="55" y="388" font-size="9" fill="#495057">T4→T5: WMS 处理 finishDrawing</text>
+  <text x="55" y="404" font-size="9" fill="#495057">T5→T7: SF 传递焦点 → Input 授予焦点</text>
+
+  <rect x="420" y="320" width="380" height="90" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="435" y="340" font-size="9.5" font-weight="600" fill="#c0392b">常见瓶颈</text>
+  <text x="435" y="358" font-size="9" fill="#495057">App 主线程阻塞 → T1~T2 过长</text>
+  <text x="435" y="374" font-size="9" fill="#495057">cancelDraw (共享元素动画) → T2~T4 无限重试</text>
+  <text x="435" y="390" font-size="9" fill="#495057">Layer 不可见 (Transition 异常) → T5~T7 永远无法完成</text>
+  <text x="435" y="406" font-size="9" fill="#495057">系统高负载 → 所有阶段变慢</text>
+</svg>

@@ -38,7 +38,7 @@ export default defineConfig({
                     { text: 'Window/Activity Mng Svc', link: '/framework/basic-with-wms'},
                     { text: '动画', link: '/framework/ShellTransition'},
                     { text: 'Input Mng Svc', link: '/framework/input-system'},
-                    { text: '性能与稳定性', link: '/framework/'},
+                    { text: '性能与稳定性', link: '/framework/anr-no-focused'},
                     { text: '新特性与其他', link: '/framework/performTraversal'},
                 ]},
                 { text: '杂谈', link: '/hello-world/' }
@@ -287,7 +287,9 @@ export default defineConfig({
                 {
                     text: '性能与稳定性',
                     collapsed: false,
-                    items: []
+                    items: [
+                        { text: '无焦点窗口 ANR', link: 'framework/anr-no-focused' },
+                    ]
                 },
                 {
                     text: '新特性与其他',

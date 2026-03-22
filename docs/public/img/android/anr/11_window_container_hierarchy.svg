@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 520">
+  <defs>
+    <marker id="arrow11" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="390" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">WindowContainer 窗口层级体系</text>
+
+  <!-- RootWindowContainer -->
+  <rect x="280" y="35" width="220" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="390" y="55" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">RootWindowContainer</text>
+
+  <line x1="390" y1="67" x2="390" y2="82" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+
+  <!-- DisplayContent -->
+  <rect x="280" y="84" width="220" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="390" y="104" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">DisplayContent (屏幕)</text>
+
+  <!-- Three branches from DisplayContent -->
+  <line x1="200" y1="116" x2="200" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+  <line x1="390" y1="116" x2="390" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+  <line x1="580" y1="116" x2="580" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+  <line x1="390" y1="116" x2="200" y2="116" stroke="#555" stroke-width="0.8"/>
+  <line x1="390" y1="116" x2="580" y2="116" stroke="#555" stroke-width="0.8"/>
+
+  <!-- Above Tasks -->
+  <rect x="515" y="142" width="130" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="580" y="160" font-size="9" font-weight="600" fill="#495057" text-anchor="middle">DisplayArea</text>
+  <text x="580" y="175" font-size="8" fill="#868e96" text-anchor="middle">ABOVE_TASKS</text>
+  <text x="580" y="185" font-size="7.5" fill="#868e96" text-anchor="middle">StatusBar / NavigationBar</text>
+
+  <!-- DefaultTaskDisplayArea -->
+  <rect x="300" y="142" width="180" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="390" y="162" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">TaskDisplayArea (App 区域)</text>
+
+  <!-- Below Tasks -->
+  <rect x="135" y="142" width="130" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="200" y="160" font-size="9" font-weight="600" fill="#495057" text-anchor="middle">DisplayArea</text>
+  <text x="200" y="175" font-size="8" fill="#868e96" text-anchor="middle">BELOW_TASKS</text>
+  <text x="200" y="185" font-size="7.5" fill="#868e96" text-anchor="middle">Wallpaper</text>
+
+  <!-- Task -->
+  <line x1="390" y1="174" x2="390" y2="200" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+
+  <rect x="310" y="202" width="160" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="390" y="222" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">Task (任务栈)</text>
+
+  <!-- ActivityRecord -->
+  <line x1="390" y1="234" x2="390" y2="260" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+
+  <rect x="295" y="262" width="190" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="390" y="282" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">ActivityRecord (Activity)</text>
+
+  <!-- WindowState -->
+  <line x1="390" y1="294" x2="390" y2="320" stroke="#555" stroke-width="1" marker-end="url(#arrow11)"/>
+
+  <rect x="305" y="322" width="170" height="32" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="390" y="342" font-size="10" font-weight="600" fill="#2e7d32" text-anchor="middle">WindowState (窗口)</text>
+
+  <!-- SurfaceFlinger correspondence -->
+  <rect x="560" y="202" width="200" height="152" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="570" y="220" font-size="9" font-weight="600" fill="#868e96">SurfaceFlinger 对应</text>
+
+  <rect x="580" y="235" width="160" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="660" y="250" font-size="8.5" fill="#495057" text-anchor="middle">Layer (Task)</text>
+
+  <rect x="580" y="265" width="160" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="660" y="280" font-size="8.5" fill="#495057" text-anchor="middle">Layer (ActivityRecord)</text>
+
+  <rect x="580" y="295" width="160" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="660" y="310" font-size="8.5" fill="#495057" text-anchor="middle">Layer (WindowState)</text>
+
+  <rect x="580" y="325" width="160" height="22" rx="3" fill="white" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="660" y="340" font-size="8.5" fill="#495057" text-anchor="middle">Surface (绘制画布)</text>
+
+  <!-- Arrows WMS → SF -->
+  <line x1="475" y1="218" x2="578" y2="244" stroke="#868e96" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="485" y1="278" x2="578" y2="274" stroke="#868e96" stroke-width="0.8" stroke-dasharray="3,2"/>
+  <line x1="475" y1="338" x2="578" y2="304" stroke="#868e96" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+  <!-- Key properties -->
+  <rect x="20" y="370" width="740" height="140" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="35" y="390" font-size="10" font-weight="600" fill="#343a40">关键属性</text>
+
+  <rect x="35" y="400" width="225" height="95" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="147" y="418" font-size="9.5" font-weight="600" fill="#495057" text-anchor="middle">DisplayContent</text>
+  <text x="45" y="435" font-size="8.5" fill="#868e96">mCurrentFocus: 焦点窗口</text>
+  <text x="45" y="450" font-size="8.5" fill="#868e96">mFocusedApp: 焦点应用</text>
+  <text x="45" y="465" font-size="8.5" fill="#868e96">mTopFocusedDisplayId: 焦点屏幕</text>
+  <text x="45" y="480" font-size="8.5" fill="#868e96">InputMonitor: 同步焦点到 Input</text>
+
+  <rect x="275" y="400" width="225" height="95" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="387" y="418" font-size="9.5" font-weight="600" fill="#495057" text-anchor="middle">WindowState</text>
+  <text x="285" y="435" font-size="8.5" fill="#868e96">canReceiveKeys(): 能否获焦</text>
+  <text x="285" y="450" font-size="8.5" fill="#868e96">mHasSurface: 有无 Surface</text>
+  <text x="285" y="465" font-size="8.5" fill="#868e96">mViewVisibility: View 可见性</text>
+  <text x="285" y="480" font-size="8.5" fill="#868e96">mInputChannelToken: Input 通道</text>
+
+  <rect x="515" y="400" width="230" height="95" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="630" y="418" font-size="9.5" font-weight="600" fill="#495057" text-anchor="middle">WindowStateAnimator</text>
+  <text x="525" y="435" font-size="8.5" fill="#868e96">mDrawState: 绘制状态</text>
+  <text x="525" y="450" font-size="8.5" fill="#868e96">mSurfaceController: Surface 控制</text>
+  <text x="525" y="465" font-size="8.5" fill="#868e96">mLastHidden: 是否隐藏</text>
+  <text x="525" y="480" font-size="8.5" fill="#868e96">mLastAlpha: 透明度</text>
+</svg>

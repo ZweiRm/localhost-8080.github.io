@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380">
+  <defs>
+    <marker id="a18" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="390" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">NOT_VISIBLE 类 ANR 根因分类</text>
+
+  <!-- Root -->
+  <rect x="290" y="35" width="200" height="35" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="1.2"/>
+  <text x="390" y="57" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">NOT_VISIBLE（窗口不可见）</text>
+
+  <!-- Branch lines -->
+  <line x1="390" y1="70" x2="390" y2="90" stroke="#555" stroke-width="1"/>
+  <line x1="100" y1="90" x2="680" y2="90" stroke="#555" stroke-width="1"/>
+  <line x1="100" y1="90" x2="100" y2="105" stroke="#555" stroke-width="1" marker-end="url(#a18)"/>
+  <line x1="295" y1="90" x2="295" y2="105" stroke="#555" stroke-width="1" marker-end="url(#a18)"/>
+  <line x1="490" y1="90" x2="490" y2="105" stroke="#555" stroke-width="1" marker-end="url(#a18)"/>
+  <line x1="680" y1="90" x2="680" y2="105" stroke="#555" stroke-width="1" marker-end="url(#a18)"/>
+
+  <!-- Branch 1: DrawState -->
+  <rect x="15" y="107" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="100" y="126" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">绘制状态异常</text>
+
+  <line x1="100" y1="137" x2="100" y2="155" stroke="#555" stroke-width="0.8"/>
+  <line x1="55" y1="155" x2="145" y2="155" stroke="#555" stroke-width="0.8"/>
+  <line x1="55" y1="155" x2="55" y2="168" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+  <line x1="100" y1="155" x2="100" y2="168" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+  <line x1="145" y1="155" x2="145" y2="168" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+
+  <rect x="10" y="170" width="90" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="55" y="187" font-size="8.5" font-weight="600" fill="#c0392b" text-anchor="middle">DRAW_PENDING</text>
+  <text x="55" y="202" font-size="7.5" fill="#868e96" text-anchor="middle">cancelDraw</text>
+  <text x="55" y="215" font-size="7.5" fill="#868e96" text-anchor="middle">共享元素动画</text>
+
+  <rect x="55" y="230" width="90" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="100" y="247" font-size="8" font-weight="600" fill="#495057" text-anchor="middle">COMMIT_DRAW</text>
+  <text x="100" y="262" font-size="7.5" fill="#868e96" text-anchor="middle">deferLayout</text>
+
+  <rect x="100" y="170" width="90" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="145" y="187" font-size="8" font-weight="600" fill="#495057" text-anchor="middle">READY_TO_SHOW</text>
+  <text x="145" y="202" font-size="7.5" fill="#868e96" text-anchor="middle">mViewVisibility</text>
+  <text x="145" y="215" font-size="7.5" fill="#868e96" text-anchor="middle">= GONE</text>
+
+  <!-- Branch 2: Layer hide -->
+  <rect x="210" y="107" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="295" y="126" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">Layer 被 hide</text>
+
+  <line x1="295" y1="137" x2="295" y2="155" stroke="#555" stroke-width="0.8"/>
+  <line x1="240" y1="155" x2="350" y2="155" stroke="#555" stroke-width="0.8"/>
+  <line x1="240" y1="155" x2="240" y2="168" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+  <line x1="295" y1="155" x2="295" y2="168" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+  <line x1="350" y1="155" x2="350" y2="168" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+
+  <rect x="200" y="170" width="80" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="240" y="187" font-size="8" font-weight="600" fill="#495057" text-anchor="middle">Task hide</text>
+  <text x="240" y="202" font-size="7.5" fill="#868e96" text-anchor="middle">动画堆积</text>
+  <text x="240" y="215" font-size="7.5" fill="#868e96" text-anchor="middle">abort</text>
+
+  <rect x="253" y="230" width="85" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="295" y="247" font-size="7.5" font-weight="600" fill="#495057" text-anchor="middle">TaskDisplay</text>
+  <text x="295" y="260" font-size="7.5" font-weight="600" fill="#495057" text-anchor="middle">Area hide</text>
+
+  <rect x="310" y="170" width="80" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="350" y="187" font-size="8" font-weight="600" fill="#495057" text-anchor="middle">AR hide</text>
+  <text x="350" y="202" font-size="7.5" fill="#868e96" text-anchor="middle">Transition 未</text>
+  <text x="350" y="215" font-size="7.5" fill="#868e96" text-anchor="middle">正常 finish</text>
+
+  <!-- Branch 3: Layer reparent -->
+  <rect x="405" y="107" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="490" y="126" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">Layer 层级异常</text>
+
+  <rect x="415" y="155" width="150" height="70" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="490" y="175" font-size="8.5" font-weight="600" fill="#495057" text-anchor="middle">reparent 未恢复</text>
+  <text x="490" y="193" font-size="7.5" fill="#868e96" text-anchor="middle">pendingTransaction vs</text>
+  <text x="490" y="206" font-size="7.5" fill="#868e96" text-anchor="middle">syncTransaction 时序</text>
+  <text x="490" y="219" font-size="7.5" fill="#868e96" text-anchor="middle">层级只有 2-3 级</text>
+  <line x1="490" y1="137" x2="490" y2="153" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+
+  <!-- Branch 4: Alpha -->
+  <rect x="595" y="107" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="680" y="126" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">透明度异常</text>
+
+  <rect x="605" y="155" width="150" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="680" y="175" font-size="8.5" font-weight="600" fill="#495057" text-anchor="middle">alpha = 0</text>
+  <text x="680" y="193" font-size="7.5" fill="#868e96" text-anchor="middle">小窗/自由窗口模式</text>
+  <text x="680" y="206" font-size="7.5" fill="#868e96" text-anchor="middle">动画设置透明度异常</text>
+  <line x1="680" y1="137" x2="680" y2="153" stroke="#555" stroke-width="0.8" marker-end="url(#a18)"/>
+
+  <!-- Reference note -->
+  <rect x="200" y="300" width="380" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="390" y="320" font-size="9" fill="#4a7fb5" text-anchor="middle">Layer hide/reparent 异常多与 Shell Transition 动画有关 → 详见 Shell Transition 文档</text>
+
+  <!-- Common note -->
+  <rect x="15" y="340" width="750" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="390" y="360" font-size="9" fill="#495057" text-anchor="middle">系统高负载（高温限频/拔核/IO繁忙/进程冻结）会放大上述所有问题——焦点切换流程整体变慢，更容易触发 5s 超时</text>
+</svg>

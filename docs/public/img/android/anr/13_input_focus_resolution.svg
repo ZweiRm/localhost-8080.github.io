@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 650">
+  <defs>
+    <marker id="a13" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="375" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">InputDispatcher 焦点解析流程 (FocusResolver)</text>
+
+  <!-- Two entry paths -->
+  <rect x="30" y="40" width="200" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="130" y="57" font-size="9.5" fill="#495057" text-anchor="middle">路径 1: setFocusedWindow()</text>
+  <text x="130" y="72" font-size="8" fill="#868e96" text-anchor="middle">SF 转发焦点请求</text>
+
+  <rect x="280" y="40" width="200" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="380" y="57" font-size="9.5" fill="#495057" text-anchor="middle">路径 2: setInputWindows()</text>
+  <text x="380" y="72" font-size="8" fill="#868e96" text-anchor="middle">窗口列表更新</text>
+
+  <line x1="130" y1="80" x2="250" y2="110" stroke="#555" stroke-width="1" marker-end="url(#a13)"/>
+  <line x1="380" y1="80" x2="300" y2="110" stroke="#555" stroke-width="1" marker-end="url(#a13)"/>
+
+  <!-- FocusResolver -->
+  <rect x="180" y="112" width="200" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="280" y="132" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">FocusResolver</text>
+
+  <line x1="280" y1="142" x2="280" y2="165" stroke="#555" stroke-width="1" marker-end="url(#a13)"/>
+
+  <!-- getResolvedFocusWindow -->
+  <rect x="140" y="167" width="280" height="45" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="280" y="185" font-size="10" fill="#495057" text-anchor="middle">getResolvedFocusWindow(token, windows)</text>
+  <text x="280" y="200" font-size="8.5" fill="#868e96" text-anchor="middle">支持 focusTransferTarget 链式转移（防循环）</text>
+
+  <line x1="280" y1="212" x2="280" y2="235" stroke="#555" stroke-width="1" marker-end="url(#a13)"/>
+
+  <!-- isTokenFocusable -->
+  <rect x="100" y="237" width="360" height="90" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="110" y="255" font-size="10" font-weight="600" fill="#343a40">isTokenFocusable(token, windows)</text>
+  <text x="120" y="275" font-size="9" fill="#495057">遍历窗口列表，匹配 token：</text>
+  <text x="130" y="292" font-size="9" fill="#495057">• 窗口找不到 → NO_WINDOW</text>
+  <text x="130" y="307" font-size="9" fill="#495057">• 存在 NOT_FOCUSABLE 标记 → NOT_FOCUSABLE</text>
+  <text x="130" y="322" font-size="9" fill="#495057">• 所有窗口都 NOT_VISIBLE → NOT_VISIBLE</text>
+
+  <line x1="280" y1="327" x2="280" y2="350" stroke="#555" stroke-width="1" marker-end="url(#a13)"/>
+
+  <!-- Result branches -->
+  <path d="M 280 350 L 370 378 L 280 406 L 190 378 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="280" y="382" font-size="10" fill="#495057" text-anchor="middle">结果?</text>
+
+  <!-- OK -->
+  <line x1="280" y1="406" x2="280" y2="430" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#a13)"/>
+  <text x="290" y="420" font-size="8" fill="#2e7d32">OK</text>
+
+  <rect x="180" y="432" width="200" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="280" y="448" font-size="9.5" fill="#2e7d32" text-anchor="middle">updateFocusedWindow()</text>
+  <text x="280" y="462" font-size="8" fill="#868e96" text-anchor="middle">记录新焦点，返回 FocusChanges</text>
+
+  <line x1="280" y1="467" x2="280" y2="490" stroke="#555" stroke-width="1" marker-end="url(#a13)"/>
+
+  <rect x="160" y="492" width="240" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="280" y="510" font-size="9.5" font-weight="600" fill="#495057" text-anchor="middle">onFocusChangedLocked(changes)</text>
+  <text x="280" y="525" font-size="8.5" fill="#868e96" text-anchor="middle">1. 旧窗口: synthesize Cancel + Focus leaving</text>
+  <text x="280" y="540" font-size="8.5" fill="#868e96" text-anchor="middle">2. 新窗口: resetTimeout + Focus entering</text>
+
+  <!-- NOT OK branches -->
+  <line x1="190" y1="378" x2="30" y2="378" stroke="#e07070" stroke-width="1.2" marker-end="url(#a13)"/>
+
+  <rect x="530" y="345" width="200" height="100" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="630" y="365" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">失败场景</text>
+  <text x="540" y="385" font-size="9" fill="#495057">NO_WINDOW:</text>
+  <text x="545" y="400" font-size="8" fill="#868e96">Layer 被移除/生命周期未完成</text>
+  <text x="540" y="418" font-size="9" fill="#495057">NOT_FOCUSABLE:</text>
+  <text x="545" y="433" font-size="8" fill="#868e96">FLAG_NOT_FOCUSABLE 标记</text>
+
+  <line x1="370" y1="378" x2="528" y2="378" stroke="#e07070" stroke-width="1" marker-end="url(#a13)"/>
+  <text x="450" y="370" font-size="8" fill="#c0392b">失败</text>
+
+  <rect x="530" y="455" width="200" height="60" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="1.2"/>
+  <text x="630" y="475" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">NOT_VISIBLE（最常见）</text>
+  <text x="545" y="493" font-size="8" fill="#868e96">Layer flags 奇数 (hidden)</text>
+  <text x="545" y="506" font-size="8" fill="#868e96">父 Layer 不可见 / alpha=0</text>
+
+  <!-- Failure → remove focus + save request -->
+  <rect x="10" y="355" width="170" height="50" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="95" y="373" font-size="9" fill="#c0392b" text-anchor="middle">移除当前焦点</text>
+  <text x="95" y="388" font-size="8.5" fill="#868e96" text-anchor="middle">保存焦点请求</text>
+  <text x="95" y="400" font-size="8" fill="#868e96" text-anchor="middle">等待窗口信息更新后重试</text>
+
+  <!-- Log labels -->
+  <rect x="30" y="570" width="690" height="70" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="45" y="590" font-size="10" font-weight="600" fill="#343a40">关键日志输出点</text>
+  <text x="45" y="608" font-size="9" fill="#495057">setFocusedWindow: "Focus receive [窗口名]"  |  OK: "focus update to [窗口名]"</text>
+  <text x="45" y="625" font-size="9" fill="#495057">失败: "ignore set focus to [窗口名], because [原因]"  |  派发: "Focus entering/leaving [窗口名]"</text>
+</svg>

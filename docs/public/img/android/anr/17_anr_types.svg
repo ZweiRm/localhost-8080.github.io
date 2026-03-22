@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 280">
+  <defs>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="390" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">Android ANR 四种类型</text>
+
+  <!-- Input ANR -->
+  <rect x="15" y="40" width="175" height="230" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="102" y="62" font-size="11" font-weight="600" fill="#c0392b" text-anchor="middle">Input ANR</text>
+  <text x="102" y="78" font-size="9" fill="#c0392b" text-anchor="middle">（最常见）</text>
+  <line x1="30" y1="85" x2="175" y2="85" stroke="#e07070" stroke-width="0.5"/>
+  <text x="30" y="105" font-size="9" fill="#495057">超时：5s（低端机 8s）</text>
+  <text x="30" y="125" font-size="9" fill="#495057">关键字：</text>
+  <text x="30" y="142" font-size="8" fill="#868e96">Input dispatching</text>
+  <text x="30" y="156" font-size="8" fill="#868e96">timed out</text>
+  <line x1="30" y1="165" x2="175" y2="165" stroke="#e07070" stroke-width="0.3"/>
+  <text x="30" y="182" font-size="8.5" fill="#495057">两种子类型：</text>
+  <text x="30" y="200" font-size="8" fill="#c0392b">1. 无焦点窗口</text>
+  <text x="35" y="214" font-size="7.5" fill="#868e96">does not have a</text>
+  <text x="35" y="226" font-size="7.5" fill="#868e96">focused window</text>
+  <text x="30" y="244" font-size="8" fill="#495057">2. 应用无响应</text>
+  <text x="35" y="258" font-size="7.5" fill="#868e96">is not responding</text>
+
+  <!-- Service ANR -->
+  <rect x="205" y="40" width="175" height="230" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="292" y="62" font-size="11" font-weight="600" fill="#495057" text-anchor="middle">Service ANR</text>
+  <line x1="220" y1="72" x2="365" y2="72" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="220" y="92" font-size="9" fill="#495057">超时：</text>
+  <text x="225" y="110" font-size="8.5" fill="#495057">前台 Service：20s</text>
+  <text x="225" y="126" font-size="8.5" fill="#495057">后台 Service：200s</text>
+  <text x="225" y="142" font-size="8.5" fill="#495057">startForeground：10s</text>
+  <text x="220" y="162" font-size="9" fill="#495057">关键字：</text>
+  <text x="225" y="180" font-size="8" fill="#868e96">Timeout executing</text>
+  <text x="225" y="194" font-size="8" fill="#868e96">service</text>
+  <line x1="220" y1="205" x2="365" y2="205" stroke="#ced4da" stroke-width="0.3"/>
+  <text x="220" y="222" font-size="8.5" fill="#495057">机制：delay 消息</text>
+  <text x="225" y="238" font-size="8" fill="#868e96">发送 → App 执行 →</text>
+  <text x="225" y="252" font-size="8" fill="#868e96">完成后移除消息</text>
+
+  <!-- Broadcast ANR -->
+  <rect x="395" y="40" width="175" height="230" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="482" y="62" font-size="11" font-weight="600" fill="#495057" text-anchor="middle">Broadcast ANR</text>
+  <line x1="410" y1="72" x2="555" y2="72" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="410" y="92" font-size="9" fill="#495057">超时：</text>
+  <text x="415" y="110" font-size="8.5" fill="#495057">前台广播：10s</text>
+  <text x="415" y="126" font-size="8.5" fill="#495057">后台广播：60s</text>
+  <text x="410" y="146" font-size="9" fill="#495057">关键字：</text>
+  <text x="415" y="164" font-size="8" fill="#868e96">Timeout of broadcast</text>
+  <text x="415" y="178" font-size="8" fill="#868e96">BroadcastRecord</text>
+  <line x1="410" y1="190" x2="555" y2="190" stroke="#ced4da" stroke-width="0.3"/>
+  <text x="410" y="207" font-size="8.5" fill="#495057">触发条件：</text>
+  <text x="415" y="223" font-size="8" fill="#868e96">串行广播 onReceive</text>
+  <text x="415" y="237" font-size="8" fill="#868e96">未在时限内完成</text>
+
+  <!-- ContentProvider ANR -->
+  <rect x="585" y="40" width="175" height="230" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="672" y="62" font-size="11" font-weight="600" fill="#495057" text-anchor="middle">Provider ANR</text>
+  <text x="672" y="78" font-size="9" fill="#868e96" text-anchor="middle">（较少见）</text>
+  <line x1="600" y1="85" x2="745" y2="85" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="600" y="105" font-size="9" fill="#495057">超时：10s</text>
+  <text x="600" y="125" font-size="9" fill="#495057">关键字：</text>
+  <text x="605" y="143" font-size="8" fill="#868e96">timeout publishing</text>
+  <text x="605" y="157" font-size="8" fill="#868e96">content providers</text>
+  <line x1="600" y1="168" x2="745" y2="168" stroke="#ced4da" stroke-width="0.3"/>
+  <text x="600" y="185" font-size="8.5" fill="#495057">特殊性：</text>
+  <text x="605" y="203" font-size="8" fill="#868e96">发生在进程启动时</text>
+  <text x="605" y="217" font-size="8" fill="#868e96">的 publish 过程</text>
+  <text x="605" y="237" font-size="8" fill="#868e96">超时直接杀进程</text>
+  <text x="605" y="251" font-size="8" fill="#868e96">不弹 ANR 对话框</text>
+</svg>

@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 650 600">
+  <defs>
+    <marker id="arrow3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="arrow3r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#e07070"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Title area -->
+  <text x="325" y="22" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">InputDispatcher 焦点授予与 ANR 触发流程</text>
+
+  <!-- Start -->
+  <rect x="225" y="40" width="200" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="325" y="62" font-size="10" fill="#495057" text-anchor="middle">收到按键事件 (KeyEvent)</text>
+
+  <line x1="325" y1="75" x2="325" y2="95" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Decision: has focus window? -->
+  <path d="M 325 95 L 425 130 L 325 165 L 225 130 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="325" y="127" font-size="9.5" fill="#495057" text-anchor="middle">有焦点窗口？</text>
+  <text x="325" y="140" font-size="9.5" fill="#495057" text-anchor="middle">(focusedWindowHandle)</text>
+
+  <!-- Yes path - dispatch -->
+  <line x1="425" y1="130" x2="530" y2="130" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="475" y="122" font-size="9" fill="#2e7d32">是</text>
+  <rect x="530" y="112" width="100" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="580" y="134" font-size="10" fill="#2e7d32" text-anchor="middle">正常派发</text>
+
+  <!-- No path -->
+  <line x1="325" y1="165" x2="325" y2="190" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="335" y="180" font-size="9" fill="#c0392b">否</text>
+
+  <!-- Decision: has focus app? -->
+  <path d="M 325 190 L 425 225 L 325 260 L 225 225 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="325" y="222" font-size="9.5" fill="#495057" text-anchor="middle">有焦点应用？</text>
+  <text x="325" y="235" font-size="9.5" fill="#495057" text-anchor="middle">(focusedApplication)</text>
+
+  <!-- No focus app → drop -->
+  <line x1="225" y1="225" x2="100" y2="225" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="165" y="217" font-size="9" fill="#868e96">否</text>
+  <rect x="20" y="207" width="80" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="60" y="229" font-size="10" fill="#495057" text-anchor="middle">丢弃事件</text>
+
+  <!-- Has focus app, no window -->
+  <line x1="325" y1="260" x2="325" y2="290" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="335" y="278" font-size="9" fill="#c0392b">是</text>
+
+  <!-- Start timer -->
+  <rect x="225" y="290" width="200" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="325" y="308" font-size="10" fill="#495057" text-anchor="middle">开始等待计时</text>
+  <text x="325" y="322" font-size="8.5" fill="#868e96" text-anchor="middle">mNoFocusedWindowTimeoutTime = now + 5s</text>
+
+  <line x1="325" y1="330" x2="325" y2="355" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Decision: timeout? -->
+  <path d="M 325 355 L 415 385 L 325 415 L 235 385 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="325" y="385" font-size="9.5" fill="#495057" text-anchor="middle">超时 5s？</text>
+
+  <!-- Not yet - wait -->
+  <line x1="235" y1="385" x2="100" y2="385" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="165" y="377" font-size="9" fill="#868e96">否</text>
+  <rect x="20" y="368" width="80" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="60" y="390" font-size="10" fill="#495057" text-anchor="middle">继续等待</text>
+
+  <!-- Timeout - ANR check -->
+  <line x1="325" y1="415" x2="325" y2="445" stroke="#e07070" stroke-width="1.2" marker-end="url(#arrow3r)"/>
+  <text x="335" y="433" font-size="9" fill="#c0392b">是</text>
+
+  <!-- processNoFocusedWindowAnrLocked -->
+  <rect x="200" y="445" width="250" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="325" y="463" font-size="10" fill="#495057" text-anchor="middle">processNoFocusedWindowAnrLocked()</text>
+  <text x="325" y="478" font-size="8.5" fill="#868e96" text-anchor="middle">校验焦点应用是否仍存在 + 仍无焦点窗口</text>
+
+  <line x1="325" y1="485" x2="325" y2="515" stroke="#e07070" stroke-width="1.2" marker-end="url(#arrow3r)"/>
+
+  <!-- ANR -->
+  <rect x="225" y="515" width="200" height="40" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="325" y="535" font-size="11" font-weight="600" fill="#c0392b" text-anchor="middle">触发 ANR</text>
+  <text x="325" y="549" font-size="8" fill="#868e96" text-anchor="middle">does not have a focused window</text>
+
+  <!-- Side note: focus window arrives -->
+  <rect x="480" y="290" width="150" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="555" y="308" font-size="9.5" fill="#2e7d32" text-anchor="middle">焦点窗口到来</text>
+  <text x="555" y="320" font-size="8" fill="#868e96" text-anchor="middle">resetNoFocusedWindowTimeout</text>
+  <line x1="425" y1="310" x2="478" y2="310" stroke="#2e7d32" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow3)"/>
+</svg>

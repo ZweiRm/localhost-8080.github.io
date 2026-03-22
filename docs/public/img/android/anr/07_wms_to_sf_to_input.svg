@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700">
+  <defs>
+    <marker id="arrow7" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="400" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">InputWindows 更新 + 焦点请求：WMS → SF → Input 完整流程</text>
+
+  <!-- WMS Section -->
+  <rect x="10" y="35" width="380" height="440" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="20" y="55" font-size="11" font-weight="600" fill="#4a7fb5">WMS (system_server 主线程 + android.anim 线程)</text>
+
+  <rect x="30" y="70" width="340" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="200" y="92" font-size="10" fill="#495057" text-anchor="middle">InputMonitor.setInputFocusLw(newFocus)</text>
+
+  <line x1="200" y1="105" x2="200" y2="120" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <rect x="30" y="122" width="340" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="200" y="141" font-size="9.5" fill="#495057" text-anchor="middle">scheduleUpdateInputWindows() → 投递到 android.anim 线程</text>
+
+  <line x1="200" y1="150" x2="200" y2="163" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <!-- Traversal loop -->
+  <rect x="30" y="165" width="340" height="85" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="40" y="183" font-size="10" font-weight="600" fill="#343a40">遍历所有窗口（forAllWindows）</text>
+  <text x="40" y="200" font-size="9" fill="#495057">对每个 WindowState：</text>
+  <text x="55" y="215" font-size="9" fill="#495057">1. populateInputWindowHandle() — 填充 InputWindowHandle</text>
+  <text x="55" y="230" font-size="9" fill="#495057">2. setInputWindowInfoIfNeeded() — 写入 Transaction</text>
+  <text x="55" y="245" font-size="9" fill="#868e96">   → Transaction.setInputWindowInfo(sc, handle)</text>
+
+  <line x1="200" y1="250" x2="200" y2="265" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <!-- Focus request -->
+  <rect x="30" y="267" width="340" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="40" y="287" font-size="10" font-weight="600" fill="#343a40">updateInputFocusRequest → requestFocus()</text>
+  <text x="40" y="302" font-size="9" fill="#495057">Transaction.setFocusedWindow(token, name, displayId)</text>
+  <text x="40" y="312" font-size="8" fill="#2e7d32">日志: Focus request [窗口名]</text>
+
+  <line x1="200" y1="317" x2="200" y2="332" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <!-- Merge + apply -->
+  <rect x="30" y="334" width="340" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="40" y="352" font-size="10" font-weight="600" fill="#343a40">merge → scheduleAnimation()</text>
+  <text x="40" y="367" font-size="9" fill="#495057">WindowAnimator.animate() → openSurfaceTransaction()</text>
+  <text x="40" y="380" font-size="9" fill="#495057">→ prepareSurfaces() → closeSurfaceTransaction()</text>
+
+  <line x1="200" y1="384" x2="200" y2="400" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <rect x="30" y="402" width="340" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="200" y="422" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">Transaction.apply() → nativeApplyTransaction()</text>
+
+  <!-- SF Section -->
+  <rect x="410" y="35" width="380" height="250" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="420" y="55" font-size="11" font-weight="600" fill="#868e96">SurfaceFlinger 进程</text>
+
+  <line x1="370" y1="417" x2="430" y2="80" stroke="#555" stroke-width="1.2" marker-end="url(#arrow7)"/>
+  <text x="405" y="230" font-size="8" fill="#868e96" transform="rotate(-60 405 230)">Binder IPC</text>
+
+  <rect x="430" y="70" width="340" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="600" y="92" font-size="10" fill="#495057" text-anchor="middle">setTransactionState() → addInputWindowCommands()</text>
+
+  <line x1="600" y1="105" x2="600" y2="120" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <rect x="430" y="122" width="340" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="440" y="140" font-size="10" font-weight="600" fill="#343a40">updateInputFlinger()</text>
+  <text x="440" y="155" font-size="9" fill="#495057">buildWindowInfos() — Layer 遍历，设置可见性</text>
+  <text x="440" y="168" font-size="9" fill="#868e96">Layer::fillInputInfo() → isVisibleForInput()</text>
+
+  <line x1="600" y1="172" x2="600" y2="187" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <rect x="430" y="189" width="340" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="600" y="211" font-size="10" fill="#495057" text-anchor="middle">windowInfosChanged() → 通知 InputDispatcher</text>
+
+  <line x1="600" y1="224" x2="600" y2="239" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <rect x="430" y="241" width="340" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="600" y="261" font-size="10" fill="#495057" text-anchor="middle">inputFlinger→setFocusedWindow(focusRequest)</text>
+
+  <!-- Input Section -->
+  <rect x="410" y="300" width="380" height="370" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="420" y="320" font-size="11" font-weight="600" fill="#868e96">InputDispatcher (system_server native)</text>
+
+  <line x1="600" y1="271" x2="600" y2="335" stroke="#555" stroke-width="1.2" marker-end="url(#arrow7)"/>
+
+  <!-- Two paths -->
+  <rect x="430" y="337" width="160" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="357" font-size="9.5" font-weight="600" fill="#495057" text-anchor="middle">setInputWindows</text>
+  <text x="510" y="372" font-size="8.5" fill="#868e96" text-anchor="middle">窗口列表更新</text>
+  <text x="510" y="385" font-size="8.5" fill="#868e96" text-anchor="middle">重新检查焦点</text>
+
+  <rect x="610" y="337" width="160" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="690" y="357" font-size="9.5" font-weight="600" fill="#495057" text-anchor="middle">setFocusedWindow</text>
+  <text x="690" y="372" font-size="8.5" fill="#868e96" text-anchor="middle">焦点请求到达</text>
+  <text x="690" y="385" font-size="8" fill="#2e7d32" text-anchor="middle">日志: Focus receive</text>
+
+  <!-- Both converge to FocusResolver -->
+  <line x1="510" y1="392" x2="600" y2="415" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+  <line x1="690" y1="392" x2="600" y2="415" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <rect x="470" y="417" width="300" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="620" y="437" font-size="10" font-weight="600" fill="#495057" text-anchor="middle">FocusResolver</text>
+  <text x="620" y="452" font-size="9" fill="#868e96" text-anchor="middle">getResolvedFocusWindow() → isTokenFocusable()</text>
+  <text x="620" y="462" font-size="8" fill="#868e96" text-anchor="middle">NO_WINDOW / NOT_FOCUSABLE / NOT_VISIBLE / OK</text>
+
+  <line x1="600" y1="467" x2="600" y2="485" stroke="#555" stroke-width="1" marker-end="url(#arrow7)"/>
+
+  <!-- Decision -->
+  <path d="M 600 485 L 660 510 L 600 535 L 540 510 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="600" y="514" font-size="9.5" fill="#495057" text-anchor="middle">OK?</text>
+
+  <!-- Success -->
+  <rect x="430" y="555" width="150" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="505" y="575" font-size="10" fill="#2e7d32" text-anchor="middle">onFocusChanged</text>
+  <text x="505" y="588" font-size="8" fill="#2e7d32" text-anchor="middle">Focus entering</text>
+  <line x1="570" y1="535" x2="505" y2="553" stroke="#2e7d32" stroke-width="1" marker-end="url(#arrow7)"/>
+  <text x="530" y="542" font-size="8" fill="#2e7d32">是</text>
+
+  <!-- Failure -->
+  <rect x="620" y="555" width="150" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="695" y="575" font-size="10" fill="#c0392b" text-anchor="middle">等待 / 移除焦点</text>
+  <text x="695" y="588" font-size="8" fill="#868e96" text-anchor="middle">保存请求，后续重试</text>
+  <line x1="630" y1="535" x2="695" y2="553" stroke="#e07070" stroke-width="1" marker-end="url(#arrow7)"/>
+  <text x="668" y="542" font-size="8" fill="#c0392b">否</text>
+
+  <!-- ANR connection -->
+  <rect x="430" y="620" width="340" height="30" rx="3" fill="#fff0f0" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="600" y="640" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">持续等待超过 5s → 触发无焦点窗口 ANR</text>
+  <line x1="695" y1="595" x2="695" y2="618" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow7)"/>
+</svg>

@@ -1,3 +1,12 @@
+---
+prev:
+    text: '窗口绘制状态'
+    link: '/framework/window-draw-state'
+next:
+    text: 'Android Input 系统'
+    link: '/framework/input-system'
+---
+
 # Shell Transition 机制
 
 本文档梳理 Android U 引入的 Shell Transition 动画机制，包括其整体架构、生命周期各阶段的流程与代码、对窗口 Surface 状态的影响，以及常见问题与治理方法。

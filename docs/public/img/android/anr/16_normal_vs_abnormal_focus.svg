@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 380">
+  <defs>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="390" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">焦点切换：正常 vs 异常日志对比</text>
+
+  <!-- Normal -->
+  <rect x="15" y="35" width="365" height="330" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="197" y="55" font-size="11" font-weight="600" fill="#2e7d32" text-anchor="middle">正常焦点切换（约 100ms 内完成）</text>
+
+  <text x="30" y="78" font-size="8.5" fill="#495057" font-family="monospace">T+0ms   wm_pause_activity [旧 Activity]</text>
+  <text x="30" y="96" font-size="8.5" fill="#495057" font-family="monospace">T+2ms   Focus leaving [旧窗口]</text>
+  <text x="30" y="114" font-size="8.5" fill="#495057" font-family="monospace">T+5ms   wm_set_resumed_activity [新 Activity]</text>
+  <text x="30" y="132" font-size="8.5" fill="#495057" font-family="monospace">T+10ms  wm_on_resume_called [新 Activity]</text>
+  <text x="30" y="155" font-size="8.5" fill="#4a7fb5" font-family="monospace">T+15ms  Focus request [新窗口]</text>
+  <text x="30" y="173" font-size="8.5" fill="#495057" font-family="monospace">T+20ms  vri.reportDrawFinished</text>
+  <text x="30" y="191" font-size="8.5" fill="#495057" font-family="monospace">T+22ms  finishDrawingLocked COMMIT_DRAW_PENDING</text>
+  <text x="30" y="209" font-size="8.5" fill="#495057" font-family="monospace">T+25ms  showSurfaceRobustly</text>
+  <text x="30" y="232" font-size="8.5" fill="#4a7fb5" font-family="monospace">T+30ms  Focus receive [新窗口]</text>
+  <text x="30" y="250" font-size="8.5" fill="#495057" font-family="monospace">        ignore ... NOT_VISIBLE</text>
+  <text x="30" y="268" font-size="8.5" fill="#495057" font-family="monospace">T+60ms  setInputWindows → NOT_VISIBLE 消除</text>
+  <text x="30" y="291" font-size="8.5" font-weight="600" fill="#2e7d32" font-family="monospace">T+65ms  Focus entering [新窗口] ✓</text>
+  <text x="30" y="309" font-size="8.5" fill="#868e96" font-family="monospace">        reason=Window became focusable</text>
+
+  <rect x="30" y="325" width="335" height="25" rx="3" fill="white" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="197" y="342" font-size="9" fill="#2e7d32" text-anchor="middle">Focus request → Focus entering 成对出现</text>
+
+  <!-- Abnormal -->
+  <rect x="400" y="35" width="365" height="330" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="582" y="55" font-size="11" font-weight="600" fill="#c0392b" text-anchor="middle">异常焦点切换（5s+ 超时 → ANR）</text>
+
+  <text x="415" y="78" font-size="8.5" fill="#495057" font-family="monospace">T+0ms   wm_pause_activity [旧 Activity]</text>
+  <text x="415" y="96" font-size="8.5" fill="#495057" font-family="monospace">T+2ms   Focus leaving [旧窗口]</text>
+  <text x="415" y="114" font-size="8.5" fill="#495057" font-family="monospace">T+5ms   wm_set_resumed_activity [新 Activity]</text>
+  <text x="415" y="132" font-size="8.5" fill="#495057" font-family="monospace">T+10ms  wm_on_resume_called [新 Activity]</text>
+  <text x="415" y="155" font-size="8.5" fill="#4a7fb5" font-family="monospace">T+15ms  Focus request [新窗口]</text>
+  <text x="415" y="178" font-size="8.5" fill="#c0392b" font-family="monospace">T+30ms  Focus receive [新窗口]</text>
+  <text x="415" y="196" font-size="8.5" font-weight="600" fill="#c0392b" font-family="monospace">        ignore ... NOT_VISIBLE ✗</text>
+  <text x="415" y="219" font-size="8.5" fill="#868e96" font-family="monospace">        ... 无 Focus entering ...</text>
+  <text x="415" y="237" font-size="8.5" fill="#868e96" font-family="monospace">        ... 窗口始终 NOT_VISIBLE ...</text>
+  <text x="415" y="255" font-size="8.5" fill="#868e96" font-family="monospace">        ... Layer flags=0x1 (hidden) ...</text>
+  <text x="415" y="278" font-size="8.5" font-weight="600" fill="#c0392b" font-family="monospace">T+5000ms am_anr [Application does not</text>
+  <text x="415" y="296" font-size="8.5" font-weight="600" fill="#c0392b" font-family="monospace">         have a focused window]</text>
+
+  <rect x="415" y="315" width="335" height="40" rx="3" fill="white" stroke="#e07070" stroke-width="0.8"/>
+  <text x="582" y="333" font-size="9" fill="#c0392b" text-anchor="middle">只有 Focus request，无 Focus entering</text>
+  <text x="582" y="348" font-size="8.5" fill="#868e96" text-anchor="middle">→ 检查 dump SF Layer 状态</text>
+</svg>
