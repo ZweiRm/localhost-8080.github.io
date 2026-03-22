@@ -1,110 +1,247 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 280" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1560 560" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
   <defs>
-    <marker id="ta" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
-      <polygon points="0,0 6,2 0,4" fill="#868e96"/>
+    <marker id="ta" markerWidth="5" markerHeight="4" refX="5" refY="2" orient="auto">
+      <polygon points="0,0 5,2 0,4" fill="#9e9e9e"/>
     </marker>
+    <style>
+      .nd  { stroke-width: 1; rx: 3; ry: 3; height: 22; }
+      .wm  { fill: #ede7f6; stroke: #7e57c2; }
+      .hdc { fill: #e3f2fd; stroke: #42a5f5; }
+      .oh  { fill: #fff3e0; stroke: #ffa726; }
+      .fm  { fill: #fffde7; stroke: #fdd835; }
+      .ime { fill: #fce4ec; stroke: #ef5350; }
+      .lf  { fill: #e8f5e9; stroke: #66bb6a; }
+      .sp  { fill: #c8e6c9; stroke: #388e3c; stroke-width: 1.2; }
+      .dc  { fill: #ffcdd2; stroke: #e53935; stroke-width: 1.2; }
+      .ln  { stroke: #9e9e9e; stroke-width: 0.8; fill: none; }
+      .nt  { font-size: 8px; fill: #424242; text-anchor: middle; dominant-baseline: central; }
+      .st  { font-size: 7px; fill: #757575; text-anchor: middle; dominant-baseline: central; }
+    </style>
   </defs>
 
-  <!-- Root: DisplayContent -->
-  <rect x="480" y="5" width="140" height="26" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
-  <text x="550" y="22" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayContent</text>
+  <!-- ===== Level 0: DisplayContent ===== -->
+  <rect x="710" y="8" width="140" height="26" class="nd dc"/>
+  <text x="780" y="21" class="nt" font-weight="600" font-size="10">DisplayContent</text>
 
-  <!-- Level 1 children -->
-  <!-- WindowedMagnification:0:31 -->
-  <rect x="200" y="50" width="185" height="22" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1"/>
-  <text x="292" y="65" font-size="9" fill="#343a40" text-anchor="middle">WindowedMagnification:0:31</text>
-  <line x1="500" y1="31" x2="292" y2="50" stroke="#868e96" stroke-width="0.8" marker-end="url(#ta)"/>
+  <!-- Lines from DC to Level 1 -->
+  <line x1="780" y1="34" x2="780" y2="48" class="ln"/>
+  <line x1="40" y1="48" x2="1520" y2="48" class="ln"/>
+  <line x1="40" y1="48" x2="40" y2="58" class="ln"/>
+  <line x1="210" y1="48" x2="210" y2="58" class="ln"/>
+  <line x1="880" y1="48" x2="880" y2="58" class="ln"/>
+
+  <!-- ===== Level 1 ===== -->
+  <!-- Leaf:36:36 -->
+  <rect x="5" y="58" width="70" height="22" class="nd lf"/>
+  <text x="40" y="69" class="nt">Leaf:36:36</text>
 
   <!-- HideDisplayCutout:32:35 -->
-  <rect x="680" y="50" width="160" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="760" y="65" font-size="9" fill="#343a40" text-anchor="middle">HideDisplayCutout:32:35</text>
-  <line x1="580" y1="31" x2="760" y2="50" stroke="#868e96" stroke-width="0.8" marker-end="url(#ta)"/>
+  <rect x="110" y="58" width="200" height="22" class="nd hdc"/>
+  <text x="210" y="69" class="nt">HideDisplayCutout:32:35</text>
 
-  <!-- Leaf:36:36 -->
-  <rect x="880" y="50" width="90" height="22" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
-  <text x="925" y="65" font-size="9" fill="#868e96" text-anchor="middle">Leaf:36:36</text>
-  <line x1="610" y1="31" x2="925" y2="50" stroke="#868e96" stroke-width="0.8" marker-end="url(#ta)"/>
+  <!-- WindowedMagnification:0:31 -->
+  <rect x="740" y="58" width="280" height="22" class="nd wm"/>
+  <text x="880" y="69" class="nt">WindowedMagnification:0:31</text>
 
-  <!-- Level 2 under WindowedMagnification -->
-  <!-- HideDisplayCutout:0:14 -->
-  <rect x="20" y="95" width="155" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="97" y="110" font-size="8" fill="#343a40" text-anchor="middle">HideDisplayCutout:0:14</text>
-  <line x1="240" y1="72" x2="97" y2="95" stroke="#868e96" stroke-width="0.8" marker-end="url(#ta)"/>
+  <!-- ===== Level 2 under HDC:32:35 ===== -->
+  <line x1="210" y1="80" x2="210" y2="94" class="ln"/>
+  <line x1="110" y1="94" x2="310" y2="94" class="ln"/>
+  <line x1="110" y1="94" x2="110" y2="104" class="ln"/>
+  <line x1="210" y1="94" x2="210" y2="104" class="ln"/>
+  <line x1="310" y1="94" x2="310" y2="104" class="ln"/>
 
-  <!-- OneHanded:15:15 -->
-  <rect x="190" y="95" width="100" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="240" y="110" font-size="8" fill="#343a40" text-anchor="middle">OH:15:15</text>
-  <line x1="270" y1="72" x2="240" y2="95" stroke="#868e96" stroke-width="0.8" marker-end="url(#ta)"/>
+  <rect x="50" y="104" width="120" height="22" class="nd oh"/>
+  <text x="110" y="115" class="nt">OneHanded:34:35</text>
+  <rect x="180" y="104" width="60" height="22" class="nd fm"/>
+  <text x="210" y="115" class="st">FM:33:33</text>
+  <rect x="260" y="104" width="110" height="22" class="nd oh"/>
+  <text x="315" y="115" class="nt">OneHanded:32:32</text>
 
-  <!-- HideDisplayCutout:16:16 -->
-  <rect x="300" y="95" width="65" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="332" y="110" font-size="7" fill="#343a40" text-anchor="middle">HDC:16</text>
+  <!-- Level 3 under OH:34:35 -->
+  <line x1="110" y1="126" x2="110" y2="150" class="ln"/>
+  <rect x="30" y="150" width="160" height="22" class="nd fm"/>
+  <text x="110" y="161" class="nt">FullMag:34:35</text>
 
-  <!-- OneHanded:17:17 -->
-  <rect x="375" y="95" width="65" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="407" y="110" font-size="7" fill="#343a40" text-anchor="middle">OH:17</text>
+  <!-- Level 3 under FM:33:33 -->
+  <line x1="210" y1="126" x2="210" y2="150" class="ln"/>
+  <rect x="180" y="150" width="60" height="22" class="nd lf"/>
+  <text x="210" y="161" class="st">L:33:33</text>
 
+  <!-- Level 3 under OH:32:32 -->
+  <line x1="315" y1="126" x2="315" y2="150" class="ln"/>
+  <rect x="285" y="150" width="60" height="22" class="nd lf"/>
+  <text x="315" y="161" class="st">L:32:32</text>
+
+  <!-- Level 4 under FullMag:34:35 -->
+  <line x1="110" y1="172" x2="110" y2="196" class="ln"/>
+  <rect x="80" y="196" width="60" height="22" class="nd lf"/>
+  <text x="110" y="207" class="st">L:34:35</text>
+
+  <!-- ===== Level 2 under WM:0:31 ===== -->
+  <line x1="880" y1="80" x2="880" y2="94" class="ln"/>
+  <line x1="440" y1="94" x2="1520" y2="94" class="ln"/>
+  <!-- 7 children -->
+  <line x1="440" y1="94" x2="440" y2="104" class="ln"/>
+  <line x1="600" y1="94" x2="600" y2="104" class="ln"/>
+  <line x1="730" y1="94" x2="730" y2="104" class="ln"/>
+  <line x1="850" y1="94" x2="850" y2="104" class="ln"/>
+  <line x1="970" y1="94" x2="970" y2="104" class="ln"/>
+  <line x1="1120" y1="94" x2="1120" y2="104" class="ln"/>
+  <line x1="1400" y1="94" x2="1400" y2="104" class="ln"/>
+
+  <!-- HDC:26:31 -->
+  <rect x="380" y="104" width="120" height="22" class="nd hdc"/>
+  <text x="440" y="115" class="nt">HDC:26:31</text>
   <!-- Leaf:24:25 -->
-  <rect x="450" y="95" width="65" height="22" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
-  <text x="482" y="110" font-size="7" fill="#868e96" text-anchor="middle">24:25</text>
+  <rect x="560" y="104" width="80" height="22" class="nd lf"/>
+  <text x="600" y="115" class="nt">Leaf:24:25</text>
+  <!-- HDC:18:23 -->
+  <rect x="670" y="104" width="120" height="22" class="nd hdc"/>
+  <text x="730" y="115" class="nt">HDC:18:23</text>
+  <!-- OH:17:17 -->
+  <rect x="810" y="104" width="80" height="22" class="nd oh"/>
+  <text x="850" y="115" class="nt">OH:17:17</text>
+  <!-- HDC:16:16 -->
+  <rect x="920" y="104" width="100" height="22" class="nd hdc"/>
+  <text x="970" y="115" class="nt">HDC:16:16</text>
+  <!-- OH:15:15 -->
+  <rect x="1070" y="104" width="100" height="22" class="nd oh"/>
+  <text x="1120" y="115" class="nt">OH:15:15</text>
+  <!-- HDC:0:14 -->
+  <rect x="1270" y="104" width="260" height="22" class="nd hdc"/>
+  <text x="1400" y="115" class="nt">HideDisplayCutout:0:14</text>
 
-  <!-- HideDisplayCutout:18:23 -->
-  <rect x="525" y="95" width="65" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="557" y="110" font-size="7" fill="#343a40" text-anchor="middle">HDC:18:23</text>
+  <!-- ===== Level 3 under WM children ===== -->
 
-  <!-- HideDisplayCutout:26:31 -->
-  <rect x="600" y="95" width="65" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="632" y="110" font-size="7" fill="#343a40" text-anchor="middle">HDC:26:31</text>
+  <!-- Under HDC:26:31 → OH:26:31 -->
+  <line x1="440" y1="126" x2="440" y2="150" class="ln"/>
+  <rect x="380" y="150" width="120" height="22" class="nd oh"/>
+  <text x="440" y="161" class="nt">OH:26:31</text>
 
-  <line x1="300" y1="72" x2="332" y2="95" stroke="#868e96" stroke-width="0.6"/>
-  <line x1="320" y1="72" x2="407" y2="95" stroke="#868e96" stroke-width="0.6"/>
-  <line x1="340" y1="72" x2="482" y2="95" stroke="#868e96" stroke-width="0.6"/>
-  <line x1="350" y1="72" x2="557" y2="95" stroke="#868e96" stroke-width="0.6"/>
-  <line x1="360" y1="72" x2="632" y2="95" stroke="#868e96" stroke-width="0.6"/>
+  <!-- Under HDC:18:23 → OH:18:23 -->
+  <line x1="730" y1="126" x2="730" y2="150" class="ln"/>
+  <rect x="670" y="150" width="120" height="22" class="nd oh"/>
+  <text x="730" y="161" class="nt">OH:18:23</text>
 
-  <!-- Level 3 under HideDisplayCutout:0:14 -->
-  <rect x="20" y="140" width="155" height="22" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/>
-  <text x="97" y="155" font-size="8" fill="#2e7d32" text-anchor="middle">OneHanded:0:14</text>
-  <line x1="97" y1="117" x2="97" y2="140" stroke="#868e96" stroke-width="0.8" marker-end="url(#ta)"/>
+  <!-- Under OH:17:17 → FM:17:17 -->
+  <line x1="850" y1="126" x2="850" y2="150" class="ln"/>
+  <rect x="810" y="150" width="80" height="22" class="nd fm"/>
+  <text x="850" y="161" class="st">FM:17:17</text>
 
-  <!-- Level 4 under OneHanded:0:14 -->
-  <!-- FullscreenMagnification:0:12 -->
-  <rect x="10" y="185" width="115" height="22" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
-  <text x="67" y="200" font-size="7" fill="#343a40" text-anchor="middle">FullMag:0:12</text>
-  <line x1="70" y1="162" x2="67" y2="185" stroke="#868e96" stroke-width="0.6"/>
+  <!-- Under HDC:16:16 → OH:16:16 -->
+  <line x1="970" y1="126" x2="970" y2="150" class="ln"/>
+  <rect x="930" y="150" width="80" height="22" class="nd oh"/>
+  <text x="970" y="161" class="st">OH:16:16</text>
 
-  <!-- ImePlaceholder:13:14 -->
-  <rect x="135" y="185" width="100" height="22" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
-  <text x="185" y="200" font-size="7" fill="#c0392b" text-anchor="middle">ImePlaceholder:13:14</text>
-  <line x1="120" y1="162" x2="185" y2="185" stroke="#868e96" stroke-width="0.6"/>
+  <!-- Under OH:15:15 → FM:15:15 -->
+  <line x1="1120" y1="126" x2="1120" y2="150" class="ln"/>
+  <rect x="1080" y="150" width="80" height="22" class="nd fm"/>
+  <text x="1120" y="161" class="st">FM:15:15</text>
 
-  <!-- Level 5 leaves -->
-  <!-- Leaf:0:1 (wallpaper) -->
-  <rect x="10" y="225" width="45" height="20" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
-  <text x="32" y="239" font-size="7" fill="#868e96" text-anchor="middle">0:1</text>
-  <line x1="40" y1="207" x2="32" y2="225" stroke="#868e96" stroke-width="0.5"/>
+  <!-- Under HDC:0:14 → OH:0:14 -->
+  <line x1="1400" y1="126" x2="1400" y2="150" class="ln"/>
+  <rect x="1280" y="150" width="240" height="22" class="nd oh"/>
+  <text x="1400" y="161" class="nt">OneHanded:0:14</text>
 
-  <!-- DefaultTaskDisplayArea -->
-  <rect x="60" y="225" width="55" height="20" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <text x="87" y="239" font-size="6" fill="#2e7d32" text-anchor="middle">DTDA</text>
-  <line x1="55" y1="207" x2="87" y2="225" stroke="#868e96" stroke-width="0.5"/>
+  <!-- ===== Level 4 ===== -->
 
-  <!-- Leaf:3:12 -->
-  <rect x="120" y="225" width="45" height="20" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
-  <text x="142" y="239" font-size="7" fill="#868e96" text-anchor="middle">3:12</text>
-  <line x1="80" y1="207" x2="142" y2="225" stroke="#868e96" stroke-width="0.5"/>
+  <!-- Under OH:26:31 → FM:26:27, L:28:28, FM:29:31 -->
+  <line x1="440" y1="172" x2="440" y2="186" class="ln"/>
+  <line x1="390" y1="186" x2="520" y2="186" class="ln"/>
+  <line x1="390" y1="186" x2="390" y2="196" class="ln"/>
+  <line x1="445" y1="186" x2="445" y2="196" class="ln"/>
+  <line x1="510" y1="186" x2="510" y2="196" class="ln"/>
 
-  <!-- ImeContainer -->
-  <rect x="150" y="225" width="70" height="20" rx="2" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
-  <text x="185" y="239" font-size="7" fill="#c0392b" text-anchor="middle">ImeContainer</text>
-  <line x1="185" y1="207" x2="185" y2="225" stroke="#868e96" stroke-width="0.5"/>
+  <rect x="360" y="196" width="60" height="22" class="nd fm"/>
+  <text x="390" y="207" class="st">FM:26:27</text>
+  <rect x="420" y="196" width="50" height="22" class="nd lf"/>
+  <text x="445" y="207" class="st">L:28:28</text>
+  <rect x="480" y="196" width="60" height="22" class="nd fm"/>
+  <text x="510" y="207" class="st">FM:29:31</text>
 
-  <!-- Legend -->
-  <rect x="10" y="258" width="10" height="10" rx="1" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
-  <text x="25" y="267" font-size="7" fill="#868e96">TaskDisplayArea</text>
-  <rect x="110" y="258" width="10" height="10" rx="1" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
-  <text x="125" y="267" font-size="7" fill="#868e96">IME 相关</text>
-  <rect x="200" y="258" width="10" height="10" rx="1" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
-  <text x="215" y="267" font-size="7" fill="#868e96">Leaf (叶子节点)</text>
-  <text x="310" y="267" font-size="7" fill="#868e96">DTDA = DefaultTaskDisplayArea | OH = OneHanded | HDC = HideDisplayCutout | FullMag = FullscreenMagnification</text>
+  <!-- Under OH:18:23 → FM:18:23 -->
+  <line x1="730" y1="172" x2="730" y2="196" class="ln"/>
+  <rect x="690" y="196" width="80" height="22" class="nd fm"/>
+  <text x="730" y="207" class="st">FM:18:23</text>
+
+  <!-- Under FM:17:17 → L:17:17 -->
+  <line x1="850" y1="172" x2="850" y2="196" class="ln"/>
+  <rect x="825" y="196" width="50" height="22" class="nd lf"/>
+  <text x="850" y="207" class="st">L:17:17</text>
+
+  <!-- Under OH:16:16 → FM:16:16 -->
+  <line x1="970" y1="172" x2="970" y2="196" class="ln"/>
+  <rect x="935" y="196" width="70" height="22" class="nd fm"/>
+  <text x="970" y="207" class="st">FM:16:16</text>
+
+  <!-- Under FM:15:15 → L:15:15 -->
+  <line x1="1120" y1="172" x2="1120" y2="196" class="ln"/>
+  <rect x="1095" y="196" width="50" height="22" class="nd lf"/>
+  <text x="1120" y="207" class="st">L:15:15</text>
+
+  <!-- Under OH:0:14 → FM:0:12, IME:13:14 -->
+  <line x1="1400" y1="172" x2="1400" y2="186" class="ln"/>
+  <line x1="1340" y1="186" x2="1480" y2="186" class="ln"/>
+  <line x1="1340" y1="186" x2="1340" y2="196" class="ln"/>
+  <line x1="1480" y1="186" x2="1480" y2="196" class="ln"/>
+
+  <rect x="1260" y="196" width="160" height="22" class="nd fm"/>
+  <text x="1340" y="207" class="nt">FullMag:0:12</text>
+  <rect x="1440" y="196" width="115" height="22" class="nd ime"/>
+  <text x="1497" y="207" class="nt">IME:13:14</text>
+
+  <!-- ===== Level 5 ===== -->
+
+  <!-- Under FM:26:27 → L:26:27 -->
+  <line x1="390" y1="218" x2="390" y2="242" class="ln"/>
+  <rect x="365" y="242" width="50" height="22" class="nd lf"/>
+  <text x="390" y="253" class="st">L:26:27</text>
+
+  <!-- Under FM:29:31 → L:29:31 -->
+  <line x1="510" y1="218" x2="510" y2="242" class="ln"/>
+  <rect x="485" y="242" width="50" height="22" class="nd lf"/>
+  <text x="510" y="253" class="st">L:29:31</text>
+
+  <!-- Under FM:18:23 → L:18:23 -->
+  <line x1="730" y1="218" x2="730" y2="242" class="ln"/>
+  <rect x="705" y="242" width="50" height="22" class="nd lf"/>
+  <text x="730" y="253" class="st">L:18:23</text>
+
+  <!-- Under FM:16:16 → L:16:16 -->
+  <line x1="970" y1="218" x2="970" y2="242" class="ln"/>
+  <rect x="945" y="242" width="50" height="22" class="nd lf"/>
+  <text x="970" y="253" class="st">L:16:16</text>
+
+  <!-- Under FullMag:0:12 → Leaf:0:1, DTDA, Leaf:3:12 -->
+  <line x1="1340" y1="218" x2="1340" y2="232" class="ln"/>
+  <line x1="1270" y1="232" x2="1410" y2="232" class="ln"/>
+  <line x1="1270" y1="232" x2="1270" y2="242" class="ln"/>
+  <line x1="1340" y1="232" x2="1340" y2="242" class="ln"/>
+  <line x1="1410" y1="232" x2="1410" y2="242" class="ln"/>
+
+  <rect x="1240" y="242" width="60" height="22" class="nd lf"/>
+  <text x="1270" y="253" class="st">L:0:1</text>
+  <rect x="1310" y="242" width="60" height="22" class="nd sp"/>
+  <text x="1340" y="253" class="st" fill="#1b5e20" font-weight="600">DTDA</text>
+  <rect x="1380" y="242" width="60" height="22" class="nd lf"/>
+  <text x="1410" y="253" class="st">L:3:12</text>
+
+  <!-- Under IME:13:14 → ImeContainer -->
+  <line x1="1497" y1="218" x2="1497" y2="242" class="ln"/>
+  <rect x="1450" y="242" width="95" height="22" class="nd ime"/>
+  <text x="1497" y="253" class="st" fill="#c62828">ImeContainer</text>
+
+  <!-- ===== Legend ===== -->
+  <g transform="translate(20, 300)">
+    <text x="0" y="0" font-size="9" fill="#616161" font-weight="600">Legend:</text>
+    <rect x="0" y="8" width="14" height="14" class="nd wm"/><text x="20" y="19" font-size="8" fill="#616161">WindowedMagnification (ID=4)</text>
+    <rect x="190" y="8" width="14" height="14" class="nd hdc"/><text x="210" y="19" font-size="8" fill="#616161">HideDisplayCutout (ID=6)</text>
+    <rect x="370" y="8" width="14" height="14" class="nd oh"/><text x="390" y="19" font-size="8" fill="#616161">OneHanded (ID=3)</text>
+    <rect x="520" y="8" width="14" height="14" class="nd fm"/><text x="540" y="19" font-size="8" fill="#616161">FullscreenMagnification (ID=5)</text>
+    <rect x="740" y="8" width="14" height="14" class="nd ime"/><text x="760" y="19" font-size="8" fill="#616161">ImePlaceholder (ID=7)</text>
+    <rect x="920" y="8" width="14" height="14" class="nd lf"/><text x="940" y="19" font-size="8" fill="#616161">Leaf / DisplayArea.Tokens</text>
+    <rect x="1110" y="8" width="14" height="14" class="nd sp"/><text x="1130" y="19" font-size="8" fill="#616161">DefaultTaskDisplayArea</text>
+    <text x="0" y="40" font-size="8" fill="#9e9e9e">DTDA = DefaultTaskDisplayArea | L = Leaf | FM = FullscreenMagnification | OH = OneHanded | HDC = HideDisplayCutout | IME = ImePlaceholder</text>
+    <text x="0" y="54" font-size="8" fill="#9e9e9e">AOSP DefaultProvider (5 Features) | adb shell dumpsys activity containers</text>
+  </g>
 </svg>

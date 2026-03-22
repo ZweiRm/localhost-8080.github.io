@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 430" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
   <defs>
     <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
       <polygon points="0,0 7,2.5 0,5" fill="#555"/>
@@ -6,70 +6,83 @@
   </defs>
 
   <!-- ConfigurationContainer -->
-  <rect x="220" y="10" width="260" height="44" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="350" y="28" font-size="11" fill="#343a40" font-weight="600" text-anchor="middle">ConfigurationContainer&lt;E&gt;</text>
-  <text x="350" y="44" font-size="9" fill="#868e96" text-anchor="middle">abstract | 配置容器基类</text>
+  <rect x="250" y="10" width="280" height="44" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="390" y="28" font-size="11" fill="#343a40" font-weight="600" text-anchor="middle">ConfigurationContainer&lt;E&gt;</text>
+  <text x="390" y="44" font-size="9" fill="#868e96" text-anchor="middle">abstract | 配置容器基类</text>
 
   <!-- WindowContainer -->
-  <rect x="220" y="80" width="260" height="44" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="350" y="98" font-size="11" fill="#343a40" font-weight="600" text-anchor="middle">WindowContainer&lt;E&gt;</text>
-  <text x="350" y="114" font-size="9" fill="#868e96" text-anchor="middle">mChildren: ArrayList&lt;E&gt;</text>
-  <line x1="350" y1="54" x2="350" y2="80" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="250" y="80" width="280" height="44" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="390" y="98" font-size="11" fill="#343a40" font-weight="600" text-anchor="middle">WindowContainer&lt;E&gt;</text>
+  <text x="390" y="114" font-size="9" fill="#868e96" text-anchor="middle">mChildren: WindowList&lt;E&gt;</text>
+  <line x1="390" y1="54" x2="390" y2="80" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Level 2: 4 direct subclasses of WindowContainer -->
 
   <!-- RootWindowContainer -->
-  <rect x="10" y="160" width="200" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="110" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">RootWindowContainer</text>
-  <text x="110" y="194" font-size="9" fill="#868e96" text-anchor="middle">WC&lt;DisplayContent&gt;</text>
-  <line x1="280" y1="124" x2="110" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="10" y="160" width="170" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="95" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">RootWindowContainer</text>
+  <text x="95" y="194" font-size="9" fill="#868e96" text-anchor="middle">WC&lt;DisplayContent&gt;</text>
+  <line x1="310" y1="124" x2="95" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- DisplayArea -->
-  <rect x="250" y="160" width="200" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="350" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayArea&lt;T&gt;</text>
-  <text x="350" y="194" font-size="9" fill="#868e96" text-anchor="middle">Type: ABOVE | BELOW | ANY</text>
-  <line x1="350" y1="124" x2="350" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="210" y="160" width="170" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="295" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayArea&lt;T&gt;</text>
+  <text x="295" y="194" font-size="9" fill="#868e96" text-anchor="middle">Type: ABOVE | BELOW | ANY</text>
+  <line x1="360" y1="124" x2="295" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- WindowToken -->
+  <rect x="420" y="160" width="170" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="505" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowToken</text>
+  <text x="505" y="194" font-size="9" fill="#868e96" text-anchor="middle">WC&lt;WindowState&gt;</text>
+  <line x1="420" y1="124" x2="505" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- WindowState -->
-  <rect x="490" y="160" width="200" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="590" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowState</text>
-  <text x="590" y="194" font-size="9" fill="#868e96" text-anchor="middle">对应一个窗口</text>
-  <line x1="420" y1="124" x2="590" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="630" y="160" width="170" height="44" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="715" y="178" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowState</text>
+  <text x="715" y="194" font-size="9" fill="#868e96" text-anchor="middle">对应一个窗口</text>
+  <line x1="470" y1="124" x2="715" y2="160" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
 
-  <!-- DisplayArea.Dimmable / RootDisplayArea -->
-  <rect x="180" y="240" width="160" height="34" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="260" y="262" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">RootDisplayArea</text>
-  <line x1="320" y1="204" x2="260" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
-  <text x="230" y="232" font-size="8" fill="#868e96">extends Dimmable</text>
+  <!-- Level 3: subclasses -->
+
+  <!-- RootDisplayArea (extends DisplayArea.Dimmable extends DisplayArea<DisplayArea>) -->
+  <rect x="100" y="240" width="160" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="180" y="262" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">RootDisplayArea</text>
+  <line x1="260" y1="204" x2="180" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="160" y="233" font-size="8" fill="#868e96">extends Dimmable</text>
 
   <!-- DisplayArea.Tokens -->
-  <rect x="380" y="240" width="160" height="34" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="460" y="262" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayArea.Tokens</text>
-  <line x1="380" y1="204" x2="460" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
-  <text x="430" y="232" font-size="8" fill="#868e96">DA&lt;WindowToken&gt;</text>
-
-  <!-- DisplayContent -->
-  <rect x="120" y="300" width="160" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
-  <text x="200" y="322" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayContent</text>
-  <line x1="260" y1="274" x2="200" y2="300" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="290" y="240" width="140" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="262" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayArea.Tokens</text>
+  <line x1="310" y1="204" x2="360" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="340" y="233" font-size="8" fill="#868e96">DA&lt;WindowToken&gt;</text>
 
   <!-- TaskDisplayArea -->
-  <rect x="310" y="300" width="160" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
-  <text x="390" y="322" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">TaskDisplayArea</text>
-  <line x1="350" y1="204" x2="390" y2="300" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
-  <text x="400" y="293" font-size="8" fill="#868e96">DA&lt;WindowContainer&gt;</text>
+  <rect x="210" y="310" width="160" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="290" y="332" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">TaskDisplayArea</text>
+  <line x1="295" y1="274" x2="290" y2="310" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="260" y="303" font-size="8" fill="#868e96">DA&lt;WC&gt;</text>
 
-  <!-- WindowToken / ActivityRecord -->
-  <rect x="500" y="300" width="160" height="34" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="580" y="322" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowToken</text>
-  <line x1="590" y1="204" x2="580" y2="300" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <!-- ActivityRecord (extends WindowToken) -->
+  <rect x="450" y="240" width="140" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="520" y="262" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">ActivityRecord</text>
+  <line x1="505" y1="204" x2="520" y2="240" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="530" y="233" font-size="8" fill="#868e96">extends WindowToken</text>
+
+  <!-- DisplayContent (extends RootDisplayArea) -->
+  <rect x="50" y="310" width="160" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="130" y="332" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayContent</text>
+  <line x1="180" y1="274" x2="130" y2="310" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
 
   <!-- Task -->
-  <rect x="310" y="360" width="100" height="34" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="360" y="382" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">Task</text>
-  <line x1="390" y1="334" x2="360" y2="360" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="390" y="310" width="100" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="440" y="332" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">Task</text>
+  <text x="440" y="303" font-size="8" fill="#868e96">via TaskFragment</text>
+  <line x1="715" y1="204" x2="440" y2="310" stroke="#555" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#arr)"/>
+  <text x="610" y="260" font-size="8" fill="#868e96">WC → TaskFragment → Task</text>
 
-  <!-- ActivityRecord -->
-  <rect x="430" y="360" width="120" height="34" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="490" y="382" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">ActivityRecord</text>
-  <line x1="540" y1="334" x2="490" y2="360" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
-  <text x="530" y="354" font-size="8" fill="#868e96">extends WindowToken</text>
+  <!-- Containment legend -->
+  <text x="10" y="380" font-size="9" fill="#868e96">继承关系（箭头方向 = 子类指向父类的继承来源）</text>
+  <text x="10" y="396" font-size="9" fill="#868e96">虚线 = 多级继承（WindowContainer → TaskFragment → Task）</text>
+  <rect x="10" y="406" width="14" height="14" rx="2" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="30" y="417" font-size="9" fill="#868e96">= 屏幕级容器</text>
 </svg>

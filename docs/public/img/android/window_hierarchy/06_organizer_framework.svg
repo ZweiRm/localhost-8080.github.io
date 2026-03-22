@@ -1,71 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 340" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
   <defs>
     <marker id="oa" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
       <polygon points="0,0 7,2.5 0,5" fill="#555"/>
     </marker>
+    <marker id="ob" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7,0 0,2.5 7,5" fill="#555"/>
+    </marker>
+    <marker id="dia" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <polygon points="4,0 8,4 4,8 0,4" fill="white" stroke="#555" stroke-width="0.8"/>
+    </marker>
+    <marker id="tri" markerWidth="10" markerHeight="8" refX="0" refY="4" orient="auto">
+      <polygon points="10,0 0,4 10,8" fill="white" stroke="#555" stroke-width="0.8"/>
+    </marker>
   </defs>
 
-  <!-- App / SystemUI Process -->
-  <rect x="10" y="10" width="350" height="320" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
-  <text x="20" y="28" font-size="10" fill="#4a7fb5" font-weight="600">App / SystemUI Process (API 层)</text>
+  <!-- Layer backgrounds -->
+  <!-- Framework API layer -->
+  <rect x="10" y="10" width="840" height="150" rx="4" fill="#e8f5e9" stroke="#a5d6a7" stroke-width="1"/>
+  <text x="20" y="28" font-size="10" fill="#2e7d32" font-weight="600">framework API</text>
 
-  <!-- system_server Process -->
-  <rect x="400" y="10" width="350" height="320" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
-  <text x="410" y="28" font-size="10" fill="#868e96" font-weight="600">system_server (服务层)</text>
+  <!-- AIDL layer -->
+  <rect x="10" y="170" width="840" height="100" rx="4" fill="#e3f2fd" stroke="#90caf9" stroke-width="1"/>
+  <text x="20" y="188" font-size="10" fill="#1565c0" font-weight="600">AIDL</text>
+
+  <!-- Services layer -->
+  <rect x="10" y="280" width="840" height="130" rx="4" fill="#e1f5fe" stroke="#81d4fa" stroke-width="1"/>
+  <text x="20" y="298" font-size="10" fill="#0277bd" font-weight="600">Services (system_server)</text>
+
+  <!-- === Framework API layer === -->
 
   <!-- WindowOrganizer -->
-  <rect x="30" y="50" width="160" height="36" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="110" y="73" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowOrganizer</text>
+  <rect x="30" y="40" width="160" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="110" y="62" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">WindowOrganizer</text>
 
   <!-- DisplayAreaOrganizer -->
-  <rect x="30" y="110" width="160" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
-  <text x="110" y="128" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaOrganizer</text>
-  <text x="110" y="145" font-size="8" fill="#868e96" text-anchor="middle">registerOrganizer(featureId)</text>
-  <text x="110" y="155" font-size="8" fill="#868e96" text-anchor="middle">extends WindowOrganizer</text>
-  <line x1="110" y1="86" x2="110" y2="110" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+  <rect x="220" y="40" width="180" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="62" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaOrganizer</text>
+  <!-- inheritance arrow (hollow triangle) -->
+  <line x1="220" y1="57" x2="190" y2="57" stroke="#555" stroke-width="1" marker-start="url(#tri)"/>
 
   <!-- DisplayAreaAppearedInfo -->
-  <rect x="30" y="190" width="160" height="42" rx="3" fill="white" stroke="#adb5bd"/>
-  <text x="110" y="208" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaAppearedInfo</text>
-  <text x="110" y="224" font-size="8" fill="#868e96" text-anchor="middle">DisplayAreaInfo + SurfaceControl</text>
-  <line x1="110" y1="160" x2="110" y2="190" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
-  <text x="120" y="178" font-size="7" fill="#868e96">onDisplayAreaAppeared()</text>
+  <rect x="530" y="36" width="200" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="630" y="53" font-size="10" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaAppearedInfo</text>
+  <text x="630" y="68" font-size="8" fill="#868e96" text-anchor="middle">- DisplayAreaInfo mDisplayAreaInfo</text>
+  <text x="630" y="79" font-size="8" fill="#868e96" text-anchor="middle">- SurfaceControl mLeash</text>
 
-  <!-- Concrete organizer -->
-  <rect x="30" y="260" width="310" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
-  <text x="185" y="278" font-size="9" fill="#2e7d32" font-weight="600" text-anchor="middle">OneHandedDisplayAreaOrganizer</text>
-  <text x="185" y="295" font-size="8" fill="#868e96" text-anchor="middle">管理 FEATURE_ONE_HANDED 的 DisplayArea</text>
-  <line x1="110" y1="232" x2="185" y2="260" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+  <!-- DisplayAreaInfo -->
+  <rect x="740" y="36" width="100" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="790" y="53" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaInfo</text>
+  <text x="790" y="66" font-size="7.5" fill="#868e96" text-anchor="middle">- int displayId</text>
+  <text x="790" y="77" font-size="7.5" fill="#868e96" text-anchor="middle">- int featureId</text>
 
-  <!-- AIDL interfaces -->
-  <rect x="230" y="50" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="3,2"/>
-  <text x="290" y="64" font-size="8" fill="#343a40" text-anchor="middle">IWindowOrganizer</text>
-  <text x="290" y="77" font-size="8" fill="#343a40" text-anchor="middle">Controller (AIDL)</text>
+  <!-- registerOrganizer label -->
+  <text x="310" y="100" font-size="8" fill="#868e96" text-anchor="middle">registerOrganizer(featureId)</text>
+  <text x="310" y="112" font-size="8" fill="#868e96" text-anchor="middle">onDisplayAreaAppeared(info, leash)</text>
+  <text x="310" y="124" font-size="8" fill="#868e96" text-anchor="middle">onDisplayAreaVanished(info)</text>
 
-  <rect x="230" y="110" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="3,2"/>
-  <text x="290" y="124" font-size="8" fill="#343a40" text-anchor="middle">IDisplayAreaOrganizer</text>
-  <text x="290" y="137" font-size="8" fill="#343a40" text-anchor="middle">Controller (AIDL)</text>
+  <!-- connection from DAOrganizer to DAAppearedInfo -->
+  <line x1="400" y1="57" x2="530" y2="57" stroke="#555" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#oa)"/>
+  <text x="465" y="50" font-size="7" fill="#868e96" text-anchor="middle">callback returns</text>
 
-  <rect x="230" y="170" width="120" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-dasharray="3,2"/>
-  <text x="290" y="189" font-size="8" fill="#343a40" text-anchor="middle">IDisplayAreaOrganizer</text>
+  <!-- === AIDL layer === -->
 
-  <!-- Server-side -->
-  <rect x="420" y="50" width="180" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
-  <text x="510" y="73" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">WindowOrganizerController</text>
+  <!-- IWindowOrganizerController -->
+  <rect x="30" y="195" width="250" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="155" y="213" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">IWindowOrganizerController</text>
+  <text x="155" y="230" font-size="7.5" fill="#868e96" text-anchor="middle">getDisplayAreaOrganizerController()</text>
 
-  <rect x="420" y="110" width="180" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
-  <text x="510" y="128" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaOrganizerController</text>
-  <text x="510" y="145" font-size="8" fill="#868e96" text-anchor="middle">register / unregister</text>
-  <line x1="510" y1="86" x2="510" y2="110" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+  <!-- IDisplayAreaOrganizerController -->
+  <rect x="310" y="195" width="240" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="213" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">IDisplayAreaOrganizerController</text>
+  <text x="430" y="230" font-size="7.5" fill="#868e96" text-anchor="middle">registerOrganizer() / unregisterOrganizer()</text>
 
-  <!-- DisplayArea (server) -->
-  <rect x="420" y="190" width="180" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
-  <text x="510" y="213" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayArea (Feature节点)</text>
-  <line x1="510" y1="160" x2="510" y2="190" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+  <!-- IDisplayAreaOrganizer -->
+  <rect x="580" y="195" width="200" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="680" y="213" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">IDisplayAreaOrganizer</text>
+  <text x="680" y="227" font-size="7.5" fill="#868e96" text-anchor="middle">onDisplayAreaAppeared()</text>
+  <text x="680" y="238" font-size="7.5" fill="#868e96" text-anchor="middle">onDisplayAreaVanished()</text>
 
-  <!-- Cross-process arrows -->
-  <line x1="350" y1="68" x2="420" y2="68" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#oa)"/>
-  <line x1="350" y1="135" x2="420" y2="135" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#oa)"/>
-  <line x1="420" y1="185" x2="350" y2="185" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#oa)"/>
-  <text x="370" y="182" font-size="7" fill="#4a7fb5">callback</text>
+  <!-- Arrows between AIDL boxes -->
+  <line x1="280" y1="219" x2="310" y2="219" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+  <line x1="550" y1="219" x2="580" y2="219" stroke="#555" stroke-width="1" marker-end="url(#oa)"/>
+
+  <!-- Vertical connections: API ↔ AIDL -->
+  <line x1="110" y1="74" x2="155" y2="195" stroke="#555" stroke-width="1" stroke-dasharray="4,2"/>
+  <line x1="310" y1="74" x2="430" y2="195" stroke="#555" stroke-width="1" stroke-dasharray="4,2"/>
+  <line x1="630" y1="86" x2="680" y2="195" stroke="#555" stroke-width="1" stroke-dasharray="4,2"/>
+
+  <!-- === Services layer === -->
+
+  <!-- WindowOrganizerController -->
+  <rect x="30" y="305" width="250" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="155" y="323" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">WindowOrganizerController</text>
+  <text x="155" y="340" font-size="7.5" fill="#868e96" text-anchor="middle">impl IWindowOrganizerController</text>
+
+  <!-- DisplayAreaOrganizerController -->
+  <rect x="310" y="305" width="240" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="323" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">DisplayAreaOrganizerController</text>
+  <text x="430" y="340" font-size="7.5" fill="#868e96" text-anchor="middle">impl IDisplayAreaOrganizerController</text>
+
+  <!-- ActivityTaskManagerService -->
+  <rect x="30" y="370" width="250" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="155" y="392" font-size="9" fill="#343a40" font-weight="600" text-anchor="middle">ActivityTaskManagerService</text>
+
+  <!-- Composition: ATMS ◇→ WOC -->
+  <line x1="155" y1="370" x2="155" y2="353" stroke="#555" stroke-width="1" marker-end="url(#dia)"/>
+  <text x="170" y="365" font-size="7" fill="#868e96">mWindowOrganizerController</text>
+
+  <!-- Composition: WOC ◇→ DAOC -->
+  <line x1="280" y1="329" x2="310" y2="329" stroke="#555" stroke-width="1" marker-start="url(#dia)"/>
+  <text x="294" y="323" font-size="7" fill="#868e96">has</text>
+
+  <!-- Vertical connections: AIDL ↔ Services -->
+  <line x1="155" y1="243" x2="155" y2="305" stroke="#555" stroke-width="1" stroke-dasharray="4,2"/>
+  <line x1="430" y1="243" x2="430" y2="305" stroke="#555" stroke-width="1" stroke-dasharray="4,2"/>
+  <line x1="680" y1="243" x2="680" y2="280" stroke="#555" stroke-width="1" stroke-dasharray="4,2"/>
+  <text x="690" y="270" font-size="7" fill="#868e96">callback to client</text>
 </svg>

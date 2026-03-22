@@ -4,7 +4,7 @@ prev:
     link: '/framework/activity-rendering-process'
 next:
     text: 'WMS 窗口层级'
-    link: '/framework/wms_window_hierarchy'
+    link: '/framework/wms-window-hierarchy'
 ---
 
 # WMS - 窗口添加和移除

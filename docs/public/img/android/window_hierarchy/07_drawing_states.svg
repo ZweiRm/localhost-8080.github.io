@@ -1,47 +1,149 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 120" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
   <defs>
-    <marker id="da" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
-      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    <marker id="da" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
+      <polygon points="0,0 6,2 0,4" fill="#555"/>
+    </marker>
+    <marker id="db" markerWidth="6" markerHeight="4" refX="6" refY="2" orient="auto">
+      <polygon points="0,0 6,2 0,4" fill="#1565c0"/>
     </marker>
   </defs>
 
-  <!-- States -->
-  <rect x="10" y="30" width="120" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="70" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">NO_SURFACE</text>
-  <text x="70" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 0</text>
+  <!-- Column headers (swimlane style) -->
+  <rect x="60" y="10" width="170" height="28" rx="3" fill="#e8eaf6" stroke="#7986cb"/>
+  <text x="145" y="29" font-size="10" fill="#283593" font-weight="600" text-anchor="middle">ViewRootImpl</text>
 
-  <rect x="180" y="30" width="120" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="240" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">DRAW_PENDING</text>
-  <text x="240" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 1</text>
+  <rect x="270" y="10" width="140" height="28" rx="3" fill="#e8eaf6" stroke="#7986cb"/>
+  <text x="340" y="29" font-size="10" fill="#283593" font-weight="600" text-anchor="middle">IWindowSession</text>
 
-  <rect x="350" y="30" width="150" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="425" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">COMMIT_DRAW_PENDING</text>
-  <text x="425" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 2</text>
+  <rect x="450" y="10" width="190" height="28" rx="3" fill="#e8eaf6" stroke="#7986cb"/>
+  <text x="545" y="29" font-size="10" fill="#283593" font-weight="600" text-anchor="middle">WindowManagerService</text>
 
-  <rect x="550" y="30" width="130" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
-  <text x="615" y="47" font-size="9.5" fill="#343a40" font-weight="600" text-anchor="middle">READY_TO_SHOW</text>
-  <text x="615" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 3</text>
+  <rect x="690" y="10" width="180" height="28" rx="3" fill="#e8eaf6" stroke="#7986cb"/>
+  <text x="780" y="29" font-size="10" fill="#283593" font-weight="600" text-anchor="middle">WindowStateAnimator</text>
 
-  <rect x="730" y="30" width="120" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
-  <text x="790" y="47" font-size="9.5" fill="#2e7d32" font-weight="600" text-anchor="middle">HAS_DRAWN</text>
-  <text x="790" y="60" font-size="8" fill="#868e96" text-anchor="middle">value = 4</text>
+  <!-- Swimlane dividers -->
+  <line x1="250" y1="10" x2="250" y2="420" stroke="#e0e0e0" stroke-width="0.5" stroke-dasharray="4,3"/>
+  <line x1="430" y1="10" x2="430" y2="420" stroke="#e0e0e0" stroke-width="0.5" stroke-dasharray="4,3"/>
+  <line x1="660" y1="10" x2="660" y2="420" stroke="#e0e0e0" stroke-width="0.5" stroke-dasharray="4,3"/>
 
-  <!-- Arrows -->
-  <line x1="130" y1="48" x2="180" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
-  <line x1="300" y1="48" x2="350" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
-  <line x1="500" y1="48" x2="550" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
-  <line x1="680" y1="48" x2="730" y2="48" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+  <!-- ===== Phase 1: addWindow → NO_SURFACE ===== -->
+  <text x="10" y="68" font-size="8" fill="#78909c" font-weight="600">Resume</text>
+  <circle cx="40" cy="65" r="6" fill="#424242"/>
 
-  <!-- Transition labels -->
-  <text x="155" y="40" font-size="7" fill="#868e96" text-anchor="middle">relayout</text>
-  <text x="155" y="90" font-size="7" fill="#868e96" text-anchor="middle">createSurface</text>
+  <!-- setView -->
+  <rect x="80" y="55" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="140" y="71" font-size="9" fill="#343a40" text-anchor="middle">setView</text>
+  <line x1="46" y1="65" x2="80" y2="65" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
 
-  <text x="325" y="40" font-size="7" fill="#868e96" text-anchor="middle">finish</text>
-  <text x="325" y="90" font-size="7" fill="#868e96" text-anchor="middle">Drawing</text>
+  <!-- addToDisplayAsUser -->
+  <rect x="280" y="55" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="71" font-size="8.5" fill="#343a40" text-anchor="middle">addToDisplayAsUser</text>
+  <line x1="200" y1="67" x2="280" y2="67" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
 
-  <text x="525" y="40" font-size="7" fill="#868e96" text-anchor="middle">commit</text>
-  <text x="525" y="90" font-size="7" fill="#868e96" text-anchor="middle">FinishDrawing</text>
+  <!-- addWindow -->
+  <rect x="470" y="55" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="530" y="71" font-size="9" fill="#343a40" text-anchor="middle">addWindow</text>
+  <line x1="400" y1="67" x2="470" y2="67" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
 
-  <text x="705" y="40" font-size="7" fill="#868e96" text-anchor="middle">perform</text>
-  <text x="705" y="90" font-size="7" fill="#868e96" text-anchor="middle">ShowLocked</text>
+  <!-- NO_SURFACE state -->
+  <rect x="710" y="52" width="140" height="28" rx="14" fill="#ef9a9a" stroke="#e53935" stroke-width="1.2"/>
+  <text x="780" y="71" font-size="10" fill="#b71c1c" font-weight="600" text-anchor="middle">NO_SURFACE</text>
+  <line x1="590" y1="67" x2="710" y2="67" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- ===== Phase 2: relayout → DRAW_PENDING ===== -->
+  <!-- Side note: requestLayout -->
+  <rect x="10" y="110" width="50" height="52" rx="2" fill="#fff9c4" stroke="#f9a825" stroke-width="0.8"/>
+  <text x="35" y="122" font-size="7" fill="#f57f17" text-anchor="middle">requestLayout</text>
+  <text x="35" y="132" font-size="7" fill="#f57f17" text-anchor="middle">schedule</text>
+  <text x="35" y="142" font-size="7" fill="#f57f17" text-anchor="middle">Traversals</text>
+  <text x="35" y="152" font-size="7" fill="#f57f17" text-anchor="middle">perform</text>
+
+  <rect x="80" y="120" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="140" y="136" font-size="9" fill="#343a40" text-anchor="middle">relayoutWindow</text>
+  <line x1="60" y1="132" x2="80" y2="132" stroke="#555" stroke-width="0.8"/>
+
+  <rect x="280" y="120" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="136" font-size="9" fill="#343a40" text-anchor="middle">relayout</text>
+  <line x1="200" y1="132" x2="280" y2="132" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <rect x="470" y="120" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="530" y="136" font-size="9" fill="#343a40" text-anchor="middle">relayoutWindow</text>
+  <line x1="400" y1="132" x2="470" y2="132" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- createSurfaceLocked label -->
+  <text x="648" y="128" font-size="8" fill="#1565c0">createSurface</text>
+  <text x="648" y="140" font-size="8" fill="#1565c0">Locked</text>
+
+  <!-- DRAW_PENDING state -->
+  <rect x="710" y="118" width="140" height="28" rx="14" fill="#fff9c4" stroke="#f9a825" stroke-width="1.2"/>
+  <text x="780" y="137" font-size="10" fill="#e65100" font-weight="600" text-anchor="middle">DRAW_PENDING</text>
+  <line x1="590" y1="132" x2="710" y2="132" stroke="#1565c0" stroke-width="1" marker-end="url(#db)"/>
+
+  <!-- Arrow from NO_SURFACE to DRAW_PENDING -->
+  <line x1="780" y1="80" x2="780" y2="118" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- ===== Phase 3: finishDrawing → COMMIT_DRAW_PENDING ===== -->
+  <rect x="80" y="190" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="140" y="206" font-size="8.5" fill="#343a40" text-anchor="middle">reportDrawFinished</text>
+
+  <rect x="280" y="190" width="120" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="206" font-size="9" fill="#343a40" text-anchor="middle">finishDrawing</text>
+  <line x1="200" y1="202" x2="280" y2="202" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <rect x="470" y="190" width="140" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="540" y="206" font-size="8.5" fill="#343a40" text-anchor="middle">finishDrawingWindow</text>
+  <line x1="400" y1="202" x2="470" y2="202" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <text x="648" y="198" font-size="8" fill="#1565c0">finishDrawing</text>
+  <text x="648" y="210" font-size="8" fill="#1565c0">Locked</text>
+
+  <!-- COMMIT_DRAW_PENDING state -->
+  <rect x="690" y="186" width="180" height="28" rx="14" fill="#fff9c4" stroke="#f9a825" stroke-width="1.2"/>
+  <text x="780" y="205" font-size="9.5" fill="#e65100" font-weight="600" text-anchor="middle">COMMIT_DRAW_PENDING</text>
+  <line x1="610" y1="202" x2="690" y2="202" stroke="#1565c0" stroke-width="1" marker-end="url(#db)"/>
+
+  <!-- Arrow from DRAW_PENDING -->
+  <line x1="780" y1="146" x2="780" y2="186" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- ===== Phase 4: performSurfacePlacement → READY_TO_SHOW ===== -->
+  <text x="470" y="260" font-size="8.5" fill="#1565c0" font-weight="600">performSurfacePlacement</text>
+  <text x="648" y="264" font-size="8" fill="#1565c0">commitFinish</text>
+  <text x="648" y="276" font-size="8" fill="#1565c0">DrawingLocked</text>
+
+  <!-- READY_TO_SHOW state -->
+  <rect x="710" y="252" width="140" height="28" rx="14" fill="#fff9c4" stroke="#f9a825" stroke-width="1.2"/>
+  <text x="780" y="271" font-size="10" fill="#e65100" font-weight="600" text-anchor="middle">READY_TO_SHOW</text>
+  <line x1="780" y1="214" x2="780" y2="252" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- ===== Phase 5: performShowLocked → HAS_DRAWN ===== -->
+  <text x="648" y="322" font-size="8" fill="#1565c0">performShow</text>
+  <text x="648" y="334" font-size="8" fill="#1565c0">Locked</text>
+
+  <!-- HAS_DRAWN state -->
+  <rect x="710" y="314" width="140" height="28" rx="14" fill="#a5d6a7" stroke="#388e3c" stroke-width="1.2"/>
+  <text x="780" y="333" font-size="10" fill="#1b5e20" font-weight="600" text-anchor="middle">HAS_DRAWN</text>
+  <line x1="780" y1="280" x2="780" y2="314" stroke="#555" stroke-width="1" marker-end="url(#da)"/>
+
+  <!-- scheduleAnimationLocked -->
+  <text x="780" y="358" font-size="8" fill="#388e3c" text-anchor="middle">scheduleAnimationLocked()</text>
+  <text x="780" y="370" font-size="8" fill="#78909c" text-anchor="middle">窗口上屏显示</text>
+
+  <!-- Side note: sync -->
+  <rect x="10" y="192" width="56" height="52" rx="2" fill="#fff9c4" stroke="#f9a825" stroke-width="0.8"/>
+  <text x="38" y="204" font-size="7" fill="#f57f17" text-anchor="middle">createSync</text>
+  <text x="38" y="214" font-size="7" fill="#f57f17" text-anchor="middle">IfNeeded</text>
+  <text x="38" y="226" font-size="7" fill="#f57f17" text-anchor="middle">markSync</text>
+  <text x="38" y="236" font-size="7" fill="#f57f17" text-anchor="middle">Ready</text>
+
+  <!-- App/Server boundary -->
+  <line x1="250" y1="44" x2="250" y2="380" stroke="#e57373" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="243" y="395" font-size="8" fill="#e57373" text-anchor="end">App 进程</text>
+  <text x="257" y="395" font-size="8" fill="#e57373">system_server 进程</text>
+
+  <!-- State value labels -->
+  <text x="920" y="71" font-size="8" fill="#9e9e9e">value = 0</text>
+  <text x="920" y="137" font-size="8" fill="#9e9e9e">value = 1</text>
+  <text x="920" y="205" font-size="8" fill="#9e9e9e">value = 2</text>
+  <text x="920" y="271" font-size="8" fill="#9e9e9e">value = 3</text>
+  <text x="920" y="333" font-size="8" fill="#9e9e9e">value = 4</text>
 </svg>

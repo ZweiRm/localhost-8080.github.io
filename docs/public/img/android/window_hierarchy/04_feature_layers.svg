@@ -1,59 +1,280 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 200" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
-  <!-- Layer axis -->
-  <text x="10" y="15" font-size="9" fill="#343a40" font-weight="600">Layer</text>
-  <line x1="60" y1="12" x2="800" y2="12" stroke="#ced4da" stroke-width="0.5"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 155" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <style>
+      .hdr { fill: #1565c0; }
+      .lbl { fill: #f5f5f5; }
+      .c1  { fill: #4caf50; }
+      .c0  { fill: #ef5350; }
+      .txt { font-size: 7px; fill: white; text-anchor: middle; dominant-baseline: central; font-weight: 600; }
+      .ltxt { font-size: 8.5px; fill: #212121; dominant-baseline: central; }
+      .htxt { font-size: 7px; fill: white; text-anchor: middle; dominant-baseline: central; font-weight: 600; }
+    </style>
+  </defs>
 
-  <!-- Layer numbers -->
-  <g font-size="7" fill="#868e96" text-anchor="middle">
-    <text x="70" y="10">0</text><text x="90" y="10">1</text><text x="110" y="10">2</text>
-    <text x="150" y="10">3-12</text>
-    <text x="210" y="10">13</text><text x="230" y="10">14</text><text x="250" y="10">15</text>
-    <text x="270" y="10">16</text><text x="290" y="10">17</text><text x="310" y="10">18-23</text>
-    <text x="370" y="10">24</text><text x="390" y="10">25</text><text x="420" y="10">26-27</text>
-    <text x="460" y="10">28</text><text x="490" y="10">29-31</text>
-    <text x="540" y="10">32</text><text x="570" y="10">33</text><text x="600" y="10">34</text>
-    <text x="630" y="10">35</text>
+  <!-- Column positions: label=0..189, data cols 0..35 each 19px starting at x=190 -->
+  <!-- Row positions: header y=0, rows y=22,44,66,88,110 each 22px -->
+
+  <!-- Header row: layer numbers -->
+  <rect x="0" y="0" width="190" height="22" class="hdr"/>
+  <text x="95" y="11" class="htxt" font-size="8.5">Feature \ Layer</text>
+  <g>
+    <rect x="190" y="0" width="19" height="22" class="hdr"/><text x="199.5" y="11" class="htxt">0</text>
+    <rect x="209" y="0" width="19" height="22" class="hdr"/><text x="218.5" y="11" class="htxt">1</text>
+    <rect x="228" y="0" width="19" height="22" class="hdr"/><text x="237.5" y="11" class="htxt">2</text>
+    <rect x="247" y="0" width="19" height="22" class="hdr"/><text x="256.5" y="11" class="htxt">3</text>
+    <rect x="266" y="0" width="19" height="22" class="hdr"/><text x="275.5" y="11" class="htxt">4</text>
+    <rect x="285" y="0" width="19" height="22" class="hdr"/><text x="294.5" y="11" class="htxt">5</text>
+    <rect x="304" y="0" width="19" height="22" class="hdr"/><text x="313.5" y="11" class="htxt">6</text>
+    <rect x="323" y="0" width="19" height="22" class="hdr"/><text x="332.5" y="11" class="htxt">7</text>
+    <rect x="342" y="0" width="19" height="22" class="hdr"/><text x="351.5" y="11" class="htxt">8</text>
+    <rect x="361" y="0" width="19" height="22" class="hdr"/><text x="370.5" y="11" class="htxt">9</text>
+    <rect x="380" y="0" width="19" height="22" class="hdr"/><text x="389.5" y="11" class="htxt">10</text>
+    <rect x="399" y="0" width="19" height="22" class="hdr"/><text x="408.5" y="11" class="htxt">11</text>
+    <rect x="418" y="0" width="19" height="22" class="hdr"/><text x="427.5" y="11" class="htxt">12</text>
+    <rect x="437" y="0" width="19" height="22" class="hdr"/><text x="446.5" y="11" class="htxt">13</text>
+    <rect x="456" y="0" width="19" height="22" class="hdr"/><text x="465.5" y="11" class="htxt">14</text>
+    <rect x="475" y="0" width="19" height="22" class="hdr"/><text x="484.5" y="11" class="htxt">15</text>
+    <rect x="494" y="0" width="19" height="22" class="hdr"/><text x="503.5" y="11" class="htxt">16</text>
+    <rect x="513" y="0" width="19" height="22" class="hdr"/><text x="522.5" y="11" class="htxt">17</text>
+    <rect x="532" y="0" width="19" height="22" class="hdr"/><text x="541.5" y="11" class="htxt">18</text>
+    <rect x="551" y="0" width="19" height="22" class="hdr"/><text x="560.5" y="11" class="htxt">19</text>
+    <rect x="570" y="0" width="19" height="22" class="hdr"/><text x="579.5" y="11" class="htxt">20</text>
+    <rect x="589" y="0" width="19" height="22" class="hdr"/><text x="598.5" y="11" class="htxt">21</text>
+    <rect x="608" y="0" width="19" height="22" class="hdr"/><text x="617.5" y="11" class="htxt">22</text>
+    <rect x="627" y="0" width="19" height="22" class="hdr"/><text x="636.5" y="11" class="htxt">23</text>
+    <rect x="646" y="0" width="19" height="22" class="hdr"/><text x="655.5" y="11" class="htxt">24</text>
+    <rect x="665" y="0" width="19" height="22" class="hdr"/><text x="674.5" y="11" class="htxt">25</text>
+    <rect x="684" y="0" width="19" height="22" class="hdr"/><text x="693.5" y="11" class="htxt">26</text>
+    <rect x="703" y="0" width="19" height="22" class="hdr"/><text x="712.5" y="11" class="htxt">27</text>
+    <rect x="722" y="0" width="19" height="22" class="hdr"/><text x="731.5" y="11" class="htxt">28</text>
+    <rect x="741" y="0" width="19" height="22" class="hdr"/><text x="750.5" y="11" class="htxt">29</text>
+    <rect x="760" y="0" width="19" height="22" class="hdr"/><text x="769.5" y="11" class="htxt">30</text>
+    <rect x="779" y="0" width="19" height="22" class="hdr"/><text x="788.5" y="11" class="htxt">31</text>
+    <rect x="798" y="0" width="19" height="22" class="hdr"/><text x="807.5" y="11" class="htxt">32</text>
+    <rect x="817" y="0" width="19" height="22" class="hdr"/><text x="826.5" y="11" class="htxt">33</text>
+    <rect x="836" y="0" width="19" height="22" class="hdr"/><text x="845.5" y="11" class="htxt">34</text>
+    <rect x="855" y="0" width="19" height="22" class="hdr"/><text x="864.5" y="11" class="htxt">35</text>
   </g>
 
-  <!-- Feature bars -->
-  <!-- WindowedMagnification: 0-31, ID=4 -->
-  <rect x="65" y="25" width="460" height="22" rx="2" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
-  <text x="290" y="40" font-size="9" fill="#4a7fb5" font-weight="600" text-anchor="middle">WindowedMagnification (ID=4) : Layer 0 ~ 31</text>
+  <!-- Row 1: WindowedMagnification  layers 0-31=1, 32-35=0 -->
+  <rect x="0" y="22" width="190" height="22" class="lbl"/><text x="6" y="33" class="ltxt">WindowedMagnification</text>
+  <g transform="translate(190,22)">
+    <rect x="0" width="19" height="22" class="c1"/><text x="9.5" y="11" class="txt">1</text>
+    <rect x="19" width="19" height="22" class="c1"/><text x="28.5" y="11" class="txt">1</text>
+    <rect x="38" width="19" height="22" class="c1"/><text x="47.5" y="11" class="txt">1</text>
+    <rect x="57" width="19" height="22" class="c1"/><text x="66.5" y="11" class="txt">1</text>
+    <rect x="76" width="19" height="22" class="c1"/><text x="85.5" y="11" class="txt">1</text>
+    <rect x="95" width="19" height="22" class="c1"/><text x="104.5" y="11" class="txt">1</text>
+    <rect x="114" width="19" height="22" class="c1"/><text x="123.5" y="11" class="txt">1</text>
+    <rect x="133" width="19" height="22" class="c1"/><text x="142.5" y="11" class="txt">1</text>
+    <rect x="152" width="19" height="22" class="c1"/><text x="161.5" y="11" class="txt">1</text>
+    <rect x="171" width="19" height="22" class="c1"/><text x="180.5" y="11" class="txt">1</text>
+    <rect x="190" width="19" height="22" class="c1"/><text x="199.5" y="11" class="txt">1</text>
+    <rect x="209" width="19" height="22" class="c1"/><text x="218.5" y="11" class="txt">1</text>
+    <rect x="228" width="19" height="22" class="c1"/><text x="237.5" y="11" class="txt">1</text>
+    <rect x="247" width="19" height="22" class="c1"/><text x="256.5" y="11" class="txt">1</text>
+    <rect x="266" width="19" height="22" class="c1"/><text x="275.5" y="11" class="txt">1</text>
+    <rect x="285" width="19" height="22" class="c1"/><text x="294.5" y="11" class="txt">1</text>
+    <rect x="304" width="19" height="22" class="c1"/><text x="313.5" y="11" class="txt">1</text>
+    <rect x="323" width="19" height="22" class="c1"/><text x="332.5" y="11" class="txt">1</text>
+    <rect x="342" width="19" height="22" class="c1"/><text x="351.5" y="11" class="txt">1</text>
+    <rect x="361" width="19" height="22" class="c1"/><text x="370.5" y="11" class="txt">1</text>
+    <rect x="380" width="19" height="22" class="c1"/><text x="389.5" y="11" class="txt">1</text>
+    <rect x="399" width="19" height="22" class="c1"/><text x="408.5" y="11" class="txt">1</text>
+    <rect x="418" width="19" height="22" class="c1"/><text x="427.5" y="11" class="txt">1</text>
+    <rect x="437" width="19" height="22" class="c1"/><text x="446.5" y="11" class="txt">1</text>
+    <rect x="456" width="19" height="22" class="c1"/><text x="465.5" y="11" class="txt">1</text>
+    <rect x="475" width="19" height="22" class="c1"/><text x="484.5" y="11" class="txt">1</text>
+    <rect x="494" width="19" height="22" class="c1"/><text x="503.5" y="11" class="txt">1</text>
+    <rect x="513" width="19" height="22" class="c1"/><text x="522.5" y="11" class="txt">1</text>
+    <rect x="532" width="19" height="22" class="c1"/><text x="541.5" y="11" class="txt">1</text>
+    <rect x="551" width="19" height="22" class="c1"/><text x="560.5" y="11" class="txt">1</text>
+    <rect x="570" width="19" height="22" class="c1"/><text x="579.5" y="11" class="txt">1</text>
+    <rect x="589" width="19" height="22" class="c1"/><text x="598.5" y="11" class="txt">1</text>
+    <rect x="608" width="19" height="22" class="c0"/><text x="617.5" y="11" class="txt">0</text>
+    <rect x="627" width="19" height="22" class="c0"/><text x="636.5" y="11" class="txt">0</text>
+    <rect x="646" width="19" height="22" class="c0"/><text x="655.5" y="11" class="txt">0</text>
+    <rect x="665" width="19" height="22" class="c0"/><text x="674.5" y="11" class="txt">0</text>
+  </g>
 
-  <!-- HideDisplayCutout: 0-14, 16, 18-23, 26-31 (except 15,17,24,25) -->
-  <rect x="65" y="52" width="170" height="22" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
-  <text x="150" y="67" font-size="8" fill="#343a40" text-anchor="middle">HideDisplayCutout (6)</text>
-  <rect x="265" y="52" width="10" height="22" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
-  <rect x="305" y="52" width="50" height="22" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
-  <rect x="405" y="52" width="120" height="22" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
-  <rect x="530" y="52" width="110" height="22" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
-  <text x="585" y="67" font-size="8" fill="#343a40" text-anchor="middle">32~35</text>
+  <!-- Row 2: HideDisplayCutout  all except 15,17,24,25 -->
+  <rect x="0" y="44" width="190" height="22" class="lbl"/><text x="6" y="55" class="ltxt">HideDisplayCutout</text>
+  <g transform="translate(190,44)">
+    <rect x="0" width="19" height="22" class="c1"/><text x="9.5" y="11" class="txt">1</text>
+    <rect x="19" width="19" height="22" class="c1"/><text x="28.5" y="11" class="txt">1</text>
+    <rect x="38" width="19" height="22" class="c1"/><text x="47.5" y="11" class="txt">1</text>
+    <rect x="57" width="19" height="22" class="c1"/><text x="66.5" y="11" class="txt">1</text>
+    <rect x="76" width="19" height="22" class="c1"/><text x="85.5" y="11" class="txt">1</text>
+    <rect x="95" width="19" height="22" class="c1"/><text x="104.5" y="11" class="txt">1</text>
+    <rect x="114" width="19" height="22" class="c1"/><text x="123.5" y="11" class="txt">1</text>
+    <rect x="133" width="19" height="22" class="c1"/><text x="142.5" y="11" class="txt">1</text>
+    <rect x="152" width="19" height="22" class="c1"/><text x="161.5" y="11" class="txt">1</text>
+    <rect x="171" width="19" height="22" class="c1"/><text x="180.5" y="11" class="txt">1</text>
+    <rect x="190" width="19" height="22" class="c1"/><text x="199.5" y="11" class="txt">1</text>
+    <rect x="209" width="19" height="22" class="c1"/><text x="218.5" y="11" class="txt">1</text>
+    <rect x="228" width="19" height="22" class="c1"/><text x="237.5" y="11" class="txt">1</text>
+    <rect x="247" width="19" height="22" class="c1"/><text x="256.5" y="11" class="txt">1</text>
+    <rect x="266" width="19" height="22" class="c1"/><text x="275.5" y="11" class="txt">1</text>
+    <rect x="285" width="19" height="22" class="c0"/><text x="294.5" y="11" class="txt">0</text>
+    <rect x="304" width="19" height="22" class="c1"/><text x="313.5" y="11" class="txt">1</text>
+    <rect x="323" width="19" height="22" class="c0"/><text x="332.5" y="11" class="txt">0</text>
+    <rect x="342" width="19" height="22" class="c1"/><text x="351.5" y="11" class="txt">1</text>
+    <rect x="361" width="19" height="22" class="c1"/><text x="370.5" y="11" class="txt">1</text>
+    <rect x="380" width="19" height="22" class="c1"/><text x="389.5" y="11" class="txt">1</text>
+    <rect x="399" width="19" height="22" class="c1"/><text x="408.5" y="11" class="txt">1</text>
+    <rect x="418" width="19" height="22" class="c1"/><text x="427.5" y="11" class="txt">1</text>
+    <rect x="437" width="19" height="22" class="c1"/><text x="446.5" y="11" class="txt">1</text>
+    <rect x="456" width="19" height="22" class="c0"/><text x="465.5" y="11" class="txt">0</text>
+    <rect x="475" width="19" height="22" class="c0"/><text x="484.5" y="11" class="txt">0</text>
+    <rect x="494" width="19" height="22" class="c1"/><text x="503.5" y="11" class="txt">1</text>
+    <rect x="513" width="19" height="22" class="c1"/><text x="522.5" y="11" class="txt">1</text>
+    <rect x="532" width="19" height="22" class="c1"/><text x="541.5" y="11" class="txt">1</text>
+    <rect x="551" width="19" height="22" class="c1"/><text x="560.5" y="11" class="txt">1</text>
+    <rect x="570" width="19" height="22" class="c1"/><text x="579.5" y="11" class="txt">1</text>
+    <rect x="589" width="19" height="22" class="c1"/><text x="598.5" y="11" class="txt">1</text>
+    <rect x="608" width="19" height="22" class="c1"/><text x="617.5" y="11" class="txt">1</text>
+    <rect x="627" width="19" height="22" class="c1"/><text x="636.5" y="11" class="txt">1</text>
+    <rect x="646" width="19" height="22" class="c1"/><text x="655.5" y="11" class="txt">1</text>
+    <rect x="665" width="19" height="22" class="c1"/><text x="674.5" y="11" class="txt">1</text>
+  </g>
 
-  <!-- OneHanded: 0-14, 15, 16, 17, 18-23, 26-31, 32, 34-35 (except 24,25,33) -->
-  <rect x="65" y="79" width="170" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <text x="150" y="94" font-size="8" fill="#2e7d32" text-anchor="middle">OneHanded (3)</text>
-  <rect x="245" y="79" width="10" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <rect x="265" y="79" width="10" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <rect x="285" y="79" width="10" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <rect x="305" y="79" width="50" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <rect x="405" y="79" width="120" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <rect x="530" y="79" width="15" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
-  <rect x="590" y="79" width="50" height="22" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <!-- Row 3: OneHanded  all except 24,25,33 -->
+  <rect x="0" y="66" width="190" height="22" class="lbl"/><text x="6" y="77" class="ltxt">OneHanded</text>
+  <g transform="translate(190,66)">
+    <rect x="0" width="19" height="22" class="c1"/><text x="9.5" y="11" class="txt">1</text>
+    <rect x="19" width="19" height="22" class="c1"/><text x="28.5" y="11" class="txt">1</text>
+    <rect x="38" width="19" height="22" class="c1"/><text x="47.5" y="11" class="txt">1</text>
+    <rect x="57" width="19" height="22" class="c1"/><text x="66.5" y="11" class="txt">1</text>
+    <rect x="76" width="19" height="22" class="c1"/><text x="85.5" y="11" class="txt">1</text>
+    <rect x="95" width="19" height="22" class="c1"/><text x="104.5" y="11" class="txt">1</text>
+    <rect x="114" width="19" height="22" class="c1"/><text x="123.5" y="11" class="txt">1</text>
+    <rect x="133" width="19" height="22" class="c1"/><text x="142.5" y="11" class="txt">1</text>
+    <rect x="152" width="19" height="22" class="c1"/><text x="161.5" y="11" class="txt">1</text>
+    <rect x="171" width="19" height="22" class="c1"/><text x="180.5" y="11" class="txt">1</text>
+    <rect x="190" width="19" height="22" class="c1"/><text x="199.5" y="11" class="txt">1</text>
+    <rect x="209" width="19" height="22" class="c1"/><text x="218.5" y="11" class="txt">1</text>
+    <rect x="228" width="19" height="22" class="c1"/><text x="237.5" y="11" class="txt">1</text>
+    <rect x="247" width="19" height="22" class="c1"/><text x="256.5" y="11" class="txt">1</text>
+    <rect x="266" width="19" height="22" class="c1"/><text x="275.5" y="11" class="txt">1</text>
+    <rect x="285" width="19" height="22" class="c1"/><text x="294.5" y="11" class="txt">1</text>
+    <rect x="304" width="19" height="22" class="c1"/><text x="313.5" y="11" class="txt">1</text>
+    <rect x="323" width="19" height="22" class="c1"/><text x="332.5" y="11" class="txt">1</text>
+    <rect x="342" width="19" height="22" class="c1"/><text x="351.5" y="11" class="txt">1</text>
+    <rect x="361" width="19" height="22" class="c1"/><text x="370.5" y="11" class="txt">1</text>
+    <rect x="380" width="19" height="22" class="c1"/><text x="389.5" y="11" class="txt">1</text>
+    <rect x="399" width="19" height="22" class="c1"/><text x="408.5" y="11" class="txt">1</text>
+    <rect x="418" width="19" height="22" class="c1"/><text x="427.5" y="11" class="txt">1</text>
+    <rect x="437" width="19" height="22" class="c1"/><text x="446.5" y="11" class="txt">1</text>
+    <rect x="456" width="19" height="22" class="c0"/><text x="465.5" y="11" class="txt">0</text>
+    <rect x="475" width="19" height="22" class="c0"/><text x="484.5" y="11" class="txt">0</text>
+    <rect x="494" width="19" height="22" class="c1"/><text x="503.5" y="11" class="txt">1</text>
+    <rect x="513" width="19" height="22" class="c1"/><text x="522.5" y="11" class="txt">1</text>
+    <rect x="532" width="19" height="22" class="c1"/><text x="541.5" y="11" class="txt">1</text>
+    <rect x="551" width="19" height="22" class="c1"/><text x="560.5" y="11" class="txt">1</text>
+    <rect x="570" width="19" height="22" class="c1"/><text x="579.5" y="11" class="txt">1</text>
+    <rect x="589" width="19" height="22" class="c1"/><text x="598.5" y="11" class="txt">1</text>
+    <rect x="608" width="19" height="22" class="c1"/><text x="617.5" y="11" class="txt">1</text>
+    <rect x="627" width="19" height="22" class="c0"/><text x="636.5" y="11" class="txt">0</text>
+    <rect x="646" width="19" height="22" class="c1"/><text x="655.5" y="11" class="txt">1</text>
+    <rect x="665" width="19" height="22" class="c1"/><text x="674.5" y="11" class="txt">1</text>
+  </g>
 
-  <!-- FullscreenMagnification: 0-12, 15-27, 29-31, 33-35 (except 13,14,28,24,25) -->
-  <rect x="65" y="106" width="150" height="22" rx="2" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
-  <text x="140" y="121" font-size="8" fill="#343a40" text-anchor="middle">FullscreenMagnification (5)</text>
-  <rect x="245" y="106" width="120" height="22" rx="2" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
-  <rect x="405" y="106" width="60" height="22" rx="2" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
-  <rect x="485" y="106" width="40" height="22" rx="2" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
-  <rect x="560" y="106" width="80" height="22" rx="2" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <!-- Row 4: FullscreenMagnification  all except 13,14,24,25,28,32 -->
+  <rect x="0" y="88" width="190" height="22" class="lbl"/><text x="6" y="99" class="ltxt">FullscreenMagnification</text>
+  <g transform="translate(190,88)">
+    <rect x="0" width="19" height="22" class="c1"/><text x="9.5" y="11" class="txt">1</text>
+    <rect x="19" width="19" height="22" class="c1"/><text x="28.5" y="11" class="txt">1</text>
+    <rect x="38" width="19" height="22" class="c1"/><text x="47.5" y="11" class="txt">1</text>
+    <rect x="57" width="19" height="22" class="c1"/><text x="66.5" y="11" class="txt">1</text>
+    <rect x="76" width="19" height="22" class="c1"/><text x="85.5" y="11" class="txt">1</text>
+    <rect x="95" width="19" height="22" class="c1"/><text x="104.5" y="11" class="txt">1</text>
+    <rect x="114" width="19" height="22" class="c1"/><text x="123.5" y="11" class="txt">1</text>
+    <rect x="133" width="19" height="22" class="c1"/><text x="142.5" y="11" class="txt">1</text>
+    <rect x="152" width="19" height="22" class="c1"/><text x="161.5" y="11" class="txt">1</text>
+    <rect x="171" width="19" height="22" class="c1"/><text x="180.5" y="11" class="txt">1</text>
+    <rect x="190" width="19" height="22" class="c1"/><text x="199.5" y="11" class="txt">1</text>
+    <rect x="209" width="19" height="22" class="c1"/><text x="218.5" y="11" class="txt">1</text>
+    <rect x="228" width="19" height="22" class="c1"/><text x="237.5" y="11" class="txt">1</text>
+    <rect x="247" width="19" height="22" class="c0"/><text x="256.5" y="11" class="txt">0</text>
+    <rect x="266" width="19" height="22" class="c0"/><text x="275.5" y="11" class="txt">0</text>
+    <rect x="285" width="19" height="22" class="c1"/><text x="294.5" y="11" class="txt">1</text>
+    <rect x="304" width="19" height="22" class="c1"/><text x="313.5" y="11" class="txt">1</text>
+    <rect x="323" width="19" height="22" class="c1"/><text x="332.5" y="11" class="txt">1</text>
+    <rect x="342" width="19" height="22" class="c1"/><text x="351.5" y="11" class="txt">1</text>
+    <rect x="361" width="19" height="22" class="c1"/><text x="370.5" y="11" class="txt">1</text>
+    <rect x="380" width="19" height="22" class="c1"/><text x="389.5" y="11" class="txt">1</text>
+    <rect x="399" width="19" height="22" class="c1"/><text x="408.5" y="11" class="txt">1</text>
+    <rect x="418" width="19" height="22" class="c1"/><text x="427.5" y="11" class="txt">1</text>
+    <rect x="437" width="19" height="22" class="c1"/><text x="446.5" y="11" class="txt">1</text>
+    <rect x="456" width="19" height="22" class="c0"/><text x="465.5" y="11" class="txt">0</text>
+    <rect x="475" width="19" height="22" class="c0"/><text x="484.5" y="11" class="txt">0</text>
+    <rect x="494" width="19" height="22" class="c1"/><text x="503.5" y="11" class="txt">1</text>
+    <rect x="513" width="19" height="22" class="c1"/><text x="522.5" y="11" class="txt">1</text>
+    <rect x="532" width="19" height="22" class="c0"/><text x="541.5" y="11" class="txt">0</text>
+    <rect x="551" width="19" height="22" class="c1"/><text x="560.5" y="11" class="txt">1</text>
+    <rect x="570" width="19" height="22" class="c1"/><text x="579.5" y="11" class="txt">1</text>
+    <rect x="589" width="19" height="22" class="c1"/><text x="598.5" y="11" class="txt">1</text>
+    <rect x="608" width="19" height="22" class="c0"/><text x="617.5" y="11" class="txt">0</text>
+    <rect x="627" width="19" height="22" class="c1"/><text x="636.5" y="11" class="txt">1</text>
+    <rect x="646" width="19" height="22" class="c1"/><text x="655.5" y="11" class="txt">1</text>
+    <rect x="665" width="19" height="22" class="c1"/><text x="674.5" y="11" class="txt">1</text>
+  </g>
 
-  <!-- ImePlaceholder: 13-14 only -->
-  <rect x="205" y="133" width="30" height="22" rx="2" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
-  <text x="220" y="148" font-size="8" fill="#c0392b" text-anchor="middle">IME (7)</text>
-  <text x="260" y="148" font-size="8" fill="#868e96">Layer 13~14</text>
+  <!-- Row 5: ImePlaceholder  only 13,14 -->
+  <rect x="0" y="110" width="190" height="22" class="lbl"/><text x="6" y="121" class="ltxt">ImePlaceholder</text>
+  <g transform="translate(190,110)">
+    <rect x="0" width="19" height="22" class="c0"/><text x="9.5" y="11" class="txt">0</text>
+    <rect x="19" width="19" height="22" class="c0"/><text x="28.5" y="11" class="txt">0</text>
+    <rect x="38" width="19" height="22" class="c0"/><text x="47.5" y="11" class="txt">0</text>
+    <rect x="57" width="19" height="22" class="c0"/><text x="66.5" y="11" class="txt">0</text>
+    <rect x="76" width="19" height="22" class="c0"/><text x="85.5" y="11" class="txt">0</text>
+    <rect x="95" width="19" height="22" class="c0"/><text x="104.5" y="11" class="txt">0</text>
+    <rect x="114" width="19" height="22" class="c0"/><text x="123.5" y="11" class="txt">0</text>
+    <rect x="133" width="19" height="22" class="c0"/><text x="142.5" y="11" class="txt">0</text>
+    <rect x="152" width="19" height="22" class="c0"/><text x="161.5" y="11" class="txt">0</text>
+    <rect x="171" width="19" height="22" class="c0"/><text x="180.5" y="11" class="txt">0</text>
+    <rect x="190" width="19" height="22" class="c0"/><text x="199.5" y="11" class="txt">0</text>
+    <rect x="209" width="19" height="22" class="c0"/><text x="218.5" y="11" class="txt">0</text>
+    <rect x="228" width="19" height="22" class="c0"/><text x="237.5" y="11" class="txt">0</text>
+    <rect x="247" width="19" height="22" class="c1"/><text x="256.5" y="11" class="txt">1</text>
+    <rect x="266" width="19" height="22" class="c1"/><text x="275.5" y="11" class="txt">1</text>
+    <rect x="285" width="19" height="22" class="c0"/><text x="294.5" y="11" class="txt">0</text>
+    <rect x="304" width="19" height="22" class="c0"/><text x="313.5" y="11" class="txt">0</text>
+    <rect x="323" width="19" height="22" class="c0"/><text x="332.5" y="11" class="txt">0</text>
+    <rect x="342" width="19" height="22" class="c0"/><text x="351.5" y="11" class="txt">0</text>
+    <rect x="361" width="19" height="22" class="c0"/><text x="370.5" y="11" class="txt">0</text>
+    <rect x="380" width="19" height="22" class="c0"/><text x="389.5" y="11" class="txt">0</text>
+    <rect x="399" width="19" height="22" class="c0"/><text x="408.5" y="11" class="txt">0</text>
+    <rect x="418" width="19" height="22" class="c0"/><text x="427.5" y="11" class="txt">0</text>
+    <rect x="437" width="19" height="22" class="c0"/><text x="446.5" y="11" class="txt">0</text>
+    <rect x="456" width="19" height="22" class="c0"/><text x="465.5" y="11" class="txt">0</text>
+    <rect x="475" width="19" height="22" class="c0"/><text x="484.5" y="11" class="txt">0</text>
+    <rect x="494" width="19" height="22" class="c0"/><text x="503.5" y="11" class="txt">0</text>
+    <rect x="513" width="19" height="22" class="c0"/><text x="522.5" y="11" class="txt">0</text>
+    <rect x="532" width="19" height="22" class="c0"/><text x="541.5" y="11" class="txt">0</text>
+    <rect x="551" width="19" height="22" class="c0"/><text x="560.5" y="11" class="txt">0</text>
+    <rect x="570" width="19" height="22" class="c0"/><text x="579.5" y="11" class="txt">0</text>
+    <rect x="589" width="19" height="22" class="c0"/><text x="598.5" y="11" class="txt">0</text>
+    <rect x="608" width="19" height="22" class="c0"/><text x="617.5" y="11" class="txt">0</text>
+    <rect x="627" width="19" height="22" class="c0"/><text x="636.5" y="11" class="txt">0</text>
+    <rect x="646" width="19" height="22" class="c0"/><text x="655.5" y="11" class="txt">0</text>
+    <rect x="665" width="19" height="22" class="c0"/><text x="674.5" y="11" class="txt">0</text>
+  </g>
 
-  <!-- Legend note -->
-  <text x="65" y="175" font-size="8" fill="#868e96">默认屏幕的 Feature 层级分布（仅 HideDisplayCutout 和 OneHanded 限默认屏幕）</text>
-  <text x="65" y="188" font-size="8" fill="#868e96">Layer 2 = APPLICATION_LAYER (应用窗口) | Layer 13-14 = IME 窗口</text>
+  <!-- Grid lines -->
+  <g stroke="#fff" stroke-width="0.5" fill="none">
+    <line x1="190" y1="0" x2="190" y2="132"/>
+    <line x1="0" y1="22" x2="874" y2="22"/>
+    <line x1="0" y1="44" x2="874" y2="44"/>
+    <line x1="0" y1="66" x2="874" y2="66"/>
+    <line x1="0" y1="88" x2="874" y2="88"/>
+    <line x1="0" y1="110" x2="874" y2="110"/>
+    <line x1="0" y1="132" x2="874" y2="132"/>
+  </g>
+
+  <!-- Border -->
+  <rect x="0" y="0" width="874" height="132" fill="none" stroke="#bdbdbd" stroke-width="0.8"/>
+
+  <!-- Note -->
+  <text x="4" y="147" font-size="8" fill="#757575">AOSP (Android 14) configureTrustedHierarchyBuilder | Layer 2 = APPLICATION_LAYER | Layer 13-14 = IME</text>
 </svg>
