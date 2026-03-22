@@ -59,7 +59,10 @@ export default defineConfig({
                     { text: 'Hadoop', link: '/hadoop/' },
                 ]},
                 { text: 'Android Frameworks', items: [
-                    { text: 'Framework', link: '/framework/'},
+                    { text: 'Window/Activity Mng Svc', link: '/framework/basic-with-wms'},
+                    { text: '动画', link: '/framework/'},
+                    { text: '性能与稳定性', link: '/framework/'},
+                    { text: '新特性与其他', link: '/framework/performTraversal'},
                 ]}
             ]
         },
@@ -191,16 +194,38 @@ export default defineConfig({
         '/framework/':[{
             text: 'Android Frameworks', link: 'framework/index',
             items: [
-                { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
-                { text: 'Activity 启动流程与生命周期', link: 'framework/activity-launching-process' },
-                { text: '窗口显示流程', link: 'framework/window-rendering-process' },
-                { text: '窗口添加和移除', link: 'framework/window-add-remove' },
-                { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
-                { text: '窗口布局流程 relayoutWindow', link: 'framework/relayoutWindow' },
-                { text: '窗口绘制状态', link: 'framework/window-draw-state' },
-                { text: 'performTraversal', link: 'framework/performTraversal' },
-                { text: 'Android 12 容器层级', link: 'framework/container'},
-                { text: 'Android 16 新特性', link: 'framework/android16'},
+                {
+                    text: 'Window/Activity Mng Svc',
+                    collapsed: false,
+                    items: [
+                        { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
+                        { text: 'Activity 启动流程与生命周期', link: 'framework/activity-launching-process' },
+                        { text: '窗口显示流程', link: 'framework/window-rendering-process' },
+                        { text: '窗口添加和移除', link: 'framework/window-add-remove' },
+                        { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
+                        { text: '窗口布局流程 relayoutWindow', link: 'framework/relayoutWindow' },
+                        { text: '窗口绘制状态', link: 'framework/window-draw-state' },
+                    ]
+                },
+                {
+                    text: '动画',
+                    collapsed: false,
+                    items: []
+                },
+                {
+                    text: '性能与稳定性',
+                    collapsed: false,
+                    items: []
+                },
+                {
+                    text: '新特性与其他',
+                    collapsed: false,
+                    items: [
+                        { text: 'performTraversal', link: 'framework/performTraversal' },
+                        { text: 'Android 12 容器层级', link: 'framework/container' },
+                        { text: 'Android 16 新特性', link: 'framework/android16' },
+                    ]
+                },
             ]
         }],
     },
