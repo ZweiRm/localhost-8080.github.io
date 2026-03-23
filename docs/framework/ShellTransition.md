@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Activity 与窗口可见性更新机制'
-    link: '/framework/visibility-management'
+    text: 'Configuration 管理'
+    link: '/framework/configuration-management'
 next:
     text: 'Android Input 系统'
     link: '/framework/input-system'

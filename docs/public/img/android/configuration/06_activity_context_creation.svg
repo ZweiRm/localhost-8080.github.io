@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <defs>
+    <marker id="seq-arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+
+  <!-- Participants -->
+  <rect x="30" y="10" width="100" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="80" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ActivityThread</text>
+  <line x1="80" y1="40" x2="80" y2="490" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="185" y="10" width="100" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="235" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ContextImpl</text>
+  <line x1="235" y1="40" x2="235" y2="490" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="340" y="10" width="130" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="405" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ResourcesManager</text>
+  <line x1="405" y1="40" x2="405" y2="490" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="530" y="10" width="80" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="570" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">Activity</text>
+  <line x1="570" y1="40" x2="570" y2="490" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="660" y="10" width="120" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="720" y="25" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">ContextTheme</text>
+  <text x="720" y="36" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">Wrapper</text>
+  <line x1="720" y1="40" x2="720" y2="490" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="820" y="10" width="65" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="852" y="25" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">Context</text>
+  <text x="852" y="36" font-size="9" font-weight="600" fill="#343a40" text-anchor="middle">Wrapper</text>
+  <line x1="852" y1="40" x2="852" y2="490" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- Activation bars -->
+  <rect x="75" y="55" width="10" height="185" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+  <rect x="230" y="130" width="10" height="90" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+  <rect x="400" y="210" width="10" height="30" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+  <rect x="565" y="290" width="10" height="170" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+
+  <!-- 0: handleLaunchActivity -->
+  <text x="15" y="65" font-size="9" fill="#868e96">0</text>
+  <rect x="35" y="55" width="35" height="14" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.6"/>
+  <text x="52" y="65" font-size="8" fill="#495057" text-anchor="middle">entry</text>
+
+  <!-- 1: performLaunchActivity (self) -->
+  <text x="15" y="82" font-size="9" fill="#868e96">1</text>
+  <polyline points="85,85 115,85 115,100 85,100" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="120" y="93" font-size="9" fill="#495057">performLaunchActivity()</text>
+
+  <!-- 2: createBaseContextForActivity (self) -->
+  <text x="15" y="112" font-size="9" fill="#868e96">2</text>
+  <polyline points="85,115 115,115 115,130 85,130" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="120" y="123" font-size="9" fill="#495057">createBaseContextForActivity()</text>
+
+  <!-- 3: createActivityContext → ContextImpl -->
+  <text x="90" y="145" font-size="9" fill="#868e96">3</text>
+  <line x1="85" y1="148" x2="230" y2="148" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="130" y="144" font-size="9" fill="#495057">createActivityContext()</text>
+
+  <!-- 4: new ContextImpl (self) -->
+  <text x="245" y="165" font-size="9" fill="#868e96">4</text>
+  <polyline points="240,168 270,168 270,183 240,183" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="275" y="176" font-size="9" fill="#495057">new ContextImpl()</text>
+
+  <!-- 5: setResources (self) -->
+  <text x="245" y="193" font-size="9" fill="#868e96">5</text>
+  <polyline points="240,196 270,196 270,211 240,211" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="275" y="204" font-size="9" fill="#495057">setResources()</text>
+
+  <!-- 6: createBaseTokenResources → ResourcesManager -->
+  <text x="245" y="222" font-size="9" fill="#868e96">6</text>
+  <line x1="240" y1="225" x2="400" y2="225" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="290" y="222" font-size="9" fill="#495057">createBaseTokenResources()</text>
+
+  <!-- Return from ResourcesManager -->
+  <line x1="400" y1="238" x2="240" y2="238" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Return from ContextImpl to ActivityThread -->
+  <line x1="230" y1="252" x2="85" y2="252" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 7: new Activity -->
+  <text x="15" y="275" font-size="9" fill="#868e96">7</text>
+  <text x="90" y="272" font-size="9" fill="#495057">new Activity()</text>
+
+  <!-- 8: create Activity -->
+  <text x="90" y="290" font-size="9" fill="#868e96">8</text>
+  <line x1="85" y1="293" x2="565" y2="293" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="300" y="290" font-size="9" fill="#495057">(create Activity)</text>
+
+  <!-- 9: attach → Activity -->
+  <text x="90" y="318" font-size="9" fill="#868e96">9</text>
+  <line x1="85" y1="320" x2="565" y2="320" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="300" y="317" font-size="9" fill="#495057">attach()</text>
+
+  <!-- 10: attachBaseContext (Activity self) -->
+  <text x="580" y="345" font-size="9" fill="#868e96">10</text>
+  <polyline points="575,348 605,348 605,363 575,363" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="610" y="356" font-size="9" fill="#495057">attachBaseContext()</text>
+
+  <!-- 11: attachBaseContext → ContextThemeWrapper -->
+  <text x="580" y="380" font-size="9" fill="#868e96">11</text>
+  <line x1="575" y1="383" x2="715" y2="383" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="630" y="378" font-size="9" fill="#495057">attachBaseContext()</text>
+  <rect x="715" y="378" width="10" height="50" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+
+  <!-- 12: attachBaseContext → ContextWrapper -->
+  <text x="730" y="408" font-size="9" fill="#868e96">12</text>
+  <line x1="725" y1="410" x2="847" y2="410" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="765" y="406" font-size="9" fill="#495057">attachBaseContext()</text>
+  <rect x="847" y="405" width="10" height="20" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+
+  <!-- Return dashes -->
+  <line x1="847" y1="425" x2="725" y2="425" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="715" y1="435" x2="575" y2="435" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="565" y1="460" x2="85" y2="460" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+</svg>

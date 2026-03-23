@@ -268,7 +268,8 @@ export default defineConfig({
                         { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
                         { text: '窗口布局流程 relayoutWindow', link: 'framework/relayoutWindow' },
                         { text: '窗口绘制状态', link: 'framework/window-draw-state' },
-                        { text: 'Activity 与窗口可见性更新机制', link: 'framework/visibility-management' },
+                        { text: 'Activity 与窗口可见性更新', link: 'framework/visibility-management' },
+                        { text: 'Configuration 管理', link: 'framework/configuration-management' },
                     ]
                 },
                 {

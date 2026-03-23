@@ -3,11 +3,11 @@ prev:
     text: '窗口绘制状态'
     link: '/framework/window-draw-state'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'Configuration 管理'
+    link: '/framework/configuration-management'
 ---
 
-# Activity 与窗口可见性更新机制
+# Activity 与窗口可见性更新
 
 本文详细介绍 Android 系统中 Activity 和窗口可见性的更新机制，包括从 Activity 启动完成后如何通过 `ensureActivitiesVisible` 链路逐层更新每个 Activity 的可见性状态，以及如何将可见性信息传递给应用进程完成窗口的显示/隐藏。
 

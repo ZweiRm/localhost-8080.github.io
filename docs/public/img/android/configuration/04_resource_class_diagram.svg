@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="400" viewBox="0 0 700 400">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="diamond" markerWidth="10" markerHeight="8" refX="0" refY="4" orient="auto">
+      <polygon points="5,0 10,4 5,8 0,4" fill="#555" stroke="#555" stroke-width="0.5"/>
+    </marker>
+    <marker id="diamond-open" markerWidth="10" markerHeight="8" refX="0" refY="4" orient="auto">
+      <polygon points="5,0 10,4 5,8 0,4" fill="white" stroke="#555" stroke-width="1"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+
+  <!-- ResourcesManager (singleton) -->
+  <rect x="200" y="10" width="250" height="90" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="325" y="28" font-size="9" fill="#868e96" text-anchor="middle">&lt;&lt;singleton&gt;&gt;</text>
+  <text x="325" y="42" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">ResourcesManager</text>
+  <line x1="200" y1="48" x2="450" y2="48" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="210" y="62" font-size="10" fill="#495057">mResConfiguration: Configuration</text>
+  <text x="210" y="76" font-size="10" fill="#495057">mResourceImpls: ArrayMap</text>
+  <text x="210" y="90" font-size="10" fill="#495057">mActivityResourceReferences: WeakHashMap</text>
+
+  <!-- Resources -->
+  <rect x="10" y="200" width="200" height="60" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="110" y="220" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">Resources</text>
+  <line x1="10" y1="226" x2="210" y2="226" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="20" y="242" font-size="10" fill="#495057">mResourcesImpl: ResourcesImpl</text>
+
+  <!-- ResourcesImpl -->
+  <rect x="250" y="170" width="220" height="90" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="360" y="190" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">ResourcesImpl</text>
+  <line x1="250" y1="196" x2="470" y2="196" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="260" y="212" font-size="10" fill="#495057">mAssets: AssetManager</text>
+  <text x="260" y="226" font-size="10" fill="#495057">mConfiguration: Configuration</text>
+  <text x="260" y="240" font-size="10" fill="#495057">mMetrics: DisplayMetrics</text>
+
+  <!-- Resources → ResourcesImpl -->
+  <line x1="210" y1="230" x2="250" y2="215" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="225" y="210" font-size="9" fill="#868e96">mResourcesImpl</text>
+
+  <!-- ResourcesManager manages ResourcesImpl[] -->
+  <line x1="360" y1="100" x2="360" y2="170" stroke="#555" stroke-width="1.2" marker-start="url(#diamond)" marker-end="url(#arrow)"/>
+  <text x="365" y="140" font-size="9" fill="#868e96">manages *</text>
+
+  <!-- ActivityResources -->
+  <rect x="510" y="130" width="180" height="70" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="600" y="150" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">ActivityResources</text>
+  <line x1="510" y1="156" x2="690" y2="156" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="520" y="172" font-size="10" fill="#495057">overrideConfig: Configuration</text>
+  <text x="520" y="186" font-size="10" fill="#495057">activityResources: ArrayList</text>
+
+  <!-- ResourcesManager manages ActivityResources[] -->
+  <line x1="450" y1="50" x2="600" y2="50" stroke="#555" stroke-width="1.2"/>
+  <line x1="600" y1="50" x2="600" y2="130" stroke="#555" stroke-width="1.2" marker-start="url(#diamond)" marker-end="url(#arrow)"/>
+  <text x="610" y="90" font-size="9" fill="#868e96">manages *</text>
+
+  <!-- ActivityResource -->
+  <rect x="490" y="280" width="200" height="80" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="590" y="300" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">ActivityResource</text>
+  <line x1="490" y1="306" x2="690" y2="306" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="500" y="322" font-size="10" fill="#495057">overrideConfig: Configuration</text>
+  <text x="500" y="336" font-size="10" fill="#495057">overrideDisplayId: int</text>
+  <text x="500" y="350" font-size="10" fill="#495057">resources: WeakReference</text>
+
+  <!-- ActivityResources contains ActivityResource[] -->
+  <line x1="600" y1="200" x2="600" y2="280" stroke="#555" stroke-width="1.2" marker-start="url(#diamond)" marker-end="url(#arrow)"/>
+  <text x="610" y="245" font-size="9" fill="#868e96">contains *</text>
+
+  <!-- ActivityResource references Resources weakly -->
+  <line x1="490" y1="340" x2="110" y2="340" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <line x1="110" y1="340" x2="110" y2="260" stroke="#555" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="300" y="335" font-size="9" fill="#868e96">WeakRef to Resources</text>
+</svg>

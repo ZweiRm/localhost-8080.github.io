@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="450" viewBox="0 0 900 450">
+  <defs>
+    <marker id="seq-arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+
+  <!-- Participants -->
+  <rect x="30" y="10" width="100" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="80" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ActivityThread</text>
+  <line x1="80" y1="40" x2="80" y2="440" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="230" y="10" width="130" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="295" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ResourcesManager</text>
+  <line x1="295" y1="40" x2="295" y2="440" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="460" y="10" width="110" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="515" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ResourcesImpl</text>
+  <line x1="515" y1="40" x2="515" y2="440" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <rect x="680" y="10" width="80" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="720" y="30" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">Activity</text>
+  <line x1="720" y1="40" x2="720" y2="440" stroke="#adb5bd" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- ActivityConfigurationChangeItem label -->
+  <rect x="10" y="50" width="178" height="16" rx="2" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.6"/>
+  <text x="99" y="62" font-size="8" fill="#495057" text-anchor="middle">ActivityConfigurationChangeItem</text>
+
+  <!-- Activation bars -->
+  <rect x="75" y="68" width="10" height="110" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+  <rect x="290" y="175" width="10" height="180" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+  <rect x="510" y="270" width="10" height="60" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+  <rect x="715" y="390" width="10" height="30" fill="#f8f9fa" stroke="#adb5bd" stroke-width="0.8"/>
+
+  <!-- 0: handleActivityConfigurationChanged → ActivityThread -->
+  <text x="15" y="78" font-size="9" fill="#868e96">0</text>
+  <line x1="20" y1="80" x2="75" y2="80" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="90" y="85" font-size="9" fill="#495057">handleActivityConfigurationChanged()</text>
+
+  <!-- 1: performConfigurationChangedForActivity (self) -->
+  <text x="90" y="105" font-size="9" fill="#868e96">1</text>
+  <polyline points="85,108 115,108 115,123 85,123" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="120" y="116" font-size="9" fill="#495057">performConfigurationChangedForActivity()</text>
+
+  <!-- 2: performActivityConfigurationChanged (self) -->
+  <text x="90" y="140" font-size="9" fill="#868e96">2</text>
+  <polyline points="85,143 115,143 115,158 85,158" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="120" y="151" font-size="9" fill="#495057">performActivityConfigurationChanged()</text>
+
+  <!-- 3: updateResourcesForActivity → ResourcesManager -->
+  <text x="90" y="180" font-size="9" fill="#868e96">3</text>
+  <line x1="85" y1="183" x2="290" y2="183" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="145" y="179" font-size="9" fill="#495057">updateResourcesForActivity()</text>
+
+  <!-- 4: findOrCreateResourcesImplForKeyLocked (self ResourcesManager) -->
+  <text x="305" y="205" font-size="9" fill="#868e96">4</text>
+  <polyline points="300,208 330,208 330,223 300,223" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="335" y="216" font-size="9" fill="#495057">findOrCreateResourcesImplForKeyLocked()</text>
+
+  <!-- 5: createResourcesImpl (self) -->
+  <text x="305" y="240" font-size="9" fill="#868e96">5</text>
+  <polyline points="300,243 330,243 330,258 300,258" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="335" y="251" font-size="9" fill="#495057">createResourcesImpl()</text>
+
+  <!-- 6: new ResourcesImpl → ResourcesImpl -->
+  <text x="305" y="275" font-size="9" fill="#868e96">6</text>
+  <line x1="300" y1="278" x2="510" y2="278" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="375" y="274" font-size="9" fill="#495057">new ResourcesImpl</text>
+
+  <!-- Highlight box: 更新ResourcesImpl中Configuration -->
+  <rect x="530" y="282" width="185" height="20" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="622" y="296" font-size="9" fill="#495057" text-anchor="middle">更新ResourcesImpl中Configuration</text>
+
+  <!-- 7: updateConfigurationImpl (self ResourcesImpl) -->
+  <text x="525" y="315" font-size="9" fill="#868e96">7</text>
+  <polyline points="520,318 550,318 550,333 520,333" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="555" y="326" font-size="9" fill="#495057">updateConfigurationImpl()</text>
+
+  <!-- Return from ResourcesImpl -->
+  <line x1="510" y1="345" x2="300" y2="345" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 8: setImpl (from ResourcesManager back towards Activity's Resources) -->
+  <text x="305" y="363" font-size="9" fill="#868e96">8</text>
+  <polyline points="300,366 330,366 330,381 300,381" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#seq-arrow)"/>
+  <text x="335" y="374" font-size="9" fill="#495057">setImpl()</text>
+
+  <!-- Highlight box: 为Resources设置新的mResourcesImpl -->
+  <rect x="345" y="366" width="220" height="20" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="455" y="380" font-size="9" fill="#495057" text-anchor="middle">为Resources设置新的mResourcesImpl</text>
+
+  <!-- Return from ResourcesManager to ActivityThread -->
+  <line x1="290" y1="390" x2="85" y2="390" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- 9: onConfigurationChanged → Activity -->
+  <text x="90" y="403" font-size="9" fill="#868e96">9</text>
+  <line x1="85" y1="405" x2="715" y2="405" stroke="#555" stroke-width="1.2" marker-end="url(#seq-arrow)"/>
+  <text x="380" y="401" font-size="9" fill="#495057">onConfigurationChanged()</text>
+
+  <!-- Highlight box: 调用Activity的onConfigurationChanged() -->
+  <rect x="570" y="415" width="220" height="20" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="680" y="429" font-size="9" fill="#495057" text-anchor="middle">调用Activity的onConfigurationChanged()</text>
+
+  <!-- Return -->
+  <line x1="715" y1="435" x2="85" y2="435" stroke="#555" stroke-width="1" stroke-dasharray="4,3"/>
+</svg>
