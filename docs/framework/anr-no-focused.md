@@ -1207,7 +1207,7 @@ adb shell cat /sys/class/thermal/thermal_zone*/temp   # 查看各热区温度
 - **DRAW_PENDING 卡住**：cancelDraw / 共享元素动画异常
 - **COMMIT_DRAW_PENDING 卡住**：deferLayout 未恢复
 - **READY_TO_SHOW 卡住**：mViewVisibility = GONE
-- **Layer 被 hide**：Shell Transition 动画异常（详见 [Shell Transition 文档](../ShellTransition/ShellTransition.md)）
+- **Layer 被 hide**：Shell Transition 动画异常（详见 [Shell Transition 文档](/framework/ShellTransition)）
 - **Layer reparent 异常**：pendingTransaction vs syncTransaction 时序
 - **Layer alpha=0**：小窗/自由窗口模式
 
@@ -1227,7 +1227,7 @@ adb shell cat /sys/class/thermal/thermal_zone*/temp   # 查看各热区温度
 
 **日志**：`dispatchReady: track.mReadyTransitions.size() > 1, return, size = 444`
 
-**治理**：业务确保动画及时 finish，增加超时保护。详见 [Shell Transition 文档](../ShellTransition/ShellTransition.md)。
+**治理**：业务确保动画及时 finish，增加超时保护。详见 [Shell Transition 文档](/framework/ShellTransition)。
 
 ### 11.2 窗口动画 reparent 异常
 

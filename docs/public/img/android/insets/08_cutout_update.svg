@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 560">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="ab" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#4a7fb5"/>
+    </marker>
+  </defs>
+
+  <text x="300" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Cutout 更新架构图</text>
+
+  <!-- APP Layer -->
+  <rect x="20" y="34" width="560" height="110" rx="6" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="300" y="52" text-anchor="middle" font-size="12" font-weight="600" fill="#4a7fb5">APP 层</text>
+
+  <!-- SystemUI box -->
+  <rect x="50" y="62" width="220" height="68" rx="4" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="160" y="80" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">SystemUI</text>
+  <rect x="70" y="88" width="180" height="20" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="160" y="102" text-anchor="middle" font-size="8.5" fill="#2e7d32">config_mainBuiltInDisplayCutout</text>
+  <rect x="70" y="110" width="180" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="160" y="121" text-anchor="middle" font-size="8" fill="#868e96">config_secondaryBuiltInDisplayCutout</text>
+
+  <!-- 三方APP box -->
+  <rect x="330" y="62" width="220" height="68" rx="4" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="440" y="102" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">三方 APP</text>
+
+  <!-- HooK label -->
+  <text x="440" y="120" text-anchor="middle" font-size="8" fill="#868e96">HooK (windowLayoutInDisplayCutoutMode)</text>
+
+  <!-- Framework Layer -->
+  <rect x="20" y="160" width="560" height="270" rx="6" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="300" y="178" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Framework 层</text>
+
+  <!-- Left sub: parse chain -->
+  <rect x="40" y="190" width="240" height="220" rx="4" fill="white" stroke="#ced4da"/>
+  <text x="160" y="208" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">Cutout 解析链</text>
+
+  <rect x="60" y="216" width="200" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="160" y="234" text-anchor="middle" font-size="9" fill="#c0392b">DisplayCutout#getDisplayCutoutPath</text>
+
+  <line x1="160" y1="244" x2="160" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="80" y="258" width="160" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="160" y="274" text-anchor="middle" font-size="9" fill="#343a40">Graphics (PathParser)</text>
+
+  <line x1="160" y1="282" x2="160" y2="296" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="80" y="296" width="160" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="160" y="312" text-anchor="middle" font-size="9" fill="#343a40">NativeLib (HWUI)</text>
+
+  <line x1="160" y1="320" x2="160" y2="334" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="80" y="334" width="160" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="160" y="350" text-anchor="middle" font-size="9" fill="#343a40">Insets (解析结果)</text>
+
+  <line x1="240" y1="342" x2="320" y2="342" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Right sub: WMS chain -->
+  <rect x="320" y="190" width="240" height="220" rx="4" fill="white" stroke="#ced4da"/>
+  <text x="440" y="208" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">WMS 接收链</text>
+
+  <rect x="340" y="216" width="200" height="24" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="440" y="232" text-anchor="middle" font-size="9" fill="#343a40">ViewRootImpl</text>
+
+  <line x1="440" y1="240" x2="440" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="340" y="258" width="200" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="440" y="274" text-anchor="middle" font-size="9" fill="#343a40">WMS / DisplayContent</text>
+
+  <line x1="440" y1="282" x2="440" y2="296" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="340" y="296" width="200" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="440" y="312" text-anchor="middle" font-size="9" fill="#343a40">DisplayInfo (displayCutout)</text>
+
+  <line x1="440" y1="320" x2="440" y2="334" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="340" y="334" width="200" height="24" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="440" y="350" text-anchor="middle" font-size="9" fill="#2e7d32">DisplayCutout (mInitialDisplayCutout)</text>
+
+  <!-- Connection between Insets and DisplayCutout -->
+  <text x="289" y="342" text-anchor="middle" font-size="9" fill="#868e96">→</text>
+
+  <!-- displayUniqueId label -->
+  <line x1="160" y1="144" x2="160" y2="190" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <text x="170" y="170" font-size="8" fill="#868e96">displayUniqueId 匹配</text>
+
+  <line x1="440" y1="130" x2="440" y2="190" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <text x="450" y="165" font-size="8" fill="#868e96">Hook</text>
+
+  <!-- Native Layer -->
+  <rect x="20" y="445" width="560" height="70" rx="6" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="300" y="463" text-anchor="middle" font-size="12" font-weight="600" fill="#2e7d32">Native 层</text>
+
+  <rect x="80" y="474" width="160" height="28" rx="4" fill="white" stroke="#2e7d32"/>
+  <text x="160" y="492" text-anchor="middle" font-size="9.5" fill="#343a40">SurfaceFlinger</text>
+
+  <rect x="370" y="474" width="140" height="28" rx="4" fill="white" stroke="#2e7d32"/>
+  <text x="440" y="492" text-anchor="middle" font-size="9.5" fill="#343a40">OtherNative</text>
+
+  <!-- Framework to Native arrows -->
+  <line x1="160" y1="430" x2="160" y2="445" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <line x1="440" y1="430" x2="440" y2="445" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a)"/>
+
+  <!-- 折叠/展开 trigger -->
+  <text x="10" y="225" font-size="8" fill="#c0392b">折叠/</text>
+  <text x="10" y="237" font-size="8" fill="#c0392b">展开</text>
+  <line x1="35" y1="225" x2="60" y2="225" stroke="#c0392b" stroke-width="1" marker-end="url(#a)"/>
+</svg>

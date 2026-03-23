@@ -270,6 +270,7 @@ export default defineConfig({
                         { text: '窗口绘制状态', link: 'framework/window-draw-state' },
                         { text: 'Activity 与窗口可见性更新', link: 'framework/visibility-management' },
                         { text: 'Configuration 管理', link: 'framework/configuration-management' },
+                        { text: 'WindowInsets', link: 'framework/windowInsets' },
                     ]
                 },
                 {

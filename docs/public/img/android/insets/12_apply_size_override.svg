@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 620 520">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="310" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">applySizeOverrideIfNeeded 决策树</text>
+  <text x="310" y="36" text-anchor="middle" font-size="9" fill="#868e96">ConfigurationContainer.java:229</text>
+
+  <!-- Callers -->
+  <rect x="30" y="50" width="560" height="36" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="310" y="63" text-anchor="middle" font-size="8.5" fill="#343a40">调用方：ActivityRecord.resolveOverrideConfiguration():10919</text>
+  <text x="310" y="77" text-anchor="middle" font-size="8.5" fill="#343a40">WindowProcessController.resolveOverrideConfiguration():1816</text>
+
+  <line x1="310" y1="86" x2="310" y2="108" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Check 1: mInsetsDecoupledConfiguration -->
+  <path d="M 310,108 L 570,140 L 310,172 L 50,140 Z" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="136" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">mInsetsDecoupled-</text>
+  <text x="310" y="150" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">Configuration = true?</text>
+
+  <!-- Left: false -->
+  <line x1="50" y1="140" x2="30" y2="140" stroke="#555" stroke-width="1"/>
+  <line x1="30" y1="140" x2="30" y2="200" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="14" y="160" font-size="7.5" fill="#868e96">false</text>
+  <text x="14" y="172" font-size="7.5" fill="#868e96">(U及之前)</text>
+
+  <!-- Right: true -->
+  <line x1="570" y1="140" x2="590" y2="140" stroke="#555" stroke-width="1"/>
+  <line x1="590" y1="140" x2="590" y2="200" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="578" y="160" font-size="7.5" fill="#868e96">true</text>
+  <text x="578" y="172" font-size="7.5" fill="#868e96">(V)</text>
+
+  <!-- Left: check OVERRIDE_ENABLE -->
+  <rect x="0" y="200" width="182" height="42" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="91" y="216" text-anchor="middle" font-size="7.5" fill="#343a40">isChangeEnabled</text>
+  <text x="91" y="228" text-anchor="middle" font-size="7.5" fill="#343a40">(OVERRIDE_ENABLE_INSETS</text>
+  <text x="91" y="240" text-anchor="middle" font-size="7.5" fill="#343a40">_DECOUPLED)?</text>
+
+  <!-- Right: check !INSETS_DECOUPLED_ENFORCED && !OVERRIDE -->
+  <rect x="438" y="200" width="182" height="42" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="529" y="216" text-anchor="middle" font-size="7.5" fill="#343a40">!INSETS_DECOUPLED_</text>
+  <text x="529" y="228" text-anchor="middle" font-size="7.5" fill="#343a40">CONFIGURATION_ENFORCED</text>
+  <text x="529" y="240" text-anchor="middle" font-size="7.5" fill="#343a40">&amp;&amp; !OVERRIDE_ENABLE?</text>
+
+  <!-- Both paths lead to useOverrideInsetsForConfig -->
+  <line x1="91" y1="242" x2="91" y2="268" stroke="#555" stroke-width="1"/>
+  <line x1="529" y1="242" x2="529" y2="268" stroke="#555" stroke-width="1"/>
+
+  <!-- useOverrideInsetsForConfig gate -->
+  <path d="M 310,268 L 530,296 L 310,324 L 90,296 Z" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="292" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">useOverride-</text>
+  <text x="310" y="306" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">InsetsForConfig?</text>
+
+  <!-- If false: skip -->
+  <line x1="90" y1="296" x2="40" y2="296" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="-40" y="280" width="80" height="32" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="-0" y="296" text-anchor="middle" font-size="8" fill="#495057">false</text>
+  <text x="-0" y="308" text-anchor="middle" font-size="7.5" fill="#868e96">→ return (E2E config)</text>
+
+  <!-- If true: continue -->
+  <line x1="310" y1="324" x2="310" y2="350" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="320" y="342" font-size="8" fill="#868e96">true (需重写)</text>
+
+  <!-- Check: isFloating/hasCompat... -->
+  <path d="M 310,350 L 510,375 L 310,400 L 110,375 Z" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="371" text-anchor="middle" font-size="8" fill="#343a40">isFloating / hasCompat /</text>
+  <text x="310" y="383" text-anchor="middle" font-size="8" fill="#343a40">rotation=UNDEFINED?</text>
+
+  <!-- Skip -->
+  <line x1="110" y1="375" x2="60" y2="375" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="-40" y="360" width="100" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="10" y="380" text-anchor="middle" font-size="7.5" fill="#868e96">→ return (跳过重写)</text>
+
+  <!-- Apply override -->
+  <line x1="310" y1="400" x2="310" y2="424" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="140" y="424" width="340" height="52" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="310" y="442" text-anchor="middle" font-size="9.5" font-weight="600" fill="#c0392b">执行 Override（Legacy Size）</text>
+  <text x="310" y="456" text-anchor="middle" font-size="8" fill="#495057">appBounds ∩ mOverrideNonDecorFrame</text>
+  <text x="310" y="468" text-anchor="middle" font-size="8" fill="#495057">重写 screenWidthDp / screenHeightDp / orientation</text>
+
+  <!-- Note targetSdk -->
+  <rect x="460" y="350" width="150" height="50" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="535" y="366" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">targetSdk 关联</text>
+  <text x="535" y="380" text-anchor="middle" font-size="8" fill="#495057">≥35: ENFORCED=true</text>
+  <text x="535" y="392" text-anchor="middle" font-size="8" fill="#495057">→ 不重写（E2E）</text>
+</svg>

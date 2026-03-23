@@ -702,7 +702,7 @@ public class Main {
         }
         ```
         所对应的字节码反编译为：
-        ``` {10,12,16}
+        ```txt {10,12,16}
         public void method(java.lang.Thread);
         descriptor: (Ljava/lang/Thread;)V
         flags: (0x0001) ACC_PUBLIC

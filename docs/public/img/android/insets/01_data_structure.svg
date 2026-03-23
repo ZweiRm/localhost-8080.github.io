@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#4a7fb5"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#343a40">WindowInsets 核心数据结构</text>
+
+  <!-- Server Side -->
+  <rect x="20" y="50" width="370" height="440" rx="3" fill="none" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="205" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Server 端 (system_server)</text>
+
+  <!-- InsetsStateController -->
+  <rect x="40" y="90" width="330" height="56" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="205" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsStateController</text>
+  <text x="205" y="130" text-anchor="middle" font-size="9" fill="#495057">管理 InsetsState，协调所有 InsetsSourceProvider</text>
+
+  <!-- InsetsPolicy -->
+  <rect x="40" y="160" width="330" height="56" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="205" y="182" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsPolicy</text>
+  <text x="205" y="200" text-anchor="middle" font-size="9" fill="#495057">策略类：控制系统栏显隐、分配控制权</text>
+
+  <!-- InsetsSourceProvider -->
+  <rect x="40" y="230" width="330" height="56" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="205" y="252" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsSourceProvider</text>
+  <text x="205" y="270" text-anchor="middle" font-size="9" fill="#495057">Server 端 InsetsSource 生产者，计算 frame</text>
+
+  <!-- InsetsControlTarget -->
+  <rect x="40" y="300" width="330" height="56" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="205" y="322" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsControlTarget</text>
+  <text x="205" y="340" text-anchor="middle" font-size="9" fill="#495057">接口：Insets 实际控制者（通常是 Top Activity）</text>
+
+  <!-- Connection arrows server side -->
+  <line x1="205" y1="146" x2="205" y2="160" stroke="#868e96" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="205" y1="216" x2="205" y2="230" stroke="#868e96" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="205" y1="286" x2="205" y2="300" stroke="#868e96" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Client Side -->
+  <rect x="430" y="50" width="370" height="440" rx="3" fill="none" stroke="#4a7fb5" stroke-dasharray="5,3"/>
+  <text x="615" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Client 端 (应用进程)</text>
+
+  <!-- InsetsController -->
+  <rect x="450" y="90" width="330" height="56" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="615" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsController</text>
+  <text x="615" y="130" text-anchor="middle" font-size="9" fill="#495057">实现 WindowInsetsController，Client 端控制器</text>
+
+  <!-- InsetsSourceConsumer -->
+  <rect x="450" y="160" width="330" height="56" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="615" y="182" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsSourceConsumer</text>
+  <text x="615" y="200" text-anchor="middle" font-size="9" fill="#495057">消费者：控制单个 Insets 的可见性和动画</text>
+
+  <!-- InsetsSource -->
+  <rect x="450" y="230" width="155" height="72" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="527" y="252" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsSource</text>
+  <text x="527" y="268" text-anchor="middle" font-size="9" fill="#495057">mType: int</text>
+  <text x="527" y="282" text-anchor="middle" font-size="9" fill="#495057">mFrame: Rect</text>
+  <text x="527" y="296" text-anchor="middle" font-size="9" fill="#495057">mVisible: boolean</text>
+
+  <!-- InsetsSourceControl -->
+  <rect x="625" y="230" width="155" height="72" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="702" y="252" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsSourceControl</text>
+  <text x="702" y="268" text-anchor="middle" font-size="9" fill="#495057">mType: int</text>
+  <text x="702" y="282" text-anchor="middle" font-size="9" fill="#495057">mLeash: SurfaceControl</text>
+  <text x="702" y="296" text-anchor="middle" font-size="9" fill="#495057">mInsetsHint: Insets</text>
+
+  <!-- InsetsState -->
+  <rect x="450" y="320" width="330" height="56" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="615" y="342" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">InsetsState</text>
+  <text x="615" y="360" text-anchor="middle" font-size="9" fill="#495057">SparseArray&lt;InsetsSource&gt; 所有 Insets 源的集合</text>
+
+  <!-- WindowInsets -->
+  <rect x="450" y="395" width="330" height="56" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="615" y="417" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">WindowInsets</text>
+  <text x="615" y="435" text-anchor="middle" font-size="9" fill="#495057">应用获取的完整 Insets 描述对象</text>
+
+  <!-- Client arrows -->
+  <line x1="615" y1="146" x2="615" y2="160" stroke="#4a7fb5" stroke-width="1" marker-end="url(#arrow-blue)"/>
+  <line x1="527" y1="216" x2="527" y2="230" stroke="#4a7fb5" stroke-width="1" marker-end="url(#arrow-blue)"/>
+  <line x1="702" y1="216" x2="702" y2="230" stroke="#4a7fb5" stroke-width="1" marker-end="url(#arrow-blue)"/>
+  <line x1="615" y1="302" x2="615" y2="320" stroke="#4a7fb5" stroke-width="1" marker-end="url(#arrow-blue)"/>
+  <line x1="615" y1="376" x2="615" y2="395" stroke="#4a7fb5" stroke-width="1" marker-end="url(#arrow-blue)"/>
+
+  <!-- Cross-process communication -->
+  <line x1="370" y1="258" x2="450" y2="258" stroke="#e07070" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="410" y="250" text-anchor="middle" font-size="8" fill="#e07070">IPC</text>
+
+  <!-- Communication labels -->
+  <rect x="130" y="380" width="180" height="85" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="220" y="398" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">通信方式</text>
+  <text x="220" y="416" text-anchor="middle" font-size="8.5" fill="#495057">IDisplayWindowInsetsController.aidl</text>
+  <text x="220" y="432" text-anchor="middle" font-size="8.5" fill="#495057">SurfaceControl.Transaction</text>
+  <text x="220" y="448" text-anchor="middle" font-size="8.5" fill="#495057">Session.relayout() → InsetsState</text>
+</svg>

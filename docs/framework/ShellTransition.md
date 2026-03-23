@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Configuration 管理'
-    link: '/framework/configuration-management'
+    text: 'WindowInsets'
+    link: '/framework/windowInsets'
 next:
     text: 'Android Input 系统'
     link: '/framework/input-system'
@@ -26,7 +26,7 @@ Shell Transition 将动画执行从 system_server 进程解耦到 SystemUI 进�
 
 ### 2.1 WindowContainer 与 SurfaceControl
 
-> WindowContainer 层级体系（RootWindowContainer → DisplayContent → Task → ActivityRecord → WindowState）及其与 SurfaceFlinger Layer 的对应关系，详见[无焦点窗口 ANR 文档 §2.1](../无焦点窗口ANR/无焦点窗口ANR.md#21-windowcontainer-层级结构)。
+> WindowContainer 层级体系（RootWindowContainer → DisplayContent → Task → ActivityRecord → WindowState）及其与 SurfaceFlinger Layer 的对应关系，详见[无焦点窗口 ANR 文档 §2.1](/framework/anr-no-focused#_2-1-windowcontainer-层级结构)。
 
 ### 2.2 什么是 Transition
 

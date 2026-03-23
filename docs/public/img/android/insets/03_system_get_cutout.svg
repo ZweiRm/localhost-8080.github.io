@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 940 700">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="ao" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7 0, 0 2.5, 7 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="470" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">系统侧获取 Cutout / DisplayFrames 更新（时序图）</text>
+
+  <!-- Participants -->
+  <rect x="10" y="34" width="80" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="50" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">InsetsState</text>
+
+  <rect x="110" y="34" width="90" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="155" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">DisplayFrames</text>
+
+  <rect x="225" y="34" width="90" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="270" y="46" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">DisplayPolicy</text>
+  <text x="270" y="58" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">.DecorInsets</text>
+
+  <rect x="345" y="34" width="100" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="395" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">DisplayContent</text>
+
+  <rect x="480" y="34" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="535" y="46" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">DisplayManager</text>
+  <text x="535" y="58" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">Internal</text>
+
+  <rect x="620" y="34" width="100" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="670" y="52" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">LogicalDisplay</text>
+
+  <rect x="755" y="34" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="815" y="46" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">LocalDisplayAdapter</text>
+  <text x="815" y="58" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">.LocalDisplayDevice</text>
+
+  <!-- Lifelines -->
+  <line x1="50" y1="62" x2="50" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="155" y1="62" x2="155" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="270" y1="62" x2="270" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="395" y1="62" x2="395" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="535" y1="62" x2="535" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="670" y1="62" x2="670" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="815" y1="62" x2="815" y2="680" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Trigger -->
+  <text x="885" y="90" font-size="8" fill="#c0392b">灭屏/解锁/开机</text>
+  <text x="885" y="102" font-size="8" fill="#c0392b">显示状态改变</text>
+
+  <!-- getDisplayDeviceInfoLocked (self call) -->
+  <rect x="811" y="110" width="8" height="30" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="825" y="128" font-size="7.5" fill="#343a40">getDisplayDeviceInfoLocked()</text>
+  <text x="825" y="140" font-size="7" fill="#868e96">mInfo.displayCutout = fromResources...</text>
+
+  <!-- mBaseDisplayInfo update -->
+  <line x1="811" y1="160" x2="674" y2="160" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="743" y="155" text-anchor="middle" font-size="7.5" fill="#868e96">mBaseDisplayInfo</text>
+
+  <!-- updateLocked -->
+  <rect x="666" y="170" width="8" height="25" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="680" y="185" font-size="7.5" fill="#343a40">updateLocked()</text>
+
+  <!-- updateBaseDisplayMetricsIfNeeded -->
+  <line x1="395" y1="220" x2="531" y2="220" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="463" y="215" text-anchor="middle" font-size="7.5" fill="#343a40">getNonOverrideDisplayInfo()</text>
+
+  <line x1="535" y1="235" x2="666" y2="235" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="600" y="230" text-anchor="middle" font-size="7" fill="#868e96">getNonOverrideDisplayInfoLocked</text>
+
+  <line x1="666" y1="250" x2="535" y2="250" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+  <line x1="531" y1="265" x2="399" y2="265" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+
+  <!-- mInitialDisplayCutout -->
+  <rect x="391" y="280" width="8" height="20" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="405" y="293" font-size="8" fill="#c0392b" font-weight="600">mInitialDisplayCutout = displayInfo.displayCutout</text>
+
+  <!-- updateDecorInsetsInfo -->
+  <line x1="395" y1="320" x2="266" y2="320" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="331" y="315" text-anchor="middle" font-size="8" fill="#343a40">updateDecorInsetsInfo()</text>
+
+  <!-- DecorInsets activation -->
+  <rect x="266" y="320" width="8" height="290" fill="#eef1f5" stroke="#4a7fb5"/>
+
+  <!-- update() -->
+  <line x1="274" y1="348" x2="320" y2="348" stroke="#555" stroke-width="1"/>
+  <line x1="320" y1="348" x2="320" y2="363" stroke="#555" stroke-width="1"/>
+  <line x1="320" y1="363" x2="274" y2="363" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="326" y="356" font-size="8" fill="#c0392b" font-weight="600">update(dc, rotation, w, h)</text>
+
+  <!-- updateDisplayFrames -->
+  <line x1="270" y1="380" x2="391" y2="380" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="331" y="375" text-anchor="middle" font-size="7.5" fill="#343a40">updateDisplayFrames(df)</text>
+
+  <line x1="395" y1="395" x2="151" y2="395" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="273" y="390" text-anchor="middle" font-size="7.5" fill="#343a40">DisplayFrames.update()</text>
+
+  <!-- DisplayFrames sets InsetsState -->
+  <line x1="151" y1="415" x2="54" y2="415" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="103" y="410" text-anchor="middle" font-size="7" fill="#868e96">setDisplayFrame</text>
+
+  <line x1="151" y1="430" x2="54" y2="430" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="103" y="425" text-anchor="middle" font-size="7" fill="#868e96">setDisplayCutout</text>
+
+  <line x1="151" y1="445" x2="54" y2="445" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="103" y="440" text-anchor="middle" font-size="7" fill="#868e96">setRoundedCorners</text>
+
+  <!-- simulateLayoutDisplay -->
+  <line x1="270" y1="470" x2="391" y2="470" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="331" y="465" text-anchor="middle" font-size="7.5" fill="#343a40">simulateLayoutDisplay(df)</text>
+  <line x1="391" y1="485" x2="274" y2="485" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+
+  <!-- Calculate results -->
+  <rect x="180" y="510" width="170" height="70" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="265" y="528" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">计算结果</text>
+  <text x="265" y="542" text-anchor="middle" font-size="7" fill="#495057">mNonDecorFrame.set(displayFrame)</text>
+  <text x="265" y="554" text-anchor="middle" font-size="7" fill="#495057">mNonDecorFrame.inset(mNonDecorInsets)</text>
+  <text x="265" y="566" text-anchor="middle" font-size="7" fill="#495057">mConfigFrame.set(displayFrame)</text>
+  <text x="265" y="578" text-anchor="middle" font-size="7" fill="#495057">mConfigFrame.inset(mConfigInsets)</text>
+
+  <!-- Return -->
+  <line x1="266" y1="620" x2="399" y2="620" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#a)"/>
+  <text x="333" y="635" text-anchor="middle" font-size="7.5" fill="#2e7d32" font-weight="600">→ Configuration.appBounds = mNonDecorFrame</text>
+</svg>

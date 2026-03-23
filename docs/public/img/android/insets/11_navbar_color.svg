@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 520">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="ao" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7 0, 0 2.5, 7 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="340" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">导航栏颜色计算流程</text>
+
+  <!-- PhoneWindow.generateLayout -->
+  <rect x="180" y="36" width="320" height="44" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="340" y="54" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">PhoneWindow#generateLayout</text>
+  <text x="340" y="70" text-anchor="middle" font-size="8.5" fill="#495057">读取主题属性 Window_navigationBarColor → mNavigationBarColor</text>
+
+  <line x1="340" y1="80" x2="340" y2="100" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- DecorView.updateColorViews -->
+  <rect x="200" y="100" width="280" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="122" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DecorView#updateColorViews</text>
+
+  <line x1="340" y1="136" x2="340" y2="156" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- calculateNavigationBarColor -->
+  <rect x="180" y="156" width="320" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="178" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DecorView#calculateNavigationBarColor</text>
+
+  <line x1="340" y1="192" x2="340" y2="212" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- calculateBarColor decision -->
+  <rect x="140" y="212" width="400" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="340" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">calculateBarColor (static)</text>
+
+  <!-- Decision branches - 4 outputs -->
+  <line x1="340" y1="240" x2="340" y2="265" stroke="#555" stroke-width="1"/>
+
+  <!-- Branch: FLAG_TRANSLUCENT -->
+  <line x1="150" y1="265" x2="530" y2="265" stroke="#555" stroke-width="1"/>
+
+  <!-- Branch 1 -->
+  <line x1="165" y1="265" x2="165" y2="300" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="60" y="300" width="210" height="36" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="165" y="316" text-anchor="middle" font-size="8.5" fill="#343a40">FLAG_TRANSLUCENT_NAV 置位</text>
+  <text x="165" y="328" text-anchor="middle" font-size="8" fill="#2e7d32">→ semiTransparentBarColor</text>
+
+  <!-- Branch 2 -->
+  <line x1="285" y1="265" x2="285" y2="300" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="220" y="300" width="170" height="36" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="305" y="316" text-anchor="middle" font-size="8.5" fill="#343a40">!DRAWS_SYSTEM_BAR_BG</text>
+  <text x="305" y="328" text-anchor="middle" font-size="8" fill="#c0392b">→ Color.BLACK</text>
+
+  <!-- Branch 3 -->
+  <line x1="395" y1="265" x2="395" y2="300" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="395" y="300" width="130" height="50" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="460" y="316" text-anchor="middle" font-size="8.5" fill="#343a40">ensuresContrast &amp;&amp;</text>
+  <text x="460" y="328" text-anchor="middle" font-size="8.5" fill="#343a40">alpha == 0</text>
+  <text x="460" y="342" text-anchor="middle" font-size="8" fill="#2e7d32">→ SCRIM_LIGHT/semi</text>
+
+  <!-- Branch 4 -->
+  <line x1="515" y1="265" x2="515" y2="300" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="535" y="300" width="120" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="595" y="316" text-anchor="middle" font-size="8.5" fill="#343a40">其他</text>
+  <text x="595" y="328" text-anchor="middle" font-size="8" fill="#2e7d32">→ barColor ✅</text>
+
+  <!-- Legacy path -->
+  <line x1="285" y1="336" x2="285" y2="380" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <rect x="160" y="380" width="250" height="48" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="285" y="398" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">Legacy 绘制路径</text>
+  <text x="285" y="412" text-anchor="middle" font-size="8" fill="#495057">mDrawLegacyNavigationBarBackground = true</text>
+  <text x="285" y="424" text-anchor="middle" font-size="8" fill="#495057">→ onPostDraw → 绘制黑色背景</text>
+
+  <!-- Navigation key color -->
+  <rect x="380" y="380" width="280" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="520" y="398" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">导航键颜色（三键/小白条）</text>
+  <text x="520" y="414" text-anchor="middle" font-size="8.5" fill="#343a40">由 APPEARANCE_LIGHT_NAVIGATION_BARS 控制</text>
+  <text x="520" y="430" text-anchor="middle" font-size="8" fill="#495057">有：导航键深色（背景为浅色）</text>
+  <text x="520" y="445" text-anchor="middle" font-size="8" fill="#495057">无：导航键浅色（背景为深色）</text>
+  <text x="520" y="458" text-anchor="middle" font-size="8" fill="#868e96">在 DisplayPolicy.updateSystemBarsLw() 中计算</text>
+
+  <!-- Callout: FLAG_DRAWS note -->
+  <rect x="10" y="290" width="180" height="40" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="100" y="306" text-anchor="middle" font-size="8" fill="#c0392b" font-weight="600">排查提示</text>
+  <text x="100" y="320" text-anchor="middle" font-size="7.5" fill="#495057">缺少 DRAWS_SYSTEM_BAR_BG 标志</text>
+  <text x="100" y="332" text-anchor="middle" font-size="7.5" fill="#495057">→ 导航栏变黑</text>
+
+  <!-- V note -->
+  <rect x="10" y="380" width="140" height="52" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="80" y="398" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">V 新增参数</text>
+  <text x="80" y="412" text-anchor="middle" font-size="7.5" fill="#495057">movesBarColorToScrim:</text>
+  <text x="80" y="424" text-anchor="middle" font-size="7.5" fill="#495057">E2E 强制时透明处理</text>
+</svg>

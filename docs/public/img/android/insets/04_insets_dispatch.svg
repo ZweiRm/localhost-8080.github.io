@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 620">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="ao" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7 0, 0 2.5, 7 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="340" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">WindowInsets 分发流程（时序图）</text>
+
+  <!-- Participant boxes -->
+  <rect x="50" y="34" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="110" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">ViewRootImpl</text>
+
+  <rect x="260" y="34" width="100" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="310" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">ViewGroup</text>
+
+  <rect x="480" y="34" width="80" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="520" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">View</text>
+
+  <!-- Lifelines -->
+  <line x1="110" y1="62" x2="110" y2="600" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="310" y1="62" x2="310" y2="600" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="520" y1="62" x2="520" y2="600" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Bottom boxes -->
+  <rect x="50" y="586" width="120" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="110" y="601" text-anchor="middle" font-size="9" fill="#343a40">ViewRootImpl</text>
+  <rect x="260" y="586" width="100" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="310" y="601" text-anchor="middle" font-size="9" fill="#343a40">ViewGroup</text>
+  <rect x="480" y="586" width="80" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="520" y="601" text-anchor="middle" font-size="9" fill="#343a40">View</text>
+
+  <!-- Note: 从上至下深度遍历消费Insets -->
+  <rect x="10" y="72" width="160" height="20" rx="3" fill="#fffde7" stroke="#e0d88e"/>
+  <text x="90" y="86" text-anchor="middle" font-size="8" fill="#495057">从上至下深度遍历消费 Insets</text>
+
+  <!-- Step 0: performTraversals -->
+  <text x="18" y="110" font-size="9" fill="#c0392b" font-weight="600">0.</text>
+  <text x="28" y="110" font-size="9" fill="#343a40">performTraversals()</text>
+  <rect x="106" y="100" width="8" height="20" fill="#eef1f5" stroke="#4a7fb5"/>
+
+  <!-- Step 1: dispatchApplyInsets -->
+  <line x1="114" y1="130" x2="306" y2="130" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="210" y="125" text-anchor="middle" font-size="9" fill="#343a40">1. dispatchApplyInsets()</text>
+  <line x1="306" y1="145" x2="114" y2="145" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+
+  <!-- Step 2: dispatchApplyWindowInsets to ViewGroup -->
+  <line x1="114" y1="165" x2="306" y2="165" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="210" y="160" text-anchor="middle" font-size="9" fill="#343a40">2. dispatchApplyWindowInsets()</text>
+
+  <!-- Note -->
+  <rect x="325" y="170" width="190" height="20" rx="3" fill="#fffde7" stroke="#e0d88e"/>
+  <text x="420" y="184" text-anchor="middle" font-size="8" fill="#495057">先调用父类 View 中的方法，再在子 View 中分发</text>
+
+  <!-- Step 3: to View -->
+  <line x1="310" y1="200" x2="516" y2="200" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="413" y="195" text-anchor="middle" font-size="9" fill="#343a40">3. dispatchApplyWindowInsets()</text>
+
+  <!-- Activation bar on View -->
+  <rect x="516" y="200" width="8" height="360" fill="#eef1f5" stroke="#4a7fb5"/>
+
+  <!-- Step 4: onApplyWindowInsets -->
+  <line x1="524" y1="230" x2="570" y2="230" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="230" x2="570" y2="250" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="250" x2="524" y2="250" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="580" y="240" font-size="9" fill="#343a40">4. onApplyWindowInsets()</text>
+
+  <!-- Step 5: fitSystemWindowsInt -->
+  <line x1="524" y1="280" x2="570" y2="280" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="280" x2="570" y2="300" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="300" x2="524" y2="300" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="580" y="290" font-size="9" fill="#343a40">5. fitSystemWindowsInt()</text>
+
+  <!-- Note -->
+  <rect x="330" y="310" width="210" height="20" rx="3" fill="#fffde7" stroke="#e0d88e"/>
+  <text x="435" y="324" text-anchor="middle" font-size="8" fill="#495057">先计算是否消费 Insets，然后 applyInsets</text>
+
+  <!-- Sub-step 5.1.1 -->
+  <line x1="524" y1="345" x2="570" y2="345" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="345" x2="570" y2="365" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="365" x2="524" y2="365" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="580" y="348" font-size="8.5" fill="#495057">5.1.1 computeFitSystemWindows()</text>
+
+  <!-- Sub-step 5.1.2 -->
+  <line x1="524" y1="385" x2="570" y2="385" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="385" x2="570" y2="405" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="405" x2="524" y2="405" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="580" y="388" font-size="8.5" fill="#495057">5.1.2 computeSystemWindowInsets()</text>
+
+  <!-- Sub-step 5.2.1 -->
+  <line x1="524" y1="430" x2="570" y2="430" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="430" x2="570" y2="450" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="450" x2="524" y2="450" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="580" y="433" font-size="8.5" fill="#495057">5.2.1 applyInsets()</text>
+
+  <!-- Sub-step 5.2.2 -->
+  <line x1="524" y1="475" x2="570" y2="475" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="475" x2="570" y2="495" stroke="#555" stroke-width="1"/>
+  <line x1="570" y1="495" x2="524" y2="495" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="580" y="478" font-size="8.5" fill="#eef5f1" font-weight="600">5.2.2 internalSetPadding()</text>
+  <text x="580" y="478" font-size="8.5" fill="#2e7d32" font-weight="600">5.2.2 internalSetPadding()</text>
+
+  <!-- Return -->
+  <line x1="516" y1="540" x2="314" y2="540" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+  <line x1="306" y1="555" x2="114" y2="555" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+</svg>

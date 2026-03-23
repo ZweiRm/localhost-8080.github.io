@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="ao" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7 0, 0 2.5, 7 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="380" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">状态栏隐藏流程（时序图）</text>
+
+  <!-- Participants -->
+  <rect x="50" y="34" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="115" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DisplayContent</text>
+
+  <rect x="280" y="34" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DisplayPolicy</text>
+
+  <rect x="540" y="34" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="595" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">InsetsPolicy</text>
+
+  <!-- Lifelines -->
+  <line x1="115" y1="62" x2="115" y2="490" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="340" y1="62" x2="340" y2="490" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="595" y1="62" x2="595" y2="490" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Bottom -->
+  <rect x="50" y="490" width="130" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="115" y="505" text-anchor="middle" font-size="9" fill="#343a40">DisplayContent</text>
+  <rect x="280" y="490" width="120" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="505" text-anchor="middle" font-size="9" fill="#343a40">DisplayPolicy</text>
+  <rect x="540" y="490" width="110" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="595" y="505" text-anchor="middle" font-size="9" fill="#343a40">InsetsPolicy</text>
+
+  <!-- 0. applySurfaceChangesTransaction -->
+  <text x="18" y="90" font-size="9" fill="#c0392b" font-weight="600">0.</text>
+  <text x="28" y="90" font-size="8.5" fill="#343a40">applySurfaceChanges-</text>
+  <text x="28" y="102" font-size="8.5" fill="#343a40">Transaction()</text>
+  <rect x="111" y="82" width="8" height="30" fill="#eef1f5" stroke="#4a7fb5"/>
+
+  <!-- 1. performLayout -->
+  <line x1="119" y1="120" x2="336" y2="120" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="228" y="115" text-anchor="middle" font-size="9" fill="#343a40">1. performLayout()</text>
+  <line x1="336" y1="135" x2="119" y2="135" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+
+  <!-- 1.1 performLayoutNoTrace -->
+  <line x1="119" y1="155" x2="336" y2="155" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="228" y="150" text-anchor="middle" font-size="9" fill="#343a40">1.1 performLayoutNoTrace()</text>
+  <line x1="336" y1="170" x2="119" y2="170" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+
+  <!-- Note -->
+  <rect x="20" y="185" width="230" height="18" rx="3" fill="#fffde7" stroke="#e0d88e"/>
+  <text x="135" y="198" text-anchor="middle" font-size="8" fill="#495057">在窗口 layout 之后调用 finishPostLayoutPolicyLw</text>
+
+  <!-- 2. finishPostLayoutPolicyLw -->
+  <line x1="119" y1="215" x2="336" y2="215" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="228" y="210" text-anchor="middle" font-size="9" fill="#343a40">2. finishPostLayoutPolicyLw()</text>
+
+  <!-- Activation on DisplayPolicy -->
+  <rect x="336" y="215" width="8" height="230" fill="#eef1f5" stroke="#4a7fb5"/>
+
+  <!-- 2.1 updateSystemBarAttributes -->
+  <line x1="344" y1="240" x2="400" y2="240" stroke="#555" stroke-width="1"/>
+  <line x1="400" y1="240" x2="400" y2="258" stroke="#555" stroke-width="1"/>
+  <line x1="400" y1="258" x2="344" y2="258" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="406" y="249" font-size="9" fill="#343a40">2.1 updateSystemBarAttributes()</text>
+
+  <!-- 2.2 updateSystemBarsLw -->
+  <line x1="344" y1="278" x2="400" y2="278" stroke="#555" stroke-width="1"/>
+  <line x1="400" y1="278" x2="400" y2="296" stroke="#555" stroke-width="1"/>
+  <line x1="400" y1="296" x2="344" y2="296" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="406" y="287" font-size="9" fill="#343a40">2.2 updateSystemBarsLw()</text>
+
+  <!-- 2.3 updateBarControlTarget -->
+  <line x1="344" y1="325" x2="591" y2="325" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="467" y="320" text-anchor="middle" font-size="9" fill="#343a40">2.3 updateBarControlTarget()</text>
+
+  <!-- Activation on InsetsPolicy -->
+  <rect x="591" y="325" width="8" height="100" fill="#eef1f5" stroke="#4a7fb5"/>
+
+  <!-- 2.4 getStatusControlTarget -->
+  <line x1="599" y1="355" x2="650" y2="355" stroke="#555" stroke-width="1"/>
+  <line x1="650" y1="355" x2="650" y2="375" stroke="#555" stroke-width="1"/>
+  <line x1="650" y1="375" x2="599" y2="375" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="656" y="362" font-size="8.5" fill="#343a40">2.4 getStatusControlTarget()</text>
+
+  <!-- 2.5 getNavControlTarget -->
+  <line x1="599" y1="395" x2="650" y2="395" stroke="#555" stroke-width="1"/>
+  <line x1="650" y1="395" x2="650" y2="415" stroke="#555" stroke-width="1"/>
+  <line x1="650" y1="415" x2="599" y2="415" stroke="#555" stroke-width="1" marker-end="url(#ao)"/>
+  <text x="656" y="402" font-size="8.5" fill="#343a40">2.5 getNavControlTarget()</text>
+
+  <!-- Return -->
+  <line x1="591" y1="440" x2="344" y2="440" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+  <line x1="336" y1="460" x2="119" y2="460" stroke="#555" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ao)"/>
+</svg>

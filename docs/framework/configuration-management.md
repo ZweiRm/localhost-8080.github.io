@@ -3,8 +3,8 @@ prev:
     text: 'Activity 与窗口可见性更新机制'
     link: '/framework/visibility-management'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'WindowInsets'
+    link: '/framework/windowInsets'
 ---
 
 # Configuration 管理

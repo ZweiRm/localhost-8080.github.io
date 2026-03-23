@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#343a40">Edge-to-Edge Configuration 下发路径</text>
+
+  <!-- Display level -->
+  <rect x="220" y="48" width="280" height="48" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="360" y="68" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DisplayContent#computeScreenConfiguration</text>
+  <text x="360" y="84" text-anchor="middle" font-size="8.5" fill="#495057">appBounds = info.mNonDecorFrame (V上为全屏大小)</text>
+
+  <line x1="360" y1="96" x2="360" y2="116" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Decision -->
+  <path d="M 360,116 L 490,148 L 360,180 L 230,148 Z" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="145" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">mInsetsDecoupled-</text>
+  <text x="360" y="157" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Configuration?</text>
+
+  <!-- Left: V (true) -->
+  <line x1="230" y1="148" x2="120" y2="148" stroke="#555" stroke-width="1"/>
+  <text x="175" y="140" font-size="8.5" fill="#2e7d32" font-weight="600">V上: true</text>
+  <line x1="120" y1="148" x2="120" y2="198" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="30" y="198" width="180" height="44" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="120" y="216" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">mDecorTypes = 0</text>
+  <text x="120" y="232" text-anchor="middle" font-size="9" fill="#2e7d32">mConfigTypes = 0</text>
+
+  <line x1="120" y1="242" x2="120" y2="262" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="20" y="262" width="200" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="120" y="284" text-anchor="middle" font-size="9" fill="#2e7d32">nonDecorFrame = 全屏 (E2E)</text>
+
+  <!-- Right: U (false) -->
+  <line x1="490" y1="148" x2="600" y2="148" stroke="#555" stroke-width="1"/>
+  <text x="545" y="140" font-size="8.5" fill="#868e96" font-weight="600">U及之前: false</text>
+  <line x1="600" y1="148" x2="600" y2="198" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="510" y="198" width="180" height="44" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="600" y="216" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">mDecorTypes = cutout|nav</text>
+  <text x="600" y="232" text-anchor="middle" font-size="9" fill="#343a40">mConfigTypes = cutout|status|nav</text>
+
+  <line x1="600" y1="242" x2="600" y2="262" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="500" y="262" width="200" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="600" y="284" text-anchor="middle" font-size="9" fill="#343a40">nonDecorFrame = 全屏 - Insets</text>
+
+  <!-- applySizeOverride -->
+  <line x1="120" y1="298" x2="120" y2="320" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="600" y1="298" x2="600" y2="320" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="30" y="320" width="180" height="50" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="120" y="338" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">applySizeOverride</text>
+  <text x="120" y="352" text-anchor="middle" font-size="8" fill="#495057">targetSdk &lt; 35 ?</text>
+  <text x="120" y="364" text-anchor="middle" font-size="8" fill="#495057">→ 用 mOverrideNonDecorFrame 重写</text>
+
+  <rect x="500" y="320" width="200" height="50" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="600" y="338" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">无需重写</text>
+  <text x="600" y="352" text-anchor="middle" font-size="8.5" fill="#495057">已包含 Insets 信息</text>
+  <text x="600" y="364" text-anchor="middle" font-size="8.5" fill="#495057">（Legacy 行为）</text>
+</svg>

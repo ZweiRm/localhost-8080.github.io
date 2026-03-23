@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520">
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="380" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#343a40">导航栏布局流程</text>
+
+  <!-- Step 1: SystemUI -->
+  <rect x="240" y="44" width="280" height="44" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="380" y="62" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">NavigationBar#onInit</text>
+  <text x="380" y="78" text-anchor="middle" font-size="8.5" fill="#495057">mWindowManager.addView(mFrame, layoutParams)</text>
+
+  <line x1="380" y1="88" x2="380" y2="106" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 2: WMS -->
+  <rect x="240" y="106" width="280" height="44" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="380" y="124" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">WMS#addWindow</text>
+  <text x="380" y="140" text-anchor="middle" font-size="8.5" fill="#495057">→ DisplayPolicy#addWindowLw</text>
+
+  <line x1="380" y1="150" x2="380" y2="168" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 2.1: Register providers -->
+  <rect x="500" y="115" width="240" height="46" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="620" y="133" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">注册 InsetsSourceProvider</text>
+  <text x="620" y="148" text-anchor="middle" font-size="8" fill="#495057">遍历 attrs.providedInsets[]</text>
+  <text x="620" y="158" text-anchor="middle" font-size="8" fill="#495057">为每个 provider 创建 frameProvider</text>
+  <line x1="520" y1="128" x2="500" y2="128" stroke="#868e96" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 3: layoutWindowLw -->
+  <rect x="240" y="168" width="280" height="44" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="380" y="186" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DisplayPolicy#layoutWindowLw</text>
+  <text x="380" y="202" text-anchor="middle" font-size="8.5" fill="#495057">窗口属性/显示变更时触发</text>
+
+  <line x1="380" y1="212" x2="380" y2="230" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 4: computeFrames -->
+  <rect x="200" y="230" width="360" height="56" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="380" y="250" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">WindowLayout#computeFrames</text>
+  <text x="380" y="266" text-anchor="middle" font-size="8.5" fill="#495057">核心计算：Insets约束 + Cutout避让 + Gravity</text>
+  <text x="380" y="278" text-anchor="middle" font-size="8.5" fill="#495057">输出 → sTmpClientFrames (displayFrame/parentFrame/frame)</text>
+
+  <line x1="380" y1="286" x2="380" y2="306" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 5: setFrames -->
+  <rect x="240" y="306" width="280" height="44" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="380" y="324" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">WindowState#setFrames</text>
+  <text x="380" y="340" text-anchor="middle" font-size="8.5" fill="#495057">设置 mDisplayFrame / mParentFrame / mFrame</text>
+
+  <line x1="380" y1="350" x2="380" y2="370" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 6: updateSourceFrame -->
+  <rect x="240" y="370" width="280" height="44" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="380" y="388" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">WindowState#updateSourceFrame</text>
+  <text x="380" y="404" text-anchor="middle" font-size="8.5" fill="#495057">遍历所有 InsetsSourceProvider 更新</text>
+
+  <line x1="380" y1="414" x2="380" y2="434" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 7: InsetsSourceProvider -->
+  <rect x="240" y="434" width="280" height="44" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="380" y="452" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">InsetsSourceProvider#updateSourceFrame</text>
+  <text x="380" y="468" text-anchor="middle" font-size="8.5" fill="#495057">mSourceFrame 更新，应用 frameProvider</text>
+
+  <!-- Side: reportResized -->
+  <rect x="560" y="434" width="180" height="44" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="650" y="452" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WindowState#reportResized</text>
+  <text x="650" y="468" text-anchor="middle" font-size="8.5" fill="#495057">→ IWindow.resized() 通知应用</text>
+  <line x1="520" y1="456" x2="560" y2="456" stroke="#868e96" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Side: computeFrames inputs -->
+  <rect x="20" y="235" width="160" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="100" y="253" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">computeFrames 输入</text>
+  <text x="100" y="269" text-anchor="middle" font-size="8" fill="#495057">LayoutParams (attrs)</text>
+  <text x="100" y="282" text-anchor="middle" font-size="8" fill="#495057">InsetsState</text>
+  <text x="100" y="295" text-anchor="middle" font-size="8" fill="#495057">displayCutoutSafe</text>
+  <text x="100" y="308" text-anchor="middle" font-size="8" fill="#495057">windowBounds / windowingMode</text>
+  <line x1="180" y1="258" x2="200" y2="258" stroke="#ced4da" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Trigger paths -->
+  <rect x="20" y="168" width="190" height="48" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="115" y="186" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">触发场景</text>
+  <text x="115" y="200" text-anchor="middle" font-size="8" fill="#495057">addWindow / 窗口属性变更</text>
+  <text x="115" y="210" text-anchor="middle" font-size="8" fill="#495057">DisplayContent 配置变化</text>
+  <line x1="210" y1="190" x2="240" y2="190" stroke="#ced4da" stroke-width="1" marker-end="url(#a)"/>
+</svg>
