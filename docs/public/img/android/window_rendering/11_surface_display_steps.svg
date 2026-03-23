@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 70" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="sd" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1 -->
+  <rect x="5" y="15" width="120" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="65" y="40" text-anchor="middle" font-size="9" fill="#343a40">创建 SurfaceControl</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="125" y1="35" x2="145" y2="35" stroke="#555" stroke-width="1.2" marker-end="url(#sd)"/>
+
+  <!-- Step 2 -->
+  <rect x="148" y="15" width="140" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="218" y="33" text-anchor="middle" font-size="9" fill="#343a40">设置 Buffer</text>
+  <text x="218" y="46" text-anchor="middle" font-size="8" fill="#6c757d">(应用端绘制内容)</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="288" y1="35" x2="308" y2="35" stroke="#555" stroke-width="1.2" marker-end="url(#sd)"/>
+
+  <!-- Step 3 -->
+  <rect x="311" y="15" width="130" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="376" y="33" text-anchor="middle" font-size="9" fill="#343a40">Transaction.show</text>
+  <text x="376" y="46" text-anchor="middle" font-size="8" fill="#6c757d">(标记需要显示)</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="441" y1="35" x2="461" y2="35" stroke="#555" stroke-width="1.2" marker-end="url(#sd)"/>
+
+  <!-- Step 4 -->
+  <rect x="464" y="15" width="140" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="534" y="33" text-anchor="middle" font-size="9" fill="#343a40">Transaction.apply</text>
+  <text x="534" y="46" text-anchor="middle" font-size="8" fill="#6c757d">(提交到 SurfaceFlinger)</text>
+
+  <!-- Arrow 4→5 -->
+  <line x1="604" y1="35" x2="624" y2="35" stroke="#555" stroke-width="1.2" marker-end="url(#sd)"/>
+
+  <!-- Step 5 -->
+  <rect x="627" y="15" width="125" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="689" y="33" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">显示 Layer</text>
+  <text x="689" y="46" text-anchor="middle" font-size="8" fill="#6c757d">(SurfaceFlinger)</text>
+</svg>

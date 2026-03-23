@@ -22,7 +22,7 @@
 - **Redis** — 缓存、集群、数据结构、持久化
 
 ### Android
-- **Android Frameworks** — WMS 架构与运行原理、Activity 启动流程、performTraversal、容器层级
+- **Android Frameworks** — WMS 架构与窗口层级、Activity 启动流程、窗口渲染与绘制状态、可见性管理、Configuration 管理、WindowInsets、Shell Transition、Input 系统、ANR 分析
 
 ### 学科基础
 - **算法** — 基础算法、动态规划

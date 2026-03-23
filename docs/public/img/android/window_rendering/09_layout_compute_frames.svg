@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 370" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="lc" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: DisplayContent.performLayout -->
+  <rect x="210" y="10" width="260" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="340" y="31" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">DisplayContent.performLayout</text>
+
+  <!-- Arrow down -->
+  <line x1="340" y1="42" x2="340" y2="58" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+
+  <!-- Step 2: performLayoutNoTrace -->
+  <rect x="230" y="61" width="220" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="340" y="81" text-anchor="middle" font-size="10" fill="#4a7fb5">performLayoutNoTrace</text>
+
+  <!-- Branch arrows -->
+  <line x1="280" y1="91" x2="160" y2="115" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+  <line x1="400" y1="91" x2="510" y2="115" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+
+  <!-- Branch left: forAllWindows(mPerformLayout) -->
+  <rect x="28" y="118" width="268" height="38" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="162" y="135" text-anchor="middle" font-size="9.5" fill="#2e7d32">forAllWindows(mPerformLayout)</text>
+  <text x="162" y="148" text-anchor="middle" font-size="8.5" fill="#6c757d">遍历普通窗口</text>
+
+  <!-- Branch right: forAllWindows(mPerformLayoutAttached) -->
+  <rect x="380" y="118" width="278" height="38" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="519" y="135" text-anchor="middle" font-size="9.5" fill="#2e7d32">forAllWindows(mPerformLayoutAttached)</text>
+  <text x="519" y="148" text-anchor="middle" font-size="8.5" fill="#6c757d">遍历子窗口</text>
+
+  <!-- Converge arrows -->
+  <line x1="162" y1="156" x2="280" y2="180" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+  <line x1="519" y1="156" x2="400" y2="180" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+
+  <!-- Step 3: DisplayPolicy.layoutWindowLw -->
+  <rect x="190" y="183" width="300" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="203" text-anchor="middle" font-size="10" fill="#343a40">DisplayPolicy.layoutWindowLw</text>
+
+  <!-- Arrow down -->
+  <line x1="340" y1="213" x2="340" y2="230" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+
+  <!-- Step 4: WindowLayout.computeFrames -->
+  <rect x="200" y="233" width="280" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="253" text-anchor="middle" font-size="10" fill="#343a40">WindowLayout.computeFrames</text>
+
+  <!-- Arrow down -->
+  <line x1="340" y1="263" x2="340" y2="280" stroke="#555" stroke-width="1" marker-end="url(#lc)"/>
+
+  <!-- Step 5: WindowState.setFrames -->
+  <rect x="220" y="283" width="240" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="340" y="303" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">WindowState.setFrames</text>
+
+  <!-- Annotation below -->
+  <text x="340" y="335" text-anchor="middle" font-size="8.5" fill="#868e96">mDisplayFrame · mParentFrame · mFrame · mRelFrame</text>
+
+  <!-- Dashed underline for annotation -->
+  <line x1="195" y1="340" x2="485" y2="340" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,2"/>
+</svg>

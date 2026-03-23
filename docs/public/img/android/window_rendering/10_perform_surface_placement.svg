@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 420" font-family="'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <marker id="sp" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: Entry -->
+  <rect x="170" y="8" width="380" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="360" y="29" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">WindowSurfacePlacer.performSurfacePlacement</text>
+
+  <!-- Arrow down -->
+  <line x1="360" y1="40" x2="360" y2="58" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+
+  <!-- Diamond 1: mDeferDepth > 0 且非 force? -->
+  <polygon points="360,60 490,85 360,110 230,85" fill="#fef8ee" stroke="#e67700" stroke-width="1.2"/>
+  <text x="360" y="83" text-anchor="middle" font-size="8.5" fill="#343a40">mDeferDepth > 0</text>
+  <text x="360" y="93" text-anchor="middle" font-size="8.5" fill="#343a40">且非 force?</text>
+
+  <!-- Yes → 延迟处理 return -->
+  <line x1="490" y1="85" x2="560" y2="85" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+  <text x="520" y="78" text-anchor="middle" font-size="8" fill="#2e7d32">Yes</text>
+  <rect x="563" y="70" width="120" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="623" y="90" text-anchor="middle" font-size="9" fill="#6c757d">延迟处理 return</text>
+
+  <!-- No → loopCount -->
+  <line x1="360" y1="110" x2="360" y2="130" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+  <text x="370" y="123" font-size="8" fill="#e67700">No</text>
+
+  <!-- loopCount = 6 -->
+  <rect x="280" y="133" width="160" height="26" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="360" y="150" text-anchor="middle" font-size="9" fill="#4a7fb5">loopCount = 6</text>
+
+  <!-- Arrow into loop -->
+  <line x1="360" y1="159" x2="360" y2="175" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+
+  <!-- Dashed loop boundary -->
+  <rect x="100" y="178" width="520" height="200" rx="5" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="115" y="194" font-size="8" fill="#868e96">循环体</text>
+
+  <!-- performSurfacePlacementLoop -->
+  <rect x="195" y="200" width="330" height="38" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="360" y="217" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">performSurfacePlacementLoop()</text>
+  <text x="360" y="230" text-anchor="middle" font-size="8" fill="#6c757d">applySurfaceChangesTransaction · checkAppTransitionReady</text>
+
+  <!-- Arrow down -->
+  <line x1="360" y1="238" x2="360" y2="256" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+
+  <!-- Diamond 2: isLayoutNeeded? -->
+  <polygon points="360,258 455,278 360,298 265,278" fill="#fef8ee" stroke="#e67700" stroke-width="1.2"/>
+  <text x="360" y="282" text-anchor="middle" font-size="8.5" fill="#343a40">isLayoutNeeded?</text>
+
+  <!-- Yes → requestTraversal -->
+  <line x1="455" y1="278" x2="510" y2="278" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+  <text x="478" y="272" font-size="8" fill="#2e7d32">Yes</text>
+  <rect x="513" y="263" width="100" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="563" y="282" text-anchor="middle" font-size="9" fill="#2e7d32">requestTraversal</text>
+
+  <!-- No → reset -->
+  <line x1="265" y1="278" x2="210" y2="278" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+  <text x="242" y="272" font-size="8" fill="#e67700">No</text>
+  <rect x="140" y="263" width="70" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="175" y="282" text-anchor="middle" font-size="9" fill="#6c757d">reset</text>
+
+  <!-- Both converge down -->
+  <line x1="175" y1="293" x2="175" y2="310" stroke="#adb5bd" stroke-width="0.8"/>
+  <line x1="563" y1="293" x2="563" y2="310" stroke="#adb5bd" stroke-width="0.8"/>
+  <line x1="175" y1="310" x2="563" y2="310" stroke="#adb5bd" stroke-width="0.8"/>
+  <line x1="360" y1="310" x2="360" y2="325" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+
+  <!-- Diamond 3: mTraversalScheduled 且 loopCount > 0? -->
+  <polygon points="360,327 510,352 360,377 210,352" fill="#fef8ee" stroke="#e67700" stroke-width="1.2"/>
+  <text x="360" y="349" text-anchor="middle" font-size="8" fill="#343a40">mTraversalScheduled</text>
+  <text x="360" y="360" text-anchor="middle" font-size="8" fill="#343a40">且 loopCount > 0?</text>
+
+  <!-- Yes → loop back (arrow going up-left) -->
+  <line x1="210" y1="352" x2="130" y2="352" stroke="#555" stroke-width="1"/>
+  <line x1="130" y1="352" x2="130" y2="219" stroke="#555" stroke-width="1"/>
+  <line x1="130" y1="219" x2="192" y2="219" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+  <text x="148" y="346" font-size="8" fill="#2e7d32">Yes</text>
+
+  <!-- No → 循环结束 -->
+  <line x1="510" y1="352" x2="570" y2="352" stroke="#555" stroke-width="1" marker-end="url(#sp)"/>
+  <text x="535" y="346" font-size="8" fill="#e67700">No</text>
+  <rect x="573" y="338" width="90" height="28" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="618" y="356" text-anchor="middle" font-size="9" fill="#6c757d">循环结束</text>
+
+  <!-- Bottom annotation -->
+  <text x="360" y="412" text-anchor="middle" font-size="8" fill="#868e96">最多循环 6 次，确保 layout 收敛后退出</text>
+</svg>
