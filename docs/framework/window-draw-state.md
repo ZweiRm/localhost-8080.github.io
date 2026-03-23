@@ -3,8 +3,8 @@ prev:
     text: '窗口布局流程 relayoutWindow'
     link: '/framework/relayoutWindow'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'Activity 与窗口可见性更新机制'
+    link: '/framework/visibility-management'
 ---
 
 # WMS 窗口绘制状态
@@ -69,7 +69,7 @@ App 进程执行完 Activity 的 `onResume` 后，通过 `ViewRootImpl` 告知 s
 ```java
 // ActivityThread.java
 public void handleResumeActivity(ActivityClientRecord r, boolean finalStateRequest,
-        boolean isForward, String reason) {
+        boolean isForward, boolean shouldSendCompatFakeFocus, String reason) {
     // 执行 Activity 的 onResume
     if (!performResumeActivity(r, finalStateRequest, reason)) {
         return;
@@ -125,8 +125,7 @@ public void setView(View view, WindowManager.LayoutParams attrs, View panelParen
 // WindowState.java
 WindowState(WindowManagerService service, Session s, IWindow c, WindowToken token,
         WindowState parentWindow, int appOp, WindowManager.LayoutParams a, int viewVisibility,
-        int ownerId, int showUserId, boolean ownerCanAddInternalSystemWindow,
-        PowerManagerWrapper powerManagerWrapper) {
+        int ownerId, int showUserId, boolean ownerCanAddInternalSystemWindow) {
     super(service);
     // 创建 WindowStateAnimator，默认 mDrawState = NO_SURFACE
     mWinAnimator = new WindowStateAnimator(this);
@@ -563,7 +562,7 @@ public SurfaceSyncGroup(String name, Consumer<Transaction> transactionReadyConsu
 void finishDrawingWindow(Session session, IWindow client,
         @Nullable SurfaceControl.Transaction postDrawTransaction, int seqId) {
     if (postDrawTransaction != null) {
-        postDrawTransaction.sanitize();
+        postDrawTransaction.sanitize(Binder.getCallingPid(), Binder.getCallingUid());
     }
     synchronized (mGlobalLock) {
         WindowState win = windowForClientLocked(session, client, false);

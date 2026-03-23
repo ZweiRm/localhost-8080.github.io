@@ -153,12 +153,12 @@ status_t InputDispatcher::start() {
 EventHub 通过 iNotify 与 Epoll 机制监听 `/dev/input` 下的设备节点：
 
 ```cpp
+// 创建 Epoll 对象
+mEpollFd = epoll_create1(EPOLL_CLOEXEC);
 // 创建 INotify 对象
 mINotifyFd = inotify_init1(IN_CLOEXEC);
 // 添加对 /dev/input 的监听
 mDeviceInputWd = inotify_add_watch(mINotifyFd, "/dev/input", IN_DELETE | IN_CREATE);
-// 创建 Epoll 对象
-mEpollFd = epoll_create1(EPOLL_CLOEXEC);
 // 将 iNotify 添加到 epoll 监听池
 int result = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, mINotifyFd, &eventItem);
 ```
@@ -217,7 +217,7 @@ epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &eventItem);
 ```cpp
 std::shared_ptr<InputDevice> device = std::make_shared<InputDevice>(
     &mContext, deviceId, bumpGenerationLocked(), identifier);
-device->addEventHubDevice(eventHubId, mConfig);
+mPendingArgs += device->addEventHubDevice(when, eventHubId, mConfig);
 ```
 
 InputMapper 负责将原始事件映射转换为 InputDispatcher 可以理解的事件信息。不同设备类型对应不同的 InputMapper：触摸屏 → `TouchInputMapper`，键盘 → `KeyboardInputMapper`，光标 → `CursorInputMapper`，等等。
@@ -277,26 +277,26 @@ InputReader 将 RawEvent 分发到各个 InputDevice 的 InputMapper 进行处�
 
 ![iq/oq/wq 队列模型](/img/android/input/08_iq_oq_wq.svg)
 
-InputReader 通过调用 `notifyKey`/`notifyMotion` 将事件传递给 InputDispatcher。此时 NotifyArgs 被转换为 **EventEntry**（KeyEntry / MotionEntry），放入 InboundQueue 并唤醒 Dispatcher 线程：
+InputReader 通过调用 `notifyKey`/`notifyMotion` 将事件传递给 InputDispatcher。此时 NotifyArgs 被转换为 **EventEntry**（KeyEntry / MotionEntry），通过 `enqueueInboundEventLocked` 放入 InboundQueue 并唤醒 Dispatcher 线程：
 
 ```cpp
 void InputDispatcher::notifyKey(const NotifyKeyArgs& args) {
     // ...
     std::unique_ptr<KeyEntry> newEntry =
-            std::make_unique<KeyEntry>(args.id, args.eventTime, args.deviceId, args.source,
-                                       args.displayId, policyFlags, args.action, flags, keyCode,
-                                       args.scanCode, metaState, repeatCount, args.downTime);
-    mInboundQueue.push_back(std::move(newEntry));
-    mLooper->wake();
+            std::make_unique<KeyEntry>(args.id, /*injectionState=*/nullptr, args.eventTime,
+                                       args.deviceId, args.source, args.displayId, policyFlags,
+                                       args.action, flags, keyCode, args.scanCode, metaState,
+                                       repeatCount, args.downTime);
+    enqueueInboundEventLocked(std::move(newEntry));
 }
 
 void InputDispatcher::notifyMotion(const NotifyMotionArgs& args) {
     // ...
     std::unique_ptr<MotionEntry> newEntry =
-            std::make_unique<MotionEntry>(args.id, args.eventTime, args.deviceId, args.source,
-                                          args.displayId, policyFlags, args.action, /* ... */);
-    mInboundQueue.push_back(std::move(newEntry));
-    mLooper->wake();
+            std::make_unique<MotionEntry>(args.id, /*injectionState=*/nullptr, args.eventTime,
+                                          args.deviceId, args.source, args.displayId,
+                                          policyFlags, args.action, /* ... */);
+    enqueueInboundEventLocked(std::move(newEntry));
 }
 ```
 
@@ -665,18 +665,25 @@ if (newTouchedWindows.empty()) {
 }
 ```
 
-寻找 Spy 窗口的逻辑：从前到后遍历，只收集坐标命中的 Spy 窗口，遇到第一个非 Spy 窗口就停止。
+寻找 Spy 窗口的逻辑：从前到后遍历，只收集坐标命中的 Spy 窗口，遇到第一个非 Spy 窗口就停止。但有一个例外：如果 Spy 窗口不支持 Split Touch，且该窗口已经接收了当前设备的触摸指针，则即使坐标未命中也会被收集（确保不支持 Split 的 Spy 窗口能接收同设备的后续指针）。
 
 ```cpp
 std::vector<sp<WindowInfoHandle>> InputDispatcher::findTouchedSpyWindowsAtLocked(
-        int32_t displayId, float x, float y, bool isStylus) const {
+        int32_t displayId, float x, float y, bool isStylus, DeviceId deviceId) const {
     std::vector<sp<WindowInfoHandle>> spyWindows;
     const auto& windowHandles = getWindowHandlesLocked(displayId);
     for (const sp<WindowInfoHandle>& windowHandle : windowHandles) {
         const WindowInfo& info = *windowHandle->getInfo();
         if (!windowAcceptsTouchAt(info, displayId, x, y, isStylus,
                                   getTransformLocked(displayId))) {
-            continue;
+            // 坐标未命中，但如果 Spy 窗口不支持 Split 且已有该设备的触摸指针，仍然收集
+            if (info.supportsSplitTouch()) {
+                continue;
+            }
+            if (!windowHasTouchingPointersLocked(windowHandle, deviceId)) {
+                continue;
+            }
+            // 已有该设备的指针，继续将此 Spy 窗口加入列表
         }
         if (!info.isSpy()) {
             // 遇到第一个非 Spy 窗口就停止
@@ -1257,6 +1264,9 @@ if (dispatchEntry->targetFlags.test(InputTarget::Flags::WINDOW_IS_OBSCURED)) {
 if (dispatchEntry->targetFlags.test(InputTarget::Flags::WINDOW_IS_PARTIALLY_OBSCURED)) {
     resolvedFlags |= AMOTION_EVENT_FLAG_WINDOW_IS_PARTIALLY_OBSCURED;
 }
+if (dispatchEntry->targetFlags.test(InputTarget::Flags::NO_FOCUS_CHANGE)) {
+    resolvedFlags |= AMOTION_EVENT_FLAG_NO_FOCUS_CHANGE;
+}
 ```
 
 如果 resolvedAction 与原始 action 不同，会生成一个新的 MotionEntry。对于 HOVER_EXIT 或 CANCEL，会从 InputState 查询上次事件的坐标（因为合成事件的坐标可能不正确）。
@@ -1334,18 +1344,20 @@ bool InputState::shouldCancelPreviousStream(const MotionEntry& motionEntry) cons
 
 > 注意：当前源码中手写笔优先逻辑被 `enable_multi_device_same_window_stream` feature flag 包裹。如果该 flag 为 true，则不再执行设备间的 cancel 逻辑。
 
-**手写笔优先保证**：在 `trackMotion` 中，如果已有手写笔事件流，非手写笔的新事件会被直接 drop：
+**手写笔优先保证**：在 `trackMotion` 中，如果已有手写笔事件流，非手写笔的新事件会被直接 drop（同样受 feature flag 控制）：
 
 ```cpp
 bool InputState::trackMotion(const MotionEntry& entry, int32_t flags) {
     if (!isFromSource(entry.source, AINPUT_SOURCE_CLASS_POINTER)) {
         return true; // 非指针事件不跟踪
     }
-    if (!mMotionMementos.empty()) {
-        const MotionMemento& lastMemento = mMotionMementos.back();
-        if (isStylusEvent(lastMemento.source, lastMemento.pointerProperties) &&
-            !isStylusEvent(entry.source, entry.pointerProperties)) {
-            return false; // 已有手写笔流，非手写笔事件被 drop
+    if (!input_flags::enable_multi_device_same_window_stream()) {
+        if (!mMotionMementos.empty()) {
+            const MotionMemento& lastMemento = mMotionMementos.back();
+            if (isStylusEvent(lastMemento.source, lastMemento.pointerProperties) &&
+                !isStylusEvent(entry.source, entry.pointerProperties)) {
+                return false; // 已有手写笔流，非手写笔事件被 drop
+            }
         }
     }
     // ...
@@ -1463,25 +1475,53 @@ void NativeInputEventReceiver::setFdEvents(int events) {
 }
 ```
 
-收到事件后，`handleEvent` 读取并通过 JNI 回调到 Java 层：
+收到事件后，`handleEvent` 调用 `consumeEvents` 读取并通过 JNI 回调到 Java 层：
 
 ```cpp
 int NativeInputEventReceiver::handleEvent(int receiveFd, int events, void* data) {
-    status_t status = mInputConsumer.consume(&mInputEventFactory,
-                consumeBatches, frameTime, &seq, &inputEvent);
     // ...
-    env->CallVoidMethod(receiverObj.get(), dispatchInputEvent, seq, inputEventObj);
+    if (events & ALOOPER_EVENT_INPUT) {
+        JNIEnv* env = AndroidRuntime::getJNIEnv();
+        status_t status = consumeEvents(env, /*consumeBatches=*/false, -1, nullptr);
+        // ...
+    }
+}
+
+status_t NativeInputEventReceiver::consumeEvents(JNIEnv* env,
+        bool consumeBatches, nsecs_t frameTime, bool* outConsumedBatch) {
+    for (;;) {
+        uint32_t seq;
+        InputEvent* inputEvent;
+        status_t status = mInputConsumer.consume(&mInputEventFactory,
+                consumeBatches, frameTime, &seq, &inputEvent);
+        // ...
+        env->CallVoidMethod(receiverObj.get(), dispatchInputEvent, seq, inputEventObj);
+    }
 }
 ```
 
-事件在 Java 层的 `dispatchInputEvent` 中作为 KeyEvent 或 MotionEvent，通过 View Tree 层层派发。处理完成后调用 `finishInputEvent`，通过 InputChannel 发送 finish 信号给 InputDispatcher，从 WaitQueue 中移除事件。
+事件在 Java 层的 `dispatchInputEvent` 中作为 KeyEvent 或 MotionEvent，通过 View Tree 层层派发。处理完成后调用 `finishInputEvent`，将 finish 事件推入 `mOutboundQueue`，然后由 `processOutboundEvents()` 通过 InputChannel 发送 finish 信号给 InputDispatcher，从 WaitQueue 中移除事件。
 
 ```cpp
-Finish finish{
-        .seq = seq,
-        .handled = handled,
-};
-mInputConsumer.sendFinishedSignal(finish.seq, finish.handled);
+status_t NativeInputEventReceiver::finishInputEvent(uint32_t seq, bool handled) {
+    Finish finish{
+            .seq = seq,
+            .handled = handled,
+    };
+    mOutboundQueue.push_back(finish);
+    return processOutboundEvents();
+}
+
+status_t NativeInputEventReceiver::processOutboundEvents() {
+    while (!mOutboundQueue.empty()) {
+        OutboundEvent& outbound = *mOutboundQueue.begin();
+        if (std::holds_alternative<Finish>(outbound)) {
+            const Finish& finish = std::get<Finish>(outbound);
+            status = mInputConsumer.sendFinishedSignal(finish.seq, finish.handled);
+        }
+        // ...
+    }
+}
 ```
 
 ## 调试工具

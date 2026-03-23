@@ -129,6 +129,7 @@ public final class WindowManagerImpl implements WindowManager {
 
     @Override
     public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {
+        // android.util.SeempLog.record_vg_layout(383, params);
         applyTokens(params);
         mGlobal.addView(view, params, mContext.getDisplayNoVerify(), mParentWindow,
                 mContext.getUserId());
@@ -171,7 +172,7 @@ public final class WindowManagerImpl implements WindowManager {
 // WindowManagerGlobal.java 三个核心方法签名
 public void addView(View view, ViewGroup.LayoutParams params,
         Display display, Window parentWindow, int userId) {
-    addView(view, params, display, parentWindow, userId, null);
+    // ... 见下方详细分析
 }
 
 public void updateViewLayout(View view, ViewGroup.LayoutParams params) {
@@ -259,7 +260,7 @@ public Object getSystemService(String name) {
 }
 
 // SystemServiceRegistry
-public static Object getSystemService(ContextImpl ctx, String name) {
+private static ServiceFetcher<?> getSystemServiceFetcher(String name) {
     if (name == null) {
         return null;
     }
@@ -268,6 +269,14 @@ public static Object getSystemService(ContextImpl ctx, String name) {
         if (sEnableServiceNotFoundWtf) {
             Slog.wtf(TAG, "Unknown manager requested: " + name);
         }
+        return null;
+    }
+    return fetcher;
+}
+
+public static Object getSystemService(@NonNull ContextImpl ctx, String name) {
+    final ServiceFetcher<?> fetcher = getSystemServiceFetcher(name);
+    if (fetcher == null) {
         return null;
     }
     final Object ret = fetcher.getService(ctx);
@@ -360,6 +369,7 @@ WindowManager 提供了关于软键盘模式的 Window 窗口处理方式：
 ```java
 @Override
 public void addView(@NonNull View view, @NonNull ViewGroup.LayoutParams params) {
+    // android.util.SeempLog.record_vg_layout(383, params);
     applyTokens(params);
     mGlobal.addView(view, params, mContext.getDisplayNoVerify(), mParentWindow,
             mContext.getUserId());
@@ -389,7 +399,7 @@ private void applyTokens(@NonNull ViewGroup.LayoutParams params) {
 > 源码位置：`WindowManagerGlobal.java` 行 447
 ```java
 public void addView(View view, ViewGroup.LayoutParams params,
-        Display display, Window parentWindow, int userId, Bundle bundle) {
+        Display display, Window parentWindow, int userId) {
     if (view == null) {
         throw new IllegalArgumentException("view must not be null");
     }
@@ -437,7 +447,7 @@ public void addView(View view, ViewGroup.LayoutParams params,
 
         // do this last because it fires off messages to start doing things
         try {
-            root.setView(view, wparams, panelParentView, userId, bundle);
+            root.setView(view, wparams, panelParentView, userId);
         } catch (RuntimeException e) {
             final int viewIndex = (index >= 0) ? index : (mViews.size() - 1);
             // BadTokenException or InvalidDisplayException, clean up.
@@ -486,7 +496,7 @@ res = mWindowSession.addToDisplayAsUser(mWindow, mWindowAttributes,
 
 1. 调用 `checkAddPermission` 进行基本的安全检查，比如检查当前添加窗口的 Type 是否合法，添加系统级别类型的窗口时检查 APP 是否有权限等
 2. 根据添加窗口的 Type，进行参数检测，比如是否重复添加窗口，添加子窗口时其父窗口是否合法，这里的检查基本靠的就是 Token
-3. 成功进行 1、2 之后，创建一个 `WindowState`，创建 `InputChannel`，执行 WS 的 `attach` 方法，将新建的 WS 保存到 WMS 的 `mWindowMap` 中，调用 `WindowToken` 的 `addWindow` 方法绑定父子关系
+3. 成功进行 1、2 之后，创建一个 `WindowState`，创建 `InputChannel`，通知 Session 添加窗口，将新建的 WS 保存到 WMS 的 `mWindowMap` 中，调用 `WindowToken` 的 `addWindow` 方法绑定父子关系
 4. 做输入法显示相关的调整，设置 addWindow 中 Rect 相关的参数（比如 outFrame、outContentInsets），更新 Input 信息，根据必要更新焦点窗口，结束
 
 ```java
@@ -516,7 +526,10 @@ public int addWindow(Session session, IWindow client, LayoutParams attrs,
 
     synchronized (mGlobalLock) {
         if (!mDisplayReady) {
-            throw new IllegalStateException("Display has not been initialized");
+            throw new IllegalStateException("Display has not been initialialized");
+        }
+        if (session.isClientDead()) {
+            return WindowManagerGlobal.ADD_APP_EXITING;
         }
 
         final DisplayContent displayContent =
@@ -547,7 +560,12 @@ public int addWindow(Session session, IWindow client, LayoutParams attrs,
             }
         }
 
-        // ---- Presentation 窗口检查 ----
+        // ---- Presentation 窗口通知与检查 ----
+        if (type == TYPE_PRESENTATION || type == TYPE_PRIVATE_PRESENTATION) {
+            mDisplayManagerInternal.onPresentation(
+                    displayContent.getDisplay().getDisplayId(), /*isShown=*/ true);
+        }
+
         if (type == TYPE_PRIVATE_PRESENTATION && !displayContent.isPrivate()) {
             return WindowManagerGlobal.ADD_PERMISSION_DENIED;
         }
@@ -607,9 +625,6 @@ public int addWindow(Session session, IWindow client, LayoutParams attrs,
         final WindowState win = new WindowState(this, session, client, token,
                 parentWindow, appOp[0], attrs, viewVisibility, session.mUid,
                 userId, session.mCanAddInternalSystemWindow);
-        if (win.mDeathRecipient == null) {
-            return WindowManagerGlobal.ADD_APP_EXITING;
-        }
 
         final DisplayPolicy displayPolicy = displayContent.getDisplayPolicy();
         displayPolicy.adjustWindowParamsLw(win, win.mAttrs);
@@ -628,16 +643,16 @@ public int addWindow(Session session, IWindow client, LayoutParams attrs,
         }
 
         // From now on, no exceptions or errors allowed!
-        res = ADD_OKAY;
 
-        // ---- attach 窗口，加入 mWindowMap ----
-        win.attach();
+        // ---- 通知 Session 添加窗口，加入 mWindowMap ----
+        win.mSession.onWindowAdded(win);
         mWindowMap.put(client.asBinder(), win);
         win.initAppOpsState();
 
         // ---- 绑定 Token 父子关系，添加到 DisplayPolicy ----
         win.mToken.addWindow(win);
         displayPolicy.addWindowLw(win, attrs);
+        displayPolicy.setDropInputModePolicy(win, win.mAttrs);
 
         // ---- 处理动画、焦点、输入法等 ----
         final WindowStateAnimator winAnimator = win.mWinAnimator;
@@ -653,7 +668,7 @@ public int addWindow(Session session, IWindow client, LayoutParams attrs,
 
         displayContent.getInputMonitor().updateInputWindowsLw(false);
 
-        outInsetsState.set(win.getCompatInsetsState(), win.isClientLocal());
+        win.fillInsetsState(outInsetsState, true /* copySources */);
         getInsetsSourceControls(win, outActiveControls);
     }
 
@@ -701,9 +716,7 @@ private void removeViewLocked(int index, boolean immediate) {
     ViewRootImpl root = mRoots.get(index);
     View view = root.getView();
 
-    if (root != null) {
-        root.getImeFocusController().onWindowDismissed();
-    }
+    root.getImeFocusController().onWindowDismissed();
     boolean deferred = root.die(immediate);
     if (view != null) {
         view.assignParent(null);
@@ -894,13 +907,15 @@ Toast 的窗口创建与普通 `addView` 不同，它需要经过 `NotificationM
 
 ```java
 // ToastPresenter.java 行 145
+private static final String WINDOW_TITLE = "Toast";
+// ...
 WindowManager.LayoutParams params = new WindowManager.LayoutParams();
 params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 params.width = WindowManager.LayoutParams.WRAP_CONTENT;
 params.format = PixelFormat.TRANSLUCENT;
 params.windowAnimations = R.style.Animation_Toast;
 params.type = WindowManager.LayoutParams.TYPE_TOAST;
-params.setTitle("Toast");
+params.setTitle(WINDOW_TITLE);
 params.flags = WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
         | WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
         | WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE;
@@ -930,6 +945,12 @@ mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE
 final Window w = new PhoneWindow(mContext);
 mWindow = w;
 w.setCallback(this);
+w.setOnWindowDismissedCallback(this);
+w.setOnWindowSwipeDismissedCallback(() -> {
+    if (mCancelable) {
+        cancel();
+    }
+});
 w.setWindowManager(mWindowManager, null, null);  // 创建绑定到此 Window 的本地 WM
 w.setGravity(Gravity.CENTER);
 ```

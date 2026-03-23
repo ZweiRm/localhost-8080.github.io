@@ -103,7 +103,8 @@ public class RootWindowContainer extends WindowContainer<DisplayContent>
         final Display[] displays = mDisplayManager.getDisplays();
         for (int displayNdx = 0; displayNdx < displays.length; ++displayNdx) {
             final Display display = displays[displayNdx];
-            final DisplayContent displayContent = new DisplayContent(display, this);
+            final DisplayContent displayContent =
+                    new DisplayContent(display, this, mDeviceStateController);
             addChild(displayContent, POSITION_BOTTOM);
         }
     }
@@ -154,7 +155,7 @@ public void onDisplayRemoved(int displayId) {
 }
 
 DisplayContent getDisplayContentOrCreate(int displayId) {
-    displayContent = new DisplayContent(display, this);
+    displayContent = new DisplayContent(display, this, mDeviceStateController);
     addChild(displayContent, POSITION_BOTTOM);
     ...
 }
@@ -396,10 +397,12 @@ static final class DefaultProvider implements DisplayAreaPolicy.Provider {
 | Feature 名 | Feature ID | 作用 | 影响的 Layer |
 |---|---|---|---|
 | WindowedMagnification | 4 | 窗口放大镜 | 0 ~ 31 |
-| HideDisplayCutout（仅默认屏） | 6 | 隐藏刘海区域 | 除 StatusBar/NavigationBar/NotificationShade 外的所有层 |
-| OneHanded（仅默认屏） | 3 | 单手模式 | 除 NavigationBar/SecureSystemOverlay 外的所有层 |
-| FullscreenMagnification | 5 | 全屏放大 | 除 IME/NavigationBar/MagnificationOverlay/AccessibilityMagnification 外的所有层 |
+| HideDisplayCutout（仅默认屏） | 6 | 隐藏刘海区域 | 除 StatusBar/NavigationBar/NavigationBarPanel/NotificationShade 外的所有层 |
+| OneHanded（仅默认屏） | 3 | 单手模式 | 除 NavigationBar/NavigationBarPanel/SecureSystemOverlay 外的所有层 |
+| FullscreenMagnification | 5 | 全屏放大 | 除 IME/NavigationBar/NavigationBarPanel/MagnificationOverlay/AccessibilityMagnification 外的所有层 |
 | ImePlaceholder | 7 | 输入法占位容器 | 仅 Layer 13 ~ 14（TYPE_INPUT_METHOD 和 TYPE_INPUT_METHOD_DIALOG） |
+
+> 所有 Feature 默认排除了 Layer 36（rounded corner overlay layer）。Feature.Builder 中 `mExcludeRoundedCorner` 默认为 `true`，在 `build()` 时将 `mLayers[getMaxWindowLayer()]` 置为 `false`。因此 Layer 36 不属于任何 Feature，对应的 `Leaf:36:36` 直接挂在 `DisplayContent` 下。
 
 ![Feature 与 Layer 对应关系](/img/android/window_hierarchy/04_feature_layers.svg)
 
@@ -871,10 +874,8 @@ private int relayoutWindow(WindowManager.LayoutParams params, int viewVisibility
 
 void updateBlastSurfaceIfNeeded() {
     // 创建 BLASTBufferQueue 作为 App 端的绘制通道
-    mBlastBufferQueue = new BLASTBufferQueue(mTag, true);
-    mBlastBufferQueue.setApplyToken(mBbqApplyToken);
-    mBlastBufferQueue.update(mSurfaceControl, mSurfaceSize.x, mSurfaceSize.y,
-            mWindowAttributes.format);
+    mBlastBufferQueue = new BLASTBufferQueue(mTag, mSurfaceControl,
+            mSurfaceSize.x, mSurfaceSize.y, mWindowAttributes.format);
     // 通过 BBQ 获取可绘制的 Surface
     Surface blastSurface = mBlastBufferQueue.createSurface();
     mSurface.transferFrom(blastSurface);
@@ -901,10 +902,10 @@ public int relayoutWindow(Session session, IWindow client, ...) {
 private int createSurfaceControl(SurfaceControl outSurfaceControl, int result,
         WindowState win, WindowStateAnimator winAnimator) {
     // 创建 SurfaceControl
-    SurfaceControl surfaceControl = winAnimator.createSurfaceLocked();
-    if (surfaceControl != null) {
+    WindowSurfaceController surfaceController = winAnimator.createSurfaceLocked();
+    if (surfaceController != null) {
         // 将 SurfaceControl 拷贝到 App 端的 outSurfaceControl
-        winAnimator.getSurfaceControl(outSurfaceControl);
+        surfaceController.getSurfaceControl(outSurfaceControl);
     }
     return result;
 }

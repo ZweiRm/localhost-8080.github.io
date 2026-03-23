@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 480" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="ak" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- shouldBeVisibleUnchecked -->
+  <rect x="260" y="15" width="300" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="410" y="37" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">shouldBeVisibleUnchecked()</text>
+  <line x1="410" y1="49" x2="410" y2="80" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+
+  <!-- root check -->
+  <path d="M410,80 L490,100 L410,120 L330,100 Z" fill="white" stroke="#adb5bd"/>
+  <text x="410" y="104" text-anchor="middle" font-size="9" fill="#495057">rootTask == null || !visibleIgnoringKeyguard?</text>
+  <line x1="490" y1="100" x2="620" y2="100" stroke="#c0392b" stroke-width="1" marker-end="url(#ak)"/>
+  <text x="630" y="96" font-size="8.5" fill="#c0392b">true → return false</text>
+  <line x1="410" y1="120" x2="410" y2="155" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+
+  <!-- pinned + forceHidden -->
+  <path d="M410,155 L510,175 L410,195 L310,175 Z" fill="white" stroke="#adb5bd"/>
+  <text x="410" y="179" text-anchor="middle" font-size="8.5" fill="#495057">inPinnedWindowingMode() &amp;&amp; forceHidden?</text>
+  <line x1="510" y1="175" x2="620" y2="175" stroke="#c0392b" stroke-width="1" marker-end="url(#ak)"/>
+  <text x="630" y="171" font-size="8.5" fill="#c0392b">true → return false</text>
+  <line x1="410" y1="195" x2="410" y2="230" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+
+  <!-- isSleeping -->
+  <path d="M410,230 L490,250 L410,270 L330,250 Z" fill="white" stroke="#adb5bd"/>
+  <text x="410" y="254" text-anchor="middle" font-size="9" fill="#495057">mDisplayContent.isSleeping()?</text>
+
+  <!-- sleeping=true -->
+  <line x1="330" y1="250" x2="140" y2="250" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+  <text x="260" y="244" font-size="8.5" fill="#495057">true</text>
+  <rect x="20" y="236" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="80" y="254" text-anchor="middle" font-size="9" fill="#495057">canTurnScreenOn()</text>
+
+  <!-- canTurnScreenOn detail -->
+  <rect x="10" y="278" width="280" height="55" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="150" y="295" text-anchor="middle" font-size="9" fill="#495057">canTurnScreenOn 检查：</text>
+  <text x="20" y="310" font-size="8.5" fill="#868e96">1. getTurnScreenOnFlag() — FLAG_TURN_SCREEN_ON</text>
+  <text x="20" y="325" font-size="8.5" fill="#868e96">2. mCurrentLaunchCanTurnScreenOn &amp;&amp; checkKeyguardVisibility</text>
+
+  <!-- sleeping=false -->
+  <line x1="410" y1="270" x2="410" y2="310" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+  <text x="420" y="290" font-size="8.5" fill="#495057">false</text>
+
+  <!-- checkKeyguardVisibility -->
+  <rect x="300" y="310" width="220" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="410" y="332" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">checkKeyguardVisibility(r)</text>
+  <line x1="410" y1="344" x2="410" y2="375" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+
+  <!-- three branches -->
+  <path d="M410,375 L490,395 L410,415 L330,395 Z" fill="white" stroke="#adb5bd"/>
+  <text x="410" y="399" text-anchor="middle" font-size="8" fill="#495057">Keyguard 状态</text>
+
+  <!-- branch 1: keyguard or aod showing -->
+  <line x1="330" y1="395" x2="120" y2="395" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+  <rect x="10" y="380" width="110" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="65" y="397" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">Keyguard/AOD</text>
+  <text x="65" y="412" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">正在显示</text>
+  <text x="65" y="440" text-anchor="middle" font-size="8" fill="#868e96">canShowActivityWhileKeyguardShowing</text>
+
+  <!-- branch 2: keyguard locked (occluded) -->
+  <line x1="410" y1="415" x2="410" y2="445" stroke="#555" stroke-width="1.2" marker-end="url(#ak)"/>
+  <rect x="330" y="445" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="410" y="463" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">Keyguard 锁定但被遮挡</text>
+  <text x="510" y="463" font-size="8" fill="#868e96">canShowWhileOccluded</text>
+
+  <!-- branch 3: no keyguard -->
+  <line x1="490" y1="395" x2="680" y2="395" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#ak)"/>
+  <rect x="680" y="381" width="120" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="740" y="399" text-anchor="middle" font-size="9" fill="#495057">无 Keyguard</text>
+  <text x="740" y="420" text-anchor="middle" font-size="8.5" fill="#2e7d32">return true</text>
+</svg>

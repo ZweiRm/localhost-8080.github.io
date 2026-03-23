@@ -197,8 +197,10 @@ boolean updateFocusedWindowLocked(int mode, boolean updateInputWindows,
     }
     getDisplayPolicy().focusChangedLw(oldFocus, newFocus);
     mAtmService.mBackNavigationController.onFocusChanged(newFocus);
-    // 通知 InputMonitor
-    getInputMonitor().setInputFocusLw(newFocus, updateInputWindows);
+    // 通知 InputMonitor（defer 模式下由调用者负责）
+    if (mode != UPDATE_FOCUS_WILL_ASSIGN_LAYERS) {
+        getInputMonitor().setInputFocusLw(newFocus, updateInputWindows);
+    }
     adjustForImeIfNeeded();
     scheduleToastWindowsTimeoutIfNeededLocked(oldFocus, newFocus);
     return true;
@@ -874,7 +876,7 @@ sp<WindowInfoHandle> InputDispatcher::findFocusedWindowTargetLocked(
 ### 6.9 ANR 处理流程
 
 ```cpp
-// InputDispatcher.cpp:1032
+// InputDispatcher.cpp:1082
 nsecs_t InputDispatcher::processAnrsLocked() {
     const nsecs_t currentTime = now();
     nsecs_t nextAnrCheck = LLONG_MAX;
@@ -957,7 +959,7 @@ boolean finishDrawingLocked(SurfaceControl.Transaction postDrawTransaction) {
 #### COMMIT_DRAW_PENDING → READY_TO_SHOW → HAS_DRAWN
 
 ```java
-// WindowStateAnimator.java:274
+// WindowStateAnimator.java:275
 boolean commitFinishDrawingLocked() {
     if (mDrawState != COMMIT_DRAW_PENDING && mDrawState != READY_TO_SHOW) {
         return false;
@@ -1143,19 +1145,29 @@ adb shell wm logging enable-text WM_DEBUG_FOCUS WM_DEBUG_FOCUS_LIGHT
 
 ### 9.2 Layer 状态分析
 
-![Layer 状态分析](/img/android/anr/15_layer_state_analysis.svg)
+通过 `dumpsys SurfaceFlinger` 检查目标窗口对应 Layer 及其父 Layer 的可见性状态。关键信息：
 
-```
-MI-SF : Print state of com.example.app/...Activity#258199
-MI-SF : isVisibleForInput=0 hasInputInfo=1 canReceiveInput=0 isVisible=0
-MI-SF : Parents states:
-MI-SF : --9-- Display 0 name="Built-in"#1 flags=0x2 getAlpha=1.000
-MI-SF :   ...
-MI-SF : --3-- Task=6302#258182 flags=0x1 getAlpha=1.000    ← 末位奇数=hidden!
-MI-SF :   ...
+```bash
+adb shell dumpsys SurfaceFlinger --list   # 列出所有 Layer
+adb shell dumpsys SurfaceFlinger           # 完整 dump，搜索目标窗口 Layer
 ```
 
-批量检索：`grep -rna -E "MI-SF   : --\d+-- .*flags=\d+[13579]" ./*`
+在 dump 输出中关注以下字段：
+
+- **flags**：末位为奇数表示 hidden（如 `0x1`、`0x3`、`0x103`）
+- **alpha**：`0` 表示完全透明
+- **父 Layer 状态**：父 Layer hidden 或 alpha=0 会导致子 Layer 不可见
+
+示例（从 `dumpsys SurfaceFlinger` 输出中截取）：
+
+```
++ Layer (Task=6302#258182) uid=1000
+  ...
+  flags=0x00000001    ← 末位奇数=hidden!
+  ...
+```
+
+如果目标窗口的 Layer 本身状态正常，需逐级检查父 Layer 是否被 hide。
 
 ### 9.3 系统负载指标（PSI）
 
@@ -1167,7 +1179,14 @@ adb shell cat /proc/pressure/cpu
 
 ### 9.4 高温限频与拔核
 
-壳温超 46°C → CPU 降频。日志中搜索 `VIRTUAL-SENSOR` 后的温度值（除以 1000）。`hotplug_cpuX=1` 表示核心 X 被暂停。
+设备温度过高时，系统会进行 CPU 降频或拔核以降温。可通过以下方式检查：
+
+```bash
+adb shell dumpsys thermalservice   # 查看热状态
+adb shell cat /sys/class/thermal/thermal_zone*/temp   # 查看各热区温度
+```
+
+日志中搜索 `thermal` 相关关键字。CPU 核心被暂停（hotplug offline）时，对应核心的状态为 offline。
 
 ### 9.5 进程冻结
 
@@ -1188,7 +1207,7 @@ adb shell cat /proc/pressure/cpu
 - **DRAW_PENDING 卡住**：cancelDraw / 共享元素动画异常
 - **COMMIT_DRAW_PENDING 卡住**：deferLayout 未恢复
 - **READY_TO_SHOW 卡住**：mViewVisibility = GONE
-- **Layer 被 hide**：Shell Transition 动画异常（详见 [Shell Transition 文档](./ShellTransition)）
+- **Layer 被 hide**：Shell Transition 动画异常（详见 [Shell Transition 文档](../ShellTransition/ShellTransition.md)）
 - **Layer reparent 异常**：pendingTransaction vs syncTransaction 时序
 - **Layer alpha=0**：小窗/自由窗口模式
 
@@ -1208,7 +1227,7 @@ adb shell cat /proc/pressure/cpu
 
 **日志**：`dispatchReady: track.mReadyTransitions.size() > 1, return, size = 444`
 
-**治理**：业务确保动画及时 finish，增加超时保护。详见 [Shell Transition 文档](./ShellTransition)。
+**治理**：业务确保动画及时 finish，增加超时保护。详见 [Shell Transition 文档](../ShellTransition/ShellTransition.md)。
 
 ### 11.2 窗口动画 reparent 异常
 
@@ -1261,7 +1280,7 @@ adb shell cat /proc/pressure/cpu
 | WMS | `services/.../wm/DisplayContent.java` | `updateFocusedWindowLocked()` (4581), `findFocusedWindow()` (4555), `mFindFocusedWindow` (940) |
 | WMS | `services/.../wm/WindowState.java` | `canReceiveKeys()` (3300), `isVisibleRequestedOrAdding()` (2095), `performShowLocked()` (5027) |
 | WMS | `services/.../wm/InputMonitor.java` | `requestFocus()` (573), `setInputFocusLw()` (417), `populateInputWindowHandle()` (271) |
-| WMS | `services/.../wm/WindowStateAnimator.java` | `mDrawState` (140-164), `finishDrawingLocked()` (231), `commitFinishDrawingLocked()` (274) |
+| WMS | `services/.../wm/WindowStateAnimator.java` | `mDrawState` (140-164), `finishDrawingLocked()` (231), `commitFinishDrawingLocked()` (275) |
 | Framework | `core/.../view/SurfaceControl.java` | `Transaction.setFocusedWindow()` (4682) |
 | Framework | `core/.../view/ViewRootImpl.java` | `performTraversals()` (4086), `reportDrawFinished()` (5971) |
 | JNI | `core/jni/android_view_SurfaceControl.cpp` | `nativeSetFocusedWindow()` (2297) |

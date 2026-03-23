@@ -7,11 +7,15 @@ next:
     link: 'framework/window-rendering-process'
 ---
 
-# Activity 启动全流程分析与 Activity 生命周期
+# Activity 启动流程与生命周期
 
 > 基于 AOSP 源码，完整分析从 Launcher 点击应用图标到目标 Activity 完成 `onResume` 的全过程。
 
 ## 前言
+
+### 目标读者与阅读建议
+
+本文面向对 Android Framework 不熟悉的开发者。阅读前建议了解 Android 四大组件的基本概念和 Binder IPC 机制。
 
 ### 三个核心模块
 
@@ -102,7 +106,7 @@ Launcher.startActivitySafely()
 Launcher 调用 `startActivitySafely()` 方法，为 Intent 添加 `FLAG_ACTIVITY_NEW_TASK` 标志（在新的 Task 中启动 Activity），然后调用 `Activity.startActivity()`。
 
 ```java
-// ActivityStartable.java
+// ActivityContext.java
 default RunnableList startActivitySafely(
         View v, Intent intent, @Nullable ItemInfo item) {
     // 添加 FLAG_ACTIVITY_NEW_TASK
@@ -149,6 +153,8 @@ public ActivityResult execStartActivity(
                 intent.resolveTypeIfNeeded(who.getContentResolver()), token,
                 target != null ? target.mEmbeddedID : null,
                 requestCode, 0, null, options);
+        // 通知 ActivityMonitor 启动结果
+        notifyStartActivityResult(result, options);
         // 检查启动结果，失败则抛出异常
         checkStartActivityResult(result, intent);
     } catch (RemoteException e) {
@@ -203,6 +209,24 @@ public static void checkStartActivityResult(int res, Object intent) {
         case ActivityManager.START_FORWARD_AND_REQUEST_CONFLICT:
             throw new AndroidRuntimeException(
                     "FORWARD_RESULT_FLAG used while also requesting a result");
+        case ActivityManager.START_NOT_ACTIVITY:
+            throw new IllegalArgumentException(
+                    "PendingIntent is not an activity");
+        case ActivityManager.START_NOT_VOICE_COMPATIBLE:
+            throw new SecurityException(
+                    "Starting under voice control not allowed for: " + intent);
+        case ActivityManager.START_VOICE_NOT_ACTIVE_SESSION:
+            throw new IllegalStateException(
+                    "Session calling startVoiceActivity does not match active session");
+        case ActivityManager.START_VOICE_HIDDEN_SESSION:
+            throw new IllegalStateException(
+                    "Cannot start voice activity on a hidden session");
+        case ActivityManager.START_ASSISTANT_NOT_ACTIVE_SESSION:
+            throw new IllegalStateException(
+                    "Session calling startAssistantActivity does not match active session");
+        case ActivityManager.START_ASSISTANT_HIDDEN_SESSION:
+            throw new IllegalStateException(
+                    "Cannot start assistant activity on a hidden session");
         case ActivityManager.START_CANCELED:
             throw new AndroidRuntimeException("Activity could not be started for " + intent);
         default:
@@ -317,9 +341,11 @@ Task build() {
     // 通过 setParent 挂载到 DefaultTaskDisplayArea
     if (mParent != null) {
         if (mParent instanceof Task) {
-            ...
+            final Task parentTask = (Task) mParent;
+            parentTask.addChild(task, mOnTop ? POSITION_TOP : POSITION_BOTTOM,
+                    (mActivityInfo.flags & FLAG_SHOW_FOR_ALL_USERS) != 0);
         } else {
-            mParent.addChild(task, onTop ? POSITION_TOP : POSITION_BOTTOM);
+            mParent.addChild(task, mOnTop ? POSITION_TOP : POSITION_BOTTOM);
         }
     }
     return task;
@@ -431,12 +457,12 @@ boolean resumeFocusedTasksTopActivities(
 ```java
 // TaskFragment.java
 final boolean resumeTopActivity(ActivityRecord prev, ActivityOptions options,
-        boolean deferPause) {
+        boolean skipPause) {
     // next 返回的是 TargetActivity 的 ActivityRecord
     ActivityRecord next = topRunningActivity(true /* focusableOnly */);
     ...
     // pausing = true，因为 pauseBackTasks 触发了 Launcher 的 pause
-    boolean pausing = !deferPause && taskDisplayArea.pauseBackTasks(next);
+    boolean pausing = !skipPause && taskDisplayArea.pauseBackTasks(next);
     ...
     if (pausing) {
         // 有 Activity 正在 pausing，先返回
@@ -596,9 +622,10 @@ Launcher 执行完 `onPause()` 后的回调链：
 
 ```
 PauseActivityItem.postExecute()
-  → ActivityClientController.activityPaused()
-    → ActivityRecord.activityPaused()
-      → TaskFragment.completePause()
+  → ActivityClient.activityPaused()
+    → ActivityClientController.activityPaused()
+      → ActivityRecord.activityPaused()
+        → TaskFragment.completePause()
 ```
 
 ```java
@@ -634,7 +661,7 @@ void completePause(boolean resumeNext, ActivityRecord resuming) {
     }
 
     // 路径2: 确保 Activity 可见性
-    mRootWindowContainer.ensureActivitiesVisible(resuming, 0, !PRESERVE_WINDOWS);
+    mRootWindowContainer.ensureActivitiesVisible(resuming);
 }
 ```
 
@@ -820,7 +847,14 @@ void makeInvisible() {
     setVisibility(false);
 
     switch (getState()) {
+        case STOPPING:
+        case STOPPED:
+            // Reset the flag indicating that an app can enter picture-in-picture
+            // once the activity is hidden
+            supportsEnterPipOnTaskSwitch = false;
+            break;
         case RESUMED:
+        case INITIALIZING:
         case PAUSING:
         case PAUSED:
         case STARTED:
@@ -828,7 +862,8 @@ void makeInvisible() {
             addToStopping(true /* scheduleIdle */,
                     canEnterPictureInPicture /* idleDelayed */, "makeInvisible");
             break;
-        ...
+        default:
+            break;
     }
 }
 ```
@@ -877,13 +912,33 @@ ActivityTaskManagerService.startProcessAsync()
     → ActivityManagerService.startProcessLocked()
       → ProcessList.startProcessLocked()
         → ProcessList.handleProcessStart()
-          → Process.start()  -- 启动进程（Zygote fork）
+          → Process.start()                          -- 启动进程（Zygote fork）
+          → ProcessList.handleProcessStartedLocked()
+            → AMS.reportUidInfoMessageLocked()       -- 打印关键日志
 ```
 
-**关键日志**：
+`startProcessAsync` 之所以是"异步"的，是因为它通过 Handler 投递消息来启动进程，避免在持有 ATMS 锁的情况下直接调用 AMS（可能导致死锁）：
+
+```java
+// ActivityTaskManagerService.java
+void startProcessAsync(ActivityRecord activity, boolean knownToBeDead, boolean isTop,
+        String hostingType) {
+    ...
+    // 通过 Handler 发送消息，异步调用 AMS 的进程创建逻辑
+    final Message m = PooledLambda.obtainMessage(ActivityManagerInternal::startProcess,
+            mAmInternal, activity.processName, activity.info.applicationInfo, knownToBeDead,
+            isTop, hostingType, activity.intent.getComponent());
+    mH.sendMessage(m);
+    ...
+}
+```
+
+**关键日志**（在 `ProcessList.handleProcessStartedLocked()` → `AMS.reportUidInfoMessageLocked()` 中打印）：
 ```
 ActivityManager: Start proc <pid>:<processName>/<uid> for <type> {<component>}
 ```
+
+这条日志是判断进程创建时间点的重要参考，经常用于分析启动耗时。
 
 ### 3.2 应用端处理
 
@@ -954,11 +1009,48 @@ AMS.finishAttachApplicationInner()
   → ATMS$LocalService.attachApplication()
     → RootWindowContainer.attachApplication()
       → 遍历 mStartingProcessActivities 列表
-        → 匹配 uid 和进程名
+        → 匹配 uid 和进程名，过滤不满足条件的 ActivityRecord
           → ActivityTaskSupervisor.realStartActivityLocked()
 ```
 
-> `RootWindowContainer.attachApplication()` 直接遍历 `mStartingProcessActivities` 列表（在 `startProcessAsync` 时加入），逐个匹配 uid 和进程名后调用 `realStartActivityLocked`。这比遍历整棵窗口层级树更高效。
+`RootWindowContainer.attachApplication()` 遍历 `mStartingProcessActivities` 列表（在 `startProcessAsync` 时加入），逐个检查后调用 `realStartActivityLocked`：
+
+```java
+// RootWindowContainer.java (line 2082)
+boolean attachApplication(WindowProcessController app) throws RemoteException {
+    final ArrayList<ActivityRecord> activities = mService.mStartingProcessActivities;
+    ...
+    for (int i = activities.size() - 1; i >= 0; i--) {
+        final ActivityRecord r = activities.get(i);
+        // 匹配 uid 和进程名
+        if (app.mUid != r.info.applicationInfo.uid || !app.mName.equals(r.processName)) {
+            continue;
+        }
+        activities.remove(i);
+        final TaskFragment tf = r.getTaskFragment();
+        // 过滤掉不满足启动条件的 ActivityRecord
+        if (tf == null || r.finishing || r.app != null
+                || !r.shouldBeVisible(true /* ignoringKeyguard */)
+                || !r.showToCurrentUser()) {
+            continue;
+        }
+        try {
+            final boolean canResume = r.isFocusable() && r == tf.topRunningActivity();
+            if (mTaskSupervisor.realStartActivityLocked(r, app, canResume,
+                    true /* checkConfig */)) {
+                hasActivityStarted = true;
+            }
+        } catch (RemoteException e) { ... }
+    }
+    ...
+}
+```
+
+过滤条件说明：
+- `r.finishing`：Activity 正在结束，不需要启动
+- `r.app != null`：Activity 已经绑定到进程了（不应该出现在待启动列表中）
+- `!r.shouldBeVisible`：Activity 不应该可见
+- `!r.showToCurrentUser`：Activity 不属于当前用户
 
 ### 3.4 阶段三小结
 
@@ -995,6 +1087,8 @@ boolean realStartActivityLocked(ActivityRecord r, WindowProcessController proc,
         if (andResume) {
             lifecycleItem = ResumeActivityItem.obtain(r.token, isTransitionForward,
                     r.shouldSendCompatFakeFocus());
+        } else if (r.isVisibleRequested()) {
+            lifecycleItem = PauseActivityItem.obtain(r.token);
         } else {
             lifecycleItem = StopActivityItem.obtain(r.token);
         }

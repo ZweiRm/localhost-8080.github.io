@@ -102,6 +102,10 @@ public void setView(View view, WindowManager.LayoutParams attrs, View panelParen
                                 "Unable to add window " + mWindow
                                 + " -- the specified window type "
                                 + mWindowAttributes.type + " is not valid");
+                    case WindowManagerGlobal.ADD_INVALID_USER:
+                        throw new WindowManager.BadTokenException(
+                                "Unable to add Window " + mWindow
+                                + " -- requested userId is not valid");
                 }
                 throw new RuntimeException(
                         "Unable to add window -- unknown error code " + res);
@@ -176,13 +180,6 @@ private void performTraversals() {
     ......
     relayoutResult = relayoutWindow(params, viewVisibility, insetsPending);
     ......
-    // 比较各类 Insets 变化
-    final boolean contentInsetsChanged = !mPendingContentInsets.equals(
-            mAttachInfo.mContentInsets);
-    if (contentInsetsChanged) {
-        mAttachInfo.mContentInsets.set(mPendingContentInsets);
-    }
-    ......
     // 更新窗口宽高
     if (mWidth != frame.width() || mHeight != frame.height()) {
         mWidth = frame.width();
@@ -210,12 +207,20 @@ private int relayoutWindow(WindowManager.LayoutParams params, int viewVisibility
                 insetsPending ? WindowManagerGlobal.RELAYOUT_INSETS_PENDING : 0,
                 mRelayoutSeq, mLastSyncSeqId);
     } else {
-        // 通过 Session 与服务端通信，调用 relayout
-        relayoutResult = mWindowSession.relayout(mWindow, params,
-                requestedWidth, requestedHeight, viewVisibility,
-                insetsPending ? WindowManagerGlobal.RELAYOUT_INSETS_PENDING : 0,
-                mRelayoutSeq, mLastSyncSeqId, mTmpFrames, mPendingMergedConfiguration,
-                mSurfaceControl, mTempInsets, mTempControls, mRelayoutBundle);
+        if (windowSessionRelayoutInfo()) {
+            // 新版路径：通过 WindowRelayoutResult 对象传递结果
+            relayoutResult = mWindowSession.relayout(mWindow, params,
+                    requestedWidth, requestedHeight, viewVisibility,
+                    insetsPending ? WindowManagerGlobal.RELAYOUT_INSETS_PENDING : 0,
+                    mRelayoutSeq, mLastSyncSeqId, mRelayoutResult);
+        } else {
+            // 旧版路径：通过多个独立参数传递结果
+            relayoutResult = mWindowSession.relayoutLegacy(mWindow, params,
+                    requestedWidth, requestedHeight, viewVisibility,
+                    insetsPending ? WindowManagerGlobal.RELAYOUT_INSETS_PENDING : 0,
+                    mRelayoutSeq, mLastSyncSeqId, mTmpFrames, mPendingMergedConfiguration,
+                    mSurfaceControl, mTempInsets, mTempControls, mRelayoutBundle);
+        }
         mRelayoutRequested = true;
     }
     return relayoutResult;
@@ -243,10 +248,10 @@ private int relayoutWindow(WindowManager.LayoutParams params, int viewVisibility
 
 ```java
 public int relayoutWindow(Session session, IWindow client, LayoutParams attrs,
-        int requestedWidth, int requestedHeight, int viewVisibility, int flags,
-        ClientWindowFrames outFrames, MergedConfiguration mergedConfiguration,
+        int requestedWidth, int requestedHeight, int viewVisibility, int flags, int seq,
+        int lastSyncSeqId, ClientWindowFrames outFrames, MergedConfiguration mergedConfiguration,
         SurfaceControl outSurfaceControl, InsetsState outInsetsState,
-        InsetsSourceControl[] outActiveControls, Bundle outSyncIdBundle) {
+        InsetsSourceControl.Array outActiveControls, Bundle outSyncIdBundle) {
     ......
     synchronized (mGlobalLock) {
         // 1. 根据客户端传过来的 IWindow 从 mWindowMap 中获取对应的 WindowState
@@ -288,7 +293,7 @@ public int relayoutWindow(Session session, IWindow client, LayoutParams attrs,
                         || win.mActivityRecord.isClientVisible());
         ......
         // 3. Surface 的创建流程
-        if (shouldRelayout) {
+        if (shouldRelayout && outSurfaceControl != null) {
             try {
                 result = createSurfaceControl(outSurfaceControl, result, win, winAnimator);
             } catch (Exception e) {
@@ -302,7 +307,7 @@ public int relayoutWindow(Session session, IWindow client, LayoutParams attrs,
         ......
         // 填充计算好的 frame 返回给客户端，更新 mergedConfiguration 对象
         win.fillClientWindowFramesAndConfiguration(outFrames, mergedConfiguration,
-                false /* useLatestConfig */, shouldRelayout);
+                outActivityWindowInfo, false /* useLatestConfig */, shouldRelayout);
         win.onResizeHandled();
         ......
     }
@@ -409,16 +414,14 @@ void performSurfacePlacementNoTrace() {
     }
     ......
 
-    // 开启事务
-    mWmService.openSurfaceTransaction();
+    Trace.traceBegin(TRACE_TAG_WINDOW_MANAGER, "applySurfaceChanges");
     try {
         // 2. 执行窗口尺寸计算，Surface 状态变更等操作
         applySurfaceChangesTransaction();
     } catch (RuntimeException e) {
         Slog.wtf(TAG, "Unhandled exception in Window Manager", e);
     } finally {
-        // 关闭事务，提交
-        mWmService.closeSurfaceTransaction("performLayoutAndPlaceSurfaces");
+        Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
     }
     ......
     // 3. 将 Surface 状态变更为 HAS_DRAWN，触发 App 过渡动画
@@ -470,25 +473,22 @@ void performSurfacePlacementNoTrace() {
 
 ```java
 private void applySurfaceChangesTransaction() {
-    mHoldScreenWindow = null;
-    mObscuringWindow = null;
-
     // 1. 水印、StrictMode 警告框以及模拟器显示的布局
-    final DisplayContent defaultDc = mWmService.getDefaultDisplayContentLocked();
+    final DisplayContent defaultDc = mDefaultDisplay;
     final DisplayInfo defaultInfo = defaultDc.getDisplayInfo();
     final int defaultDw = defaultInfo.logicalWidth;
     final int defaultDh = defaultInfo.logicalHeight;
+    final SurfaceControl.Transaction t = defaultDc.getSyncTransaction();
 
     if (mWmService.mWatermark != null) {
-        mWmService.mWatermark.positionSurface(defaultDw, defaultDh, mDisplayTransaction);
+        mWmService.mWatermark.positionSurface(defaultDw, defaultDh, t);
     }
     if (mWmService.mStrictModeFlash != null) {
-        mWmService.mStrictModeFlash.positionSurface(defaultDw, defaultDh,
-                mDisplayTransaction);
+        mWmService.mStrictModeFlash.positionSurface(defaultDw, defaultDh, t);
     }
     if (mWmService.mEmulatorDisplayOverlay != null) {
         mWmService.mEmulatorDisplayOverlay.positionSurface(defaultDw, defaultDh,
-                mWmService.getDefaultDisplayRotation(), mDisplayTransaction);
+                defaultDc.getRotation(), t);
     }
 
     // 2. 遍历 RootWindowContainer 下所有 DisplayContent
@@ -496,10 +496,11 @@ private void applySurfaceChangesTransaction() {
     for (int j = 0; j < count; ++j) {
         final DisplayContent dc = mChildren.get(j);
         dc.applySurfaceChangesTransaction();
+        mDisplayTransactions.append(dc.mDisplayId, dc.getSyncTransaction());
     }
 
-    mWmService.mDisplayManagerInternal.performTraversal(mDisplayTransaction);
-    SurfaceControl.mergeToGlobalTransaction(mDisplayTransaction);
+    mWmService.mDisplayManagerInternal.performTraversal(t, mDisplayTransactions);
+    mDisplayTransactions.clear();
 }
 ```
 
@@ -536,7 +537,9 @@ void applySurfaceChangesTransaction() {
         Trace.traceEnd(TRACE_TAG_WINDOW_MANAGER);
     }
     // 3. 处理各个 Surface 的位置、大小以及是否要在屏幕上显示等
-    prepareSurfaces();
+    if (!com.android.window.flags.Flags.removePrepareSurfaceInPlacement()) {
+        prepareSurfaces();
+    }
     ......
 }
 ```
@@ -652,8 +655,8 @@ public void layoutWindowLw(WindowState win, WindowState attached,
     // 1. 获取 DisplayFrames
     displayFrames = win.getDisplayFrames(displayFrames);
     final WindowManager.LayoutParams attrs =
-            win.getLayoutingAttrs(displayFrames.mRotation);
-    final Rect attachedWindowFrame = attached != null ? attached.getFrame() : null;
+            win.mAttrs.forRotation(displayFrames.mRotation);
+    sTmpClientFrames.attachedFrame = attached != null ? attached.getFrame() : null;
 
     final boolean trustedSize = attrs == win.mAttrs;
     final int requestedWidth = trustedSize ? win.mRequestedWidth : UNSPECIFIED_LENGTH;
@@ -662,8 +665,8 @@ public void layoutWindowLw(WindowState win, WindowState attached,
     // 2. 调用 WindowLayout.computeFrames 计算窗口布局大小
     mWindowLayout.computeFrames(attrs, win.getInsetsState(),
             displayFrames.mDisplayCutoutSafe, win.getBounds(), win.getWindowingMode(),
-            requestedWidth, requestedHeight, win.getRequestedVisibilities(),
-            attachedWindowFrame, win.mGlobalScale, sTmpClientFrames);
+            requestedWidth, requestedHeight, win.getRequestedVisibleTypes(),
+            win.mGlobalScale, sTmpClientFrames);
 
     // 3. 将计算的布局参数赋值给 windowFrames
     win.setFrames(sTmpClientFrames, win.mRequestedWidth, win.mRequestedHeight);
@@ -694,7 +697,7 @@ public void beginPostLayoutPolicyLw() {
     mBottomGestureHost = null;
     mTopFullscreenOpaqueWindowState = null;
     mNavBarColorWindowCandidate = null;
-    mNavBarBackgroundWindow = null;
+    mNavBarBackgroundWindowCandidate = null;
     mStatusBarAppearanceRegionList.clear();
     mLetterboxDetails.clear();
     mStatusBarBackgroundWindows.clear();
@@ -763,33 +766,54 @@ public void applyPostLayoutPolicyLw(WindowState win, WindowManager.LayoutParams 
     }
 
     // 记录顶部全屏不透明窗口（用于确定系统 UI 控制窗口）
+    boolean appWindow = attrs.type >= FIRST_APPLICATION_WINDOW
+            && attrs.type < FIRST_SYSTEM_WINDOW;
     if (mTopFullscreenOpaqueWindowState == null) {
-        mTopFullscreenOpaqueWindowState = win;
-    }
-
-    // 缓存与状态栏重叠的窗口（确定状态栏外观）
-    if (mStatusBar != null
-            && sTmpRect.setIntersect(win.getFrame(), mStatusBar.getFrame())
-            && !mStatusBarBackgroundCheckedBounds.contains(sTmpRect)) {
-        mStatusBarBackgroundWindows.add(win);
-        mStatusBarBackgroundCheckedBounds.union(sTmpRect);
-        if (!mStatusBarColorCheckedBounds.contains(sTmpRect)) {
-            mStatusBarAppearanceRegionList.add(new AppearanceRegion(
-                    win.mAttrs.insetsFlags.appearance & APPEARANCE_LIGHT_STATUS_BARS,
-                    new Rect(win.getFrame())));
-            mStatusBarColorCheckedBounds.union(sTmpRect);
-            addSystemBarColorApp(win);
+        final int fl = attrs.flags;
+        if (win.isDreamWindow()) {
+            if (!mDreamingLockscreen || (win.isVisible() && win.hasDrawn())) {
+                mShowingDream = true;
+                appWindow = true;
+            }
+        }
+        if (appWindow && attached == null && attrs.isFullscreen()
+                && (fl & FLAG_ALLOW_LOCK_WHILE_SCREEN_ON) != 0) {
+            mAllowLockscreenWhenOn = true;
         }
     }
 
-    // 缓存与导航栏区域重叠的窗口（确定导航栏不透明度和外观）
-    if (isOverlappingWithNavBar(win)) {
-        if (mNavBarColorWindowCandidate == null) {
-            mNavBarColorWindowCandidate = win;
-            addSystemBarColorApp(win);
+    if ((appWindow && attached == null && attrs.isFullscreen())
+            || attrs.type == TYPE_VOICE_INTERACTION) {
+        final boolean exitingStartingWindow =
+                attrs.type == TYPE_APPLICATION_STARTING && win.mAnimatingExit;
+        if (mTopFullscreenOpaqueWindowState == null && !exitingStartingWindow) {
+            mTopFullscreenOpaqueWindowState = win;
         }
-        if (mNavBarBackgroundWindow == null) {
-            mNavBarBackgroundWindow = win;
+
+        // 缓存与状态栏重叠的窗口（确定状态栏外观）
+        if (mStatusBar != null
+                && sTmpRect.setIntersect(win.getFrame(), mStatusBar.getFrame())
+                && !mStatusBarBackgroundCheckedBounds.contains(sTmpRect)) {
+            mStatusBarBackgroundWindows.add(win);
+            mStatusBarBackgroundCheckedBounds.union(sTmpRect);
+            if (!mStatusBarColorCheckedBounds.contains(sTmpRect)) {
+                mStatusBarAppearanceRegionList.add(new AppearanceRegion(
+                        win.mAttrs.insetsFlags.appearance & APPEARANCE_LIGHT_STATUS_BARS,
+                        new Rect(win.getFrame())));
+                mStatusBarColorCheckedBounds.union(sTmpRect);
+                addSystemBarColorApp(win);
+            }
+        }
+
+        // 缓存与导航栏区域重叠的窗口（确定导航栏不透明度和外观）
+        if (isOverlappingWithNavBar(win)) {
+            if (mNavBarColorWindowCandidate == null) {
+                mNavBarColorWindowCandidate = win;
+                addSystemBarColorApp(win);
+            }
+            if (mNavBarBackgroundWindowCandidate == null) {
+                mNavBarBackgroundWindowCandidate = win;
+            }
         }
     }
     ......
@@ -844,13 +868,6 @@ boolean canBeHiddenByKeyguard() {
 
 ```java
 private boolean shouldBeHiddenByKeyguard(WindowState win, WindowState imeTarget) {
-    // 如果当前窗口为 IME 窗口且处于 AOD 状态，则隐藏
-    final boolean hideIme = win.mIsImWindow
-            && (mDisplayContent.isAodShowing()
-                    || (mDisplayContent.isDefaultDisplay && !mWindowManagerDrawComplete));
-    if (hideIme) {
-        return true;
-    }
     // 如果不是默认显示或不在锁屏时，不隐藏
     if (!mDisplayContent.isDefaultDisplay || !isKeyguardShowing()) {
         return false;
@@ -960,11 +977,20 @@ public void finishPostLayoutPolicyLw() {
 ```java
 private final Consumer<WindowState> mApplySurfaceChangesTransaction = w -> {
     final WindowSurfacePlacer surfacePlacer = mWmService.mWindowPlacerLocked;
-    final boolean obscuredChanged = w.mObscured !=
-            mTmpApplySurfaceChangesTransactionState.obscured;
     final RootWindowContainer root = mWmService.mRoot;
 
-    // 1. 设置 WindowState.mObscured 属性值
+    // 1. 首先判断当前 WindowState 是否有 SurfaceControl，对已画好的窗口进行 commit 操作
+    if (w.mHasSurface) {
+        final boolean committed = w.mWinAnimator.commitFinishDrawingLocked();
+        if (isDefaultDisplay && committed) {
+            if (w.hasWallpaper()) {
+                mWallpaperMayChange = true;
+                pendingLayoutChanges |= FINISH_LAYOUT_REDO_WALLPAPER;
+            }
+        }
+    }
+
+    // 2. 设置 WindowState.mObscured 属性值
     w.mObscured = mTmpApplySurfaceChangesTransactionState.obscured;
 
     // 确定当前 WindowState 是否被上面的窗口遮挡
@@ -1010,21 +1036,9 @@ private final Consumer<WindowState> mApplySurfaceChangesTransaction = w -> {
     w.handleWindowMovedIfNeeded();
     w.resetContentChanged();
 
-    // 首先判断当前 WindowState 是否有 SurfaceControl
-    if (w.mHasSurface) {
-        // 3. 对已经画好的窗口进行 commit 操作
-        final boolean committed = winAnimator.commitFinishDrawingLocked();
-        if (isDefaultDisplay && committed) {
-            if (w.hasWallpaper()) {
-                mWallpaperMayChange = true;
-                pendingLayoutChanges |= FINISH_LAYOUT_REDO_WALLPAPER;
-            }
-        }
-    }
-
     final ActivityRecord activity = w.mActivityRecord;
     if (activity != null && activity.isVisibleRequested()) {
-        activity.updateLetterboxSurface(w);
+        activity.updateLetterboxSurfaceIfNeeded(w);
         final boolean updateAllDrawn = activity.updateDrawnWindowStates(w);
         if (updateAllDrawn && !mTmpUpdateAllDrawn.contains(activity)) {
             mTmpUpdateAllDrawn.add(activity);
@@ -1036,9 +1050,9 @@ private final Consumer<WindowState> mApplySurfaceChangesTransaction = w -> {
 
 在这个方法中主要做了三件事：
 
-1. **设置 `WindowState.mObscured` 属性值**：表示该窗口是否被其他窗口遮挡。遍历过程中，只要一个窗口已显示且全屏显示，之后遍历的 `WindowState` 的 `mObscured` 属性将设置为 `true`。
-2. **填充显示参数**：将窗口所携带的控制逻辑屏显示相关参数填充给 `mTmpApplySurfaceChangesTransactionState` 对象属性。
-3. **提交绘制完成**：对已经画好的窗口进行 commit 操作。
+1. **提交绘制完成**：对已经画好的窗口进行 commit 操作。
+2. **设置 `WindowState.mObscured` 属性值**：表示该窗口是否被其他窗口遮挡。遍历过程中，只要一个窗口已显示且全屏显示，之后遍历的 `WindowState` 的 `mObscured` 属性将设置为 `true`。
+3. **填充显示参数**：将窗口所携带的控制逻辑屏显示相关参数填充给 `mTmpApplySurfaceChangesTransactionState` 对象属性。
 
 `mTmpApplySurfaceChangesTransactionState` 对象用来在遍历过程中保存对所有窗口的遍历结果，每次遍历时都会重置：
 
@@ -1074,8 +1088,15 @@ private static final class ApplySurfaceChangesTransactionState {
 
 ```java
 boolean handleNotObscuredLocked(WindowState w, boolean obscured, boolean syswin) {
+    final boolean onScreen = w.isOnScreen();
+    boolean displayHasContent = false;
     ......
-    if (w.mHasSurface && canBeSeen) {
+    if (!onScreen) {
+        return false;
+    }
+    ......
+    if (w.isDrawn() || (w.mActivityRecord != null && w.mActivityRecord.firstWindowDrawn
+            && w.mActivityRecord.isVisibleRequested())) {
         final DisplayContent displayContent = w.getDisplayContent();
         if (displayContent != null && displayContent.isDefaultDisplay) {
             // 当窗口类型是 Dream 类型或锁屏显示时，副屏上不显示
@@ -1086,8 +1107,9 @@ boolean handleNotObscuredLocked(WindowState w, boolean obscured, boolean syswin)
             displayHasContent = true;
         } else if (displayContent != null &&
                 (!mObscureApplicationContentOnSecondaryDisplays
-                        || (obscured && type == TYPE_KEYGUARD_DIALOG))) {
-            // 满足条件的窗口在副屏上也会显示
+                        || displayContent.isKeyguardAlwaysUnlocked()
+                        || (obscured && w.mAttrs.type == TYPE_KEYGUARD_DIALOG))) {
+            // 满足条件的窗口在副屏上也会显示（包括始终解锁的显示屏）
             displayHasContent = true;
         }
     }
@@ -1103,7 +1125,7 @@ void applySurfaceChangesTransaction() {
     mTmpApplySurfaceChangesTransactionState.reset();
     ......
     mLastHasContent = mTmpApplySurfaceChangesTransactionState.displayHasContent;
-    if (!mWmService.mDisplayFrozen) {
+    if (!inTransition() && !mDisplayRotation.isRotatingSeamlessly()) {
         mWmService.mDisplayManagerInternal.setDisplayProperties(mDisplayId,
                 mLastHasContent,
                 mTmpApplySurfaceChangesTransactionState.preferredRefreshRate,
@@ -1111,6 +1133,7 @@ void applySurfaceChangesTransaction() {
                 mTmpApplySurfaceChangesTransactionState.preferredMinRefreshRate,
                 mTmpApplySurfaceChangesTransactionState.preferredMaxRefreshRate,
                 mTmpApplySurfaceChangesTransactionState.preferMinimalPostProcessing,
+                mTmpApplySurfaceChangesTransactionState.disableHdrConversion,
                 true /* inTraversal */);
     }
     ......

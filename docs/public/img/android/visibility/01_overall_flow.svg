@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- RootWindowContainer -->
+  <rect x="320" y="15" width="260" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="450" y="38" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">RootWindowContainer</text>
+  <text x="450" y="62" text-anchor="middle" font-size="9" fill="#868e96">ensureActivitiesVisible(starting, notifyClients)</text>
+  <line x1="450" y1="51" x2="450" y2="80" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- DisplayContent -->
+  <rect x="320" y="80" width="260" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="450" y="103" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">DisplayContent</text>
+  <text x="600" y="95" font-size="8.5" fill="#868e96">遍历每个 DisplayContent</text>
+  <line x1="450" y1="116" x2="450" y2="142" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Task -->
+  <rect x="320" y="142" width="260" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="450" y="165" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Task</text>
+  <text x="600" y="157" font-size="8.5" fill="#868e96">forAllRootTasks → forAllLeafTasks</text>
+  <line x1="450" y1="178" x2="450" y2="204" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- TaskFragment -->
+  <rect x="320" y="204" width="260" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="450" y="227" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">TaskFragment.updateActivityVisibilities</text>
+  <line x1="450" y1="240" x2="450" y2="266" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- EnsureActivitiesVisibleHelper -->
+  <rect x="290" y="266" width="320" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="450" y="289" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">EnsureActivitiesVisibleHelper.process</text>
+  <text x="450" y="316" text-anchor="middle" font-size="9" fill="#868e96">遍历 mChildren, 对每个 ActivityRecord 调用 setActivityVisibilityState</text>
+
+  <line x1="450" y1="302" x2="450" y2="345" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- setActivityVisibilityState -->
+  <rect x="300" y="345" width="300" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="450" y="368" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">setActivityVisibilityState</text>
+
+  <!-- branches -->
+  <line x1="450" y1="381" x2="450" y2="410" stroke="#555" stroke-width="1.2"/>
+  <!-- diamond -->
+  <path d="M450,410 L510,430 L450,450 L390,430 Z" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="450" y="434" text-anchor="middle" font-size="9" fill="#495057">reallyVisible?</text>
+
+  <!-- true branch -->
+  <line x1="510" y1="430" x2="620" y2="430" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="540" y="424" font-size="8.5" fill="#2e7d32">true</text>
+  <rect x="620" y="414" width="230" height="32" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="735" y="434" text-anchor="middle" font-size="9.5" fill="#495057">makeVisibleIfNeeded / handleAlreadyVisible</text>
+
+  <!-- false branch -->
+  <line x1="390" y1="430" x2="260" y2="430" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="350" y="424" font-size="8.5" fill="#c0392b">false</text>
+  <rect x="120" y="414" width="140" height="32" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="190" y="434" text-anchor="middle" font-size="9.5" fill="#495057">makeInvisible</text>
+
+  <!-- makeVisibleIfNeeded -> setVisibility -->
+  <line x1="735" y1="446" x2="735" y2="475" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <rect x="610" y="475" width="250" height="32" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="735" y="495" text-anchor="middle" font-size="9.5" fill="#495057">setVisibility(true) → setClientVisible(true)</text>
+</svg>

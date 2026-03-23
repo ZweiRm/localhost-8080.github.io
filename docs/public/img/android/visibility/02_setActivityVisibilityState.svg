@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 880" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+    <marker id="arr-green" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arr-red" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- Title region -->
+  <text x="490" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">setActivityVisibilityState 详细流程</text>
+
+  <!-- Step 1: mAboveTop check -->
+  <rect x="360" y="40" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="62" text-anchor="middle" font-size="10" fill="#495057">进入 setActivityVisibilityState(r, starting, resumeTopActivity)</text>
+  <line x1="490" y1="74" x2="490" y2="100" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- mAboveTop diamond -->
+  <path d="M490,100 L560,120 L490,140 L420,120 Z" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="124" text-anchor="middle" font-size="9" fill="#495057">mAboveTop &amp;&amp; !isTop?</text>
+  <line x1="420" y1="120" x2="300" y2="120" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arr-red)"/>
+  <text x="375" y="114" font-size="8.5" fill="#c0392b">true</text>
+  <rect x="180" y="106" width="120" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="240" y="124" text-anchor="middle" font-size="9.5" fill="#495057">r.makeInvisible()</text>
+  <text x="240" y="148" text-anchor="middle" font-size="8" fill="#868e96">return</text>
+
+  <line x1="490" y1="140" x2="490" y2="170" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="500" y="155" font-size="8.5" fill="#2e7d32">false</text>
+
+  <!-- Step 2: updateVisibilityIgnoringKeyguard -->
+  <rect x="340" y="170" width="300" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="490" y="192" text-anchor="middle" font-size="10" fill="#495057">r.updateVisibilityIgnoringKeyguard(mBehindFullyOccludedContainer)</text>
+  <line x1="490" y1="204" x2="490" y2="226" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- visibleIgnoringKeyguard 说明 -->
+  <rect x="670" y="172" width="290" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="815" y="191" text-anchor="middle" font-size="8.5" fill="#868e96">visibleIgnoringKeyguard = (!behindOccluded || mLaunchTaskBehind) &amp;&amp; showToCurrentUser()</text>
+
+  <!-- Step 3: shouldBeVisibleUnchecked -->
+  <rect x="370" y="226" width="240" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="490" y="248" text-anchor="middle" font-size="10" fill="#495057">reallyVisible = r.shouldBeVisibleUnchecked()</text>
+  <line x1="490" y1="260" x2="490" y2="288" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- Step 4: visibleIgnoringKeyguard check -->
+  <path d="M490,288 L570,310 L490,332 L410,310 Z" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="314" text-anchor="middle" font-size="9" fill="#495057">r.visibleIgnoringKeyguard?</text>
+
+  <!-- true: occludesParent -->
+  <line x1="570" y1="310" x2="700" y2="310" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="620" y="304" font-size="8.5" fill="#2e7d32">true</text>
+  <path d="M790,310 L840,325 L790,340 L740,325 Z" fill="white" stroke="#adb5bd"/>
+  <text x="790" y="329" text-anchor="middle" font-size="8.5" fill="#495057">r.occludesParent()?</text>
+  <text x="860" y="316" font-size="8" fill="#2e7d32">true → mBehindFullyOccludedContainer = true</text>
+  <text x="860" y="344" font-size="8" fill="#c0392b">false → mBehindFullyOccludedContainer = false</text>
+
+  <line x1="490" y1="332" x2="490" y2="370" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- reallyVisible diamond -->
+  <path d="M490,370 L560,392 L490,414 L420,392 Z" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="396" text-anchor="middle" font-size="9.5" font-weight="600" fill="#495057">reallyVisible?</text>
+
+  <!-- false branch -->
+  <line x1="420" y1="392" x2="200" y2="392" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arr-red)"/>
+  <text x="340" y="386" font-size="8.5" fill="#c0392b">false</text>
+  <rect x="90" y="378" width="110" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="145" y="396" text-anchor="middle" font-size="9.5" fill="#495057">r.makeInvisible()</text>
+
+  <!-- true branch -->
+  <line x1="490" y1="414" x2="490" y2="450" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#arr-green)"/>
+  <text x="500" y="432" font-size="8.5" fill="#2e7d32">true</text>
+
+  <!-- finishing check -->
+  <path d="M490,450 L545,466 L490,482 L435,466 Z" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="470" text-anchor="middle" font-size="9" fill="#495057">r.finishing?</text>
+  <line x1="545" y1="466" x2="620" y2="466" stroke="#c0392b" stroke-width="1" marker-end="url(#arr-red)"/>
+  <text x="630" y="462" font-size="8" fill="#c0392b">true → return</text>
+  <line x1="490" y1="482" x2="490" y2="510" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- attachedToProcess check -->
+  <path d="M490,510 L570,530 L490,550 L410,530 Z" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="534" text-anchor="middle" font-size="9" fill="#495057">r.attachedToProcess()?</text>
+
+  <!-- not attached -->
+  <line x1="410" y1="530" x2="200" y2="530" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arr-red)"/>
+  <text x="330" y="524" font-size="8.5" fill="#c0392b">false</text>
+  <rect x="50" y="516" width="150" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="125" y="534" text-anchor="middle" font-size="9" fill="#495057">makeVisibleAndRestartIfNeeded</text>
+
+  <!-- attached -->
+  <line x1="490" y1="550" x2="490" y2="580" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#arr-green)"/>
+  <text x="500" y="565" font-size="8.5" fill="#2e7d32">true</text>
+
+  <!-- isVisibleRequested check -->
+  <path d="M490,580 L565,600 L490,620 L415,600 Z" fill="white" stroke="#adb5bd"/>
+  <text x="490" y="604" text-anchor="middle" font-size="9" fill="#495057">r.isVisibleRequested()?</text>
+
+  <!-- already visible -->
+  <line x1="565" y1="600" x2="720" y2="600" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#arr-green)"/>
+  <text x="625" y="594" font-size="8.5" fill="#2e7d32">true</text>
+  <rect x="720" y="586" width="200" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="820" y="604" text-anchor="middle" font-size="9" fill="#495057">handleAlreadyVisible + makeActiveIfNeeded</text>
+
+  <!-- not visible yet -->
+  <line x1="415" y1="600" x2="220" y2="600" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arr-red)"/>
+  <text x="340" y="594" font-size="8.5" fill="#c0392b">false</text>
+  <rect x="60" y="586" width="160" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="140" y="604" text-anchor="middle" font-size="9" fill="#495057">r.makeVisibleIfNeeded</text>
+
+  <!-- makeVisibleIfNeeded detail -->
+  <line x1="140" y1="614" x2="140" y2="650" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <rect x="50" y="650" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="140" y="668" text-anchor="middle" font-size="9.5" fill="#495057">setVisibility(true)</text>
+
+  <line x1="140" y1="678" x2="140" y2="710" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- setVisibility branches -->
+  <rect x="30" y="710" width="220" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="140" y="728" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">setVisibility(visible, deferHidingClient)</text>
+  <text x="140" y="745" text-anchor="middle" font-size="8.5" fill="#868e96">→ setVisibleRequested → setClientVisible → commitVisibility</text>
+
+  <!-- Three output paths from setVisibility -->
+  <line x1="80" y1="760" x2="80" y2="800" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="10" y="800" width="140" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="80" y="816" text-anchor="middle" font-size="8.5" fill="#495057">(1) setVisibleRequested</text>
+
+  <line x1="170" y1="760" x2="170" y2="800" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="155" y="800" width="100" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="205" y="816" text-anchor="middle" font-size="8.5" fill="#495057">(2) setClientVisible</text>
+
+  <line x1="140" y1="760" x2="350" y2="800" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <rect x="260" y="800" width="140" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="330" y="816" text-anchor="middle" font-size="8.5" fill="#495057">(3) commitVisibility</text>
+
+  <!-- Home task special -->
+  <rect x="380" y="830" width="360" height="40" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="560" y="847" text-anchor="middle" font-size="9" fill="#868e96">如果是 Home Task 的根 Activity 且未被完全遮挡：</text>
+  <text x="560" y="862" text-anchor="middle" font-size="9" fill="#868e96">mBehindFullyOccludedContainer = true（阻止 Home 后面的 Activity 显示）</text>
+</svg>

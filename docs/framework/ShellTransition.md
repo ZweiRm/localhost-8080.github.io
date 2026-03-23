@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '窗口绘制状态'
-    link: '/framework/window-draw-state'
+    text: 'Activity 与窗口可见性更新机制'
+    link: '/framework/visibility-management'
 next:
     text: 'Android Input 系统'
     link: '/framework/input-system'
@@ -26,7 +26,7 @@ Shell Transition 将动画执行从 system_server 进程解耦到 SystemUI 进�
 
 ### 2.1 WindowContainer 与 SurfaceControl
 
-> WindowContainer 层级体系（RootWindowContainer → DisplayContent → Task → ActivityRecord → WindowState）及其与 SurfaceFlinger Layer 的对应关系，详见无焦点窗口 ANR 文档 §2.1（WindowContainer 层级结构）。
+> WindowContainer 层级体系（RootWindowContainer → DisplayContent → Task → ActivityRecord → WindowState）及其与 SurfaceFlinger Layer 的对应关系，详见[无焦点窗口 ANR 文档 §2.1](../无焦点窗口ANR/无焦点窗口ANR.md#21-windowcontainer-层级结构)。
 
 ### 2.2 什么是 Transition
 
@@ -85,7 +85,7 @@ Transition createTransition(int type) {
 Transition createTransition(@WindowManager.TransitionType int type,
         @WindowManager.TransitionFlags int flags) {
     ...
-    final Transition transit = new Transition(type, flags, this, mSyncEngine);
+    Transition transit = new Transition(type, flags, this, mSyncEngine);
     ProtoLog.v(WM_DEBUG_WINDOW_TRANSITIONS, "Creating Transition: %s", transit);
     moveToCollecting(transit);
     return transit;
@@ -110,13 +110,13 @@ WindowManager: Collecting in transition N: ActivityRecord{xxx}
 每次 `applySurfaceChangesTransaction()` 后触发 `onSurfacePlacement()` 检查：
 
 ```
-BLASTSyncEngine: SyncGroup N: onSurfacePlacement checking {Task{...}, Display{...}}
+WindowManager: SyncGroup N: onSurfacePlacement checking {Task{...}, Display{...}}
 ```
 
 当所有窗口完成绘制：
 
 ```
-BLASTSyncEngine: SyncGroup N: Finished!
+WindowManager: SyncGroup N: Finished!
 ```
 
 ### 5.2 超时机制
@@ -143,12 +143,13 @@ BLASTSyncEngine: Unfinished container: ActivityRecord{xxx}
 
 Core 侧在 `Transition.onTransactionReady()` 中完成动画前的准备：
 
-1. **commitVisible**：更新窗口可见性
+1. **commitVisibleActivities / commitVisibleWallpapers**：更新窗口可见性
 2. **calculateTargets**：计算动画目标
 3. **calculateTransitionInfo**：构建 `TransitionInfo`
 4. **assignTrack**：分配动画轨道
-5. **buildStartTransaction**：构建 StartTransaction（Shell 侧动画开始前 apply）
+5. **mStartTransaction**：来自 `SyncGroup.finishNow()` 传入的 transaction 参数，包含所有参与容器的 sync transaction
 6. **buildFinishTransaction**：构建 FinishTransaction（Shell 侧动画结束后 apply，恢复状态）
+7. **buildCleanupTransaction**：构建 CleanupTransaction（清理 transition-only 的 Surface，如 root leash 和 snapshot）
 
 关键日志：
 
@@ -156,7 +157,6 @@ Core 侧在 `Transition.onTransactionReady()` 中完成动画前的准备：
 WindowManager: Calling onTransitionReady info={id=89 t=OPEN f=0x0 ...
     c=[{null m=OPEN f=FILLS_TASK leash=Surface(name=ActivityRecord{xxx})...},
        {null m=TO_BACK f=FILLS_TASK leash=Surface(name=ActivityRecord{yyy})...}]}
-BLASTSyncEngine: finishNow: after onTransactionReady, mSyncId=89
 ```
 
 ## 七、Playing 阶段（动画执行）
@@ -200,12 +200,13 @@ private static void setupStartState(@NonNull TransitionInfo info,
     for (int i = info.getChanges().size() - 1; i >= 0; --i) {
         final TransitionInfo.Change change = info.getChanges().get(i);
         final SurfaceControl leash = change.getLeash();
-        final int mode = state.getMode();
+        final int mode = info.getChanges().get(i).getMode();
         ...
         if (mode == TRANSIT_OPEN || mode == TRANSIT_TO_FRONT) {
-            // 打开的窗口：初始 show，位置在屏幕外
+            // 打开的窗口：初始 show，alpha 从 0 开始便于淡入动画
             t.show(leash);
-            t.setAlpha(leash, 1.f);
+            t.setAlpha(leash, 0.f);
+            finishT.show(leash);
         } else if (mode == TRANSIT_CLOSE || mode == TRANSIT_TO_BACK) {
             // 关闭的窗口：在 finishT 中 hide（动画结束时执行）
             finishT.hide(leash);
@@ -274,6 +275,18 @@ void finishTransition(Transition record) {
     ProtoLog.v(WM_DEBUG_WINDOW_TRANSITIONS, "Finish Transition: %s", record);
     mPlayingTransitions.remove(record);
     ...
+    updateRunningRemoteAnimation(record, false /* isPlaying */);
+    record.finishTransition();
+    for (int i = mAnimatingExitWindows.size() - 1; i >= 0; i--) {
+        final WindowState w = mAnimatingExitWindows.get(i);
+        if (w.mAnimatingExit && w.mHasSurface && !w.inTransition()) {
+            w.onExitAnimationDone();
+        }
+        if (!w.mAnimatingExit || !w.mHasSurface) {
+            mAnimatingExitWindows.remove(i);
+        }
+    }
+    ...
     if (!inTransition()) {
         validateStates();  // 执行 mStateValidators
     }
@@ -293,15 +306,23 @@ WindowManager: Finish Transition (#89): created at ... finished=675.119ms
 `validateStates()` 执行所有注册的状态校验回调。其中 `enforceSurfaceVisible()` 用于修复 `setVisibility(true)` 在动画期间被覆盖的问题：
 
 ```java
-// TransitionController.java
-private void enforceSurfaceVisible(WindowContainer<?> wc) {
+// WindowContainer.java
+static void enforceSurfaceVisible(@NonNull WindowContainer<?> wc) {
     if (wc.mSurfaceControl == null) return;
     wc.getSyncTransaction().show(wc.mSurfaceControl);
+    final ActivityRecord ar = wc.asActivityRecord();
+    if (ar != null) {
+        ar.mLastSurfaceShowing = true;
+    }
     // 同时 show 所有父级 Surface
     for (WindowContainer<?> p = wc.getParent(); p != null && p != wc.mDisplayContent;
             p = p.getParent()) {
         if (p.mSurfaceControl != null) {
             p.getSyncTransaction().show(p.mSurfaceControl);
+            final Task task = p.asTask();
+            if (task != null) {
+                task.mLastSurfaceShowing = true;
+            }
         }
     }
     wc.scheduleAnimation();
@@ -324,7 +345,7 @@ private void enforceSurfaceVisible(WindowContainer<?> wc) {
 
 ### 9.3 动画堆积
 
-当系统中 Transition 动画大量堆积（数百个），新 Transition 无法被正常 dispatch（`track.mReadyTransitions.size() > 1`），导致异常 abort。被 abort 的动画不会正常 finish → Task Surface 留在 hide 状态。
+当系统中 Transition 动画大量堆积（数百个），新 Transition 进入排队等待（`track.mReadyTransitions.size() > 1`），无法被及时 dispatch 和播放。大量排队的动画导致后续 Transition 长时间无法 finish → Task Surface 留在 hide 状态。
 
 日志特征：
 
@@ -366,11 +387,10 @@ WindowManager: Creating Transition: TransitionRecord{xxx id=89 type=OPEN}
 WindowManager: Collecting in transition 89: ActivityRecord{xxx}
 
 # 3. 同步完成
-BLASTSyncEngine: SyncGroup 89: Finished!
+WindowManager: SyncGroup 89: Finished!
 
 # 4. Core 侧准备完毕
 WindowManager: Calling onTransitionReady info={id=89 t=OPEN ...}
-BLASTSyncEngine: finishNow: after onTransactionReady, mSyncId=89
 
 # 5. Shell 侧接收并选择 Handler
 WindowManagerShell: onTransitionReady (#89) ...
@@ -402,7 +422,8 @@ adb shell wm logging enable-text WM_DEBUG_WINDOW_TRANSITIONS WM_DEBUG_WINDOW_TRA
 
 | 模块 | 文件路径 | 关键方法 |
 |------|---------|---------|
-| Core | `services/.../wm/TransitionController.java` | `createTransition()`, `finishTransition()`, `enforceSurfaceVisible()` |
+| Core | `services/.../wm/TransitionController.java` | `createTransition()`, `finishTransition()` |
+| Core | `services/.../wm/WindowContainer.java` | `enforceSurfaceVisible()` |
 | Core | `services/.../wm/Transition.java` | `onTransactionReady()`, `calculateTargets()` |
 | Core | `services/.../wm/BLASTSyncEngine.java` | `SyncGroup`, `finishNow()`, 超时 5000ms |
 | Shell | `libs/WindowManager/Shell/.../transition/Transitions.java` | `onTransitionReady()`, `setupStartState()`, `setupAnimHierarchy()` |

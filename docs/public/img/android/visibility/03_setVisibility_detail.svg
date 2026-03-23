@@ -1,0 +1,77 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 700" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Entry -->
+  <rect x="280" y="15" width="300" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="430" y="37" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ActivityRecord.setVisibility(visible)</text>
+  <line x1="430" y1="49" x2="430" y2="75" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- setVisibility(visible, deferHidingClient) -->
+  <rect x="270" y="75" width="320" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="97" text-anchor="middle" font-size="10" fill="#495057">setVisibility(visible, mDeferHidingClient)</text>
+  <line x1="430" y1="109" x2="430" y2="140" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- setVisibleRequested -->
+  <rect x="300" y="140" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="162" text-anchor="middle" font-size="10" fill="#495057">setVisibleRequested(visible)</text>
+  <text x="430" y="188" text-anchor="middle" font-size="8.5" fill="#868e96">更新 mVisibleRequested，通知 listeners</text>
+
+  <line x1="430" y1="174" x2="430" y2="210" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- visible=true branch -->
+  <path d="M430,210 L490,230 L430,250 L370,230 Z" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="234" text-anchor="middle" font-size="9" fill="#495057">visible?</text>
+
+  <!-- false: !visible -->
+  <line x1="370" y1="230" x2="120" y2="230" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="260" y="224" font-size="8.5" fill="#c0392b">false</text>
+  <rect x="20" y="216" width="100" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="70" y="234" text-anchor="middle" font-size="9" fill="#495057">removeDeadWindows</text>
+
+  <!-- true: visible -->
+  <line x1="430" y1="250" x2="430" y2="280" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="440" y="265" font-size="8.5" fill="#2e7d32">true</text>
+
+  <!-- setClientVisible(true) -->
+  <rect x="310" y="280" width="240" height="34" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="430" y="302" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">setClientVisible(true)</text>
+  <text x="430" y="328" text-anchor="middle" font-size="8.5" fill="#868e96">告诉客户端窗口可以显示</text>
+
+  <line x1="430" y1="314" x2="430" y2="355" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- transition check -->
+  <path d="M430,355 L520,375 L430,395 L340,375 Z" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="378" text-anchor="middle" font-size="8.5" fill="#495057">collecting transition?</text>
+  <line x1="520" y1="375" x2="680" y2="375" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="580" y="368" font-size="8" fill="#868e96">yes → defer, return</text>
+
+  <line x1="430" y1="395" x2="430" y2="430" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="440" y="412" font-size="8.5" fill="#495057">no</text>
+
+  <!-- deferCommitVisibilityChange -->
+  <path d="M430,430 L530,450 L430,470 L330,450 Z" fill="white" stroke="#adb5bd"/>
+  <text x="430" y="454" text-anchor="middle" font-size="8.5" fill="#495057">deferCommitVisibilityChange?</text>
+  <line x1="530" y1="450" x2="680" y2="450" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="690" y="446" font-size="8" fill="#868e96">yes → defer, return</text>
+
+  <line x1="430" y1="470" x2="430" y2="505" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="440" y="487" font-size="8.5" fill="#495057">no</text>
+
+  <!-- commitVisibility -->
+  <rect x="300" y="505" width="260" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="430" y="527" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">commitVisibility(visible, true)</text>
+  <line x1="430" y1="539" x2="430" y2="565" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- commitVisibility internals -->
+  <rect x="200" y="565" width="460" height="120" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-dasharray="4,3"/>
+  <text x="430" y="585" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">commitVisibility 内部</text>
+  <text x="220" y="605" font-size="9" fill="#495057">1. 遍历子窗口，调用 onAppVisibilityChanged</text>
+  <text x="220" y="622" font-size="9" fill="#495057">2. setVisible(visible) — 更新 mVisible</text>
+  <text x="220" y="639" font-size="9" fill="#495057">3. setVisibleRequested(visible)</text>
+  <text x="220" y="656" font-size="9" fill="#495057">4. updateFocusedWindowLocked + performSurfacePlacement</text>
+  <text x="220" y="673" font-size="9" fill="#495057">5. updateInputWindowsLw + postApplyAnimation</text>
+</svg>

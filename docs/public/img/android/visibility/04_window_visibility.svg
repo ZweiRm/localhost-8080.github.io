@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="aw" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <path d="M0,0 L7,2.5 L0,5 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- system_server side -->
+  <rect x="20" y="10" width="370" height="370" rx="3" fill="none" stroke="#bbb" stroke-dasharray="5,3"/>
+  <text x="30" y="30" font-size="10" font-weight="600" fill="#868e96">system_server 进程</text>
+
+  <!-- setClientVisible -->
+  <rect x="80" y="50" width="260" height="34" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="210" y="72" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">WindowToken.setClientVisible(true)</text>
+  <text x="210" y="98" text-anchor="middle" font-size="8.5" fill="#868e96">更新 mClientVisible，触发 sendAppVisibilityToClients</text>
+  <line x1="210" y1="84" x2="210" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- sendAppVisibilityToClients WC -->
+  <rect x="80" y="120" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="210" y="142" text-anchor="middle" font-size="10" fill="#495057">WindowContainer.sendAppVisibilityToClients</text>
+  <text x="210" y="168" text-anchor="middle" font-size="8.5" fill="#868e96">递归遍历 mChildren</text>
+  <line x1="210" y1="154" x2="210" y2="190" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- sendAppVisibilityToClients WS -->
+  <rect x="80" y="190" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="210" y="212" text-anchor="middle" font-size="10" fill="#495057">WindowState.sendAppVisibilityToClients</text>
+  <line x1="210" y1="224" x2="210" y2="260" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- IPC: mClient.dispatchAppVisibility -->
+  <rect x="60" y="260" width="300" height="34" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="210" y="282" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">mClient.dispatchAppVisibility(clientVisible)</text>
+  <text x="210" y="305" text-anchor="middle" font-size="8.5" fill="#868e96">通过 IWindow Binder 接口跨进程调用</text>
+  <line x1="210" y1="294" x2="210" y2="320" stroke="#555" stroke-width="1.2" stroke-dasharray="6,3"/>
+
+  <!-- Binder IPC label -->
+  <rect x="150" y="320" width="120" height="22" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="210" y="335" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">Binder IPC</text>
+
+  <!-- app side -->
+  <rect x="410" y="10" width="350" height="500" rx="3" fill="none" stroke="#bbb" stroke-dasharray="5,3"/>
+  <text x="420" y="30" font-size="10" font-weight="600" fill="#868e96">应用进程</text>
+
+  <!-- W.dispatchAppVisibility -->
+  <line x1="270" y1="340" x2="470" y2="340" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+  <rect x="470" y="50" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="600" y="72" text-anchor="middle" font-size="10" fill="#495057">ViewRootImpl.W.dispatchAppVisibility</text>
+  <text x="600" y="97" text-anchor="middle" font-size="8.5" fill="#868e96">IWindow.Stub 内部类</text>
+
+  <line x1="600" y1="84" x2="600" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- ViewRootImpl.dispatchAppVisibility -->
+  <rect x="470" y="120" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="600" y="142" text-anchor="middle" font-size="10" fill="#495057">ViewRootImpl.dispatchAppVisibility</text>
+  <text x="600" y="168" text-anchor="middle" font-size="8.5" fill="#868e96">发送 MSG_DISPATCH_APP_VISIBILITY</text>
+  <line x1="600" y1="154" x2="600" y2="200" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- Handler -->
+  <rect x="470" y="200" width="260" height="34" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="600" y="222" text-anchor="middle" font-size="10" fill="#495057">ViewRootHandler → handleAppVisibility</text>
+  <line x1="600" y1="234" x2="600" y2="270" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- handleAppVisibility -->
+  <rect x="450" y="270" width="300" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="600" y="290" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">handleAppVisibility(visible)</text>
+  <text x="600" y="308" text-anchor="middle" font-size="8.5" fill="#868e96">mAppVisible != visible 时触发 scheduleTraversals</text>
+  <line x1="600" y1="320" x2="600" y2="356" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- scheduleTraversals -->
+  <rect x="470" y="356" width="260" height="34" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="600" y="378" text-anchor="middle" font-size="10" fill="#495057">scheduleTraversals()</text>
+  <text x="600" y="403" text-anchor="middle" font-size="8.5" fill="#868e96">设置同步屏障，通过 Choreographer 投递回调</text>
+  <line x1="600" y1="390" x2="600" y2="430" stroke="#555" stroke-width="1.2" marker-end="url(#aw)"/>
+
+  <!-- performTraversals -->
+  <rect x="440" y="430" width="320" height="60" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="600" y="452" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">performTraversals()</text>
+  <text x="600" y="470" text-anchor="middle" font-size="9" fill="#495057">performMeasure → performLayout → performDraw</text>
+  <text x="600" y="484" text-anchor="middle" font-size="8.5" fill="#868e96">完成视图测量、布局、绘制</text>
+</svg>
