@@ -509,7 +509,7 @@ void populateInputWindowHandle(final InputWindowHandleWrapper inputWindowHandle,
 
 ### 4.4 requestFocus()
 
-打印焦点切换三步日志的**第一步**：
+打印焦点切换两步日志的**第一步**：
 
 ```java
 // InputMonitor.java:573
@@ -635,7 +635,7 @@ void InputDispatcher::setFocusedApplicationLocked(
 }
 ```
 
-日志：`input_focus: displayId:0, focusApplication has changed to ActivityRecord{xxx}`
+AOSP 中 `setFocusedApplicationLocked()` 仅在 `DEBUG_FOCUS` 开启时输出 logcat 调试日志，不会写入 event log。
 
 ### 6.2 焦点请求处理
 
@@ -659,8 +659,6 @@ void InputDispatcher::setFocusedWindow(const FocusRequest& request) {
     mLooper->wake();
 }
 ```
-
-日志：`input_focus: [Focus receive :xxx com.example.app/...Activity,reason=setFocusedWindow]`
 
 ### 6.3 焦点窗口判定：isTokenFocusable()
 
@@ -703,9 +701,9 @@ Focusability FocusResolver::isTokenFocusable(
 - **NOT_FOCUSABLE**：窗口存在但设置了 `NOT_FOCUSABLE`
 - **NOT_VISIBLE**：窗口存在但不可见（**最常见的 ANR 根因**）
 
-日志：
-- 成功：`input_focus: [At display 0,focus update to xxx,from setFocusedWindow.]`
-- 失败：`input_focus: [At display 0,ignore set focus to xxx,because NOT_VISIBLE,from setFocusedWindow.]`
+AOSP 的 `FocusResolver` 本身不写 event log（`input_focus:`）。判定结果通过 `FocusChanges` 返回给 `InputDispatcher::onFocusChangedLocked()`，由后者在 `dispatchFocusLocked()` 中打印：
+- 成功（焦点变化）：`input_focus: [Focus entering xxx ...,reason=setFocusedWindow]`
+- 失败（NOT_VISIBLE）：焦点不变，不产生 `input_focus` event log；仅在 `DEBUG_FOCUS` 开启时有 logcat 调试输出
 
 ### 6.4 getResolvedFocusWindow()
 
@@ -1088,7 +1086,7 @@ wm_on_resume_called: [0,...,com.example.newapp.NewActivity,RESUME_ACTIVITY,...]
 # 4. WMS 找到焦点窗口
 WindowManager: wms.Input focus has changed to Window{xxx com.example.newapp/...NewActivity}
 
-# 5. 焦点切换三步
+# 5. 焦点切换两步
 input_focus: [Focus request xxx com.example.newapp/...NewActivity,reason=UpdateInputWindows]
 
 # 6. 首帧绘制
@@ -1097,12 +1095,10 @@ vri.reportDrawFinished ...
 WindowManager: wms.finishDrawingLocked: mDrawState=COMMIT_DRAW_PENDING Window{xxx}
 WindowManager: wms.showSurfaceRobustly mWin:Window{xxx}
 
-# 7. SF 传递，Input 收到
-input_focus: [Focus receive :xxx com.example.newapp/...NewActivity,reason=setFocusedWindow]
-input_focus: [At display :0,Ignore setFocusedWindow :xxx,Reason = NOT_VISIBLE]
+# 7. SF 传递焦点请求，Input 判定 NOT_VISIBLE
+# FocusResolver 判定窗口不可见，焦点暂不授予（此步 AOSP 不产生 input_focus event log）
 
 # 8. 窗口变为可见后焦点生效
-input_focus: [At display :0,Focus update :xxx,reason=setInputWindows]
 input_focus: [Focus entering xxx com.example.newapp/...NewActivity (server),
     reason=Window became focusable. Previous reason: NOT_VISIBLE]
 ```
@@ -1207,7 +1203,7 @@ adb shell cat /sys/class/thermal/thermal_zone*/temp   # 查看各热区温度
 - **DRAW_PENDING 卡住**：cancelDraw / 共享元素动画异常
 - **COMMIT_DRAW_PENDING 卡住**：deferLayout 未恢复
 - **READY_TO_SHOW 卡住**：mViewVisibility = GONE
-- **Layer 被 hide**：Shell Transition 动画异常（详见 [Shell Transition 文档](/framework/ShellTransition)）
+- **Layer 被 hide**：Shell Transition 动画异常（详见 [Shell Transition 文档](../ShellTransition/ShellTransition.md)）
 - **Layer reparent 异常**：pendingTransaction vs syncTransaction 时序
 - **Layer alpha=0**：小窗/自由窗口模式
 
@@ -1227,7 +1223,7 @@ adb shell cat /sys/class/thermal/thermal_zone*/temp   # 查看各热区温度
 
 **日志**：`dispatchReady: track.mReadyTransitions.size() > 1, return, size = 444`
 
-**治理**：业务确保动画及时 finish，增加超时保护。详见 [Shell Transition 文档](/framework/ShellTransition)。
+**治理**：业务确保动画及时 finish，增加超时保护。详见 [Shell Transition 文档](../ShellTransition/ShellTransition.md)。
 
 ### 11.2 窗口动画 reparent 异常
 
