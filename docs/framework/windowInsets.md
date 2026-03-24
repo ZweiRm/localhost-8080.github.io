@@ -3,8 +3,8 @@ prev:
     text: 'Configuration 管理'
     link: '/framework/configuration-management'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'SurfaceControl & Transaction 流程'
+    link: '/framework/surfacecontrol-transaction'
 ---
 
 # WindowInsets

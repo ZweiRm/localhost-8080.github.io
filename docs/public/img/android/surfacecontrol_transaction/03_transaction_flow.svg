@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 580" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="ab" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#4a7fb5"/>
+    </marker>
+  </defs>
+
+  <!-- 泳道分隔线 -->
+  <line x1="290" y1="0" x2="290" y2="580" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="590" y1="0" x2="590" y2="580" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- 泳道标题 -->
+  <rect x="85" y="8" width="120" height="22" rx="3" fill="#eef1f5" stroke="none"/>
+  <text x="100" y="24" font-size="10" font-weight="600" fill="#4a7fb5">应用 / WMS 进程</text>
+
+  <rect x="370" y="8" width="140" height="22" rx="3" fill="#fef8ee" stroke="none"/>
+  <text x="378" y="24" font-size="10" font-weight="600" fill="#8b6914">SF Binder 线程</text>
+
+  <rect x="660" y="8" width="130" height="22" rx="3" fill="#fef8ee" stroke="none"/>
+  <text x="676" y="24" font-size="10" font-weight="600" fill="#8b6914">SF 主线程</text>
+
+  <!-- ===== 应用进程 ===== -->
+
+  <!-- Step 1: Java 设置操作 -->
+  <rect x="40" y="50" width="200" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="55" y="72" font-size="9.5" fill="#495057">Transaction.reparent(sc, newParent)</text>
+
+  <line x1="140" y1="85" x2="140" y2="105" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 2: JNI -->
+  <rect x="55" y="108" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="70" y="128" font-size="9.5" fill="#495057">nativeReparent (JNI)</text>
+
+  <line x1="140" y1="138" x2="140" y2="158" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 3: Native 记录 -->
+  <rect x="30" y="160" width="220" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="45" y="180" font-size="9.5" fill="#495057">getLayerState(sc) → layer_state_t*</text>
+  <text x="45" y="198" font-size="9.5" fill="#495057">s->what |= eReparent</text>
+
+  <line x1="140" y1="210" x2="140" y2="230" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- 可叠加多个操作 -->
+  <rect x="30" y="232" width="220" height="45" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="45" y="250" font-size="9" fill="#868e96">可继续叠加: setPosition / setAlpha</text>
+  <text x="45" y="265" font-size="9" fill="#868e96">/ setColor / merge(other) ...</text>
+
+  <line x1="140" y1="277" x2="140" y2="297" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 4: apply -->
+  <rect x="40" y="300" width="200" height="55" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="55" y="320" font-size="10" font-weight="600" fill="#343a40">Transaction.apply()</text>
+  <text x="55" y="335" font-size="8.5" fill="#868e96">cacheBuffers()</text>
+  <text x="55" y="348" font-size="8.5" fill="#868e96">composerStates → Vector</text>
+
+  <!-- Binder 调用箭头 -->
+  <line x1="240" y1="325" x2="340" y2="325" stroke="#4a7fb5" stroke-width="1.5" marker-end="url(#ab)"/>
+  <text x="255" y="318" font-size="8" fill="#4a7fb5">Binder IPC</text>
+
+  <!-- ===== SF Binder 线程 ===== -->
+
+  <rect x="345" y="300" width="220" height="70" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="358" y="320" font-size="10" font-weight="600" fill="#343a40">setTransactionState()</text>
+  <text x="358" y="336" font-size="9" fill="#495057">ComposerState → ResolvedState</text>
+  <text x="358" y="350" font-size="9" fill="#495057">→ TransactionState</text>
+  <text x="358" y="364" font-size="9" fill="#495057">→ queueTransaction (无锁队列)</text>
+
+  <line x1="455" y1="370" x2="455" y2="395" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="370" y="398" width="170" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="380" y="418" font-size="9.5" fill="#495057">setTransactionFlags</text>
+  <text x="380" y="418" font-size="9.5" fill="#495057">setTransactionFlags(eFlushNeeded)</text>
+
+  <!-- VSync 触发箭头 -->
+  <line x1="540" y1="413" x2="620" y2="413" stroke="#4a7fb5" stroke-width="1.5" stroke-dasharray="4,3" marker-end="url(#ab)"/>
+  <text x="558" y="406" font-size="8" fill="#4a7fb5">VSync</text>
+
+  <!-- ===== SF 主线程 ===== -->
+
+  <rect x="625" y="50" width="220" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="640" y="72" font-size="10" font-weight="600" fill="#343a40">commit()</text>
+
+  <line x1="735" y1="85" x2="735" y2="105" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- 判断菱形 -->
+  <path d="M 735,108 L 775,128 L 735,148 L 695,128 Z" fill="white" stroke="#adb5bd"/>
+  <text x="712" y="131" font-size="8" fill="#495057">flush?</text>
+
+  <line x1="735" y1="148" x2="735" y2="168" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="742" y="162" font-size="8" fill="#868e96">Y</text>
+
+  <rect x="625" y="170" width="220" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="635" y="190" font-size="9.5" fill="#495057">collectTransactions()</text>
+
+  <line x1="735" y1="200" x2="735" y2="218" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="625" y="220" width="220" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="635" y="240" font-size="9.5" fill="#495057">flushTransactions() (barrier 解析)</text>
+
+  <line x1="735" y1="250" x2="735" y2="268" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="625" y="270" width="220" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="635" y="290" font-size="9.5" fill="#495057">applyTransactions() → merge 状态</text>
+
+  <line x1="735" y1="300" x2="735" y2="318" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="625" y="320" width="220" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="635" y="340" font-size="9.5" fill="#495057">LayerHierarchyBuilder.update()</text>
+
+  <line x1="735" y1="350" x2="735" y2="368" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="625" y="370" width="220" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="635" y="390" font-size="9.5" fill="#495057">LayerSnapshotBuilder.update()</text>
+
+  <line x1="735" y1="400" x2="735" y2="418" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="625" y="420" width="220" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="635" y="440" font-size="9.5" fill="#495057">sendCallbacks (commit / complete)</text>
+
+  <line x1="735" y1="450" x2="735" y2="468" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="655" y="470" width="160" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="692" y="490" font-size="10" font-weight="600" fill="#2e7d32">composite()</text>
+
+  <!-- 回调箭头（commit callback → 应用） -->
+  <path d="M 625,435 L 140,435 L 140,370" stroke="#868e96" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#a)" fill="none"/>
+  <text x="300" y="448" font-size="8" fill="#868e96">TransactionCommittedCallback</text>
+
+  <!-- 同步等待标注 -->
+  <rect x="40" y="365" width="200" height="25" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="50" y="382" font-size="9" fill="#c0392b">sync=true 时阻塞等待此回调</text>
+</svg>

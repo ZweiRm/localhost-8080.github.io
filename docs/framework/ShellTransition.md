@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'WindowInsets'
-    link: '/framework/windowInsets'
+    text: 'SurfaceControl & Transaction 流程'
+    link: '/framework/surfacecontrol-transaction'
 next:
     text: 'Android Input 系统'
     link: '/framework/input-system'

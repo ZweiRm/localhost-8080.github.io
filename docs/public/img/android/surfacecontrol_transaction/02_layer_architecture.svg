@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 400" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arr-g" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- 标题区 -->
+  <text x="380" y="22" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">Android V Layer 状态架构</text>
+
+  <!-- 单个 Layer 状态 -->
+  <rect x="20" y="40" width="350" height="165" rx="3" fill="none" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="35" y="58" font-size="10" font-weight="600" fill="#868e96">单个 Layer 状态</text>
+
+  <rect x="35" y="68" width="150" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="52" y="88" font-size="10" font-weight="600" fill="#343a40">RequestedLayerState</text>
+  <text x="52" y="104" font-size="8.5" fill="#868e96">前端请求状态</text>
+
+  <rect x="205" y="68" width="150" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="232" y="88" font-size="10" font-weight="600" fill="#343a40">LayerHierarchy</text>
+  <text x="222" y="104" font-size="8.5" fill="#868e96">层级关系节点</text>
+
+  <rect x="120" y="140" width="150" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="142" y="160" font-size="10" font-weight="600" fill="#343a40">LayerSnapshot</text>
+  <text x="132" y="176" font-size="8.5" fill="#868e96">合成引擎最终状态</text>
+
+  <!-- 箭头：RequestedLayerState → LayerSnapshot -->
+  <line x1="110" y1="118" x2="160" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <!-- 箭头：LayerHierarchy → LayerSnapshot -->
+  <line x1="280" y1="118" x2="230" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="195" y="132" font-size="8" fill="#868e96">综合</text>
+
+  <!-- 管理类 -->
+  <rect x="400" y="40" width="345" height="165" rx="3" fill="none" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="415" y="58" font-size="10" font-weight="600" fill="#868e96">管理类</text>
+
+  <rect x="415" y="68" width="160" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="425" y="88" font-size="10" font-weight="600" fill="#343a40">LayerLifecycleManager</text>
+  <text x="425" y="104" font-size="8.5" fill="#868e96">管理所有前端状态</text>
+
+  <rect x="590" y="68" width="140" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="597" y="88" font-size="10" font-weight="600" fill="#343a40">LayerHierarchyBuilder</text>
+  <text x="600" y="104" font-size="8.5" fill="#868e96">管理层级关系</text>
+
+  <rect x="480" y="140" width="160" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="492" y="160" font-size="10" font-weight="600" fill="#343a40">LayerSnapshotBuilder</text>
+  <text x="492" y="176" font-size="8.5" fill="#868e96">生成合成状态</text>
+
+  <!-- 管理关系箭头 -->
+  <line x1="495" y1="118" x2="530" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <line x1="660" y1="118" x2="600" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- 左右对应关系（虚线） -->
+  <line x1="185" y1="93" x2="410" y2="93" stroke="#ced4da" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="305" y="90" font-size="8" fill="#868e96">管理</text>
+  <line x1="355" y1="93" x2="586" y2="93" stroke="#ced4da" stroke-width="1" stroke-dasharray="3,3"/>
+  <line x1="270" y1="165" x2="476" y2="165" stroke="#ced4da" stroke-width="1" stroke-dasharray="3,3"/>
+  <text x="380" y="162" font-size="8" fill="#868e96">管理</text>
+
+  <!-- 处理流程 -->
+  <rect x="20" y="230" width="720" height="155" rx="3" fill="none" stroke="#adb5bd" stroke-dasharray="5,3"/>
+  <text x="35" y="248" font-size="10" font-weight="600" fill="#868e96">Transaction 处理流程（updateLayerSnapshots）</text>
+
+  <rect x="40" y="260" width="130" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="48" y="284" font-size="9.5" fill="#495057">collectTransactions</text>
+
+  <line x1="170" y1="280" x2="195" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="200" y="260" width="120" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="215" y="284" font-size="9.5" fill="#495057">flushTransactions</text>
+
+  <line x1="320" y1="280" x2="345" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="350" y="260" width="120" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="358" y="284" font-size="9.5" fill="#495057">applyTransactions</text>
+
+  <line x1="470" y1="280" x2="495" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="500" y="260" width="110" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="510" y="284" font-size="9.5" fill="#495057">update 层级关系</text>
+
+  <line x1="610" y1="280" x2="635" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="640" y="260" width="90" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="648" y="278" font-size="9.5" fill="#495057">update</text>
+  <text x="648" y="292" font-size="9.5" fill="#495057">Snapshot</text>
+
+  <!-- 底部对应标注 -->
+  <text x="58" y="320" font-size="8" fill="#868e96">TransactionHandler</text>
+  <text x="218" y="320" font-size="8" fill="#868e96">TransactionHandler</text>
+  <text x="358" y="320" font-size="8" fill="#868e96">LayerLifecycleManager</text>
+  <text x="506" y="320" font-size="8" fill="#868e96">LayerHierarchyBuilder</text>
+  <text x="646" y="320" font-size="8" fill="#868e96">LayerSnapshotBuilder</text>
+
+  <!-- 输出标注 -->
+  <line x1="685" y1="300" x2="685" y2="345" stroke="#2e7d32" stroke-width="1" marker-end="url(#arr-g)"/>
+  <rect x="630" y="348" width="100" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="646" y="366" font-size="9" fill="#2e7d32">→ 合成引擎</text>
+</svg>

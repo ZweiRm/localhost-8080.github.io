@@ -271,6 +271,7 @@ export default defineConfig({
                         { text: 'Activity 与窗口可见性更新', link: 'framework/visibility-management' },
                         { text: 'Configuration 管理', link: 'framework/configuration-management' },
                         { text: 'WindowInsets', link: 'framework/windowInsets' },
+                        { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
                     ]
                 },
                 {
