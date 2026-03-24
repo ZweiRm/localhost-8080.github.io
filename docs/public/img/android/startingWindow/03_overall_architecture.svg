@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 620" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrow3r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- system_server region -->
+  <rect x="10" y="10" width="530" height="600" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="20" y="30" font-size="13" font-weight="600" fill="#343a40">system_server</text>
+
+  <!-- Task.java -->
+  <rect x="25" y="50" width="150" height="80" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="100" y="70" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Task.java</text>
+  <text x="100" y="88" text-anchor="middle" font-size="9" fill="#495057">startActivityLocked()</text>
+  <text x="100" y="103" text-anchor="middle" font-size="9" fill="#868e96">↓ showStartingWindow</text>
+
+  <!-- StartingSurfaceController.java -->
+  <rect x="25" y="145" width="150" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="100" y="165" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">StartingSurfaceController</text>
+  <text x="100" y="180" text-anchor="middle" font-size="9" fill="#495057">showStartingWindow()</text>
+
+  <!-- ActivityRecord.java -->
+  <rect x="195" y="50" width="330" height="235" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="70" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">ActivityRecord.java</text>
+
+  <rect x="210" y="82" width="145" height="24" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="282" y="98" text-anchor="middle" font-size="9" fill="#495057">showStartingWindow()</text>
+
+  <rect x="210" y="114" width="145" height="24" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="282" y="130" text-anchor="middle" font-size="9" fill="#495057">addStartingWindow()</text>
+
+  <text x="362" y="130" font-size="9" fill="#868e96">← 1. 获取启动窗口类型</text>
+
+  <rect x="370" y="82" width="145" height="24" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="442" y="98" text-anchor="middle" font-size="9" fill="#495057">getStartingWindowType()</text>
+
+  <!-- SNAPSHOT path label -->
+  <text x="370" y="158" font-size="9" font-weight="600" fill="#2e7d32">2. SNAPSHOT 类型</text>
+  <rect x="370" y="164" width="145" height="24" rx="2" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="442" y="180" text-anchor="middle" font-size="9" fill="#2e7d32">createSnapshot()</text>
+
+  <!-- SPLASH path label -->
+  <text x="210" y="158" font-size="9" font-weight="600" fill="#c0392b">3. SPLASH 类型</text>
+
+  <rect x="210" y="210" width="145" height="24" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="282" y="226" text-anchor="middle" font-size="8.5" fill="#495057">scheduleAddStartingWindow()</text>
+
+  <rect x="210" y="248" width="145" height="24" rx="2" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="282" y="264" text-anchor="middle" font-size="9" fill="#495057">createStartingSurface()</text>
+
+  <!-- SplashScreenStartingData / SnapshotStartingData -->
+  <rect x="25" y="300" width="230" height="60" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="140" y="318" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">SplashScreenStartingData</text>
+  <text x="140" y="336" text-anchor="middle" font-size="9" fill="#495057">createStartingSurface()</text>
+  <text x="140" y="350" text-anchor="middle" font-size="8.5" fill="#868e96">→ createSplashScreenStartingSurface()</text>
+
+  <rect x="275" y="300" width="230" height="60" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="318" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">SnapshotStartingData</text>
+  <text x="390" y="336" text-anchor="middle" font-size="9" fill="#495057">createStartingSurface()</text>
+  <text x="390" y="350" text-anchor="middle" font-size="8.5" fill="#868e96">→ createTaskSnapshotSurface()</text>
+
+  <!-- TaskOrganizerController -->
+  <rect x="100" y="380" width="260" height="48" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="230" y="400" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">TaskOrganizerController.java</text>
+  <text x="230" y="416" text-anchor="middle" font-size="10" fill="#495057">addStartingWindow()</text>
+
+  <!-- Arrows: Task → StartingSurfaceController → ActivityRecord -->
+  <line x1="100" y1="130" x2="100" y2="145" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+  <line x1="175" y1="170" x2="195" y2="113" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+
+  <!-- ActivityRecord internal flow -->
+  <line x1="282" y1="138" x2="282" y2="210" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <line x1="282" y1="234" x2="282" y2="248" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- createStartingSurface → SplashScreenStartingData / SnapshotStartingData -->
+  <line x1="245" y1="272" x2="140" y2="300" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <line x1="320" y1="272" x2="390" y2="300" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Both → TaskOrganizerController -->
+  <line x1="140" y1="360" x2="200" y2="380" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <line x1="390" y1="360" x2="300" y2="380" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- ===== Binder boundary ===== -->
+  <rect x="543" y="10" width="14" height="600" fill="#e07070" opacity="0.15"/>
+  <text x="550" y="310" font-size="10" fill="#c0392b" transform="rotate(-90,550,310)" text-anchor="middle">Binder</text>
+
+  <!-- WmShell region -->
+  <rect x="560" y="10" width="440" height="600" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="570" y="30" font-size="13" font-weight="600" fill="#343a40">WmShell (SystemUI)</text>
+
+  <!-- ShellTaskOrganizer -->
+  <rect x="575" y="50" width="170" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="660" y="65" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">ShellTaskOrganizer</text>
+  <text x="660" y="79" text-anchor="middle" font-size="9" fill="#495057">addStartingWindow()</text>
+
+  <!-- StartingWindowController -->
+  <rect x="575" y="110" width="170" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="660" y="125" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">StartingWindowController</text>
+  <text x="660" y="139" text-anchor="middle" font-size="9" fill="#495057">addStartingWindow()</text>
+
+  <!-- StartingSurfaceDrawer -->
+  <rect x="575" y="175" width="170" height="65" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="660" y="193" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">StartingSurfaceDrawer</text>
+  <text x="660" y="210" text-anchor="middle" font-size="8.5" fill="#c0392b">addSplashScreenStartingWindow()</text>
+  <text x="660" y="227" text-anchor="middle" font-size="8.5" fill="#2e7d32">makeTaskSnapshotWindow()</text>
+
+  <!-- SplashscreenWindowCreator -->
+  <rect x="575" y="265" width="170" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="660" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">SplashscreenWindowCreator</text>
+  <text x="660" y="295" text-anchor="middle" font-size="8.5" fill="#495057">createContentView()</text>
+  <text x="660" y="310" text-anchor="middle" font-size="8.5" fill="#495057">addWindow()</text>
+
+  <!-- SplashscreenContentDrawer -->
+  <rect x="770" y="265" width="210" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="875" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">SplashscreenContentDrawer</text>
+  <text x="875" y="300" text-anchor="middle" font-size="8.5" fill="#495057">makeSplashScreenContentView()</text>
+
+  <!-- WindowManagerGlobal -->
+  <rect x="575" y="345" width="170" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="660" y="360" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">WindowManagerGlobal</text>
+  <text x="660" y="375" text-anchor="middle" font-size="9" fill="#495057">addView()</text>
+
+  <!-- WmShell internal arrows -->
+  <line x1="660" y1="90" x2="660" y2="110" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+  <line x1="660" y1="150" x2="660" y2="175" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+  <line x1="660" y1="240" x2="660" y2="265" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+  <line x1="745" y1="290" x2="770" y2="290" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <line x1="660" y1="320" x2="660" y2="345" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+
+  <!-- Cross-process: TaskOrganizerController → ShellTaskOrganizer -->
+  <line x1="360" y1="404" x2="550" y2="404" stroke="#c0392b" stroke-width="1.5"/>
+  <line x1="550" y1="404" x2="550" y2="65" stroke="#c0392b" stroke-width="1.5"/>
+  <line x1="550" y1="65" x2="575" y2="65" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow3r)"/>
+
+  <!-- system_server right side: WMS addWindow -->
+  <rect x="1010" y="10" width="240" height="600" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="1020" y="30" font-size="13" font-weight="600" fill="#343a40">system_server</text>
+
+  <!-- WMS -->
+  <rect x="1030" y="345" width="200" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1130" y="360" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">WindowManagerService</text>
+  <text x="1130" y="375" text-anchor="middle" font-size="9" fill="#495057">addWindow()</text>
+
+  <!-- ActivityRecord attachStartingWindow -->
+  <rect x="1030" y="430" width="200" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1130" y="445" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">ActivityRecord</text>
+  <text x="1130" y="459" text-anchor="middle" font-size="9" fill="#495057">attachStartingWindow()</text>
+
+  <!-- WindowManagerGlobal → WMS addWindow -->
+  <line x1="745" y1="365" x2="1030" y2="365" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arrow3r)"/>
+  <text x="850" y="358" font-size="8.5" fill="#c0392b">Binder: addWindow</text>
+
+  <!-- WMS → attachStartingWindow -->
+  <line x1="1130" y1="385" x2="1130" y2="430" stroke="#555" stroke-width="1.2" marker-end="url(#arrow3)"/>
+
+  <!-- Note -->
+  <text x="660" y="408" text-anchor="middle" font-size="8.5" fill="#868e96">调用 WindowManagerGlobal.addView</text>
+  <text x="660" y="420" text-anchor="middle" font-size="8.5" fill="#868e96">进入常规窗口添加流程</text>
+</svg>

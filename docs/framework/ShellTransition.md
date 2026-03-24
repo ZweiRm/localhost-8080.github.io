@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'SurfaceControl & Transaction 流程'
-    link: '/framework/surfacecontrol-transaction'
+    text: 'StartingWindow'
+    link: '/framework/StartingWindow'
 next:
     text: 'Android Input 系统'
     link: '/framework/input-system'

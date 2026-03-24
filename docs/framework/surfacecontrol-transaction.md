@@ -3,8 +3,8 @@ prev:
     text: 'WindowInsets'
     link: '/framework/windowInsets'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'StartingWindow'
+    link: '/framework/StartingWindow'
 ---
 
 # SurfaceControl & Transaction 流程

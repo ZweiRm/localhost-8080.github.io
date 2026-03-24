@@ -272,6 +272,7 @@ export default defineConfig({
                         { text: 'Configuration 管理', link: 'framework/configuration-management' },
                         { text: 'WindowInsets', link: 'framework/windowInsets' },
                         { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
+                        { text: 'StartingWindow', link: 'framework/StartingWindow' },
                     ]
                 },
                 {

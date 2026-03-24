@@ -1,0 +1,151 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1300 560" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <g font-size="9.5" font-weight="600" fill="#343a40">
+    <rect x="10" y="10" width="125" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="72" y="30" text-anchor="middle">WindowStateAnimator</text>
+
+    <rect x="155" y="10" width="95" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="202" y="30" text-anchor="middle">WindowState</text>
+
+    <rect x="270" y="10" width="110" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="325" y="30" text-anchor="middle">ActivityRecord</text>
+
+    <rect x="400" y="10" width="150" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="475" y="30" text-anchor="middle" font-size="9">StartingSurfaceController</text>
+
+    <rect x="570" y="10" width="155" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="647" y="30" text-anchor="middle" font-size="9">TaskOrganizerController</text>
+
+    <rect x="745" y="10" width="155" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="822" y="30" text-anchor="middle" font-size="9">StartingWindowController</text>
+
+    <rect x="920" y="10" width="140" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="990" y="30" text-anchor="middle" font-size="9">StartingSurfaceDrawer</text>
+
+    <rect x="1080" y="10" width="200" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="1180" y="30" text-anchor="middle" font-size="9">SplashscreenWindowCreator</text>
+  </g>
+
+  <!-- Lifelines -->
+  <g stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="72" y1="40" x2="72" y2="520"/>
+    <line x1="202" y1="40" x2="202" y2="520"/>
+    <line x1="325" y1="40" x2="325" y2="520"/>
+    <line x1="475" y1="40" x2="475" y2="520"/>
+    <line x1="647" y1="40" x2="647" y2="520"/>
+    <line x1="822" y1="40" x2="822" y2="520"/>
+    <line x1="990" y1="40" x2="990" y2="520"/>
+    <line x1="1180" y1="40" x2="1180" y2="520"/>
+  </g>
+
+  <!-- Messages -->
+  <g font-size="9" fill="#495057" stroke="#555" stroke-width="1.2">
+    <!-- 1. commitFinishDrawingLocked (self) -->
+    <line x1="72" y1="70" x2="72" y2="90" marker-end="url(#arrow4)"/>
+    <path d="M 72,70 L 120,70 L 120,90 L 72,90" fill="none"/>
+    <text x="125" y="83" stroke="none">1. commitFinishDrawingLocked</text>
+
+    <!-- 2. performShowLocked -->
+    <line x1="72" y1="110" x2="202" y2="110" marker-end="url(#arrow4)"/>
+    <text x="85" y="105" stroke="none">2. performShowLocked</text>
+
+    <!-- 3. onFirstWindowDrawn -->
+    <line x1="202" y1="140" x2="325" y2="140" marker-end="url(#arrow4)"/>
+    <text x="215" y="135" stroke="none">3. onFirstWindowDrawn</text>
+
+    <!-- 4. removeStartingWindow (self) -->
+    <line x1="325" y1="170" x2="325" y2="190" marker-end="url(#arrow4)"/>
+    <path d="M 325,170 L 380,170 L 380,190 L 325,190" fill="none"/>
+    <text x="385" y="183" stroke="none">4. removeStartingWindow</text>
+
+    <!-- 5. removeStartingWindowAnimation (self) -->
+    <line x1="325" y1="210" x2="325" y2="230" marker-end="url(#arrow4)"/>
+    <path d="M 325,210 L 380,210 L 380,230 L 325,230" fill="none"/>
+    <text x="385" y="223" stroke="none">5. removeStartingWindowAnimation</text>
+
+    <!-- 6. remove -->
+    <line x1="325" y1="250" x2="475" y2="250" marker-end="url(#arrow4)"/>
+    <text x="345" y="245" stroke="none">6. remove()</text>
+
+    <!-- 7. removeStartingWindow -->
+    <line x1="475" y1="280" x2="647" y2="280" marker-end="url(#arrow4)"/>
+    <text x="498" y="275" stroke="none">7. removeStartingWindow</text>
+
+    <!-- 8. removeStartingWindow (to WmShell) -->
+    <line x1="647" y1="310" x2="822" y2="310" marker-end="url(#arrow4)"/>
+    <text x="665" y="305" stroke="none" fill="#c0392b" font-size="8">Binder</text>
+    <text x="700" y="305" stroke="none">8. removeStartingWindow</text>
+
+    <!-- 9. removeStartingWindow -->
+    <line x1="822" y1="340" x2="990" y2="340" marker-end="url(#arrow4)"/>
+    <text x="835" y="335" stroke="none">9. removeStartingWindow</text>
+
+    <!-- 10. removeWindow (self) -->
+    <line x1="990" y1="365" x2="990" y2="385" marker-end="url(#arrow4)"/>
+    <path d="M 990,365 L 1045,365 L 1045,385 L 990,385" fill="none"/>
+    <text x="1050" y="378" stroke="none">10. removeWindow</text>
+  </g>
+
+  <!-- Branch: snapshot -->
+  <rect x="950" y="400" width="110" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="1005" y="415" text-anchor="middle" font-size="9" fill="#2e7d32">type = snapshot</text>
+
+  <g font-size="9" fill="#495057" stroke="#555" stroke-width="1.2">
+    <line x1="990" y1="422" x2="990" y2="442" marker-end="url(#arrow4)"/>
+    <path d="M 990,422 L 1045,422 L 1045,442 L 990,442" fill="none"/>
+    <text x="1050" y="435" stroke="none">a. removeIfPossible</text>
+
+    <line x1="990" y1="456" x2="990" y2="476" marker-end="url(#arrow4)"/>
+    <path d="M 990,456 L 1045,456 L 1045,476 L 990,476" fill="none"/>
+    <text x="1050" y="469" stroke="none">b. removeImmediately</text>
+  </g>
+
+  <!-- Branch: splash screen -->
+  <rect x="1130" y="400" width="120" height="22" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
+  <text x="1190" y="415" text-anchor="middle" font-size="9" fill="#c0392b">type = splash screen</text>
+
+  <g font-size="9" fill="#495057" stroke="#555" stroke-width="1.2">
+    <line x1="1180" y1="422" x2="1180" y2="442" marker-end="url(#arrow4)"/>
+    <path d="M 1180,422 L 1235,422 L 1235,442 L 1180,442" fill="none"/>
+    <text x="1238" y="435" stroke="none">a. removeIfPossible</text>
+
+    <line x1="1180" y1="456" x2="1180" y2="476" marker-end="url(#arrow4)"/>
+    <path d="M 1180,456 L 1235,456 L 1235,476 L 1180,476" fill="none"/>
+    <text x="1238" y="469" stroke="none">b. removeWindowInner</text>
+
+    <text x="1238" y="498" stroke="none" fill="#868e96">→ WindowManagerGlobal.removeView</text>
+  </g>
+
+  <!-- Bottom participants -->
+  <g font-size="9.5" font-weight="600" fill="#343a40">
+    <rect x="10" y="520" width="125" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="72" y="540" text-anchor="middle">WindowStateAnimator</text>
+
+    <rect x="155" y="520" width="95" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="202" y="540" text-anchor="middle">WindowState</text>
+
+    <rect x="270" y="520" width="110" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="325" y="540" text-anchor="middle">ActivityRecord</text>
+
+    <rect x="400" y="520" width="150" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="475" y="540" text-anchor="middle" font-size="9">StartingSurfaceController</text>
+
+    <rect x="570" y="520" width="155" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="647" y="540" text-anchor="middle" font-size="9">TaskOrganizerController</text>
+
+    <rect x="745" y="520" width="155" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="822" y="540" text-anchor="middle" font-size="9">StartingWindowController</text>
+
+    <rect x="920" y="520" width="140" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="990" y="540" text-anchor="middle" font-size="9">StartingSurfaceDrawer</text>
+
+    <rect x="1080" y="520" width="200" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="1180" y="540" text-anchor="middle" font-size="9">SplashscreenWindowCreator</text>
+  </g>
+</svg>

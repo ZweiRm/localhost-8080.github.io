@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrow1self" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <g font-size="11" font-weight="600" fill="#343a40">
+    <rect x="20" y="10" width="110" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="75" y="30" text-anchor="middle">ActivityStarter</text>
+
+    <rect x="190" y="10" width="70" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="225" y="30" text-anchor="middle">Task</text>
+
+    <rect x="320" y="10" width="185" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="412" y="30" text-anchor="middle">StartingSurfaceController</text>
+
+    <rect x="565" y="10" width="120" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="625" y="30" text-anchor="middle">ActivityRecord</text>
+
+    <rect x="745" y="10" width="100" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="795" y="30" text-anchor="middle">StartingData</text>
+
+    <rect x="905" y="10" width="180" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="995" y="30" text-anchor="middle" font-size="10">SplashScreenStartingData</text>
+  </g>
+
+  <!-- Lifelines -->
+  <g stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="75" y1="40" x2="75" y2="480"/>
+    <line x1="225" y1="40" x2="225" y2="480"/>
+    <line x1="412" y1="40" x2="412" y2="480"/>
+    <line x1="625" y1="40" x2="625" y2="480"/>
+    <line x1="795" y1="40" x2="795" y2="480"/>
+    <line x1="995" y1="40" x2="995" y2="480"/>
+  </g>
+
+  <!-- Messages -->
+  <g font-size="9.5" fill="#495057" stroke="#555" stroke-width="1.2">
+    <!-- 1. startActivityInner (self) -->
+    <line x1="75" y1="75" x2="75" y2="95" marker-end="url(#arrow1self)"/>
+    <path d="M 75,75 L 115,75 L 115,95 L 75,95" fill="none"/>
+    <text x="120" y="88" stroke="none">1. startActivityInner</text>
+
+    <!-- 2. startActivityLocked -->
+    <line x1="75" y1="125" x2="225" y2="125" marker-end="url(#arrow1)"/>
+    <text x="100" y="120" stroke="none">2. startActivityLocked</text>
+
+    <!-- 3. showStartingWindow -->
+    <line x1="225" y1="165" x2="412" y2="165" marker-end="url(#arrow1)"/>
+    <text x="250" y="160" stroke="none">3. showStartingWindow</text>
+
+    <!-- 4. showStartingWindow (to ActivityRecord) -->
+    <line x1="412" y1="205" x2="625" y2="205" marker-end="url(#arrow1)"/>
+    <text x="435" y="200" stroke="none">4. showStartingWindow</text>
+
+    <!-- 5. showStartingWindow (self overload) -->
+    <line x1="625" y1="240" x2="625" y2="260" marker-end="url(#arrow1self)"/>
+    <path d="M 625,240 L 680,240 L 680,260 L 625,260" fill="none"/>
+    <text x="688" y="253" stroke="none">5. showStartingWindow()</text>
+
+    <!-- 6. addStartingWindow (self) -->
+    <line x1="625" y1="290" x2="625" y2="310" marker-end="url(#arrow1self)"/>
+    <path d="M 625,290 L 680,290 L 680,310 L 625,310" fill="none"/>
+    <text x="688" y="303" stroke="none">6. addStartingWindow()</text>
+
+    <!-- 7. scheduleAddStartingWindow (self) -->
+    <line x1="625" y1="340" x2="625" y2="360" marker-end="url(#arrow1self)"/>
+    <path d="M 625,340 L 680,340 L 680,360 L 625,360" fill="none"/>
+    <text x="688" y="353" stroke="none">7. scheduleAddStartingWindow()</text>
+
+    <!-- 8. createStartingSurface (to StartingData) -->
+    <line x1="625" y1="395" x2="795" y2="395" marker-end="url(#arrow1)"/>
+    <text x="640" y="390" stroke="none">8. createStartingSurface</text>
+
+    <!-- 9. createStartingSurface (to SplashScreenStartingData) -->
+    <line x1="795" y1="435" x2="995" y2="435" marker-end="url(#arrow1)"/>
+    <text x="820" y="430" stroke="none">9. createStartingSurface</text>
+  </g>
+
+  <!-- Bottom participants -->
+  <g font-size="11" font-weight="600" fill="#343a40">
+    <rect x="20" y="480" width="110" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="75" y="500" text-anchor="middle">ActivityStarter</text>
+
+    <rect x="190" y="480" width="70" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="225" y="500" text-anchor="middle">Task</text>
+
+    <rect x="320" y="480" width="185" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="412" y="500" text-anchor="middle">StartingSurfaceController</text>
+
+    <rect x="565" y="480" width="120" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="625" y="500" text-anchor="middle">ActivityRecord</text>
+
+    <rect x="745" y="480" width="100" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="795" y="500" text-anchor="middle">StartingData</text>
+
+    <rect x="905" y="480" width="180" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="995" y="500" text-anchor="middle" font-size="10">SplashScreenStartingData</text>
+  </g>
+</svg>

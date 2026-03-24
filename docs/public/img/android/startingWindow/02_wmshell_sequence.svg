@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1050 460" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Participants -->
+  <g font-size="11" font-weight="600" fill="#343a40">
+    <rect x="20" y="10" width="190" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="115" y="30" text-anchor="middle">StartingWindowController</text>
+
+    <rect x="270" y="10" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="355" y="30" text-anchor="middle">StartingSurfaceDrawer</text>
+
+    <rect x="500" y="10" width="210" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="605" y="30" text-anchor="middle">SplashscreenWindowCreator</text>
+
+    <rect x="770" y="10" width="210" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="875" y="30" text-anchor="middle">SplashscreenContentDrawer</text>
+  </g>
+
+  <!-- Lifelines -->
+  <g stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3">
+    <line x1="115" y1="40" x2="115" y2="420"/>
+    <line x1="355" y1="40" x2="355" y2="420"/>
+    <line x1="605" y1="40" x2="605" y2="420"/>
+    <line x1="875" y1="40" x2="875" y2="420"/>
+  </g>
+
+  <!-- SPLASH_SCREEN path -->
+  <g font-size="9.5" fill="#495057" stroke="#555" stroke-width="1.2">
+    <!-- Entry -->
+    <line x1="20" y1="75" x2="115" y2="75" marker-end="url(#arrow2)"/>
+    <text x="22" y="68" stroke="none" font-size="10" font-weight="600">1. addStartingWindow</text>
+
+    <!-- Type label -->
+    <rect x="22" y="92" width="130" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.8"/>
+    <text x="87" y="107" text-anchor="middle" stroke="none" font-size="9" fill="#868e96">type: SPLASH_SCREEN</text>
+
+    <!-- 2. addSplashScreenStartingWindow -->
+    <line x1="115" y1="130" x2="355" y2="130" marker-end="url(#arrow2)"/>
+    <text x="140" y="125" stroke="none">2. addSplashScreenStartingWindow</text>
+
+    <!-- 3. addSplashScreenStartingWindow -->
+    <line x1="355" y1="165" x2="605" y2="165" marker-end="url(#arrow2)"/>
+    <text x="380" y="160" stroke="none">3. addSplashScreenStartingWindow</text>
+
+    <!-- 4. createContentView -->
+    <line x1="605" y1="200" x2="875" y2="200" marker-end="url(#arrow2)"/>
+    <text x="660" y="195" stroke="none">4. createContentView</text>
+
+    <!-- 5. makeSplashScreenContentView (self) -->
+    <line x1="875" y1="230" x2="875" y2="250" marker-end="url(#arrow2)"/>
+    <path d="M 875,230 L 935,230 L 935,250 L 875,250" fill="none"/>
+    <text x="655" y="245" stroke="none">5. makeSplashScreenContentView</text>
+  </g>
+
+  <!-- Separator -->
+  <line x1="20" y1="280" x2="1030" y2="280" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="6,4"/>
+
+  <!-- SNAPSHOT path -->
+  <g font-size="9.5" fill="#495057" stroke="#555" stroke-width="1.2">
+    <!-- Type label -->
+    <rect x="22" y="295" width="130" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+    <text x="87" y="310" text-anchor="middle" stroke="none" font-size="9" fill="#2e7d32">type: SNAPSHOT</text>
+
+    <!-- 2. makeTaskSnapshotWindow -->
+    <line x1="115" y1="335" x2="355" y2="335" marker-end="url(#arrow2)"/>
+    <text x="140" y="330" stroke="none">2. makeTaskSnapshotWindow</text>
+
+    <!-- 3. makeTaskSnapshotWindow -->
+    <line x1="355" y1="370" x2="605" y2="370" marker-end="url(#arrow2)"/>
+    <text x="380" y="365" stroke="none">3. makeTaskSnapshotWindow</text>
+  </g>
+
+  <!-- Bottom participants -->
+  <g font-size="11" font-weight="600" fill="#343a40">
+    <rect x="20" y="420" width="190" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+    <text x="115" y="440" text-anchor="middle">StartingWindowController</text>
+
+    <rect x="270" y="420" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="355" y="440" text-anchor="middle">StartingSurfaceDrawer</text>
+
+    <rect x="500" y="420" width="210" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+    <text x="605" y="440" text-anchor="middle">SplashscreenWindowCreator</text>
+
+    <rect x="770" y="420" width="210" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+    <text x="875" y="440" text-anchor="middle">SplashscreenContentDrawer</text>
+  </g>
+</svg>
