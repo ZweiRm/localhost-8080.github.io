@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 500" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#2e7d32"/>
+    </marker>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <text x="340" y="25" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">帧调度流程：scheduleFrameLocked()</text>
+
+  <!-- 入口 -->
+  <rect x="240" y="45" width="200" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="340" y="67" text-anchor="middle" font-size="10" fill="#495057">postCallbackDelayedInternal()</text>
+
+  <line x1="340" y1="81" x2="340" y2="103" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 判断: mFrameScheduled? -->
+  <path d="M340,105 L430,135 L340,165 L250,135 Z" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="340" y="138" text-anchor="middle" font-size="9.5" fill="#495057">mFrameScheduled?</text>
+
+  <!-- Yes: 已调度 -->
+  <line x1="430" y1="135" x2="530" y2="135" stroke="#868e96" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="470" y="128" font-size="8.5" fill="#868e96">= true</text>
+  <rect x="532" y="120" width="120" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="592" y="139" text-anchor="middle" font-size="9.5" fill="#868e96">return（去重）</text>
+
+  <!-- No: 未调度 -->
+  <line x1="340" y1="165" x2="340" y2="193" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="355" y="181" font-size="8.5" fill="#495057">= false</text>
+
+  <!-- 设置标志 -->
+  <rect x="255" y="195" width="170" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="214" text-anchor="middle" font-size="9.5" fill="#495057">mFrameScheduled = true</text>
+
+  <line x1="340" y1="225" x2="340" y2="253" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 判断: USE_VSYNC? -->
+  <path d="M340,255 L430,285 L340,315 L250,285 Z" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="340" y="288" text-anchor="middle" font-size="9.5" fill="#495057">USE_VSYNC?</text>
+
+  <!-- No: 不使用 VSync -->
+  <line x1="250" y1="285" x2="90" y2="285" stroke="#868e96" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="175" y="278" font-size="8.5" fill="#868e96">false</text>
+
+  <rect x="15" y="270" width="73" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="51" y="289" text-anchor="middle" font-size="9" fill="#495057">延迟发送</text>
+
+  <line x1="51" y1="300" x2="51" y2="322" stroke="#868e96" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="10" y="324" width="140" height="44" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="80" y="343" text-anchor="middle" font-size="9" fill="#495057">MSG_DO_FRAME</text>
+  <text x="80" y="359" text-anchor="middle" font-size="8" fill="#868e96">sendMessageAtTime()</text>
+
+  <!-- Yes: 使用 VSync -->
+  <line x1="340" y1="315" x2="340" y2="343" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="355" y="331" font-size="8.5" fill="#495057">true</text>
+
+  <!-- 判断: 在 Looper 线程？ -->
+  <path d="M340,345 L455,375 L340,405 L225,375 Z" fill="white" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="340" y="372" text-anchor="middle" font-size="9" fill="#495057">isRunningOn</text>
+  <text x="340" y="385" text-anchor="middle" font-size="9" fill="#495057">LooperThread?</text>
+
+  <!-- Yes: 在 Looper 线程 -->
+  <line x1="340" y1="405" x2="340" y2="433" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="360" y="421" font-size="8.5" fill="#2e7d32">true</text>
+
+  <rect x="255" y="435" width="170" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="340" y="450" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">scheduleVsyncLocked()</text>
+  <text x="340" y="464" text-anchor="middle" font-size="8" fill="#868e96">直接请求 VSync</text>
+
+  <!-- No: 不在 Looper 线程 -->
+  <line x1="455" y1="375" x2="540" y2="375" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="490" y="368" font-size="8.5" fill="#495057">false</text>
+
+  <rect x="475" y="355" width="190" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="570" y="374" text-anchor="middle" font-size="9" fill="#495057">MSG_DO_SCHEDULE_VSYNC</text>
+  <text x="570" y="390" text-anchor="middle" font-size="8" fill="#868e96">sendMessageAtFrontOfQueue()</text>
+  <text x="570" y="400" text-anchor="middle" font-size="8" fill="#868e96">异步消息，穿越同步屏障</text>
+
+  <line x1="570" y1="405" x2="570" y2="433" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="490" y="435" width="160" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="570" y="450" text-anchor="middle" font-size="9" fill="#495057">doScheduleVsync()</text>
+  <text x="570" y="464" text-anchor="middle" font-size="8" fill="#868e96">在 Looper 线程执行</text>
+
+  <line x1="490" y1="453" x2="427" y2="453" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#ag)"/>
+</svg>

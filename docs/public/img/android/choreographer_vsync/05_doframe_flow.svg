@@ -1,0 +1,125 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 720" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#2e7d32"/>
+    </marker>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="25" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">doFrame() 核心处理流程</text>
+
+  <!-- Step 1 -->
+  <rect x="220" y="42" width="280" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="360" y="62" text-anchor="middle" font-size="10" fill="#495057">VSync 到达 → FrameDisplayEventReceiver.run()</text>
+
+  <line x1="360" y1="74" x2="360" y2="96" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- Step 2: update FrameData -->
+  <rect x="230" y="98" width="260" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="117" text-anchor="middle" font-size="9.5" fill="#495057">mFrameData.update(frameTimeNanos, vsyncEventData)</text>
+
+  <line x1="360" y1="128" x2="360" y2="148" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 同步块开始 -->
+  <rect x="60" y="150" width="600" height="290" rx="3" fill="none" stroke="#4a7fb5" stroke-dasharray="5,3"/>
+  <text x="75" y="167" font-size="9" fill="#4a7fb5" font-weight="600">synchronized (mLock)</text>
+
+  <!-- mFrameScheduled check -->
+  <path d="M360,175 L435,200 L360,225 L285,200 Z" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="204" text-anchor="middle" font-size="9" fill="#495057">mFrameScheduled?</text>
+
+  <line x1="285" y1="200" x2="100" y2="200" stroke="#868e96" stroke-width="1" marker-end="url(#a)"/>
+  <text x="185" y="193" font-size="8" fill="#868e96">false</text>
+  <rect x="70" y="188" width="55" height="24" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="97" y="204" text-anchor="middle" font-size="9" fill="#868e96">return</text>
+
+  <line x1="360" y1="225" x2="360" y2="247" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 计算 jitter -->
+  <rect x="215" y="249" width="290" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="268" text-anchor="middle" font-size="9.5" fill="#495057">jitterNanos = System.nanoTime() - frameTimeNanos</text>
+
+  <line x1="360" y1="279" x2="360" y2="299" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- jitter >= frameInterval? -->
+  <path d="M360,301 L470,331 L360,361 L250,331 Z" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="328" text-anchor="middle" font-size="8.5" fill="#495057">jitter &gt;=</text>
+  <text x="360" y="341" text-anchor="middle" font-size="8.5" fill="#495057">frameIntervalNanos?</text>
+
+  <!-- Yes: 帧延迟 -->
+  <line x1="470" y1="331" x2="548" y2="331" stroke="#c0392b" stroke-width="1.2" marker-end="url(#ar)"/>
+  <text x="500" y="324" font-size="8" fill="#c0392b">true</text>
+
+  <rect x="500" y="300" width="148" height="62" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="574" y="318" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">帧延迟处理</text>
+  <text x="574" y="333" text-anchor="middle" font-size="8.5" fill="#495057">对齐到帧间隔网格</text>
+  <text x="574" y="346" text-anchor="middle" font-size="8.5" fill="#495057">Log "Skipped N frames!"</text>
+  <text x="574" y="358" text-anchor="middle" font-size="8" fill="#868e96">重新选择 FrameTimeline</text>
+
+  <!-- No: 正常 -->
+  <line x1="360" y1="361" x2="360" y2="379" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- frameTime < lastFrameTime? -->
+  <path d="M360,381 L455,405 L360,429 L265,405 Z" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="402" text-anchor="middle" font-size="8.5" fill="#495057">frameTimeNanos</text>
+  <text x="360" y="415" text-anchor="middle" font-size="8.5" fill="#495057">&lt; mLastFrameTimeNanos?</text>
+
+  <line x1="265" y1="405" x2="100" y2="405" stroke="#868e96" stroke-width="1" marker-end="url(#a)"/>
+  <text x="170" y="398" font-size="8" fill="#868e96">true: 时间回退</text>
+  <rect x="70" y="393" width="85" height="24" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="112" y="409" text-anchor="middle" font-size="8.5" fill="#868e96">重新请求VSync</text>
+
+  <line x1="360" y1="429" x2="360" y2="440" stroke="#555" stroke-width="1.2"/>
+
+  <!-- 同步块结束，进入回调 -->
+
+  <!-- setVsync + mFrameScheduled = false -->
+  <line x1="360" y1="440" x2="360" y2="460" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="185" y="462" width="350" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="360" y="481" text-anchor="middle" font-size="9.5" fill="#495057">mFrameInfo.setVsync(...)   mFrameScheduled = false</text>
+
+  <line x1="360" y1="492" x2="360" y2="514" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- lockAnimationClock -->
+  <rect x="215" y="516" width="290" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="533" text-anchor="middle" font-size="9.5" fill="#495057">AnimationUtils.lockAnimationClock()</text>
+
+  <line x1="360" y1="542" x2="360" y2="562" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 5 回调执行 -->
+  <rect x="80" y="564" width="560" height="100" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="360" y="582" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">按序执行 5 类回调</text>
+
+  <rect x="95" y="592" width="95" height="26" rx="3" fill="white" stroke="#e07070"/>
+  <text x="142" y="609" text-anchor="middle" font-size="9" fill="#c0392b">INPUT</text>
+  <line x1="190" y1="605" x2="200" y2="605" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="205" y="592" width="95" height="26" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="252" y="609" text-anchor="middle" font-size="9" fill="#4a7fb5">ANIMATION</text>
+  <line x1="300" y1="605" x2="310" y2="605" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="315" y="592" width="95" height="26" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="362" y="609" text-anchor="middle" font-size="8" fill="#4a7fb5">INSETS_ANIM</text>
+  <line x1="410" y1="605" x2="420" y2="605" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="425" y="592" width="95" height="26" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="472" y="609" text-anchor="middle" font-size="9" fill="#2e7d32">TRAVERSAL</text>
+  <line x1="520" y1="605" x2="530" y2="605" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="535" y="592" width="90" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="580" y="609" text-anchor="middle" font-size="9" fill="#495057">COMMIT</text>
+
+  <text x="360" y="645" text-anchor="middle" font-size="8.5" fill="#868e96">markInputHandlingStart → markAnimationsStart → markPerformTraversalsStart</text>
+
+  <line x1="360" y1="664" x2="360" y2="684" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- unlockAnimationClock -->
+  <rect x="215" y="686" width="290" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="703" text-anchor="middle" font-size="9.5" fill="#495057">AnimationUtils.unlockAnimationClock()</text>
+</svg>

@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 500" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="arr-b" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#4a7fb5"/>
+    </marker>
+    <marker id="arr-r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+    <marker id="arr-green" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <!-- 泳道分隔线 -->
+  <line x1="170" y1="0" x2="170" y2="500" stroke="#ced4da" stroke-dasharray="5,3"/>
+  <line x1="370" y1="0" x2="370" y2="500" stroke="#ced4da" stroke-dasharray="5,3"/>
+  <line x1="580" y1="0" x2="580" y2="500" stroke="#ced4da" stroke-dasharray="5,3"/>
+
+  <!-- 泳道标题 -->
+  <rect x="15" y="8" width="140" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="85" y="27" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">SurfaceFlinger</text>
+
+  <rect x="195" y="8" width="150" height="28" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="270" y="27" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Native 层 (应用进程)</text>
+
+  <rect x="400" y="8" width="155" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="477" y="27" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Java 层 (应用进程)</text>
+
+  <rect x="610" y="8" width="230" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="725" y="27" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Choreographer (应用进程)</text>
+
+  <!-- Step 0: scheduleVsync 请求 (上方灰色，表示之前的请求) -->
+  <rect x="610" y="50" width="230" height="26" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="725" y="67" text-anchor="middle" font-size="9" fill="#868e96">scheduleVsyncLocked() — 请求 VSync</text>
+
+  <line x1="610" y1="63" x2="557" y2="63" stroke="#868e96" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="400" y="50" width="155" height="26" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="477" y="67" text-anchor="middle" font-size="9" fill="#868e96">scheduleVsync()</text>
+
+  <line x1="400" y1="63" x2="347" y2="63" stroke="#868e96" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="195" y="50" width="150" height="26" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="270" y="67" text-anchor="middle" font-size="9" fill="#868e96">nativeScheduleVsync()</text>
+
+  <line x1="195" y1="63" x2="157" y2="88" stroke="#868e96" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="150" y="72" font-size="7.5" fill="#868e96">Binder</text>
+
+  <rect x="15" y="82" width="140" height="26" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="85" y="99" text-anchor="middle" font-size="9" fill="#868e96">注册 VSync 请求</text>
+
+  <!-- Step 1: VSync 信号产生 -->
+  <circle cx="85" cy="135" r="11" fill="#c0392b"/>
+  <text x="85" y="139" text-anchor="middle" font-size="9" fill="white" font-weight="600">1</text>
+
+  <rect x="15" y="150" width="140" height="40" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="85" y="168" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">VSync 信号</text>
+  <text x="85" y="183" text-anchor="middle" font-size="8" fill="#868e96">屏幕刷新时刻</text>
+
+  <!-- Step 2: BitTube 传递 -->
+  <circle cx="270" cy="135" r="11" fill="#555"/>
+  <text x="270" y="139" text-anchor="middle" font-size="9" fill="white" font-weight="600">2</text>
+
+  <line x1="155" y1="170" x2="193" y2="170" stroke="#c0392b" stroke-width="1.5" marker-end="url(#arr-r)"/>
+  <text x="174" y="162" text-anchor="middle" font-size="8" fill="#c0392b">BitTube</text>
+
+  <rect x="195" y="150" width="150" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="270" y="168" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">DisplayEventDispatcher</text>
+  <text x="270" y="184" text-anchor="middle" font-size="8.5" fill="#495057">Looper 监听 fd 回调</text>
+  <text x="270" y="196" text-anchor="middle" font-size="8.5" fill="#495057">handleEvent()</text>
+
+  <!-- Step 3: dispatchVsync -->
+  <circle cx="270" cy="215" r="11" fill="#555"/>
+  <text x="270" y="219" text-anchor="middle" font-size="9" fill="white" font-weight="600">3</text>
+
+  <line x1="270" y1="200" x2="270" y2="230" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <rect x="190" y="232" width="160" height="50" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="270" y="249" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">NativeDisplayEvent-</text>
+  <text x="270" y="261" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Receiver</text>
+  <text x="270" y="276" text-anchor="middle" font-size="8.5" fill="#495057">dispatchVsync()</text>
+
+  <!-- Step 4: JNI 回调 -->
+  <circle cx="385" cy="257" r="11" fill="#4a7fb5"/>
+  <text x="385" y="261" text-anchor="middle" font-size="9" fill="white" font-weight="600">4</text>
+
+  <line x1="350" y1="257" x2="398" y2="257" stroke="#4a7fb5" stroke-width="1.5" marker-end="url(#arr-b)"/>
+  <text x="375" y="247" text-anchor="middle" font-size="8" fill="#4a7fb5">JNI</text>
+
+  <rect x="400" y="232" width="155" height="50" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="477" y="249" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">DisplayEventReceiver</text>
+  <text x="477" y="264" text-anchor="middle" font-size="8.5" fill="#495057">dispatchVsync()</text>
+  <text x="477" y="276" text-anchor="middle" font-size="8.5" fill="#495057">→ onVsync()</text>
+
+  <!-- Step 5: FrameDisplayEventReceiver.onVsync -->
+  <circle cx="390" cy="305" r="11" fill="#4a7fb5"/>
+  <text x="390" y="309" text-anchor="middle" font-size="9" fill="white" font-weight="600">5</text>
+
+  <line x1="477" y1="282" x2="477" y2="310" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#arr-b)"/>
+
+  <rect x="400" y="312" width="155" height="60" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="477" y="328" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4a7fb5">FrameDisplayEvent-</text>
+  <text x="477" y="340" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4a7fb5">Receiver.onVsync()</text>
+  <text x="477" y="355" text-anchor="middle" font-size="8" fill="#495057">校验时间戳</text>
+  <text x="477" y="366" text-anchor="middle" font-size="8" fill="#495057">Message.obtain(handler, this)</text>
+
+  <!-- Step 6: Handler 投递 -->
+  <text x="477" y="390" text-anchor="middle" font-size="8" fill="#868e96">msg.setAsynchronous(true)</text>
+  <text x="477" y="403" text-anchor="middle" font-size="8" fill="#868e96">sendMessageAtTime(vsync 时间戳)</text>
+
+  <circle cx="598" cy="400" r="11" fill="#2e7d32"/>
+  <text x="598" y="404" text-anchor="middle" font-size="9" fill="white" font-weight="600">6</text>
+
+  <line x1="555" y1="370" x2="608" y2="400" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#arr-b)"/>
+  <text x="590" y="380" font-size="8" fill="#4a7fb5">异步消息</text>
+
+  <!-- Step 7: run() → doFrame() -->
+  <rect x="610" y="412" width="230" height="30" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="725" y="431" text-anchor="middle" font-size="9.5" fill="#495057">FrameDisplayEventReceiver.run()</text>
+
+  <circle cx="598" cy="458" r="11" fill="#2e7d32"/>
+  <text x="598" y="462" text-anchor="middle" font-size="9" fill="white" font-weight="600">7</text>
+
+  <line x1="725" y1="442" x2="725" y2="455" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#arr-green)"/>
+
+  <rect x="610" y="457" width="230" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="725" y="476" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">Choreographer.doFrame()</text>
+</svg>

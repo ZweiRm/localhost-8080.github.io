@@ -3,8 +3,8 @@ prev:
     text: 'SurfaceControl & Transaction 流程'
     link: '/framework/surfacecontrol-transaction'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'Choreographer 与 VSync 机制'
+    link: '/framework/choreographer-vsync'
 ---
 # StartingWindow
 

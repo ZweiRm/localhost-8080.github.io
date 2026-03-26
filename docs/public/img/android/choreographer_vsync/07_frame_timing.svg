@@ -1,0 +1,91 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">帧时间线与 FrameInfo 阶段</text>
+
+  <!-- 时间轴 -->
+  <line x1="40" y1="80" x2="770" y2="80" stroke="#343a40" stroke-width="1.5" marker-end="url(#a)"/>
+  <text x="775" y="84" font-size="9" fill="#868e96">时间 t</text>
+
+  <!-- VSync 标记 -->
+  <line x1="80" y1="65" x2="80" y2="95" stroke="#c0392b" stroke-width="2"/>
+  <text x="80" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">VSync</text>
+  <text x="80" y="110" text-anchor="middle" font-size="8" fill="#868e96">INTENDED_VSYNC</text>
+
+  <!-- Jitter 标注 -->
+  <line x1="80" y1="70" x2="160" y2="70" stroke="#e07070" stroke-width="1" stroke-dasharray="3,2"/>
+  <line x1="160" y1="65" x2="160" y2="95" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="120" y="63" text-anchor="middle" font-size="8" fill="#c0392b">jitter</text>
+  <text x="160" y="110" text-anchor="middle" font-size="8" fill="#4a7fb5">doFrame 开始</text>
+  <text x="160" y="121" text-anchor="middle" font-size="8" fill="#868e96">FRAME_START_TIME</text>
+
+  <!-- VSYNC (调整后) -->
+  <line x1="100" y1="73" x2="100" y2="87" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="100" y="133" text-anchor="middle" font-size="8" fill="#2e7d32">VSYNC (对齐后)</text>
+
+  <!-- 五阶段时间条 -->
+  <rect x="160" y="145" width="580" height="20" rx="0" fill="#f8f9fa" stroke="#ced4da"/>
+
+  <!-- INPUT -->
+  <rect x="160" y="145" width="80" height="20" rx="0" fill="#fff0f0" stroke="#e07070"/>
+  <text x="200" y="159" text-anchor="middle" font-size="8.5" fill="#c0392b">INPUT</text>
+
+  <!-- ANIMATION -->
+  <rect x="240" y="145" width="100" height="20" rx="0" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="290" y="159" text-anchor="middle" font-size="8.5" fill="#4a7fb5">ANIMATION</text>
+
+  <!-- INSETS_ANIM -->
+  <rect x="340" y="145" width="60" height="20" rx="0" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="370" y="159" text-anchor="middle" font-size="7" fill="#4a7fb5">INSETS</text>
+
+  <!-- TRAVERSAL -->
+  <rect x="400" y="145" width="200" height="20" rx="0" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="500" y="159" text-anchor="middle" font-size="8.5" fill="#2e7d32">TRAVERSAL (measure/layout/draw)</text>
+
+  <!-- COMMIT -->
+  <rect x="600" y="145" width="60" height="20" rx="0" fill="white" stroke="#adb5bd"/>
+  <text x="630" y="159" text-anchor="middle" font-size="8.5" fill="#495057">COMMIT</text>
+
+  <!-- FrameInfo 标注线 -->
+  <line x1="160" y1="140" x2="160" y2="130" stroke="#868e96" stroke-width="0.8"/>
+  <text x="160" y="128" text-anchor="middle" font-size="7.5" fill="#868e96">HANDLE_INPUT_START</text>
+
+  <line x1="240" y1="140" x2="240" y2="130" stroke="#868e96" stroke-width="0.8"/>
+  <text x="240" y="128" text-anchor="middle" font-size="7.5" fill="#868e96">ANIMATION_START</text>
+
+  <line x1="400" y1="140" x2="400" y2="128" stroke="#868e96" stroke-width="0.8"/>
+  <text x="400" y="126" text-anchor="middle" font-size="7.5" fill="#868e96">PERFORM_TRAVERSALS_START</text>
+
+  <line x1="500" y1="165" x2="500" y2="178" stroke="#868e96" stroke-width="0.8"/>
+  <text x="500" y="188" text-anchor="middle" font-size="7.5" fill="#868e96">DRAW_START</text>
+
+  <!-- Deadline 标记 -->
+  <line x1="700" y1="65" x2="700" y2="175" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,2"/>
+  <text x="700" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">deadline</text>
+  <text x="700" y="188" text-anchor="middle" font-size="8" fill="#c0392b">FRAME_DEADLINE</text>
+
+  <!-- Expected Presentation Time -->
+  <line x1="740" y1="65" x2="740" y2="95" stroke="#2e7d32" stroke-width="2"/>
+  <text x="740" y="58" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">上屏</text>
+  <text x="740" y="110" text-anchor="middle" font-size="8" fill="#2e7d32">expectedPresentationTime</text>
+
+  <!-- frameInterval 标注 -->
+  <line x1="80" y1="200" x2="80" y2="215" stroke="#555" stroke-width="0.8"/>
+  <line x1="80" y1="212" x2="740" y2="212" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="740" y1="200" x2="740" y2="215" stroke="#555" stroke-width="0.8"/>
+  <text x="410" y="228" text-anchor="middle" font-size="9" fill="#495057">FRAME_INTERVAL（帧间隔，如 16.6ms @60Hz）</text>
+
+  <!-- 说明区域 -->
+  <rect x="40" y="250" width="720" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da"/>
+  <text x="55" y="270" font-size="9.5" font-weight="600" fill="#343a40">关键时间差的含义：</text>
+  <text x="55" y="288" font-size="9" fill="#495057">FRAME_START_TIME - INTENDED_VSYNC = jitter（主线程繁忙导致的 VSync 响应延迟）</text>
+  <text x="55" y="304" font-size="9" fill="#495057">VSYNC - INTENDED_VSYNC = 帧时间对齐修正量（跳帧时非零）</text>
+  <text x="55" y="320" font-size="9" fill="#495057">deadline - FRAME_START_TIME = 帧处理时间预算（必须在此之前完成渲染提交）</text>
+</svg>

@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'StartingWindow'
-    link: '/framework/StartingWindow'
+    text: 'Choreographer 与 VSync 机制'
+    link: '/framework/choreographer-vsync'
 next:
     text: 'Android 属性动画原理'
     link: '/framework/android-property-animation'

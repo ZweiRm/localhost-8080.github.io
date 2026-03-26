@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 680" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="ab" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#4a7fb5"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#2e7d32"/>
+    </marker>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <text x="380" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">View.invalidate() 到屏幕刷新的完整链路</text>
+
+  <!-- 阶段标签 -->
+  <rect x="15" y="40" width="80" height="22" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="55" y="55" text-anchor="middle" font-size="9" font-weight="600" fill="#4a7fb5">阶段一</text>
+  <text x="105" y="55" font-size="8.5" fill="#868e96">View 树触发更新</text>
+
+  <!-- View.invalidate -->
+  <rect x="50" y="70" width="170" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="135" y="89" text-anchor="middle" font-size="10" fill="#4a7fb5">View.invalidate()</text>
+
+  <line x1="135" y1="100" x2="135" y2="118" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="30" y="120" width="210" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="135" y="138" text-anchor="middle" font-size="9" fill="#495057">ViewGroup.invalidateChild() 向上遍历</text>
+
+  <line x1="135" y1="148" x2="135" y2="166" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="20" y="168" width="230" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="135" y="186" text-anchor="middle" font-size="9" fill="#495057">ViewRootImpl.invalidateChildInParent()</text>
+
+  <line x1="135" y1="196" x2="135" y2="214" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="40" y="216" width="190" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="135" y="234" text-anchor="middle" font-size="9" fill="#495057">invalidateRectOnScreen()</text>
+
+  <line x1="135" y1="244" x2="135" y2="265" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 阶段二 -->
+  <rect x="15" y="265" width="80" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="55" y="280" text-anchor="middle" font-size="9" font-weight="600" fill="#495057">阶段二</text>
+  <text x="105" y="280" font-size="8.5" fill="#868e96">帧调度请求</text>
+
+  <rect x="30" y="293" width="210" height="44" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="135" y="311" text-anchor="middle" font-size="9.5" font-weight="600" fill="#343a40">scheduleTraversals()</text>
+  <text x="135" y="328" text-anchor="middle" font-size="8" fill="#868e96">postSyncBarrier() + postCallback()</text>
+
+  <!-- 右侧：同步屏障说明 -->
+  <rect x="270" y="293" width="200" height="44" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="370" y="310" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">Sync Barrier</text>
+  <text x="370" y="325" text-anchor="middle" font-size="8" fill="#495057">阻止同步消息，仅放行</text>
+  <text x="370" y="336" text-anchor="middle" font-size="8" fill="#495057">异步消息（VSync 回调）</text>
+
+  <line x1="240" y1="315" x2="268" y2="315" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#ar)"/>
+
+  <line x1="135" y1="337" x2="135" y2="355" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="25" y="357" width="220" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="135" y="375" text-anchor="middle" font-size="9" fill="#495057">scheduleFrameLocked() → scheduleVsyncLocked()</text>
+
+  <line x1="135" y1="385" x2="135" y2="403" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="30" y="405" width="210" height="28" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="135" y="423" text-anchor="middle" font-size="9" fill="#4a7fb5">nativeScheduleVsync() → SurfaceFlinger</text>
+
+  <!-- 等待 VSync -->
+  <line x1="135" y1="433" x2="135" y2="453" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <text x="150" y="447" font-size="8.5" font-style="italic" fill="#c0392b">等待下一次 VSync...</text>
+
+  <!-- 阶段三 -->
+  <rect x="15" y="458" width="80" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="55" y="473" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">阶段三</text>
+  <text x="105" y="473" font-size="8.5" fill="#868e96">VSync 到达处理帧</text>
+
+  <rect x="30" y="486" width="210" height="28" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="135" y="504" text-anchor="middle" font-size="9" fill="#2e7d32">FrameDisplayEventReceiver.onVsync()</text>
+
+  <line x1="135" y1="514" x2="135" y2="530" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="55" y="532" width="160" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="135" y="550" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">Choreographer.doFrame()</text>
+
+  <line x1="135" y1="560" x2="135" y2="578" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="30" y="580" width="210" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="135" y="598" text-anchor="middle" font-size="9" fill="#495057">doCallbacks(CALLBACK_TRAVERSAL)</text>
+
+  <line x1="135" y1="608" x2="135" y2="620" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 阶段四 -->
+  <rect x="300" y="458" width="80" height="22" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="340" y="473" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">阶段四</text>
+  <text x="390" y="473" font-size="8.5" fill="#868e96">View 树绘制</text>
+
+  <!-- TraversalRunnable.run() -->
+  <rect x="30" y="622" width="210" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="135" y="640" text-anchor="middle" font-size="9" fill="#495057">TraversalRunnable.run() → doTraversal()</text>
+
+  <!-- removeSyncBarrier -->
+  <line x1="240" y1="636" x2="268" y2="636" stroke="#868e96" stroke-width="1" stroke-dasharray="3,2"/>
+  <rect x="270" y="622" width="170" height="28" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="355" y="640" text-anchor="middle" font-size="8.5" fill="#868e96">removeSyncBarrier() 解除屏障</text>
+
+  <line x1="135" y1="650" x2="135" y2="660" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- performTraversals -->
+  <rect x="530" y="580" width="200" height="78" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="630" y="600" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">performTraversals()</text>
+
+  <rect x="545" y="608" width="80" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="585" y="623" text-anchor="middle" font-size="9" fill="#495057">measure</text>
+
+  <line x1="625" y1="619" x2="632" y2="619" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="638" y="608" width="75" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="675" y="623" text-anchor="middle" font-size="9" fill="#495057">layout</text>
+
+  <rect x="580" y="635" width="110" height="22" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="635" y="650" text-anchor="middle" font-size="9" fill="#2e7d32">draw → RenderThread</text>
+
+  <line x1="240" y1="636" x2="528" y2="620" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#ag)"/>
+
+  <!-- 到 SF -->
+  <rect x="530" y="662" width="200" height="12" rx="0" fill="none" stroke="none"/>
+  <text x="630" y="672" text-anchor="middle" font-size="8.5" fill="#868e96">→ 提交 Buffer 到 SurfaceFlinger 合成上屏</text>
+</svg>

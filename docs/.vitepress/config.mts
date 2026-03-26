@@ -273,6 +273,7 @@ export default defineConfig({
                         { text: 'WindowInsets', link: 'framework/windowInsets' },
                         { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
                         { text: 'StartingWindow', link: 'framework/StartingWindow' },
+                        { text: 'Choreographer 与 VSync 机制', link: 'framework/choreographer-vsync' },
                     ]
                 },
                 {

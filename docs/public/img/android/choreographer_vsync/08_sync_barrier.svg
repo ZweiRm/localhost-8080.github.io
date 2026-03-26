@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 360" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <text x="360" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">同步屏障（Sync Barrier）机制</text>
+
+  <!-- MessageQueue -->
+  <rect x="30" y="50" width="660" height="120" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="50" y="72" font-size="11" font-weight="600" fill="#343a40">MessageQueue</text>
+
+  <!-- 消息序列 -->
+  <rect x="50" y="85" width="80" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="90" y="103" text-anchor="middle" font-size="8.5" fill="#495057">同步消息</text>
+  <text x="90" y="117" text-anchor="middle" font-size="8" fill="#868e96">onClick</text>
+
+  <rect x="145" y="85" width="80" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="185" y="103" text-anchor="middle" font-size="8.5" fill="#495057">同步消息</text>
+  <text x="185" y="117" text-anchor="middle" font-size="8" fill="#868e96">postDelay</text>
+
+  <!-- 同步屏障 -->
+  <rect x="240" y="80" width="6" height="50" rx="0" fill="#c0392b"/>
+  <text x="243" y="145" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">Barrier</text>
+  <text x="243" y="158" text-anchor="middle" font-size="7.5" fill="#868e96">postSyncBarrier()</text>
+
+  <!-- 屏障后的同步消息（被阻塞） -->
+  <rect x="265" y="85" width="80" height="40" rx="3" fill="white" stroke="#ced4da" stroke-dasharray="3,2"/>
+  <text x="305" y="103" text-anchor="middle" font-size="8.5" fill="#ced4da">同步消息</text>
+  <text x="305" y="117" text-anchor="middle" font-size="7.5" fill="#ced4da">被阻塞</text>
+
+  <rect x="360" y="85" width="80" height="40" rx="3" fill="white" stroke="#ced4da" stroke-dasharray="3,2"/>
+  <text x="400" y="103" text-anchor="middle" font-size="8.5" fill="#ced4da">同步消息</text>
+  <text x="400" y="117" text-anchor="middle" font-size="7.5" fill="#ced4da">被阻塞</text>
+
+  <!-- 异步消息（可穿越） -->
+  <rect x="480" y="85" width="100" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="530" y="103" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">异步消息</text>
+  <text x="530" y="117" text-anchor="middle" font-size="8" fill="#2e7d32">VSync 回调</text>
+
+  <rect x="595" y="85" width="80" height="40" rx="3" fill="white" stroke="#ced4da" stroke-dasharray="3,2"/>
+  <text x="635" y="103" text-anchor="middle" font-size="8.5" fill="#ced4da">同步消息</text>
+  <text x="635" y="117" text-anchor="middle" font-size="7.5" fill="#ced4da">被阻塞</text>
+
+  <!-- 穿越箭头 -->
+  <path d="M530,125 C530,150 530,150 530,180" fill="none" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#ag)"/>
+  <text x="550" y="165" font-size="9" fill="#2e7d32">穿越屏障</text>
+
+  <!-- 时间线 -->
+  <rect x="30" y="195" width="660" height="150" rx="3" fill="white" stroke="#ced4da"/>
+  <text x="50" y="218" font-size="11" font-weight="600" fill="#343a40">执行时间线</text>
+
+  <!-- scheduleTraversals -->
+  <rect x="50" y="235" width="180" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="140" y="252" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">scheduleTraversals()</text>
+  <text x="140" y="267" text-anchor="middle" font-size="8" fill="#495057">postSyncBarrier() + postCallback()</text>
+
+  <line x1="230" y1="255" x2="268" y2="255" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="248" y="248" font-size="7.5" fill="#868e96">等VSync</text>
+
+  <!-- VSync 到达 -->
+  <rect x="270" y="235" width="150" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="345" y="252" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">doFrame()</text>
+  <text x="345" y="267" text-anchor="middle" font-size="8" fill="#868e96">异步消息优先执行</text>
+
+  <line x1="420" y1="255" x2="448" y2="255" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- doTraversal -->
+  <rect x="450" y="235" width="120" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="510" y="252" text-anchor="middle" font-size="9" fill="#495057">doTraversal()</text>
+  <text x="510" y="267" text-anchor="middle" font-size="8" fill="#c0392b">removeSyncBarrier()</text>
+
+  <line x1="570" y1="255" x2="598" y2="255" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 恢复处理 -->
+  <rect x="600" y="235" width="75" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="637" y="252" text-anchor="middle" font-size="8.5" fill="#495057">同步消息</text>
+  <text x="637" y="267" text-anchor="middle" font-size="8" fill="#868e96">恢复处理</text>
+
+  <!-- 说明 -->
+  <text x="50" y="310" font-size="9" fill="#495057">同步屏障确保 VSync 异步消息不会被队列中的其他同步消息阻塞，保证帧回调及时执行。</text>
+  <text x="50" y="326" font-size="9" fill="#495057">屏障在 doTraversal() 中移除后，后续同步消息恢复正常处理。</text>
+</svg>
