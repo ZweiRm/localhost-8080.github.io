@@ -1,0 +1,293 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1580 1270" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1580" height="1680" fill="white"/>
+
+  <!-- Swim lane headers -->
+  <rect x="10" y="8" width="120" height="24" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="70" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WMS</text>
+
+  <rect x="140" y="8" width="110" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="195" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WindowAnimator</text>
+
+  <rect x="260" y="8" width="110" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="315" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">DisplayContent</text>
+
+  <rect x="380" y="8" width="100" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="430" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WindowState</text>
+
+  <rect x="490" y="8" width="120" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="550" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WSAnimator</text>
+
+  <rect x="620" y="8" width="110" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="675" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">SurfaceAnimator</text>
+
+  <rect x="740" y="8" width="130" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="805" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">LocalAnimationAdapter</text>
+
+  <rect x="880" y="8" width="140" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="950" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">SurfaceAnimationRunner</text>
+
+  <rect x="1030" y="8" width="130" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1095" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">WindowAnimationSpec</text>
+
+  <rect x="1170" y="8" width="100" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1220" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">ValueAnimator</text>
+
+  <rect x="1280" y="8" width="100" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1330" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">SurfaceControl</text>
+
+  <rect x="1390" y="8" width="90" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1435" y="24" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">DisplayArea</text>
+
+  <rect x="1490" y="8" width="80" height="24" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1530" y="24" text-anchor="middle" font-size="8.5" font-weight="600" fill="#343a40">WinSurfCtrl</text>
+
+  <!-- Lifelines (vertical dashed lines) -->
+  <line x1="70" y1="32" x2="70" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="195" y1="32" x2="195" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="315" y1="32" x2="315" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="430" y1="32" x2="430" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="550" y1="32" x2="550" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="675" y1="32" x2="675" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="805" y1="32" x2="805" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="950" y1="32" x2="950" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="1095" y1="32" x2="1095" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="1220" y1="32" x2="1220" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="1330" y1="32" x2="1330" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="1435" y1="32" x2="1435" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="1530" y1="32" x2="1530" y2="1670" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- ===== Group 1: 窗口动画流程 (Steps 1-24) ===== -->
+  <rect x="5" y="44" width="1090" height="820" rx="3" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="15" y="58" font-size="10" font-weight="600" fill="#343a40">窗口动画流程</text>
+
+  <!-- Step 1: scheduleAnimationLocked -->
+  <text x="12" y="80" font-size="8.5" font-weight="600" fill="#c0392b">1</text>
+  <text x="22" y="80" font-size="8.5" fill="#495057">scheduleAnimationLocked</text>
+  <line x1="70" y1="82" x2="190" y2="82" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: scheduleAnimation -->
+  <text x="142" y="100" font-size="8.5" font-weight="600" fill="#c0392b">2</text>
+  <text x="152" y="100" font-size="8.5" fill="#495057">scheduleAnimation</text>
+  <path d="M 195,102 L 210,102 L 210,108 L 195,108" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: animate (Choreographer callback) -->
+  <text x="142" y="125" font-size="8.5" font-weight="600" fill="#c0392b">3</text>
+  <text x="152" y="125" font-size="8.5" fill="#495057">animate (Vsync callback)</text>
+  <path d="M 195,127 L 210,127 L 210,133 L 195,133" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: updateWindowsForAnimator -->
+  <text x="200" y="150" font-size="8.5" font-weight="600" fill="#c0392b">4</text>
+  <text x="210" y="150" font-size="8.5" fill="#495057">updateWindowsForAnimator</text>
+  <line x1="195" y1="152" x2="310" y2="152" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 5: performShowLocked -->
+  <text x="322" y="170" font-size="8.5" font-weight="600" fill="#c0392b">5</text>
+  <text x="332" y="170" font-size="8.5" fill="#495057">performShowLocked</text>
+  <line x1="315" y1="172" x2="425" y2="172" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 6: applyEnterAnimationLocked -->
+  <text x="437" y="195" font-size="8.5" font-weight="600" fill="#c0392b">6</text>
+  <text x="447" y="195" font-size="8.5" fill="#495057">applyEnterAnimationLocked</text>
+  <line x1="430" y1="197" x2="545" y2="197" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 7: applyAnimationLocked -->
+  <text x="437" y="218" font-size="8.5" font-weight="600" fill="#c0392b">7</text>
+  <text x="447" y="218" font-size="8.5" fill="#495057">applyAnimationLocked</text>
+  <path d="M 550,220 L 565,220 L 565,226 L 550,226" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 8: startAnimation (WS) -->
+  <text x="437" y="245" font-size="8.5" font-weight="600" fill="#c0392b">8</text>
+  <text x="447" y="245" font-size="8.5" fill="#495057">startAnimation</text>
+  <line x1="550" y1="247" x2="425" y2="247" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 9: startAnimation (WC -> SA) -->
+  <text x="437" y="270" font-size="8.5" font-weight="600" fill="#c0392b">9</text>
+  <text x="447" y="270" font-size="8.5" fill="#495057">startAnimation</text>
+  <line x1="430" y1="272" x2="670" y2="272" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 10: createAnimationLeash -->
+  <text x="580" y="293" font-size="8.5" font-weight="600" fill="#c0392b">10</text>
+  <text x="593" y="293" font-size="8.5" fill="#495057">createAnimationLeash</text>
+  <path d="M 675,295 L 690,295 L 690,301 L 675,301" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 11: mAnimation.startAnimation (SA -> LAA) -->
+  <text x="682" y="318" font-size="8.5" font-weight="600" fill="#c0392b">11</text>
+  <text x="695" y="318" font-size="8.5" fill="#495057">startAnimation</text>
+  <line x1="675" y1="320" x2="800" y2="320" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 12: LAA -> SAR startAnimation -->
+  <text x="810" y="343" font-size="8.5" font-weight="600" fill="#c0392b">12</text>
+  <text x="823" y="343" font-size="8.5" fill="#495057">startAnimation</text>
+  <line x1="805" y1="345" x2="945" y2="345" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 13: startAnimations (Choreographer callback) -->
+  <text x="855" y="373" font-size="8.5" font-weight="600" fill="#c0392b">13</text>
+  <text x="868" y="373" font-size="8.5" fill="#495057">startAnimations (Vsync)</text>
+  <path d="M 950,375 L 965,375 L 965,381 L 950,381" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 14: startPendingAnimationsLocked -->
+  <text x="855" y="398" font-size="8.5" font-weight="600" fill="#c0392b">14</text>
+  <text x="868" y="398" font-size="8.5" fill="#495057">startPendingAnimationsLocked</text>
+  <path d="M 950,400 L 965,400 L 965,406 L 950,406" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 15: startAnimationLocked -->
+  <text x="855" y="423" font-size="8.5" font-weight="600" fill="#c0392b">15</text>
+  <text x="868" y="423" font-size="8.5" fill="#495057">startAnimationLocked</text>
+  <path d="M 950,425 L 965,425 L 965,431 L 950,431" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 16: addUpdateListener -->
+  <text x="855" y="448" font-size="8.5" font-weight="600" fill="#c0392b">16</text>
+  <text x="868" y="448" font-size="8.5" fill="#868e96">(创建 ValueAnimator, 注册 UpdateListener)</text>
+
+  <!-- Step 17: applyTransformation -->
+  <text x="855" y="473" font-size="8.5" font-weight="600" fill="#c0392b">17</text>
+  <text x="868" y="473" font-size="8.5" fill="#495057">applyTransformation</text>
+  <path d="M 950,475 L 965,475 L 965,481 L 950,481" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 18: apply (-> WAS) -->
+  <text x="960" y="498" font-size="8.5" font-weight="600" fill="#c0392b">18</text>
+  <text x="973" y="498" font-size="8.5" fill="#495057">apply</text>
+  <line x1="950" y1="500" x2="1090" y2="500" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 19: WAS.apply internals -->
+  <text x="1000" y="523" font-size="8.5" font-weight="600" fill="#c0392b">19</text>
+  <text x="1013" y="523" font-size="8.5" fill="#495057">getTransformation + setMatrix</text>
+  <line x1="1095" y1="525" x2="1325" y2="525" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 20: scheduleApplyTransaction -->
+  <text x="855" y="553" font-size="8.5" font-weight="600" fill="#c0392b">20</text>
+  <text x="868" y="553" font-size="8.5" fill="#495057">scheduleApplyTransaction</text>
+  <path d="M 950,555 L 965,555 L 965,561 L 950,561" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 21: applyTransaction -->
+  <text x="855" y="578" font-size="8.5" font-weight="600" fill="#c0392b">21</text>
+  <text x="868" y="578" font-size="8.5" fill="#495057">applyTransaction</text>
+  <path d="M 950,580 L 965,580 L 965,586 L 950,586" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 22: mFrameTransaction.apply -->
+  <text x="960" y="603" font-size="8.5" font-weight="600" fill="#c0392b">22</text>
+  <text x="973" y="603" font-size="8.5" fill="#495057">apply</text>
+  <line x1="950" y1="605" x2="1325" y2="605" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 23: ValueAnimator.start -->
+  <text x="960" y="638" font-size="8.5" font-weight="600" fill="#c0392b">23</text>
+  <text x="973" y="638" font-size="8.5" fill="#495057">anim.start()</text>
+  <line x1="950" y1="640" x2="1215" y2="640" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 24: doAnimationFrame -->
+  <text x="960" y="663" font-size="8.5" font-weight="600" fill="#c0392b">24</text>
+  <text x="973" y="663" font-size="8.5" fill="#495057">doAnimationFrame</text>
+  <line x1="950" y1="665" x2="1215" y2="665" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Activation bars for key participants -->
+  <rect x="191" y="78" width="8" height="100" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="311" y="148" width="8" height="30" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="426" y="168" width="8" height="110" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="546" y="193" width="8" height="60" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="671" y="268" width="8" height="60" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="801" y="316" width="8" height="35" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="946" y="341" width="8" height="340" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <rect x="1091" y="496" width="8" height="35" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- ===== Group 2: ValueAnimator 工作流程 (Steps 25-34) ===== -->
+  <rect x="1100" y="700" width="460" height="320" rx="3" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="1110" y="714" font-size="10" font-weight="600" fill="#343a40">ValueAnimator 工作流程</text>
+
+  <text x="1165" y="740" font-size="8.5" font-weight="600" fill="#c0392b">25</text>
+  <text x="1178" y="740" font-size="8.5" fill="#495057">start</text>
+  <path d="M 1220,742 L 1235,742 L 1235,748 L 1220,748" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <text x="1165" y="765" font-size="8.5" font-weight="600" fill="#c0392b">26</text>
+  <text x="1178" y="765" font-size="8.5" fill="#495057">addAnimationCallback</text>
+  <path d="M 1220,767 L 1235,767 L 1235,773 L 1220,773" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <text x="1165" y="790" font-size="8.5" font-weight="600" fill="#c0392b">27</text>
+  <text x="1178" y="790" font-size="8.5" fill="#495057">Choreographer.FrameCallback</text>
+
+  <text x="1165" y="820" font-size="8.5" font-weight="600" fill="#c0392b">28</text>
+  <text x="1178" y="820" font-size="8.5" fill="#495057">doAnimationFrame</text>
+  <path d="M 1220,822 L 1235,822 L 1235,828 L 1220,828" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <text x="1165" y="845" font-size="8.5" font-weight="600" fill="#c0392b">29</text>
+  <text x="1178" y="845" font-size="8.5" fill="#495057">animateBasedOnTime</text>
+  <path d="M 1220,847 L 1235,847 L 1235,853 L 1220,853" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <text x="1165" y="870" font-size="8.5" font-weight="600" fill="#c0392b">30</text>
+  <text x="1178" y="870" font-size="8.5" fill="#495057">animateValue</text>
+  <path d="M 1220,872 L 1235,872 L 1235,878 L 1220,878" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <text x="1165" y="895" font-size="8.5" font-weight="600" fill="#c0392b">31</text>
+  <text x="1178" y="895" font-size="8.5" fill="#495057">onAnimationUpdate(this)</text>
+
+  <text x="1110" y="930" font-size="8" fill="#868e96">→ 触发 UpdateListener 回调</text>
+  <text x="1110" y="945" font-size="8" fill="#868e96">→ applyTransformation → apply</text>
+  <text x="1110" y="960" font-size="8" fill="#868e96">→ scheduleApplyTransaction</text>
+
+  <text x="1110" y="985" font-size="8" fill="#868e96">每帧重复 28-31，驱动属性动画</text>
+
+  <!-- ===== Group 3: 输出动画帧 / prepareSurfaces (Steps 35-44) ===== -->
+  <rect x="5" y="880" width="1090" height="370" rx="3" fill="none" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="15" y="894" font-size="10" font-weight="600" fill="#343a40">输出动画帧 (prepareSurfaces)</text>
+
+  <!-- Step 32: WMS -> WA prepareSurfaces (in animate loop) -->
+  <text x="12" y="920" font-size="8.5" font-weight="600" fill="#c0392b">32</text>
+  <text x="22" y="920" font-size="8.5" fill="#495057">animate 循环内: dc.prepareSurfaces()</text>
+
+  <!-- Step 33: DC.prepareSurfaces -->
+  <text x="200" y="945" font-size="8.5" font-weight="600" fill="#c0392b">33</text>
+  <text x="213" y="945" font-size="8.5" fill="#495057">prepareSurfaces</text>
+  <line x1="195" y1="947" x2="310" y2="947" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 34: forAllWindows -> WS.prepareSurfaces -->
+  <text x="322" y="970" font-size="8.5" font-weight="600" fill="#c0392b">34</text>
+  <text x="335" y="970" font-size="8.5" fill="#495057">prepareSurfaces (each window)</text>
+  <line x1="315" y1="972" x2="425" y2="972" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 35: WSA.prepareSurfaceLocked -->
+  <text x="437" y="995" font-size="8.5" font-weight="600" fill="#c0392b">35</text>
+  <text x="450" y="995" font-size="8.5" fill="#495057">prepareSurfaceLocked</text>
+  <line x1="430" y1="997" x2="545" y2="997" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 36: showSurfaceRobustlyLocked -->
+  <text x="437" y="1020" font-size="8.5" font-weight="600" fill="#c0392b">36</text>
+  <text x="450" y="1020" font-size="8.5" fill="#495057">showSurfaceRobustlyLocked</text>
+  <path d="M 550,1022 L 565,1022 L 565,1028 L 550,1028" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 37: showRobustlyInTransaction -->
+  <text x="437" y="1045" font-size="8.5" font-weight="600" fill="#c0392b">37</text>
+  <text x="450" y="1045" font-size="8.5" fill="#495057">showRobustlyInTransaction</text>
+  <path d="M 550,1047 L 565,1047 L 565,1053 L 550,1053" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 38: updateVisibility -->
+  <text x="1340" y="1070" font-size="8.5" font-weight="600" fill="#c0392b">38</text>
+  <text x="1353" y="1070" font-size="8.5" fill="#495057">updateVisibility</text>
+  <line x1="550" y1="1072" x2="1525" y2="1072" stroke="#868e96" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrow)"/>
+
+  <!-- Step 39: showSurface -->
+  <text x="1340" y="1095" font-size="8.5" font-weight="600" fill="#c0392b">39</text>
+  <text x="1353" y="1095" font-size="8.5" fill="#495057">showSurface</text>
+  <line x1="1530" y1="1097" x2="1325" y2="1097" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 40: show -->
+  <text x="1340" y="1120" font-size="8.5" font-weight="600" fill="#c0392b">40</text>
+  <text x="1353" y="1120" font-size="8.5" fill="#495057">show</text>
+  <path d="M 1330,1122 L 1345,1122 L 1345,1128 L 1330,1128" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Notes -->
+  <rect x="15" y="1160" width="400" height="90" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="25" y="1178" font-size="9" font-weight="600" fill="#343a40">执行摘要</text>
+  <text x="25" y="1196" font-size="8.5" fill="#495057">1. Choreographer Vsync 回调驱动 WindowAnimator.animate()</text>
+  <text x="25" y="1210" font-size="8.5" fill="#495057">2. 遍历窗口，READY_TO_SHOW → 加载 Animation → 创建 Leash</text>
+  <text x="25" y="1224" font-size="8.5" fill="#495057">3. SurfaceAnimationRunner 使用 ValueAnimator 逐帧驱动动画</text>
+  <text x="25" y="1238" font-size="8.5" fill="#495057">4. 每帧 apply Transformation → SurfaceControl.Transaction 提交到 SF</text>
+</svg>

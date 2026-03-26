@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#4a7fb5"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#e67e22"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="780" height="420" fill="white"/>
+
+  <!-- Title -->
+  <text x="390" y="28" text-anchor="middle" font-size="14" font-weight="600" fill="#343a40">SurfaceAnimationRunner 动画帧驱动循环</text>
+
+  <!-- Step 1: Choreographer Vsync -->
+  <rect x="20" y="60" width="160" height="50" rx="8" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="100" y="82" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">Choreographer</text>
+  <text x="100" y="98" text-anchor="middle" font-size="10" fill="#4a7fb5">SF-Vsync 回调</text>
+
+  <!-- Arrow to ValueAnimator -->
+  <line x1="180" y1="85" x2="218" y2="85" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Step 2: ValueAnimator -->
+  <rect x="225" y="60" width="160" height="50" rx="8" fill="#fff3cd" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="305" y="82" text-anchor="middle" font-size="10" font-weight="600" fill="#e67e22">ValueAnimator</text>
+  <text x="305" y="98" text-anchor="middle" font-size="10" fill="#e67e22">doAnimationFrame()</text>
+
+  <!-- Arrow to UpdateListener -->
+  <line x1="385" y1="85" x2="423" y2="85" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: UpdateListener -->
+  <rect x="430" y="60" width="160" height="50" rx="8" fill="#fff3cd" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="510" y="82" text-anchor="middle" font-size="10" font-weight="600" fill="#e67e22">onAnimationUpdate</text>
+  <text x="510" y="98" text-anchor="middle" font-size="10" fill="#868e96">(UpdateListener)</text>
+
+  <!-- Arrow down from UpdateListener -->
+  <line x1="510" y1="110" x2="510" y2="148" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Step 4: applyTransformation -->
+  <rect x="430" y="155" width="160" height="50" rx="8" fill="#d4edda" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="510" y="175" text-anchor="middle" font-size="10" font-weight="600" fill="#27ae60">applyTransformation</text>
+  <text x="510" y="193" text-anchor="middle" font-size="9" fill="#868e96">计算当前帧变换</text>
+
+  <!-- Arrow down -->
+  <line x1="510" y1="205" x2="510" y2="243" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Step 5: WindowAnimationSpec.apply -->
+  <rect x="390" y="250" width="240" height="55" rx="8" fill="#d4edda" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="510" y="272" text-anchor="middle" font-size="10" font-weight="600" fill="#27ae60">WindowAnimationSpec.apply()</text>
+  <text x="510" y="292" text-anchor="middle" font-size="9" fill="#868e96">getTransformation → setMatrix / setAlpha</text>
+
+  <!-- Arrow down -->
+  <line x1="510" y1="305" x2="510" y2="343" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Step 6: Transaction apply -->
+  <rect x="390" y="350" width="240" height="40" rx="8" fill="#cce5ff" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="510" y="375" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">SurfaceControl.Transaction.apply()</text>
+
+  <!-- Arrow to SurfaceFlinger -->
+  <line x1="630" y1="370" x2="668" y2="370" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#arrow-blue)"/>
+  <rect x="675" y="355" width="90" height="30" rx="6" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="720" y="375" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">SF</text>
+
+  <!-- Loop arrow: from Transaction left side, down, left, up, right back to Choreographer bottom -->
+  <path d="M 390,370 L 15,370 L 15,130 L 100,130 L 100,117" fill="none" stroke="#e67e22" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-orange)"/>
+  <rect x="30" y="240" width="120" height="35" rx="4" fill="white" stroke="#e67e22" stroke-width="1"/>
+  <text x="90" y="257" text-anchor="middle" font-size="9" font-weight="600" fill="#e67e22">注册下一帧回调</text>
+  <text x="90" y="270" text-anchor="middle" font-size="8" fill="#868e96">scheduleApply</text>
+
+  <!-- End condition: arrow from ValueAnimator bottom-left going down to 动画结束 -->
+  <line x1="260" y1="110" x2="260" y2="148" stroke="#c0392b" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="278" y="135" font-size="8" fill="#c0392b">播放完毕</text>
+
+  <rect x="185" y="155" width="150" height="50" rx="8" fill="#f8d7da" stroke="#c0392b" stroke-width="1"/>
+  <text x="260" y="175" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">动画结束</text>
+  <text x="260" y="193" text-anchor="middle" font-size="9" fill="#868e96">onAnimationEnd 回调</text>
+
+  <!-- Finish callback: arrow from 动画结束 left side to mFinishCallback -->
+  <line x1="185" y1="180" x2="153" y2="180" stroke="#c0392b" stroke-width="1" marker-end="url(#arrow-red)"/>
+  <rect x="20" y="165" width="126" height="30" rx="6" fill="#f8d7da" stroke="#c0392b" stroke-width="1"/>
+  <text x="83" y="185" text-anchor="middle" font-size="9" fill="#c0392b">mFinishCallback</text>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 220" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="220" fill="white"/>
+
+  <!-- Title -->
+  <text x="450" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#343a40">窗口绘制状态（DrawState）流转</text>
+
+  <!-- State: NO_SURFACE -->
+  <rect x="20" y="80" width="130" height="50" rx="8" fill="#f8d7da" stroke="#c0392b" stroke-width="1.5"/>
+  <text x="85" y="101" text-anchor="middle" font-size="11" font-weight="600" fill="#c0392b">NO_SURFACE</text>
+  <text x="85" y="118" text-anchor="middle" font-size="9" fill="#868e96">无 Surface</text>
+
+  <!-- Arrow 1 -->
+  <line x1="150" y1="105" x2="188" y2="105" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="169" y="97" text-anchor="middle" font-size="8" fill="#495057">创建 Surface</text>
+
+  <!-- State: DRAW_PENDING -->
+  <rect x="195" y="80" width="130" height="50" rx="8" fill="#fff3cd" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="260" y="101" text-anchor="middle" font-size="11" font-weight="600" fill="#e67e22">DRAW_PENDING</text>
+  <text x="260" y="118" text-anchor="middle" font-size="9" fill="#868e96">等待 App 绘制</text>
+
+  <!-- Arrow 2 -->
+  <line x1="325" y1="105" x2="363" y2="105" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="344" y="97" text-anchor="middle" font-size="8" fill="#495057">finishDrawing</text>
+
+  <!-- State: COMMIT_DRAW_PENDING -->
+  <rect x="370" y="80" width="150" height="50" rx="8" fill="#fff3cd" stroke="#e67e22" stroke-width="1.5"/>
+  <text x="445" y="101" text-anchor="middle" font-size="10" font-weight="600" fill="#e67e22">COMMIT_DRAW</text>
+  <text x="445" y="118" text-anchor="middle" font-size="10" font-weight="600" fill="#e67e22">_PENDING</text>
+
+  <!-- Arrow 3 -->
+  <line x1="520" y1="105" x2="558" y2="105" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="539" y="97" text-anchor="middle" font-size="8" fill="#495057">commitFinish</text>
+  <text x="539" y="85" text-anchor="middle" font-size="8" fill="#495057">DrawPending</text>
+
+  <!-- State: READY_TO_SHOW -->
+  <rect x="565" y="80" width="140" height="50" rx="8" fill="#d4edda" stroke="#27ae60" stroke-width="1.5"/>
+  <text x="635" y="101" text-anchor="middle" font-size="11" font-weight="600" fill="#27ae60">READY_TO_SHOW</text>
+  <text x="635" y="118" text-anchor="middle" font-size="9" fill="#868e96">等待 Token 就绪</text>
+
+  <!-- Arrow 4 -->
+  <line x1="705" y1="105" x2="743" y2="105" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="724" y="97" text-anchor="middle" font-size="8" fill="#495057">performShow</text>
+  <text x="724" y="85" text-anchor="middle" font-size="8" fill="#495057">Locked</text>
+
+  <!-- State: HAS_DRAWN -->
+  <rect x="750" y="80" width="130" height="50" rx="8" fill="#cce5ff" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="815" y="101" text-anchor="middle" font-size="11" font-weight="600" fill="#4a7fb5">HAS_DRAWN</text>
+  <text x="815" y="118" text-anchor="middle" font-size="9" fill="#868e96">已显示</text>
+
+  <!-- Annotations -->
+  <rect x="20" y="160" width="860" height="45" rx="4" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
+  <text x="35" y="178" font-size="9" fill="#495057">• Surface 创建后进入 DRAW_PENDING，此时 Surface 处于隐藏状态</text>
+  <text x="35" y="194" font-size="9" fill="#495057">• App 完成首帧绘制后进入 COMMIT_DRAW_PENDING → READY_TO_SHOW，等待同 Token 窗口一起显示 → 触发 performShowLocked 进入 HAS_DRAWN 并启动进入动画</text>
+</svg>

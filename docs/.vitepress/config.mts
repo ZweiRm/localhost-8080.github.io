@@ -280,7 +280,8 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         { text: 'ShellTransition', link: 'framework/ShellTransition' },
-                        { text: 'Android 属性动画原理', link: 'framework/android-property-animation' },
+                        { text: '属性动画', link: 'framework/android-property-animation' },
+                        { text: '窗口动画', link: 'framework/window-animation' },
                     ]
                 },
                 {
