@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 340">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Participants -->
+  <rect x="10" y="10" width="115" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="67" y="29" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">ObjectAnimator</text>
+  <line x1="67" y1="38" x2="67" y2="330" stroke="#adb5bd" stroke-dasharray="4,3"/>
+
+  <rect x="160" y="10" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="215" y="29" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">ValueAnimator</text>
+  <line x1="215" y1="38" x2="215" y2="330" stroke="#adb5bd" stroke-dasharray="4,3"/>
+
+  <rect x="305" y="10" width="150" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="380" y="29" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">PropertyValuesHolder</text>
+  <line x1="380" y1="38" x2="380" y2="330" stroke="#adb5bd" stroke-dasharray="4,3"/>
+
+  <rect x="490" y="10" width="150" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="565" y="29" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">FloatPropValuesHolder</text>
+  <line x1="565" y1="38" x2="565" y2="330" stroke="#adb5bd" stroke-dasharray="4,3"/>
+
+  <rect x="675" y="10" width="160" height="28" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="755" y="29" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">JNI (PropertyValuesHolder.cpp)</text>
+  <line x1="755" y1="38" x2="755" y2="330" stroke="#adb5bd" stroke-dasharray="4,3"/>
+
+  <!-- Step 1: start -->
+  <text x="2" y="72" font-size="9" fill="#868e96">1</text>
+  <text x="15" y="72" font-size="9.5" fill="#495057">start()</text>
+
+  <!-- Step 2: autoCancelBasedOn -->
+  <text x="2" y="100" font-size="9" fill="#868e96">2</text>
+  <rect x="42" y="88" width="50" height="16" rx="2" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="67" y="100" text-anchor="middle" font-size="8.5" fill="#495057">autoCancelBasedOn(this)</text>
+
+  <!-- Step 3: super.start() -->
+  <text x="2" y="130" font-size="9" fill="#868e96">3</text>
+  <line x1="67" y1="124" x2="210" y2="124" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="138" y="120" text-anchor="middle" font-size="9" fill="#495057">super.start()</text>
+
+  <!-- Step 4: initAnimation -->
+  <text x="2" y="160" font-size="9" fill="#868e96">4</text>
+  <line x1="215" y1="154" x2="72" y2="154" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="143" y="150" text-anchor="middle" font-size="9" fill="#495057">initAnimation()</text>
+
+  <!-- Step 5: setupSetterAndGetter -->
+  <text x="2" y="190" font-size="9" fill="#868e96">5</text>
+  <line x1="67" y1="184" x2="375" y2="184" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="220" y="180" text-anchor="middle" font-size="9" fill="#495057">setupSetterAndGetter(target)</text>
+
+  <!-- Step 6: setupSetter -->
+  <text x="2" y="220" font-size="9" fill="#868e96">6</text>
+  <line x1="380" y1="214" x2="560" y2="214" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="470" y="210" text-anchor="middle" font-size="9" fill="#495057">setupSetter(targetClass)</text>
+
+  <!-- Step 7: getMethodName -->
+  <text x="2" y="250" font-size="9" fill="#868e96">7</text>
+  <rect x="540" y="238" width="50" height="16" rx="2" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="565" y="250" text-anchor="middle" font-size="8.5" fill="#495057">getMethodName("set", prop)</text>
+
+  <!-- Step 8: nGetFloatMethod (JNI) -->
+  <text x="2" y="280" font-size="9" fill="#868e96">8</text>
+  <line x1="565" y1="274" x2="750" y2="274" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="658" y="270" text-anchor="middle" font-size="9" fill="#495057">nGetFloatMethod()</text>
+  <text x="755" y="296" text-anchor="middle" font-size="8" fill="#868e96">GetMethodID(targetClass, "setXxx", "(F)V")</text>
+</svg>

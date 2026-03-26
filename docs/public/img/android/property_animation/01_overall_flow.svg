@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Title area -->
+  <text x="410" y="28" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">ValueAnimator 工作流程总览</text>
+
+  <!-- Phase 1: Start -->
+  <rect x="30" y="50" width="180" height="130" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="120" y="70" text-anchor="middle" font-size="11" font-weight="600" fill="#4a7fb5">应用层启动</text>
+  <rect x="45" y="82" width="150" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="99" text-anchor="middle" font-size="9.5" fill="#495057">ValueAnimator.start()</text>
+  <line x1="120" y1="108" x2="120" y2="118" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="45" y="118" width="150" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="135" text-anchor="middle" font-size="9.5" fill="#495057">addAnimationCallback()</text>
+  <line x1="120" y1="144" x2="120" y2="154" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="45" y="154" width="150" height="18" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="167" text-anchor="middle" font-size="8.5" fill="#868e96">注册 VSYNC 回调</text>
+
+  <!-- Phase 2: Registration chain -->
+  <rect x="240" y="50" width="200" height="200" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="340" y="70" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">VSYNC 注册链</text>
+  <rect x="255" y="82" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="97" text-anchor="middle" font-size="9" fill="#495057">AnimationHandler</text>
+  <line x1="340" y1="104" x2="340" y2="112" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="255" y="112" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="127" text-anchor="middle" font-size="9" fill="#495057">Choreographer</text>
+  <line x1="340" y1="134" x2="340" y2="142" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="255" y="142" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="157" text-anchor="middle" font-size="9" fill="#495057">DisplayEventReceiver (Java)</text>
+  <line x1="340" y1="164" x2="340" y2="172" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="340" y="180" text-anchor="middle" font-size="8" fill="#868e96">JNI</text>
+  <rect x="255" y="186" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="201" text-anchor="middle" font-size="9" fill="#495057">DisplayEventDispatcher (Native)</text>
+  <line x1="340" y1="208" x2="340" y2="216" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="255" y="216" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="231" text-anchor="middle" font-size="9" fill="#495057">EventThread → requestNextVsync</text>
+
+  <!-- Arrow from phase 1 to phase 2 -->
+  <line x1="210" y1="120" x2="240" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Phase 3: SurfaceFlinger scheduling -->
+  <rect x="470" y="50" width="180" height="200" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="560" y="70" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">SF VSYNC 调度</text>
+  <rect x="485" y="82" width="150" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="97" text-anchor="middle" font-size="9" fill="#495057">VSyncDispatchTimerQueue</text>
+  <line x1="560" y1="104" x2="560" y2="114" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="485" y="114" width="150" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="129" text-anchor="middle" font-size="9" fill="#495057">schedule → setTimer</text>
+  <line x1="560" y1="136" x2="560" y2="146" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="485" y="146" width="150" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="161" text-anchor="middle" font-size="9" fill="#495057">timerCallback()</text>
+  <line x1="560" y1="168" x2="560" y2="178" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="485" y="178" width="150" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="193" text-anchor="middle" font-size="9" fill="#495057">EventThread::onVsync()</text>
+  <line x1="560" y1="200" x2="560" y2="210" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="485" y="210" width="150" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="225" text-anchor="middle" font-size="9" fill="#495057">mPendingEvents.push_back</text>
+
+  <!-- Arrow from phase 2 to phase 3 -->
+  <line x1="440" y1="120" x2="470" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Phase 4: Dispatch back -->
+  <rect x="470" y="275" width="340" height="120" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="640" y="295" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">VSYNC 信号回传</text>
+  <rect x="485" y="305" width="150" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="320" text-anchor="middle" font-size="9" fill="#495057">threadMain → dispatchEvent</text>
+  <line x1="635" y1="316" x2="655" y2="316" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="655" y="305" width="140" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="725" y="320" text-anchor="middle" font-size="9" fill="#495057">BitTube (socket)</text>
+  <line x1="725" y1="327" x2="725" y2="340" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="655" y="340" width="140" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="725" y="355" text-anchor="middle" font-size="9" fill="#495057">handleEvent → dispatchVsync</text>
+  <line x1="655" y1="362" x2="590" y2="375" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="610" y="375" text-anchor="middle" font-size="8" fill="#868e96">JNI</text>
+  <rect x="485" y="370" width="150" height="18" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="383" text-anchor="middle" font-size="8.5" fill="#868e96">→ Java dispatchVsync</text>
+
+  <!-- Arrow down from phase 3 to phase 4 -->
+  <line x1="560" y1="250" x2="560" y2="275" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Phase 5: Java VSYNC handling -->
+  <rect x="30" y="275" width="410" height="230" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="235" y="295" text-anchor="middle" font-size="11" font-weight="600" fill="#4a7fb5">Java 层 VSYNC 处理 &amp; 动画帧计算</text>
+  <rect x="45" y="307" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="322" text-anchor="middle" font-size="9" fill="#495057">FrameDisplayEventReceiver.onVsync</text>
+  <line x1="130" y1="329" x2="130" y2="339" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="45" y="339" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="354" text-anchor="middle" font-size="9" fill="#495057">Choreographer.doFrame()</text>
+  <line x1="130" y1="361" x2="130" y2="371" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="45" y="371" width="170" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="386" text-anchor="middle" font-size="9" fill="#495057">doCallbacks(CALLBACK_ANIMATION)</text>
+  <line x1="215" y1="382" x2="245" y2="382" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="245" y="307" width="180" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="335" y="322" text-anchor="middle" font-size="9" fill="#495057">AnimationHandler.doAnimationFrame</text>
+  <line x1="335" y1="329" x2="335" y2="339" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="245" y="339" width="180" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="335" y="354" text-anchor="middle" font-size="9" fill="#495057">ValueAnimator.doAnimationFrame</text>
+  <line x1="335" y1="361" x2="335" y2="371" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="245" y="371" width="180" height="22" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="335" y="386" text-anchor="middle" font-size="9" fill="#495057">animateBasedOnTime → animateValue</text>
+  <line x1="335" y1="393" x2="335" y2="403" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Result box -->
+  <rect x="245" y="403" width="180" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="335" y="418" text-anchor="middle" font-size="9.5" font-weight="600" fill="#2e7d32">回调 onAnimationUpdate()</text>
+  <text x="335" y="430" text-anchor="middle" font-size="8" fill="#2e7d32">通知监听者更新 UI</text>
+
+  <!-- Loop arrow from result back to VSYNC registration -->
+  <path d="M 45,433 L 20,433 L 20,120 L 30,120" fill="none" stroke="#868e96" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="15" y="280" text-anchor="middle" font-size="8" fill="#868e96" transform="rotate(-90, 15, 280)">动画未结束 → 重新注册 VSYNC</text>
+
+  <!-- Arrow from phase 4 to phase 5 -->
+  <line x1="470" y1="380" x2="440" y2="380" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+</svg>

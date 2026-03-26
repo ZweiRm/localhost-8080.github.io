@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'Android 属性动画原理'
+    link: '/framework/android-property-animation'
 next:
     text: '无焦点窗口 ANR'
     link: '/framework/anr-no-focused'

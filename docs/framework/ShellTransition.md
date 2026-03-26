@@ -3,8 +3,8 @@ prev:
     text: 'StartingWindow'
     link: '/framework/StartingWindow'
 next:
-    text: 'Android Input 系统'
-    link: '/framework/input-system'
+    text: 'Android 属性动画原理'
+    link: '/framework/android-property-animation'
 ---
 
 # Shell Transition 机制

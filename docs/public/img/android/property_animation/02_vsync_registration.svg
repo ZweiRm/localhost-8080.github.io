@@ -1,0 +1,120 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 680">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arr-gray" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#868e96"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="390" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">VSYNC 信号注册调用链</text>
+
+  <!-- Swimlane dividers -->
+  <line x1="200" y1="35" x2="200" y2="670" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="420" y1="35" x2="420" y2="670" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="600" y1="35" x2="600" y2="670" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- Swimlane labels -->
+  <text x="100" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">动画框架层</text>
+  <text x="310" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Choreographer</text>
+  <text x="510" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Native (JNI)</text>
+  <text x="690" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">SurfaceFlinger</text>
+
+  <!-- Step 1: ValueAnimator.start() -->
+  <rect x="20" y="65" width="160" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="100" y="83" text-anchor="middle" font-size="9.5" fill="#495057">ValueAnimator.start()</text>
+  <line x1="100" y1="93" x2="100" y2="108" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 2: addAnimationCallback -->
+  <rect x="20" y="108" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="100" y="126" text-anchor="middle" font-size="9.5" fill="#495057">addAnimationCallback(0)</text>
+  <line x1="100" y1="136" x2="100" y2="151" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 3: AnimationHandler -->
+  <rect x="20" y="151" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="100" y="169" text-anchor="middle" font-size="9" fill="#495057">AnimationHandler</text>
+  <text x="100" y="177" text-anchor="middle" font-size="8" fill="#868e96">.addAnimationFrameCallback()</text>
+  <line x1="180" y1="165" x2="220" y2="165" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 4: getProvider().postFrameCallback -->
+  <rect x="220" y="151" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="169" text-anchor="middle" font-size="9" fill="#495057">MyFrameCallbackProvider</text>
+  <text x="310" y="177" text-anchor="middle" font-size="8" fill="#868e96">.postFrameCallback(mFrameCallback)</text>
+  <line x1="310" y1="179" x2="310" y2="198" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 5: Choreographer.postFrameCallback -->
+  <rect x="220" y="198" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="216" text-anchor="middle" font-size="9.5" fill="#495057">Choreographer.postFrameCallback()</text>
+  <line x1="310" y1="226" x2="310" y2="241" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 6: postCallbackDelayedInternal -->
+  <rect x="220" y="241" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="259" text-anchor="middle" font-size="9.5" fill="#495057">postCallbackDelayedInternal()</text>
+  <line x1="310" y1="269" x2="310" y2="284" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 7: scheduleFrameLocked -->
+  <rect x="220" y="284" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="302" text-anchor="middle" font-size="9.5" fill="#495057">scheduleFrameLocked()</text>
+  <line x1="310" y1="312" x2="310" y2="327" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 8: scheduleVsyncLocked -->
+  <rect x="220" y="327" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="345" text-anchor="middle" font-size="9.5" fill="#495057">scheduleVsyncLocked()</text>
+  <line x1="310" y1="355" x2="310" y2="370" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 9: DisplayEventReceiver.scheduleVsync -->
+  <rect x="220" y="370" width="180" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="310" y="388" text-anchor="middle" font-size="9" fill="#495057">DisplayEventReceiver.scheduleVsync()</text>
+
+  <!-- JNI crossing -->
+  <line x1="400" y1="384" x2="430" y2="384" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr-gray)"/>
+  <text x="415" y="378" text-anchor="middle" font-size="8" fill="#868e96">JNI</text>
+
+  <!-- Step 10: nativeScheduleVsync -->
+  <rect x="430" y="370" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="510" y="388" text-anchor="middle" font-size="9.5" fill="#495057">nativeScheduleVsync()</text>
+  <line x1="510" y1="398" x2="510" y2="413" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 11: DisplayEventDispatcher::scheduleVsync -->
+  <rect x="430" y="413" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="510" y="427" text-anchor="middle" font-size="8.5" fill="#495057">DisplayEventDispatcher</text>
+  <text x="510" y="437" text-anchor="middle" font-size="8" fill="#868e96">::scheduleVsync()</text>
+  <line x1="510" y1="441" x2="510" y2="456" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 12: DisplayEventReceiver::requestNextVsync -->
+  <rect x="430" y="456" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="510" y="470" text-anchor="middle" font-size="8.5" fill="#495057">DisplayEventReceiver</text>
+  <text x="510" y="480" text-anchor="middle" font-size="8" fill="#868e96">::requestNextVsync()</text>
+
+  <!-- Binder crossing -->
+  <line x1="590" y1="470" x2="610" y2="470" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr-gray)"/>
+  <text x="600" y="463" text-anchor="middle" font-size="8" fill="#868e96">Binder</text>
+
+  <!-- Step 13: EventThread -->
+  <rect x="610" y="456" width="160" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="690" y="470" text-anchor="middle" font-size="8.5" fill="#495057">EventThreadConnection</text>
+  <text x="690" y="480" text-anchor="middle" font-size="8" fill="#868e96">::requestNextVsync()</text>
+  <line x1="690" y1="484" x2="690" y2="499" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 14: EventThread::requestNextVsync -->
+  <rect x="610" y="499" width="160" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="690" y="515" text-anchor="middle" font-size="9" fill="#495057">EventThread</text>
+  <text x="690" y="527" text-anchor="middle" font-size="8" fill="#868e96">::requestNextVsync()</text>
+  <line x1="690" y1="535" x2="690" y2="550" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 15: VSyncDispatchTimerQueue -->
+  <rect x="610" y="550" width="160" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="690" y="566" text-anchor="middle" font-size="8.5" fill="#495057">VSyncDispatchTimerQueue</text>
+  <text x="690" y="578" text-anchor="middle" font-size="8" fill="#868e96">::schedule() → setTimer()</text>
+  <line x1="690" y1="586" x2="690" y2="601" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <!-- Step 16: Timer fires -->
+  <rect x="610" y="601" width="160" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="690" y="618" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">定时器到期</text>
+  <text x="690" y="632" text-anchor="middle" font-size="8.5" fill="#495057">timerCallback()</text>
+  <text x="690" y="644" text-anchor="middle" font-size="8" fill="#868e96">→ EventThread::onVsync()</text>
+</svg>

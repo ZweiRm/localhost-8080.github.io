@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- 5 frames -->
+  <rect x="15" y="20" width="110" height="45" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="70" y="40" text-anchor="middle" font-size="10" fill="#343a40">x = 0</text>
+  <text x="70" y="55" text-anchor="middle" font-size="9" fill="#868e96">t = 0ms</text>
+
+  <rect x="155" y="20" width="110" height="45" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="210" y="40" text-anchor="middle" font-size="10" fill="#343a40">x = 10</text>
+  <text x="210" y="55" text-anchor="middle" font-size="9" fill="#868e96">t = 10ms</text>
+
+  <rect x="295" y="20" width="110" height="45" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="350" y="40" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">x = 20</text>
+  <text x="350" y="55" text-anchor="middle" font-size="9" fill="#c0392b">t = 20ms</text>
+
+  <rect x="435" y="20" width="110" height="45" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="490" y="40" text-anchor="middle" font-size="10" fill="#343a40">x = 30</text>
+  <text x="490" y="55" text-anchor="middle" font-size="9" fill="#868e96">t = 30ms</text>
+
+  <rect x="575" y="20" width="110" height="45" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="630" y="40" text-anchor="middle" font-size="10" fill="#343a40">x = 40</text>
+  <text x="630" y="55" text-anchor="middle" font-size="9" fill="#868e96">t = 40ms</text>
+
+  <!-- Duration bar -->
+  <rect x="15" y="85" width="670" height="30" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="350" y="105" text-anchor="middle" font-size="10" fill="#495057">duration = 40ms</text>
+
+  <!-- Calculation flow -->
+  <rect x="30" y="135" width="150" height="40" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="105" y="151" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">Interpolator</text>
+  <text x="105" y="165" text-anchor="middle" font-size="8.5" fill="#868e96">20/40 = 0.5 -> 0.5</text>
+
+  <line x1="180" y1="155" x2="230" y2="155" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="205" y="148" text-anchor="middle" font-size="8" fill="#868e96">fraction</text>
+
+  <rect x="230" y="135" width="180" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="320" y="151" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">Evaluator</text>
+  <text x="320" y="165" text-anchor="middle" font-size="8.5" fill="#868e96">0 + 0.5 * (40 - 0) = 20</text>
+
+  <line x1="410" y1="155" x2="460" y2="155" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="435" y="148" text-anchor="middle" font-size="8" fill="#868e96">value</text>
+
+  <rect x="460" y="135" width="210" height="40" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="565" y="151" text-anchor="middle" font-size="9" fill="#343a40" font-weight="600">onAnimationUpdate</text>
+  <text x="565" y="165" text-anchor="middle" font-size="8.5" fill="#868e96">getAnimatedValue() = 20</text>
+</svg>

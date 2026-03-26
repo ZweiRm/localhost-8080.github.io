@@ -1,0 +1,94 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 560">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#868e96"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <text x="390" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">VSYNC 信号派发流程（Native → Java）</text>
+
+  <!-- Swimlane dividers -->
+  <line x1="260" y1="35" x2="260" y2="550" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+  <line x1="520" y1="35" x2="520" y2="550" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3"/>
+
+  <!-- Swimlane labels -->
+  <text x="130" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">SurfaceFlinger (EventThread)</text>
+  <text x="390" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Native IPC (BitTube)</text>
+  <text x="650" y="48" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">Java 层</text>
+
+  <!-- Step 1: onVsync pushes event -->
+  <rect x="20" y="65" width="220" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="81" text-anchor="middle" font-size="9.5" fill="#495057">EventThread::onVsync()</text>
+  <text x="130" y="94" text-anchor="middle" font-size="8" fill="#868e96">mPendingEvents.push_back(vsync)</text>
+  <line x1="130" y1="101" x2="130" y2="116" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 2: threadMain wakes -->
+  <rect x="20" y="116" width="220" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="132" text-anchor="middle" font-size="9.5" fill="#495057">threadMain() 被唤醒</text>
+  <text x="130" y="145" text-anchor="middle" font-size="8" fill="#868e96">从 mPendingEvents 取出 event</text>
+  <line x1="130" y1="152" x2="130" y2="167" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 3: shouldConsumeEvent -->
+  <rect x="20" y="167" width="220" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="183" text-anchor="middle" font-size="9.5" fill="#495057">查找事件消费者</text>
+  <text x="130" y="196" text-anchor="middle" font-size="8" fill="#868e96">shouldConsumeEvent → consumers</text>
+  <line x1="130" y1="203" x2="130" y2="218" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 4: dispatchEvent -->
+  <rect x="20" y="218" width="220" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="236" text-anchor="middle" font-size="9.5" fill="#495057">dispatchEvent(event, consumers)</text>
+  <line x1="130" y1="246" x2="130" y2="261" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 5: postEvent -->
+  <rect x="20" y="261" width="220" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="130" y="279" text-anchor="middle" font-size="9.5" fill="#495057">EventThreadConnection::postEvent()</text>
+  <line x1="240" y1="275" x2="275" y2="275" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 6: sendEvents via BitTube -->
+  <rect x="275" y="261" width="230" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="390" y="277" text-anchor="middle" font-size="9.5" fill="#495057">DisplayEventReceiver::sendEvents()</text>
+  <text x="390" y="290" text-anchor="middle" font-size="8" fill="#868e96">→ BitTube::sendObjects() (socket 发送)</text>
+  <line x1="390" y1="297" x2="390" y2="330" stroke="#868e96" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="390" y="318" text-anchor="middle" font-size="8.5" font-weight="600" fill="#868e96">socket IPC</text>
+
+  <!-- Step 7: recvObjects via BitTube -->
+  <rect x="275" y="330" width="230" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="390" y="346" text-anchor="middle" font-size="9.5" fill="#495057">Looper::addFd 回调触发</text>
+  <text x="390" y="359" text-anchor="middle" font-size="8" fill="#868e96">BitTube::recvObjects() (socket 接收)</text>
+  <line x1="390" y1="366" x2="390" y2="381" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 8: handleEvent -->
+  <rect x="275" y="381" width="230" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="390" y="397" text-anchor="middle" font-size="9.5" fill="#495057">DisplayEventDispatcher::handleEvent()</text>
+  <text x="390" y="410" text-anchor="middle" font-size="8" fill="#868e96">processPendingEvents → dispatchVsync</text>
+  <line x1="390" y1="417" x2="390" y2="432" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 9: JNI dispatchVsync -->
+  <rect x="275" y="432" width="230" height="36" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="390" y="448" text-anchor="middle" font-size="9" fill="#495057">NativeDisplayEventReceiver</text>
+  <text x="390" y="461" text-anchor="middle" font-size="8" fill="#868e96">::dispatchVsync() → CallVoidMethod</text>
+
+  <!-- JNI crossing -->
+  <line x1="505" y1="450" x2="535" y2="450" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#ag)"/>
+  <text x="520" y="443" text-anchor="middle" font-size="8" fill="#868e96">JNI</text>
+
+  <!-- Step 10: Java dispatchVsync -->
+  <rect x="535" y="432" width="225" height="28" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="648" y="450" text-anchor="middle" font-size="9" fill="#495057">DisplayEventReceiver.dispatchVsync()</text>
+  <line x1="648" y1="460" x2="648" y2="475" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 11: onVsync -->
+  <rect x="535" y="475" width="225" height="28" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="648" y="493" text-anchor="middle" font-size="9" fill="#495057">FrameDisplayEventReceiver.onVsync()</text>
+  <line x1="648" y1="503" x2="648" y2="518" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <!-- Step 12: doFrame -->
+  <rect x="535" y="518" width="225" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="648" y="536" text-anchor="middle" font-size="9.5" font-weight="600" fill="#2e7d32">→ Choreographer.doFrame()</text>
+</svg>
