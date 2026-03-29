@@ -3,8 +3,8 @@ prev:
     text: 'WMS 架构与运行原理分析'
     link: 'framework/basic-with-wms'
 next:
-    text: '窗口显示流程'
-    link: 'framework/window-rendering-process'
+    text: '窗口添加和移除'
+    link: '/framework/window-add-remove'
 ---
 
 # Activity 启动流程与生命周期

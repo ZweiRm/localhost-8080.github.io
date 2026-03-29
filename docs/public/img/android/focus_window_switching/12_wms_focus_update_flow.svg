@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 780">
+  <defs>
+    <marker id="a12" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>text{font-family:'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif}</style>
+  </defs>
+  <text x="340" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">WMS 焦点更新内部流程</text>
+
+  <!-- Entry -->
+  <rect x="190" y="35" width="300" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="340" y="55" font-size="10" fill="#495057" text-anchor="middle">WMS.updateFocusedWindowLocked(mode, updateInputWindows)</text>
+  <line x1="340" y1="65" x2="340" y2="85" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <rect x="170" y="87" width="340" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="107" font-size="10" fill="#495057" text-anchor="middle">RootWindowContainer.updateFocusedWindowLocked()</text>
+  <line x1="340" y1="117" x2="340" y2="137" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <!-- Loop -->
+  <rect x="130" y="139" width="420" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="340" y="159" font-size="10" fill="#495057" text-anchor="middle">for (i = mChildren.size()-1; i >= 0; --i)  遍历每个 DisplayContent</text>
+  <line x1="340" y1="169" x2="340" y2="189" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <rect x="150" y="191" width="380" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="211" font-size="10" fill="#495057" text-anchor="middle">DisplayContent.updateFocusedWindowLocked(mode, ..., topFocusedDisplayId)</text>
+  <line x1="340" y1="221" x2="340" y2="241" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <!-- shouldKeepFocus check -->
+  <path d="M 340 241 L 430 266 L 340 291 L 250 266 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="263" font-size="9" fill="#495057" text-anchor="middle">shouldKeepFocus</text>
+  <text x="340" y="276" font-size="9" fill="#495057" text-anchor="middle">&amp;&amp; visible?</text>
+  <line x1="430" y1="266" x2="530" y2="266" stroke="#2e7d32" stroke-width="1" marker-end="url(#a12)"/>
+  <text x="478" y="258" font-size="8" fill="#2e7d32">是</text>
+  <rect x="530" y="252" width="120" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="590" y="270" font-size="9" fill="#2e7d32" text-anchor="middle">return false (不切换)</text>
+
+  <line x1="340" y1="291" x2="340" y2="311" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+  <text x="350" y="303" font-size="8" fill="#868e96">否</text>
+
+  <!-- findFocusedWindowIfNeeded -->
+  <rect x="180" y="313" width="320" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="333" font-size="10" fill="#495057" text-anchor="middle">findFocusedWindowIfNeeded(topFocusedDisplayId)</text>
+  <line x1="340" y1="343" x2="340" y2="358" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <!-- hasOwnFocus check -->
+  <path d="M 340 358 L 420 380 L 340 402 L 260 380 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="378" font-size="9" fill="#495057" text-anchor="middle">hasOwnFocus()</text>
+  <text x="340" y="391" font-size="9" fill="#495057" text-anchor="middle">|| INVALID?</text>
+  <line x1="260" y1="380" x2="120" y2="380" stroke="#868e96" stroke-width="1" marker-end="url(#a12)"/>
+  <text x="190" y="372" font-size="8" fill="#868e96">否</text>
+  <rect x="30" y="366" width="90" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="75" y="384" font-size="9" fill="#495057" text-anchor="middle">return null</text>
+
+  <line x1="340" y1="402" x2="340" y2="420" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+  <text x="350" y="414" font-size="8" fill="#2e7d32">是</text>
+
+  <!-- findFocusedWindow -->
+  <rect x="190" y="422" width="300" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="340" y="442" font-size="10" fill="#495057" text-anchor="middle">findFocusedWindow() — forAllWindows 自顶向下遍历</text>
+  <line x1="340" y1="452" x2="340" y2="470" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <!-- mFindFocusedWindow -->
+  <rect x="120" y="472" width="440" height="100" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="130" y="490" font-size="10" font-weight="600" fill="#343a40">mFindFocusedWindow Lambda（对每个 WindowState）</text>
+  <text x="140" y="508" font-size="9" fill="#495057">1. canReceiveKeys() == false → 跳过</text>
+  <text x="140" y="523" font-size="9" fill="#495057">2. focusedApp == null → 当前窗口获焦</text>
+  <text x="140" y="538" font-size="9" fill="#495057">3. !focusedApp.windowsAreFocusable() → 当前窗口获焦</text>
+  <text x="140" y="553" font-size="9" fill="#495057">4. activity 在 focusedApp 之下 → mTmpWindow = null（无焦点）</text>
+  <text x="140" y="568" font-size="9" fill="#495057">5. 嵌入式 TaskFragment 检查 / 默认：当前窗口获焦</text>
+
+  <line x1="340" y1="572" x2="340" y2="595" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <!-- Focus changed? -->
+  <path d="M 340 595 L 420 618 L 340 641 L 260 618 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="340" y="616" font-size="9" fill="#495057" text-anchor="middle">newFocus !=</text>
+  <text x="340" y="629" font-size="9" fill="#495057" text-anchor="middle">mCurrentFocus?</text>
+  <line x1="420" y1="618" x2="530" y2="618" stroke="#868e96" stroke-width="1" marker-end="url(#a12)"/>
+  <text x="478" y="610" font-size="8" fill="#868e96">否</text>
+  <rect x="530" y="604" width="120" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="590" y="622" font-size="9" fill="#495057" text-anchor="middle">return false</text>
+
+  <line x1="340" y1="641" x2="340" y2="660" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+  <text x="350" y="653" font-size="8" fill="#2e7d32">是</text>
+
+  <!-- Update mCurrentFocus -->
+  <rect x="170" y="662" width="340" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="340" y="682" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">mCurrentFocus = newFocus</text>
+  <text x="340" y="698" font-size="9" fill="#495057" text-anchor="middle">→ computeImeTarget() → getInputMonitor().setInputFocusLw()</text>
+  <text x="340" y="710" font-size="8" fill="#2e7d32" text-anchor="middle">日志: "Changing focus from X to Y"</text>
+
+  <line x1="340" y1="712" x2="340" y2="732" stroke="#555" stroke-width="1" marker-end="url(#a12)"/>
+
+  <rect x="220" y="734" width="240" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="340" y="752" font-size="10" fill="#2e7d32" text-anchor="middle">return true（焦点已切换）</text>
+</svg>

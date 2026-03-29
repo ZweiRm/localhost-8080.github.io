@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '窗口显示流程'
-    link: '/framework/activity-rendering-process'
+    text: 'Activity 启动流程与生命周期'
+    link: '/framework/activity-launching-process'
 next:
     text: '窗口层级管理'
     link: '/framework/wms-window-hierarchy'

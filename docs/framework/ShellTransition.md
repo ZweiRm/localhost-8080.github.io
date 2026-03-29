@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Choreographer 与 VSync 机制'
-    link: '/framework/choreographer-vsync'
+    text: '焦点窗口切换'
+    link: '/framework/focus-window-switching'
 next:
     text: 'Android 属性动画原理'
     link: '/framework/android-property-animation'

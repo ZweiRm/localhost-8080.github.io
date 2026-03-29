@@ -3,8 +3,8 @@ prev:
     text: '窗口添加和移除'
     link: '/framework/window-add-remove'
 next:
-    text: '窗口布局流程 relayoutWindow'
-    link: '/framework/relayoutWindow'
+    text: 'SurfaceControl & Transaction 流程'
+    link: '/framework/surfacecontrol-transaction'
 ---
 
 # WMS 窗口层级管理

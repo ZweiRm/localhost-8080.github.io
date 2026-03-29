@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 680">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="360" y="22" font-size="13" font-weight="700" fill="#212529" text-anchor="middle">App 侧焦点回调链</text>
+
+  <!-- Swimlane headers -->
+  <rect x="0" y="38" width="240" height="28" rx="0" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="120" y="56" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">InputDispatcher (native)</text>
+
+  <rect x="240" y="38" width="240" height="28" rx="0" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="360" y="56" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">ViewRootImpl (主线程)</text>
+
+  <rect x="480" y="38" width="240" height="28" rx="0" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="600" y="56" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">View 树 / Activity</text>
+
+  <!-- Vertical dividers -->
+  <line x1="240" y1="66" x2="240" y2="680" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="480" y1="66" x2="480" y2="680" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- Step 1: InputDispatcher dispatches FocusEvent -->
+  <rect x="20" y="82" width="200" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="120" y="102" font-size="9" fill="#212529" text-anchor="middle">dispatchFocusLocked()</text>
+  <line x1="220" y1="98" x2="268" y2="98" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="244" y="92" font-size="7.5" fill="#6c757d" text-anchor="middle">InputChannel</text>
+
+  <!-- Step 2: InputEventReceiver.onFocusEvent -->
+  <rect x="270" y="82" width="200" height="32" rx="3" fill="#e8f0fe" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="96" font-size="9" fill="#212529" text-anchor="middle">InputEventReceiver</text>
+  <text x="370" y="108" font-size="8" fill="#6c757d" text-anchor="middle">.onFocusEvent(hasFocus)</text>
+
+  <!-- Arrow down -->
+  <line x1="370" y1="114" x2="370" y2="132" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 3: windowFocusChanged -->
+  <rect x="270" y="134" width="200" height="48" rx="3" fill="#e8f0fe" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="150" font-size="9" fill="#212529" text-anchor="middle">windowFocusChanged(hasFocus)</text>
+  <text x="370" y="163" font-size="7.5" fill="#6c757d" text-anchor="middle">synchronized { mWindowFocusChanged = true }</text>
+  <text x="370" y="175" font-size="7.5" fill="#6c757d" text-anchor="middle">发送 MSG_WINDOW_FOCUS_CHANGED</text>
+
+  <!-- Arrow down -->
+  <line x1="370" y1="182" x2="370" y2="200" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="374" y="195" font-size="7" fill="#999" text-anchor="start">Handler 异步</text>
+
+  <!-- Step 4: handleWindowFocusChanged -->
+  <rect x="270" y="202" width="200" height="32" rx="3" fill="#e8f0fe" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="222" font-size="9" fill="#212529" text-anchor="middle">handleWindowFocusChanged()</text>
+
+  <!-- Arrow down -->
+  <line x1="370" y1="234" x2="370" y2="252" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 5: InsetsController -->
+  <rect x="270" y="254" width="200" height="40" rx="3" fill="#fff8e1" stroke="#f9a825" stroke-width="1"/>
+  <text x="370" y="270" font-size="9" fill="#212529" text-anchor="middle">InsetsController</text>
+  <text x="370" y="284" font-size="7.5" fill="#6c757d" text-anchor="middle">onWindowFocusGained / Lost</text>
+
+  <!-- Arrow down -->
+  <line x1="370" y1="294" x2="370" y2="312" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 6: dispatchFocusEvent -->
+  <rect x="270" y="314" width="200" height="56" rx="3" fill="#e8f0fe" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="330" font-size="9" fill="#212529" text-anchor="middle">dispatchFocusEvent()</text>
+  <text x="370" y="344" font-size="7.5" fill="#6c757d" text-anchor="middle">mAttachInfo.mHasWindowFocus = hasFocus</text>
+  <text x="370" y="356" font-size="7.5" fill="#6c757d" text-anchor="middle">初始化 ThreadedRenderer</text>
+  <text x="370" y="365" font-size="7.5" fill="#6c757d" text-anchor="middle">mImeFocusController.onPreWindowFocus()</text>
+
+  <!-- Arrow right to View tree -->
+  <line x1="470" y1="340" x2="498" y2="340" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 7: View.dispatchWindowFocusChanged -->
+  <rect x="500" y="314" width="200" height="32" rx="3" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="600" y="328" font-size="9" fill="#212529" text-anchor="middle">mView.dispatchWindow</text>
+  <text x="600" y="340" font-size="9" fill="#212529" text-anchor="middle">FocusChanged(hasFocus)</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="346" x2="600" y2="364" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 8: ViewGroup recursion -->
+  <rect x="500" y="366" width="200" height="40" rx="3" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="600" y="382" font-size="9" fill="#212529" text-anchor="middle">ViewGroup 递归传播</text>
+  <text x="600" y="396" font-size="7.5" fill="#6c757d" text-anchor="middle">super → children[i] 遍历</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="406" x2="600" y2="424" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 9: View.onWindowFocusChanged -->
+  <rect x="500" y="426" width="200" height="48" rx="3" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1"/>
+  <text x="600" y="442" font-size="9" fill="#212529" text-anchor="middle">View.onWindowFocusChanged()</text>
+  <text x="600" y="456" font-size="7.5" fill="#6c757d" text-anchor="middle">失焦: 清 pressed、移除回调</text>
+  <text x="600" y="468" font-size="7.5" fill="#6c757d" text-anchor="middle">获焦: IME 通知、手写初始化</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="474" x2="600" y2="492" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 10: DecorView → Activity -->
+  <rect x="500" y="494" width="200" height="40" rx="3" fill="#fff3e0" stroke="#e65100" stroke-width="1"/>
+  <text x="600" y="510" font-size="9" fill="#212529" text-anchor="middle">DecorView.onWindowFocusChanged()</text>
+  <text x="600" y="524" font-size="7.5" fill="#6c757d" text-anchor="middle">→ Window.Callback.onWindowFocusChanged()</text>
+
+  <!-- Arrow down -->
+  <line x1="600" y1="534" x2="600" y2="552" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step 11: Activity.onWindowFocusChanged -->
+  <rect x="500" y="554" width="200" height="32" rx="3" fill="#fce4ec" stroke="#c62828" stroke-width="1"/>
+  <text x="600" y="574" font-size="9" font-weight="600" fill="#c62828" text-anchor="middle">Activity.onWindowFocusChanged(true)</text>
+
+  <!-- Note: App startup complete marker -->
+  <rect x="500" y="598" width="200" height="24" rx="10" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="1"/>
+  <text x="600" y="614" font-size="8" fill="#7b1fa2" text-anchor="middle">App 启动完成、界面可交互</text>
+
+  <!-- Back arrow: post-focus processing -->
+  <line x1="370" y1="370" x2="370" y2="398" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step after dispatch: IME post focus -->
+  <rect x="270" y="400" width="200" height="32" rx="3" fill="#fff8e1" stroke="#f9a825" stroke-width="1"/>
+  <text x="370" y="420" font-size="9" fill="#212529" text-anchor="middle">mImeFocusController.onPostWindowFocus()</text>
+
+  <!-- Arrow down -->
+  <line x1="370" y1="432" x2="370" y2="450" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Step: Accessibility + ContentCapture -->
+  <rect x="270" y="452" width="200" height="48" rx="3" fill="#e8f0fe" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="468" font-size="8" fill="#212529" text-anchor="middle">maybeFireAccessibilityWindow</text>
+  <text x="370" y="480" font-size="8" fill="#212529" text-anchor="middle">StateChangedEvent()</text>
+  <text x="370" y="492" font-size="8" fill="#6c757d" text-anchor="middle">handleContentCaptureFlush()</text>
+
+  <!-- Fake focus note -->
+  <rect x="270" y="520" width="200" height="40" rx="3" fill="#efebe9" stroke="#795548" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="370" y="536" font-size="8" fill="#795548" text-anchor="middle">dispatchCompatFakeFocus()</text>
+  <text x="370" y="550" font-size="7.5" fill="#999" text-anchor="middle">分屏兼容：模拟获焦/失焦</text>
+
+  <!-- Legend -->
+  <rect x="20" y="630" width="10" height="10" rx="1" fill="#e8f0fe" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="36" y="639" font-size="7.5" fill="#6c757d">ViewRootImpl 处理</text>
+  <rect x="140" y="630" width="10" height="10" rx="1" fill="#e8f5e9" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="156" y="639" font-size="7.5" fill="#6c757d">View 树传播</text>
+  <rect x="240" y="630" width="10" height="10" rx="1" fill="#fff8e1" stroke="#f9a825" stroke-width="0.8"/>
+  <text x="256" y="639" font-size="7.5" fill="#6c757d">IME/Insets 处理</text>
+  <rect x="360" y="630" width="10" height="10" rx="1" fill="#fce4ec" stroke="#c62828" stroke-width="0.8"/>
+  <text x="376" y="639" font-size="7.5" fill="#6c757d">App 回调</text>
+</svg>

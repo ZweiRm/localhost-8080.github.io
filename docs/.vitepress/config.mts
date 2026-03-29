@@ -263,17 +263,18 @@ export default defineConfig({
                     items: [
                         { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
                         { text: 'Activity 启动流程与生命周期', link: 'framework/activity-launching-process' },
-                        { text: '窗口显示流程', link: 'framework/window-rendering-process' },
                         { text: '窗口添加和移除', link: 'framework/window-add-remove' },
                         { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
+                        { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
+                        { text: 'Choreographer 与 VSync 机制', link: 'framework/choreographer-vsync' },
                         { text: '窗口布局流程 relayoutWindow', link: 'framework/relayoutWindow' },
                         { text: '窗口绘制状态', link: 'framework/window-draw-state' },
+                        { text: '窗口显示流程', link: 'framework/window-rendering-process' },
                         { text: 'Activity 与窗口可见性更新', link: 'framework/visibility-management' },
                         { text: 'Configuration 管理', link: 'framework/configuration-management' },
                         { text: 'WindowInsets', link: 'framework/windowInsets' },
-                        { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
                         { text: 'StartingWindow', link: 'framework/StartingWindow' },
-                        { text: 'Choreographer 与 VSync 机制', link: 'framework/choreographer-vsync' },
+                        { text: '焦点窗口切换', link: 'framework/focus-window-switching' },
                     ]
                 },
                 {

@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '窗口层级管理'
-    link: '/framework/wms-window-hierarchy'
+    text: 'Choreographer 与 VSync 机制'
+    link: '/framework/choreographer-vsync'
 next:
     text: '窗口绘制状态'
     link: '/framework/window-draw-state'

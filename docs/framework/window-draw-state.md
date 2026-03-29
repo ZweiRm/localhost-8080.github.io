@@ -3,8 +3,8 @@ prev:
     text: '窗口布局流程 relayoutWindow'
     link: '/framework/relayoutWindow'
 next:
-    text: 'Activity 与窗口可见性更新机制'
-    link: '/framework/visibility-management'
+    text: '窗口显示流程'
+    link: '/framework/window-rendering-process'
 ---
 
 # WMS 窗口绘制状态

@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'SurfaceControl & Transaction 流程'
-    link: '/framework/surfacecontrol-transaction'
+    text: 'WindowInsets'
+    link: '/framework/windowInsets'
 next:
-    text: 'Choreographer 与 VSync 机制'
-    link: '/framework/choreographer-vsync'
+    text: '焦点窗口切换'
+    link: '/framework/focus-window-switching'
 ---
 # StartingWindow
 

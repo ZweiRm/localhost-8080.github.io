@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'WindowInsets'
-    link: '/framework/windowInsets'
+    text: '窗口层级管理'
+    link: '/framework/wms-window-hierarchy'
 next:
-    text: 'StartingWindow'
-    link: '/framework/StartingWindow'
+    text: 'Choreographer 与 VSync 机制'
+    link: '/framework/choreographer-vsync'
 ---
 
 # SurfaceControl & Transaction 流程

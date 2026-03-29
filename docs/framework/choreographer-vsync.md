@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'StartingWindow'
-    link: '/framework/StartingWindow'
+    text: 'SurfaceControl & Transaction 流程'
+    link: '/framework/surfacecontrol-transaction'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: '窗口布局流程 relayoutWindow'
+    link: '/framework/relayoutWindow'
 ---
 
 # Choreographer 与 VSync 机制

@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '窗口绘制状态'
-    link: '/framework/window-draw-state'
+    text: '窗口显示流程'
+    link: '/framework/window-rendering-process'
 next:
     text: 'Configuration 管理'
     link: '/framework/configuration-management'

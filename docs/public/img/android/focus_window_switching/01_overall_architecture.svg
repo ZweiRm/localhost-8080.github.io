@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520">
+  <defs>
+    <marker id="arrow1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- App Process -->
+  <rect x="20" y="20" width="240" height="480" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="140" y="42" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">App 进程</text>
+
+  <rect x="40" y="60" width="200" height="55" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="140" y="82" font-size="10" fill="#495057" text-anchor="middle">ViewRootImpl</text>
+  <text x="140" y="96" font-size="9" fill="#868e96" text-anchor="middle">performTraversals() / relayoutWindow()</text>
+
+  <rect x="40" y="130" width="200" height="55" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="140" y="152" font-size="10" fill="#495057" text-anchor="middle">Choreographer</text>
+  <text x="140" y="166" font-size="9" fill="#868e96" text-anchor="middle">doFrame() / VSync 驱动</text>
+
+  <rect x="40" y="200" width="200" height="55" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="140" y="222" font-size="10" fill="#495057" text-anchor="middle">RenderThread</text>
+  <text x="140" y="236" font-size="9" fill="#868e96" text-anchor="middle">GPU 渲染 / queueBuffer</text>
+
+  <rect x="40" y="270" width="200" height="55" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="140" y="292" font-size="10" fill="#495057" text-anchor="middle">Session (Binder)</text>
+  <text x="140" y="306" font-size="9" fill="#868e96" text-anchor="middle">addToDisplay / finishDrawing</text>
+
+  <!-- system_server Process -->
+  <rect x="290" y="20" width="240" height="480" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="410" y="42" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">system_server 进程</text>
+
+  <rect x="310" y="60" width="200" height="55" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="82" font-size="10" fill="#495057" text-anchor="middle">WindowManagerService</text>
+  <text x="410" y="96" font-size="9" fill="#868e96" text-anchor="middle">updateFocusedWindowLocked()</text>
+
+  <rect x="310" y="130" width="200" height="55" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="152" font-size="10" fill="#495057" text-anchor="middle">DisplayContent</text>
+  <text x="410" y="166" font-size="9" fill="#868e96" text-anchor="middle">findFocusedWindow / canReceiveKeys</text>
+
+  <rect x="310" y="200" width="200" height="55" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="222" font-size="10" fill="#495057" text-anchor="middle">InputMonitor</text>
+  <text x="410" y="236" font-size="9" fill="#868e96" text-anchor="middle">requestFocus() / populateInputWindow</text>
+
+  <rect x="310" y="270" width="200" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="295" font-size="10" fill="#495057" text-anchor="middle">SurfaceControl.Transaction</text>
+
+  <rect x="310" y="325" width="200" height="55" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="347" font-size="10" fill="#495057" text-anchor="middle">WM Shell (Transitions)</text>
+  <text x="410" y="361" font-size="9" fill="#868e96" text-anchor="middle">动画执行 / reparent / hide</text>
+
+  <rect x="310" y="395" width="200" height="55" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="410" y="417" font-size="10" fill="#495057" text-anchor="middle">InputDispatcher (native)</text>
+  <text x="410" y="431" font-size="9" fill="#868e96" text-anchor="middle">FocusResolver / ANR 检测</text>
+
+  <!-- SurfaceFlinger Process -->
+  <rect x="560" y="20" width="240" height="480" rx="3" fill="none" stroke="#adb5bd" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="680" y="42" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">SurfaceFlinger 进程</text>
+
+  <rect x="580" y="60" width="200" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="680" y="82" font-size="10" fill="#495057" text-anchor="middle">setTransactionState</text>
+  <text x="680" y="96" font-size="9" fill="#868e96" text-anchor="middle">接收 Transaction / FocusRequest</text>
+
+  <rect x="580" y="130" width="200" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="680" y="152" font-size="10" fill="#495057" text-anchor="middle">Layer 管理</text>
+  <text x="680" y="166" font-size="9" fill="#868e96" text-anchor="middle">flags / alpha / visibility</text>
+
+  <rect x="580" y="200" width="200" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="680" y="222" font-size="10" fill="#495057" text-anchor="middle">updateInputFlinger</text>
+  <text x="680" y="236" font-size="9" fill="#868e96" text-anchor="middle">WindowInfo + FocusRequest → Input</text>
+
+  <rect x="580" y="270" width="200" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="680" y="292" font-size="10" fill="#495057" text-anchor="middle">合成上屏</text>
+  <text x="680" y="306" font-size="9" fill="#868e96" text-anchor="middle">commit / composite</text>
+
+  <!-- Arrows -->
+  <!-- App → WMS -->
+  <line x1="240" y1="87" x2="308" y2="87" stroke="#555" stroke-width="1.2" marker-end="url(#arrow1)"/>
+  <text x="274" y="80" font-size="8" fill="#868e96" text-anchor="middle">Binder</text>
+
+  <!-- WMS internal -->
+  <line x1="410" y1="115" x2="410" y2="128" stroke="#555" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="410" y1="185" x2="410" y2="198" stroke="#555" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="410" y1="255" x2="410" y2="268" stroke="#555" stroke-width="1" marker-end="url(#arrow1)"/>
+
+  <!-- Transaction → SF -->
+  <line x1="510" y1="290" x2="578" y2="87" stroke="#555" stroke-width="1.2" marker-end="url(#arrow1)"/>
+  <text x="555" y="175" font-size="8" fill="#868e96" text-anchor="middle" transform="rotate(-50 555 175)">Transaction.apply()</text>
+
+  <!-- SF → Input -->
+  <line x1="580" y1="227" x2="512" y2="410" stroke="#555" stroke-width="1.2" marker-end="url(#arrow1)"/>
+  <text x="555" y="330" font-size="8" fill="#868e96" text-anchor="middle" transform="rotate(60 555 330)">setFocusedWindow</text>
+
+  <!-- SF internal -->
+  <line x1="680" y1="115" x2="680" y2="128" stroke="#555" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="680" y1="185" x2="680" y2="198" stroke="#555" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="680" y1="255" x2="680" y2="268" stroke="#555" stroke-width="1" marker-end="url(#arrow1)"/>
+
+  <!-- ANR highlight -->
+  <rect x="310" y="460" width="200" height="30" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="410" y="480" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">ANR: 5s 无焦点窗口</text>
+  <line x1="410" y1="450" x2="410" y2="458" stroke="#e07070" stroke-width="1" marker-end="url(#arrow1)"/>
+</svg>

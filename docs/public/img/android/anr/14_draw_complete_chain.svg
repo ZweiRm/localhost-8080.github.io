@@ -102,7 +102,6 @@
   <rect x="295" y="65" width="195" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8"/>
   <text x="305" y="82" font-size="9" font-weight="600" fill="#343a40">关键日志</text>
   <text x="305" y="98" font-size="8" fill="#495057">Focus request [窗口]</text>
-  <text x="305" y="112" font-size="8" fill="#495057">Focus receive [窗口]</text>
-  <text x="305" y="126" font-size="8" fill="#495057">ignore ... NOT_VISIBLE</text>
-  <text x="305" y="140" font-size="8" fill="#2e7d32">Focus entering [窗口]</text>
+  <text x="305" y="112" font-size="8" fill="#868e96">（NOT_VISIBLE → 等待窗口可见）</text>
+  <text x="305" y="126" font-size="8" fill="#2e7d32">Focus entering [窗口]</text>
 </svg>

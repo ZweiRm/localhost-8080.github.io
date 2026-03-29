@@ -55,6 +55,6 @@
   <rect x="475" y="345" width="210" height="25" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.8"/>
   <text x="580" y="362" font-size="9" fill="#c0392b" text-anchor="middle">父级 Layer 异常 → 子级全不可见</text>
 
-  <text x="35" y="393" font-size="9" fill="#495057">批量检索命令：grep -rna -E "MI-SF   : --\d+-- .*flags=\d+[13579]" ./*</text>
+  <text x="35" y="393" font-size="9" fill="#495057">检查方法：dumpsys SurfaceFlinger，搜索目标窗口 Layer，逐级检查 flags 和 alpha</text>
   <text x="35" y="408" font-size="9" fill="#495057">正常 Layer 层级应有 8-10 级，如仅 2-3 级则说明 reparent 异常导致窗口脱离层级树</text>
 </svg>
