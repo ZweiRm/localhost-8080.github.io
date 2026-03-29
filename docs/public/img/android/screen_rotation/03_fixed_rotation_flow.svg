@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 480" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#2e7d32"/>
+    </marker>
+  </defs>
+
+  <text x="430" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">FixedRotation 流程（桌面启动横屏应用）</text>
+
+  <!-- Phase 1: OPEN Transition -->
+  <rect x="15" y="38" width="410" height="430" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="220" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">OPEN Transition</text>
+
+  <rect x="50" y="72" width="340" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="220" y="90" text-anchor="middle" font-size="10" fill="#495057">startActivity → 创建 OPEN Transition</text>
+
+  <line x1="220" y1="100" x2="220" y2="116" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="30" y="116" width="380" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="134" text-anchor="middle" font-size="10" fill="#495057">ensureVisibilityAndConfig → updateOrientation()</text>
+
+  <line x1="220" y1="144" x2="220" y2="160" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="30" y="160" width="380" height="28" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="220" y="178" text-anchor="middle" font-size="10" fill="#c0392b">handleTopActivityLaunchingInDifferentOrientation()</text>
+
+  <line x1="220" y1="188" x2="220" y2="204" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="40" y="204" width="360" height="28" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="220" y="222" text-anchor="middle" font-size="10" fill="#c0392b">setFixedRotationLaunchingApp(r, rotation)</text>
+
+  <line x1="220" y1="232" x2="220" y2="248" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="30" y="248" width="380" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="265" text-anchor="middle" font-size="10" fill="#495057">applyFixedRotationTransform()</text>
+  <text x="220" y="280" text-anchor="middle" font-size="9" fill="#868e96">模拟新方向信息 → App 横屏绘制</text>
+
+  <line x1="220" y1="288" x2="220" y2="304" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="50" y="304" width="340" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="322" text-anchor="middle" font-size="10" fill="#495057">Transition Sync → onTransitionReady</text>
+
+  <line x1="220" y1="332" x2="220" y2="348" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="60" y="348" width="320" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="366" text-anchor="middle" font-size="10" fill="#495057">Shell 播放 OPEN 过渡动画</text>
+
+  <line x1="220" y1="376" x2="220" y2="392" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="50" y="392" width="340" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="410" text-anchor="middle" font-size="10" fill="#495057">finishTransition → onAppTransitionFinishedLocked</text>
+
+  <line x1="220" y1="420" x2="220" y2="436" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="30" y="436" width="380" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="220" y="454" text-anchor="middle" font-size="10" fill="#2e7d32">continueUpdateOrientationForDiffOrienLaunchingApp()</text>
+
+  <!-- Arrow from phase 1 to phase 2 -->
+  <line x1="425" y1="450" x2="445" y2="450" stroke="#2e7d32" stroke-width="1.5" marker-end="url(#ag)"/>
+
+  <!-- Phase 2: CHANGE Transition -->
+  <rect x="435" y="38" width="410" height="430" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="640" y="58" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">CHANGE Transition</text>
+
+  <rect x="470" y="72" width="340" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="90" text-anchor="middle" font-size="10" fill="#495057">updateRotationUnchecked() → rotation 变化</text>
+
+  <line x1="640" y1="100" x2="640" y2="116" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="460" y="116" width="360" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="134" text-anchor="middle" font-size="10" fill="#495057">requestChangeTransition(CONFIG_WINDOW_CONFIGURATION)</text>
+
+  <line x1="640" y1="144" x2="640" y2="160" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="490" y="160" width="300" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="178" text-anchor="middle" font-size="10" fill="#495057">创建 CHANGE Transition → 通知 Shell</text>
+
+  <line x1="640" y1="188" x2="640" y2="204" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="490" y="204" width="300" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="222" text-anchor="middle" font-size="10" fill="#495057">Shell startTransition → applyTransaction</text>
+
+  <line x1="640" y1="232" x2="640" y2="248" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="460" y="248" width="360" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="640" y="265" text-anchor="middle" font-size="10" fill="#c0392b">sendNewConfiguration()</text>
+  <text x="640" y="280" text-anchor="middle" font-size="9" fill="#868e96">更新全局 Configuration + finishFixedRotation</text>
+
+  <line x1="640" y1="288" x2="640" y2="304" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="480" y="304" width="320" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="322" text-anchor="middle" font-size="10" fill="#495057">Transition Sync → onTransitionReady</text>
+
+  <line x1="640" y1="332" x2="640" y2="348" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="460" y="348" width="360" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="365" text-anchor="middle" font-size="10" fill="#495057">Shell 播放 CHANGE 动画</text>
+  <text x="640" y="380" text-anchor="middle" font-size="9" fill="#868e96">Seamless Rotation（因 App 已横屏绘制好）</text>
+
+  <line x1="640" y1="388" x2="640" y2="404" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="500" y="404" width="280" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="422" text-anchor="middle" font-size="10" fill="#495057">finishTransition → 旋转完成</text>
+
+  <line x1="640" y1="432" x2="640" y2="448" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <rect x="520" y="448" width="240" height="18" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="640" y="461" text-anchor="middle" font-size="9.5" fill="#2e7d32">屏幕已处于横屏状态</text>
+</svg>

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="390" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">三种旋转方式</text>
+
+  <!-- Freeze Rotation -->
+  <rect x="15" y="40" width="240" height="265" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="135" y="62" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">冻屏旋转 (Normal)</text>
+  <text x="135" y="78" text-anchor="middle" font-size="9" fill="#868e96">prepareNormalRotationAnimation()</text>
+
+  <rect x="35" y="92" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="109" text-anchor="middle" font-size="9.5" fill="#495057">截取当前屏幕内容</text>
+
+  <line x1="135" y1="118" x2="135" y2="132" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="35" y="132" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="149" text-anchor="middle" font-size="9.5" fill="#495057">冻结屏幕显示旧截图</text>
+
+  <line x1="135" y1="158" x2="135" y2="172" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="35" y="172" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="189" text-anchor="middle" font-size="9.5" fill="#495057">通知 SystemUI → 转屏</text>
+
+  <line x1="135" y1="198" x2="135" y2="212" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="35" y="212" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="135" y="229" text-anchor="middle" font-size="9.5" fill="#495057">播放旋转过渡动画</text>
+
+  <line x1="135" y1="238" x2="135" y2="252" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="35" y="252" width="200" height="26" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="135" y="269" text-anchor="middle" font-size="9.5" fill="#2e7d32">解冻 → 显示新方向</text>
+
+  <text x="135" y="296" text-anchor="middle" font-size="9" fill="#868e96">适用于：应用内旋转等场景</text>
+
+  <!-- Seamless Rotation -->
+  <rect x="270" y="40" width="240" height="265" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="390" y="62" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">无缝旋转 (Seamless)</text>
+  <text x="390" y="78" text-anchor="middle" font-size="9" fill="#868e96">prepareSeamlessRotation()</text>
+
+  <rect x="290" y="92" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="109" text-anchor="middle" font-size="9.5" fill="#495057">不冻结屏幕</text>
+
+  <line x1="390" y1="118" x2="390" y2="132" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="290" y="132" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="149" text-anchor="middle" font-size="9.5" fill="#495057">各窗口独立旋转过渡</text>
+
+  <line x1="390" y1="158" x2="390" y2="172" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="290" y="172" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="189" text-anchor="middle" font-size="9.5" fill="#495057">直接由旧方向过渡到新方向</text>
+
+  <line x1="390" y1="198" x2="390" y2="212" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="290" y="212" width="200" height="26" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="390" y="229" text-anchor="middle" font-size="9.5" fill="#2e7d32">无感完成旋转</text>
+
+  <text x="390" y="260" text-anchor="middle" font-size="9" fill="#868e96">适用于：顶层应用支持</text>
+  <text x="390" y="274" text-anchor="middle" font-size="9" fill="#868e96">seamless rotation 的场景</text>
+
+  <!-- FixedRotation -->
+  <rect x="525" y="40" width="240" height="265" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="645" y="62" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">FixedRotation</text>
+  <text x="645" y="78" text-anchor="middle" font-size="9" fill="#868e96">setFixedRotationLaunchingApp()</text>
+
+  <rect x="545" y="92" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="645" y="109" text-anchor="middle" font-size="9.5" fill="#495057">模拟新方向的 DisplayInfo</text>
+
+  <line x1="645" y1="118" x2="645" y2="132" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="545" y="132" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="645" y="149" text-anchor="middle" font-size="9.5" fill="#495057">App 以新方向绘制</text>
+
+  <line x1="645" y1="158" x2="645" y2="172" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="545" y="172" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="645" y="189" text-anchor="middle" font-size="9.5" fill="#495057">执行 OPEN 过渡动画</text>
+
+  <line x1="645" y1="198" x2="645" y2="212" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="545" y="212" width="200" height="26" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="645" y="229" text-anchor="middle" font-size="9.5" fill="#495057">动画结束后真正转屏</text>
+
+  <line x1="645" y1="238" x2="645" y2="252" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+
+  <rect x="545" y="252" width="200" height="26" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="645" y="269" text-anchor="middle" font-size="9.5" fill="#2e7d32">无缝完成（已绘制好）</text>
+
+  <text x="645" y="296" text-anchor="middle" font-size="9" fill="#868e96">适用于：Activity 启动时方向</text>
+  <text x="645" y="308" text-anchor="middle" font-size="9" fill="#868e96">与当前屏幕不一致</text>
+</svg>

@@ -275,6 +275,7 @@ export default defineConfig({
                         { text: 'WindowInsets', link: 'framework/windowInsets' },
                         { text: 'StartingWindow', link: 'framework/StartingWindow' },
                         { text: '焦点窗口切换', link: 'framework/focus-window-switching' },
+                        { text: '转屏机制', link: 'framework/screen-rotation' },
                     ]
                 },
                 {

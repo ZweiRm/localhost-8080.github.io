@@ -3,8 +3,8 @@ prev:
     text: 'StartingWindow'
     link: '/framework/StartingWindow'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: '转屏机制'
+    link: '/framework/screen-rotation'
 ---
 
 # 焦点窗口切换

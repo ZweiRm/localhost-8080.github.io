@@ -1,0 +1,109 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="al" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7,0 0,2.5 7,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="550" y="20" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">旋转 Transition 创建与收集流程（时序图）</text>
+
+  <!-- Participant boxes -->
+  <rect x="10" y="35" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="65" y="53" text-anchor="middle" font-size="9.5" fill="#495057">DisplayRotation</text>
+
+  <rect x="155" y="35" width="110" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="210" y="53" text-anchor="middle" font-size="9.5" fill="#495057">DisplayContent</text>
+
+  <rect x="310" y="35" width="130" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="375" y="53" text-anchor="middle" font-size="9.5" fill="#495057">TransitionController</text>
+
+  <rect x="490" y="35" width="120" height="28" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="550" y="53" text-anchor="middle" font-size="9.5" fill="#495057">Transitions (Shell)</text>
+
+  <rect x="660" y="35" width="90" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="705" y="53" text-anchor="middle" font-size="9.5" fill="#495057">Transition</text>
+
+  <rect x="800" y="35" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="860" y="53" text-anchor="middle" font-size="9.5" fill="#495057">BLASTSyncEngine</text>
+
+  <rect x="965" y="35" width="120" height="28" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="1025" y="53" text-anchor="middle" font-size="9.5" fill="#495057">WindowContainer</text>
+
+  <!-- Lifelines -->
+  <line x1="65" y1="63" x2="65" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="210" y1="63" x2="210" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="375" y1="63" x2="375" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="550" y1="63" x2="550" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="705" y1="63" x2="705" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="860" y1="63" x2="860" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="1025" y1="63" x2="1025" y2="510" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Step 1: requestChangeTransition -->
+  <line x1="65" y1="90" x2="210" y2="90" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="137" y="85" text-anchor="middle" font-size="9" fill="#495057">requestChangeTransition()</text>
+
+  <!-- Step 2: requestStartDisplayTransition -->
+  <line x1="210" y1="120" x2="375" y2="120" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="293" y="115" text-anchor="middle" font-size="9" fill="#495057">requestStartDisplayTransition()</text>
+
+  <!-- Step 3: createTransition + moveToCollecting -->
+  <rect x="350" y="138" width="50" height="16" rx="2" fill="white" stroke="#adb5bd" stroke-width="0.5"/>
+  <line x1="375" y1="150" x2="375" y2="150" stroke="#555" stroke-width="1"/>
+  <text x="375" y="148" text-anchor="middle" font-size="8" fill="#868e96">createTransition()</text>
+
+  <line x1="375" y1="165" x2="705" y2="165" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="540" y="160" text-anchor="middle" font-size="9" fill="#495057">startCollecting()</text>
+
+  <line x1="705" y1="185" x2="860" y2="185" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="783" y="180" text-anchor="middle" font-size="9" fill="#495057">startSyncSet()</text>
+
+  <!-- Step 4: moveToCollecting -->
+  <line x1="375" y1="210" x2="375" y2="210" stroke="#555" stroke-width="1"/>
+  <text x="375" y="208" text-anchor="middle" font-size="8" fill="#868e96">moveToCollecting()</text>
+
+  <!-- Step 5: requestStartTransition (to Shell via Binder) -->
+  <line x1="375" y1="240" x2="550" y2="240" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="463" y="235" text-anchor="middle" font-size="9" fill="#495057">requestStartTransition()</text>
+  <text x="463" y="248" text-anchor="middle" font-size="8" fill="#868e96">(Binder 调用到 Shell)</text>
+
+  <!-- Step 6: Shell creates ActiveTransition, finds handler -->
+  <rect x="480" y="260" width="140" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.5"/>
+  <text x="550" y="275" text-anchor="middle" font-size="8" fill="#495057">Shell: 创建 ActiveTransition</text>
+  <text x="550" y="285" text-anchor="middle" font-size="8" fill="#495057">寻找 Handler 处理旋转</text>
+
+  <!-- Step 7: Shell calls startTransition back -->
+  <line x1="550" y1="305" x2="375" y2="305" stroke="#555" stroke-width="1" marker-end="url(#al)"/>
+  <text x="463" y="300" text-anchor="middle" font-size="9" fill="#495057">startTransition() (回调)</text>
+
+  <!-- Step 8: collect -->
+  <line x1="210" y1="335" x2="705" y2="335" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="458" y="330" text-anchor="middle" font-size="9" fill="#495057">collect(displayContent)</text>
+
+  <!-- Step 9: SyncGroup addToSync -->
+  <line x1="705" y1="360" x2="860" y2="360" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="783" y="355" text-anchor="middle" font-size="9" fill="#495057">SyncGroup#addToSync()</text>
+
+  <!-- Step 10: prepareSync -->
+  <line x1="860" y1="385" x2="1025" y2="385" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="943" y="380" text-anchor="middle" font-size="9" fill="#495057">prepareSync()</text>
+
+  <!-- Step 11: sendNewConfiguration -->
+  <line x1="210" y1="415" x2="210" y2="430" stroke="#555" stroke-width="1"/>
+  <rect x="145" y="415" width="130" height="16" rx="2" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="210" y="426" text-anchor="middle" font-size="8.5" fill="#c0392b">sendNewConfiguration()</text>
+
+  <!-- Step 12: Sync finished → onTransitionReady -->
+  <line x1="860" y1="455" x2="705" y2="455" stroke="#555" stroke-width="1" marker-end="url(#al)"/>
+  <text x="783" y="450" text-anchor="middle" font-size="9" fill="#495057">SyncGroup Finished!</text>
+
+  <line x1="705" y1="475" x2="550" y2="475" stroke="#555" stroke-width="1" marker-end="url(#al)"/>
+  <text x="628" y="470" text-anchor="middle" font-size="9" fill="#495057">onTransitionReady()</text>
+
+  <!-- Step 13: Shell plays animation -->
+  <rect x="480" y="488" width="140" height="16" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.5"/>
+  <text x="550" y="500" text-anchor="middle" font-size="9" fill="#2e7d32">Shell 播放旋转动画</text>
+</svg>

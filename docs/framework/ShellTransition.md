@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '焦点窗口切换'
-    link: '/framework/focus-window-switching'
+    text: '转屏机制'
+    link: '/framework/screen-rotation'
 next:
     text: 'Android 属性动画原理'
     link: '/framework/android-property-animation'

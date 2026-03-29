@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 380" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="410" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">两种旋转触发方式</text>
+
+  <!-- Left: App Request -->
+  <rect x="20" y="45" width="370" height="320" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="205" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">应用请求旋转</text>
+
+  <rect x="110" y="80" width="200" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="210" y="100" text-anchor="middle" font-size="10" fill="#495057">App: setRequestedOrientation()</text>
+
+  <line x1="210" y1="112" x2="210" y2="130" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="80" y="130" width="260" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="210" y="150" text-anchor="middle" font-size="10" fill="#495057">ActivityRecord.setOrientation()</text>
+
+  <line x1="210" y1="162" x2="210" y2="180" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="60" y="180" width="300" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="210" y="200" text-anchor="middle" font-size="10" fill="#495057">DisplayContent.updateOrientation()</text>
+
+  <line x1="210" y1="212" x2="210" y2="230" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="40" y="230" width="340" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="210" y="250" text-anchor="middle" font-size="10" fill="#495057">DisplayRotation.updateRotationUnchecked()</text>
+
+  <line x1="210" y1="262" x2="210" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="50" y="280" width="320" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="210" y="300" text-anchor="middle" font-size="10" fill="#495057">DisplayRotation.rotationForOrientation()</text>
+
+  <line x1="210" y1="312" x2="210" y2="330" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="80" y="330" width="260" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="210" y="349" text-anchor="middle" font-size="10" fill="#2e7d32">mRotation 更新 → sendNewConfiguration()</text>
+
+  <!-- Right: Sensor Request -->
+  <rect x="430" y="45" width="370" height="320" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="615" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Sensor 触发旋转</text>
+
+  <rect x="510" y="80" width="210" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="615" y="100" text-anchor="middle" font-size="10" fill="#495057">SensorManager 上报方向变化</text>
+
+  <line x1="615" y1="112" x2="615" y2="130" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="460" y="130" width="310" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="615" y="150" text-anchor="middle" font-size="10" fill="#495057">WindowOrientationListener.onSensorChanged()</text>
+
+  <line x1="615" y1="162" x2="615" y2="180" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="180" width="290" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="615" y="200" text-anchor="middle" font-size="10" fill="#495057">OrientationListener.onProposedRotationChanged()</text>
+
+  <line x1="615" y1="212" x2="615" y2="230" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="470" y="230" width="290" height="32" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="615" y="250" text-anchor="middle" font-size="10" fill="#495057">WMS.updateRotation(false, false)</text>
+
+  <line x1="615" y1="262" x2="615" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="450" y="280" width="340" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="620" y="300" text-anchor="middle" font-size="10" fill="#495057">DisplayRotation.updateRotationUnchecked()</text>
+
+  <line x1="615" y1="312" x2="615" y2="330" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <rect x="480" y="330" width="260" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="610" y="349" text-anchor="middle" font-size="10" fill="#2e7d32">mRotation 更新 → sendNewConfiguration()</text>
+</svg>
