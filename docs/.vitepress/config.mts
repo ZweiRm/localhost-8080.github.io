@@ -35,7 +35,8 @@ export default defineConfig({
                     { text: 'JVM', link: '/java/jvm' },
                 ]},
                 { text: 'Android Frameworks', items: [
-                    { text: 'Window/Activity Mng Svc', link: '/framework/basic-with-wms'},
+                    { text: 'Activity Mng Svc', link: '/framework/activity-launching-process'},
+                    { text: 'Window Mng Svc', link: '/framework/basic-with-wms'},
                     { text: '动画', link: '/framework/ShellTransition'},
                     { text: 'Input Mng Svc', link: '/framework/input-system'},
                     { text: '性能与稳定性', link: '/framework/anr-no-focused'},
@@ -258,13 +259,21 @@ export default defineConfig({
             text: 'Android Frameworks', link: 'framework/index',
             items: [
                 {
-                    text: 'Window/Activity Mng Svc',
+                    text: 'Activity Mng Svc',
+                    collapsed: false,
+                    items: [
+                        { text: 'Activity 启动流程与生命周期', link: 'framework/activity-launching-process' },
+                        { text: 'AMS 进程管理', link: 'framework/ams_process_management' },
+                    ]
+                },
+                {
+                    text: 'Window Mng Svc',
                     collapsed: false,
                     items: [
                         { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
-                        { text: 'Activity 启动流程与生命周期', link: 'framework/activity-launching-process' },
                         { text: '窗口添加和移除', link: 'framework/window-add-remove' },
                         { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
+
                         { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
                         { text: 'Choreographer 与 VSync 机制', link: 'framework/choreographer-vsync' },
                         { text: '窗口布局流程 relayoutWindow', link: 'framework/relayoutWindow' },
@@ -306,7 +315,6 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         { text: 'performTraversal', link: 'framework/performTraversal' },
-                        { text: 'Android 12 容器层级', link: 'framework/container' },
                         { text: 'Android 16 新特性', link: 'framework/android16' },
                     ]
                 },

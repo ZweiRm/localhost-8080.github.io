@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 320" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <!-- Outer container (ActivityStackSupervisor) -->
+  <rect x="10" y="10" width="500" height="260" rx="3" stroke="#bbb" stroke-width="1" stroke-dasharray="5,3" fill="#f8f9fa"/>
+  <text x="260" y="30" text-anchor="middle" font-size="10" fill="#868e96">ActivityStackSupervisor</text>
+  <!-- Stack 1 -->
+  <rect x="30" y="42" width="220" height="218" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="140" y="270" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Stack</text>
+  <!-- Task 1 in Stack 1 -->
+  <rect x="50" y="52" width="180" height="96" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="52" y="68" font-size="9" fill="#868e96">Task</text>
+  <rect x="72" y="74" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="140" y="92" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <rect x="72" y="108" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="140" y="126" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <!-- Task 2 in Stack 1 -->
+  <rect x="50" y="156" width="180" height="96" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="52" y="172" font-size="9" fill="#868e96">Task</text>
+  <rect x="72" y="178" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="140" y="196" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <rect x="72" y="212" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="140" y="230" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <!-- Stack 2 -->
+  <rect x="270" y="42" width="220" height="218" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="380" y="270" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Stack</text>
+  <!-- Task 1 in Stack 2 -->
+  <rect x="290" y="52" width="180" height="96" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="292" y="68" font-size="9" fill="#868e96">Task</text>
+  <rect x="312" y="74" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="380" y="92" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <rect x="312" y="108" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="380" y="126" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <!-- Task 2 in Stack 2 -->
+  <rect x="290" y="156" width="180" height="96" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="292" y="172" font-size="9" fill="#868e96">Task</text>
+  <rect x="312" y="178" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="380" y="196" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <rect x="312" y="212" width="136" height="28" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="380" y="230" text-anchor="middle" font-size="10" fill="#495057">Activity</text>
+  <!-- Labels -->
+  <text x="260" y="305" text-anchor="middle" font-size="10" fill="#868e96">每个 Activity 属于一个 Task，每个 Task 属于一个 Stack</text>
+</svg>

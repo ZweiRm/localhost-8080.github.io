@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow6" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+  <!-- Start circle -->
+  <circle cx="250" cy="20" r="10" fill="#343a40"/>
+  <line x1="250" y1="30" x2="250" y2="50" stroke="#555" stroke-width="1" marker-end="url(#arrow6)"/>
+  <!-- Activity destroy -->
+  <rect x="170" y="52" width="160" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="250" y="74" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Activity destroy</text>
+  <line x1="250" y1="88" x2="250" y2="108" stroke="#555" stroke-width="1" marker-end="url(#arrow6)"/>
+  <!-- Condition label -->
+  <text x="258" y="104" font-size="9" fill="#868e96">oom adj &gt;= CACHED_APP_MIN_ADJ</text>
+  <!-- Set timer -->
+  <rect x="150" y="118" width="200" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="250" y="140" text-anchor="middle" font-size="10.5" fill="#343a40">设置定时器，十分钟后冻结进程</text>
+  <!-- Fork paths -->
+  <line x1="250" y1="154" x2="250" y2="170" stroke="#555" stroke-width="1"/>
+  <!-- Right path: timer fires -->
+  <line x1="250" y1="170" x2="370" y2="170" stroke="#555" stroke-width="1"/>
+  <line x1="370" y1="170" x2="370" y2="220" stroke="#555" stroke-width="1" marker-end="url(#arrow6)"/>
+  <text x="320" y="190" font-size="9" fill="#868e96">十分钟到</text>
+  <!-- Freeze process -->
+  <rect x="300" y="222" width="140" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="370" y="244" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">冻结进程</text>
+  <!-- Left path: Activity start before timer -->
+  <line x1="250" y1="170" x2="120" y2="170" stroke="#555" stroke-width="1"/>
+  <line x1="120" y1="170" x2="120" y2="310" stroke="#555" stroke-width="1" marker-end="url(#arrow6)"/>
+  <!-- Delete timer -->
+  <rect x="50" y="312" width="140" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="120" y="334" text-anchor="middle" font-size="11" fill="#495057">删除定时器</text>
+  <!-- Activity start triggers unfreeze -->
+  <line x1="370" y1="258" x2="370" y2="290" stroke="#555" stroke-width="1"/>
+  <text x="378" y="280" font-size="9" fill="#868e96">Activity start 使得 oom adj</text>
+  <text x="378" y="292" font-size="9" fill="#868e96">&lt; CACHED_APP_MIN_ADJ</text>
+  <line x1="370" y1="296" x2="370" y2="350" stroke="#555" stroke-width="1" marker-end="url(#arrow6)"/>
+  <!-- Unfreeze process -->
+  <rect x="300" y="352" width="140" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="370" y="374" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">解冻进程</text>
+  <!-- Merge paths -->
+  <line x1="120" y1="348" x2="120" y2="430" stroke="#555" stroke-width="1"/>
+  <line x1="370" y1="388" x2="370" y2="430" stroke="#555" stroke-width="1"/>
+  <line x1="120" y1="430" x2="370" y2="430" stroke="#555" stroke-width="1"/>
+  <line x1="250" y1="430" x2="250" y2="460" stroke="#555" stroke-width="1" marker-end="url(#arrow6)"/>
+  <!-- End circle -->
+  <circle cx="250" cy="475" r="10" fill="white" stroke="#343a40" stroke-width="2"/>
+  <circle cx="250" cy="475" r="5" fill="#343a40"/>
+</svg>

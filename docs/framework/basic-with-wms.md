@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'Android Frameworks'
-    link: 'framework/index'
+    text: 'AMS 进程管理'
+    link: '/framework/ams_process_management'
 next:
-    text: 'Activity 启动流程与生命周期'
-    link: 'framework/activity-launching-process'
+    text: '窗口添加和移除'
+    link: '/framework/window-add-remove'
 ---
 
 # WMS 架构与运行原理分析

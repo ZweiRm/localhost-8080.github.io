@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <!-- Nice value axis -->
+  <line x1="240" y1="30" x2="530" y2="30" stroke="#343a40" stroke-width="1.5"/>
+  <polygon points="530,27 540,30 530,33" fill="#343a40"/>
+  <text x="550" y="35" font-size="11" fill="#343a40">Nice 值</text>
+  <text x="240" y="20" text-anchor="middle" font-size="10" fill="#495057">-20</text>
+  <text x="530" y="20" text-anchor="middle" font-size="10" fill="#495057">19</text>
+  <line x1="240" y1="25" x2="240" y2="35" stroke="#343a40" stroke-width="1"/>
+  <!-- Process blocks -->
+  <!-- Real-time process block -->
+  <rect x="30" y="50" width="210" height="70" rx="3" fill="#4dd0c1" stroke="none"/>
+  <text x="135" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="white">实时进程</text>
+  <!-- Normal process block -->
+  <rect x="240" y="50" width="290" height="70" rx="3" fill="#ffab76" stroke="none"/>
+  <text x="385" y="90" text-anchor="middle" font-size="14" font-weight="600" fill="white">普通进程</text>
+  <!-- Divider line -->
+  <line x1="240" y1="40" x2="240" y2="130" stroke="#343a40" stroke-width="1" stroke-dasharray="4,3"/>
+  <!-- Prio value axis -->
+  <line x1="30" y1="150" x2="530" y2="150" stroke="#343a40" stroke-width="1.5"/>
+  <polygon points="530,147 540,150 530,153" fill="#343a40"/>
+  <text x="550" y="155" font-size="11" fill="#343a40">Prio 值</text>
+  <text x="30" y="170" text-anchor="middle" font-size="10" fill="#495057">0</text>
+  <text x="240" y="170" text-anchor="middle" font-size="10" fill="#495057">100</text>
+  <text x="460" y="170" text-anchor="middle" font-size="10" fill="#495057">139</text>
+  <line x1="30" y1="145" x2="30" y2="155" stroke="#343a40" stroke-width="1"/>
+  <line x1="240" y1="145" x2="240" y2="155" stroke="#343a40" stroke-width="1"/>
+  <line x1="460" y1="145" x2="460" y2="155" stroke="#343a40" stroke-width="1"/>
+  <!-- Formula -->
+  <text x="280" y="190" font-size="9.5" fill="#495057">static_prio = MAX_RT_PRIO + nice + 20 (MAX_RT_PRIO = 100)</text>
+</svg>
