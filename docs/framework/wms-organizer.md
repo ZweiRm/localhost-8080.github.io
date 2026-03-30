@@ -3,8 +3,8 @@ prev:
     text: 'SurfaceControl & Transaction 流程'
     link: '/framework/surfacecontrol-transaction'
 next:
-    text: '属性动画'
-    link: '/framework/android-property-animation'
+    text: '锁屏与解锁机制'
+    link: '/framework/keyguard-lock-unlock'
 ---
 
 # WMS Organizer 机制

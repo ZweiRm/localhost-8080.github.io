@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 400" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="425" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">KeyguardTransitionHandler 动画路由</text>
+
+  <!-- Entry -->
+  <rect x="300" y="45" width="250" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="425" y="68" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">startAnimation(transition, info, ...)</text>
+
+  <line x1="425" y1="81" x2="425" y2="104" stroke="#555" stroke-width="1.2" marker-end="url(#a5)"/>
+
+  <!-- Decision: handles(info)? -->
+  <path d="M425,106 L510,130 L425,154 L340,130 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="425" y="134" text-anchor="middle" font-size="9.5" fill="#343a40">handles(info)?</text>
+
+  <line x1="425" y1="154" x2="425" y2="174" stroke="#555" stroke-width="1.2" marker-end="url(#a5)"/>
+  <text x="435" y="168" font-size="8" fill="#2e7d32">yes</text>
+
+  <!-- Decision: which flag? -->
+  <path d="M425,176 L530,205 L425,234 L320,205 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="425" y="209" text-anchor="middle" font-size="9.5" fill="#343a40">检查 flags</text>
+
+  <!-- Branch: GOING_AWAY -->
+  <line x1="320" y1="205" x2="100" y2="205" stroke="#555" stroke-width="1" marker-end="url(#a5)"/>
+  <text x="210" y="198" text-anchor="middle" font-size="8" fill="#868e96">FLAG_KEYGUARD_GOING_AWAY</text>
+  <rect x="10" y="190" width="90" height="32" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="55" y="210" text-anchor="middle" font-size="9" font-weight="600" fill="#4a7fb5">going-away</text>
+
+  <!-- Branch: APPEARING -->
+  <line x1="425" y1="234" x2="425" y2="274" stroke="#555" stroke-width="1"/>
+  <line x1="425" y1="274" x2="100" y2="274" stroke="#555" stroke-width="1" marker-end="url(#a5)"/>
+  <text x="260" y="268" text-anchor="middle" font-size="8" fill="#868e96">FLAG_KEYGUARD_APPEARING</text>
+  <rect x="10" y="259" width="90" height="32" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="55" y="279" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">appearing</text>
+
+  <!-- Branch: LOCKED + OCCLUDING -->
+  <line x1="530" y1="205" x2="650" y2="205" stroke="#555" stroke-width="1"/>
+  <text x="590" y="198" text-anchor="middle" font-size="8" fill="#868e96">LOCKED?</text>
+
+  <path d="M650,190 L700,205 L650,220 L600,205 Z" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="650" y="209" text-anchor="middle" font-size="8" fill="#343a40">yes</text>
+
+  <line x1="700" y1="205" x2="750" y2="205" stroke="#555" stroke-width="1"/>
+
+  <!-- Sub-decision: OCCLUDING or UNOCCLUDING -->
+  <line x1="750" y1="205" x2="750" y2="180" stroke="#555" stroke-width="1" marker-end="url(#a5)"/>
+  <text x="770" y="190" font-size="8" fill="#868e96">OCCLUDING</text>
+  <rect x="710" y="150" width="80" height="30" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="750" y="169" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">occlude</text>
+
+  <line x1="750" y1="205" x2="750" y2="254" stroke="#555" stroke-width="1" marker-end="url(#a5)"/>
+  <text x="770" y="238" font-size="8" fill="#868e96">UNOCCLUDING</text>
+  <rect x="710" y="256" width="80" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="750" y="275" text-anchor="middle" font-size="9" font-weight="600" fill="#2e7d32">unocclude</text>
+
+  <!-- Remote handlers -->
+  <text x="425" y="330" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">IRemoteTransition 对应关系</text>
+
+  <rect x="30" y="345" width="160" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="110" y="363" text-anchor="middle" font-size="9" fill="#495057">mExitTransition</text>
+  <text x="110" y="378" text-anchor="middle" font-size="8" fill="#868e96">→ going-away</text>
+
+  <rect x="210" y="345" width="160" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="290" y="363" text-anchor="middle" font-size="9" fill="#495057">mAppearTransition</text>
+  <text x="290" y="378" text-anchor="middle" font-size="8" fill="#868e96">→ appearing</text>
+
+  <rect x="390" y="345" width="160" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="470" y="363" text-anchor="middle" font-size="9" fill="#495057">mOccludeTransition</text>
+  <text x="470" y="378" text-anchor="middle" font-size="8" fill="#868e96">→ occlude</text>
+
+  <rect x="570" y="345" width="170" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="655" y="363" text-anchor="middle" font-size="9" fill="#495057">mUnoccludeTransition</text>
+  <text x="655" y="378" text-anchor="middle" font-size="8" fill="#868e96">→ unocclude</text>
+</svg>

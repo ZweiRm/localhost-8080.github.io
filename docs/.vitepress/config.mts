@@ -317,6 +317,7 @@ export default defineConfig({
                             items: [
                                 { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
                                 { text: 'Organizer 机制', link: 'framework/wms-organizer' },
+                                { text: '锁屏与解锁机制', link: 'framework/keyguard-lock-unlock' },
                             ]
                         },
                     ]

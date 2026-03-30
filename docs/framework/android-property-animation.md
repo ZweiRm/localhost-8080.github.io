@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Organizer 机制'
-    link: '/framework/wms-organizer'
+    text: '锁屏与解锁机制'
+    link: '/framework/keyguard-lock-unlock'
 next:
     text: '窗口动画'
     link: '/framework/window-animation'

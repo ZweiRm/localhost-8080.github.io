@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 320" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="460" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">KeyguardDisplayState 状态机</text>
+
+  <!-- State: Unlocked -->
+  <rect x="30" y="60" width="140" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="100" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">Unlocked</text>
+  <text x="100" y="98" text-anchor="middle" font-size="9" fill="#495057">showing=false</text>
+
+  <!-- State: Keyguard Showing -->
+  <rect x="250" y="60" width="160" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="330" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Keyguard Showing</text>
+  <text x="330" y="98" text-anchor="middle" font-size="9" fill="#495057">showing=true, goingAway=false</text>
+
+  <!-- State: Keyguard Going Away -->
+  <rect x="500" y="60" width="170" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="585" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#4a7fb5">Keyguard Going Away</text>
+  <text x="585" y="98" text-anchor="middle" font-size="9" fill="#495057">showing=true, goingAway=true</text>
+
+  <!-- State: Keyguard Occluded -->
+  <rect x="250" y="200" width="160" height="50" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.5"/>
+  <text x="330" y="222" text-anchor="middle" font-size="11" font-weight="600" fill="#c0392b">Keyguard Occluded</text>
+  <text x="330" y="238" text-anchor="middle" font-size="9" fill="#495057">showing=true, occluded=true</text>
+
+  <!-- State: AOD Showing -->
+  <rect x="740" y="60" width="150" height="50" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="815" y="82" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">AOD Showing</text>
+  <text x="815" y="98" text-anchor="middle" font-size="9" fill="#495057">aodShowing=true</text>
+
+  <!-- Arrows: Unlocked -> Showing (setKeyguardShown) -->
+  <line x1="170" y1="85" x2="248" y2="85" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="209" y="78" text-anchor="middle" font-size="8.5" fill="#868e96">setKeyguardShown</text>
+  <text x="209" y="68" text-anchor="middle" font-size="8" fill="#868e96">APPEARING</text>
+
+  <!-- Arrows: Showing -> Going Away (keyguardGoingAway) -->
+  <line x1="410" y1="85" x2="498" y2="85" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="454" y="78" text-anchor="middle" font-size="8.5" fill="#868e96">keyguardGoingAway</text>
+  <text x="454" y="68" text-anchor="middle" font-size="8" fill="#868e96">GOING_AWAY</text>
+
+  <!-- Arrows: Going Away -> Unlocked (setKeyguardShown false) -->
+  <path d="M585,110 C585,150 100,150 100,110" fill="none" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="340" y="155" text-anchor="middle" font-size="8.5" fill="#2e7d32">setKeyguardShown(false)</text>
+
+  <!-- Arrows: Showing -> Occluded (canShowWhenLocked) -->
+  <line x1="330" y1="110" x2="330" y2="198" stroke="#e07070" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="385" y="158" text-anchor="start" font-size="8.5" fill="#c0392b">KEYGUARD_OCCLUDE</text>
+  <text x="385" y="170" text-anchor="start" font-size="8" fill="#868e96">canShowWhenLocked</text>
+
+  <!-- Arrows: Occluded -> Showing (unocclude) -->
+  <path d="M250,225 C210,225 200,160 250,110 L250,112" fill="none" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="178" y="170" text-anchor="middle" font-size="8.5" fill="#868e96">KEYGUARD_</text>
+  <text x="178" y="180" text-anchor="middle" font-size="8.5" fill="#868e96">UNOCCLUDE</text>
+
+  <!-- Arrows: Showing <-> AOD -->
+  <line x1="410" y1="70" x2="738" y2="70" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="575" y="64" text-anchor="middle" font-size="8" fill="#868e96">aodShowing 变化</text>
+
+  <!-- Going Away -> Showing (abort) -->
+  <path d="M500,62 C470,42 440,42 410,62" fill="none" stroke="#e07070" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  <text x="455" y="40" text-anchor="middle" font-size="8" fill="#c0392b">abort (goingAwayRemoved)</text>
+
+  <!-- Legend note -->
+  <text x="30" y="300" font-size="8.5" fill="#868e96">状态由 KeyguardController 管理，每个 Display 维护一个 KeyguardDisplayState 实例</text>
+</svg>

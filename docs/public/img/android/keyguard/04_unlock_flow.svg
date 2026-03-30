@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 700" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">解锁（keyguardGoingAway）核心流程</text>
+
+  <!-- SystemUI side -->
+  <rect x="30" y="50" width="200" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="130" y="73" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">指纹认证成功 (SystemUI)</text>
+
+  <line x1="130" y1="86" x2="130" y2="106" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="30" y="108" width="200" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="131" text-anchor="middle" font-size="10" fill="#495057">KeyguardViewMediator</text>
+  <text x="130" y="140" text-anchor="middle" font-size="8.5" fill="#868e96">keyguardGoingAway(flags)</text>
+
+  <line x1="230" y1="126" x2="290" y2="126" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+  <text x="260" y="120" text-anchor="middle" font-size="8" fill="#868e96">Binder</text>
+
+  <!-- system_server side -->
+  <rect x="290" y="50" width="480" height="640" rx="3" fill="none" stroke="#adb5bd" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="530" y="68" text-anchor="middle" font-size="10" font-weight="600" fill="#868e96">system_server</text>
+
+  <rect x="310" y="108" width="220" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="420" y="131" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">ATMS.keyguardGoingAway(flags)</text>
+
+  <line x1="420" y1="144" x2="420" y2="164" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="310" y="166" width="280" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="450" y="189" text-anchor="middle" font-size="10" fill="#495057">KeyguardController.keyguardGoingAway()</text>
+
+  <line x1="420" y1="202" x2="420" y2="222" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <!-- Sub-steps -->
+  <rect x="320" y="224" width="380" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="240" text-anchor="middle" font-size="9.5" fill="#343a40">① state.mKeyguardGoingAway = true</text>
+  <text x="510" y="253" text-anchor="middle" font-size="8.5" fill="#868e96">wm_set_keyguard_shown: [0,1,0,1,0,keyguardGoingAway]</text>
+
+  <line x1="420" y1="260" x2="420" y2="278" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="280" width="380" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="510" y="303" text-anchor="middle" font-size="9.5" fill="#4a7fb5">② requestTransitionIfNeeded(TRANSIT_TO_BACK, transitFlags)</text>
+
+  <line x1="420" y1="316" x2="420" y2="334" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="336" width="380" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="359" text-anchor="middle" font-size="9.5" fill="#495057">③ updateKeyguardSleepToken → release("keyguard")</text>
+
+  <line x1="420" y1="372" x2="420" y2="390" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="392" width="380" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="415" text-anchor="middle" font-size="9.5" fill="#495057">④ resumeFocusedTasksTopActivities (恢复 Launcher)</text>
+
+  <line x1="420" y1="428" x2="420" y2="446" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="448" width="380" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="471" text-anchor="middle" font-size="9.5" fill="#495057">⑤ ensureActivitiesVisible + addStartingWindows</text>
+
+  <line x1="420" y1="484" x2="420" y2="502" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="504" width="380" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="527" text-anchor="middle" font-size="9.5" fill="#495057">⑥ executeAppTransition → continueWindowLayout</text>
+
+  <line x1="420" y1="540" x2="420" y2="558" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="560" width="380" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="510" y="583" text-anchor="middle" font-size="9.5" font-weight="600" fill="#2e7d32">⑦ Launcher 绘制完成 → SyncGroup finish</text>
+
+  <line x1="420" y1="596" x2="420" y2="614" stroke="#555" stroke-width="1.2" marker-end="url(#a4)"/>
+
+  <rect x="320" y="616" width="380" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="510" y="639" text-anchor="middle" font-size="9.5" font-weight="600" fill="#4a7fb5">⑧ KeyguardTransitionHandler 执行 going-away 动画</text>
+
+  <!-- Shell side note -->
+  <rect x="555" y="108" width="190" height="50" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="650" y="128" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">Shell 侧</text>
+  <text x="650" y="142" text-anchor="middle" font-size="8.5" fill="#868e96">KeyguardTransitionHandler</text>
+  <text x="650" y="154" text-anchor="middle" font-size="8.5" fill="#868e96">mExitTransition (going-away)</text>
+</svg>

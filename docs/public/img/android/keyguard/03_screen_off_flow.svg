@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 620" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="390" y="22" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">息屏（Screen Off）核心流程</text>
+
+  <!-- Step nodes -->
+  <rect x="240" y="42" width="300" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="390" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">PMS 发出 MSG_UPDATE_POWER_STATE</text>
+
+  <line x1="390" y1="78" x2="390" y2="98" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="220" y="100" width="340" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="123" text-anchor="middle" font-size="10" fill="#495057">DisplayPowerController → animateScreenStateChange</text>
+
+  <line x1="390" y1="136" x2="390" y2="156" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="220" y="158" width="340" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="181" text-anchor="middle" font-size="10" fill="#495057">PhoneWindowManager.screenTurnedOff()</text>
+
+  <line x1="390" y1="194" x2="390" y2="214" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="200" y="216" width="380" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="390" y="239" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">mScreenOffSleepTokenAcquirer.acquire("ScreenOff")</text>
+
+  <line x1="390" y1="252" x2="390" y2="272" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="220" y="274" width="340" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="297" text-anchor="middle" font-size="10" fill="#495057">ATMS.updateSleepIfNeededLocked()</text>
+
+  <line x1="390" y1="310" x2="390" y2="330" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="220" y="332" width="340" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="350" text-anchor="middle" font-size="10" fill="#495057">mSleeping = true → goingToSleepLocked()</text>
+  <text x="390" y="362" text-anchor="middle" font-size="8.5" fill="#868e96">进程状态 → PROCESS_STATE_TOP_SLEEPING</text>
+
+  <line x1="390" y1="368" x2="390" y2="388" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="220" y="390" width="340" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="413" text-anchor="middle" font-size="10" fill="#495057">applySleepTokens(false) → 不更新 RootTask</text>
+
+  <line x1="390" y1="426" x2="390" y2="446" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="180" y="448" width="420" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="471" text-anchor="middle" font-size="10" fill="#495057">checkReadyForSleepLocked → putTasksToSleep → goToSleepIfPossible</text>
+
+  <line x1="390" y1="484" x2="390" y2="504" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="200" y="506" width="380" height="36" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.5"/>
+  <text x="390" y="529" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">sleepIfPossible → startPausing(当前 Activity)</text>
+
+  <line x1="390" y1="542" x2="390" y2="560" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="200" y="562" width="380" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="390" y="585" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">updateActivityVisibilities → 更新 mOccluded</text>
+
+  <!-- Side note: parallel process -->
+  <rect x="610" y="216" width="150" height="80" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="685" y="238" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">同步进行</text>
+  <text x="685" y="254" text-anchor="middle" font-size="8.5" fill="#868e96">KeyguardViewMediator</text>
+  <text x="685" y="268" text-anchor="middle" font-size="8.5" fill="#868e96">onFinishedGoingToSleep</text>
+  <text x="685" y="282" text-anchor="middle" font-size="8.5" fill="#868e96">→ setLockScreenShown</text>
+
+  <line x1="580" y1="234" x2="608" y2="234" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Side note: SLEEP Transition -->
+  <rect x="610" y="390" width="150" height="50" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="685" y="412" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">延迟 1s</text>
+  <text x="685" y="428" text-anchor="middle" font-size="8.5" fill="#868e96">创建 SLEEP Transition</text>
+
+  <line x1="560" y1="408" x2="608" y2="408" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3"/>
+</svg>
