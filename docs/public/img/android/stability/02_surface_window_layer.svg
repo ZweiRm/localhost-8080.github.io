@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320">
+  <defs>
+    <marker id="a2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <!-- Labels -->
+  <text x="120" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#b8860b">App</text>
+  <text x="400" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#4a5899">system_server</text>
+  <text x="650" y="18" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">SurfaceFlinger</text>
+
+  <!-- App side - nested 3D boxes -->
+  <!-- Outer Surface (Task level) -->
+  <rect x="30" y="30" width="180" height="250" rx="3" fill="#c8a83e" stroke="#333" stroke-width="1.2"/>
+  <text x="75" y="52" font-size="10" font-weight="600" fill="#333">Surface</text>
+  <!-- Middle Surface (ActivityRecord level) -->
+  <rect x="50" y="65" width="145" height="195" rx="3" fill="#dbc878" stroke="#333" stroke-width="1"/>
+  <text x="80" y="85" font-size="9.5" font-weight="600" fill="#333">Surface</text>
+  <!-- Inner Surface (Window level) -->
+  <rect x="70" y="105" width="110" height="140" rx="3" fill="#e8dca8" stroke="#333" stroke-width="1"/>
+  <text x="95" y="127" font-size="9.5" font-weight="600" fill="#333">Surface</text>
+  <!-- Inner buffer placeholder -->
+  <rect x="85" y="145" width="80" height="80" rx="2" fill="#eee8cc" stroke="#999" stroke-width="0.8"/>
+
+  <!-- system_server side - nested boxes -->
+  <rect x="290" y="30" width="220" height="250" rx="3" fill="#b8c4e8" stroke="#333" stroke-width="1.2"/>
+  <text x="380" y="52" font-size="10" font-weight="600" fill="#333">Task</text>
+  <!-- ActivityRecord -->
+  <rect x="310" y="65" width="180" height="195" rx="3" fill="#c8d0e8" stroke="#333" stroke-width="1"/>
+  <text x="370" y="85" font-size="9.5" font-weight="600" fill="#333">ActivityRecord</text>
+  <!-- WindowState -->
+  <rect x="330" y="105" width="140" height="140" rx="3" fill="#d8dce8" stroke="#333" stroke-width="1"/>
+  <text x="370" y="127" font-size="9.5" font-weight="600" fill="#333">WindowState</text>
+  <rect x="350" y="145" width="100" height="80" rx="2" fill="#e5e8f0" stroke="#999" stroke-width="0.8"/>
+
+  <!-- SurfaceFlinger side - parallelogram-style nested layers -->
+  <polygon points="560,50 740,30 740,260 560,280" fill="#a8d8a0" stroke="#333" stroke-width="1.2"/>
+  <text x="640" y="55" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Layer</text>
+  <polygon points="575,80 725,60 725,230 575,250" fill="#c0e8b8" stroke="#333" stroke-width="1"/>
+  <text x="640" y="88" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">Layer</text>
+  <polygon points="590,110 710,92 710,200 590,218" fill="#d8f0d0" stroke="#333" stroke-width="1"/>
+  <text x="640" y="122" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">Layer</text>
+  <rect x="600" y="140" width="95" height="55" rx="2" fill="#e5f5e0" stroke="#999" stroke-width="0.8"/>
+
+  <!-- Arrows between processes -->
+  <line x1="210" y1="45" x2="290" y2="45" stroke="#555" stroke-width="1" marker-end="url(#a2)"/>
+  <line x1="195" y1="80" x2="310" y2="80" stroke="#555" stroke-width="1" marker-end="url(#a2)"/>
+  <line x1="180" y1="170" x2="330" y2="170" stroke="#555" stroke-width="1" marker-end="url(#a2)"/>
+
+  <line x1="510" y1="45" x2="560" y2="52" stroke="#555" stroke-width="1" marker-end="url(#a2)"/>
+  <line x1="490" y1="80" x2="575" y2="80" stroke="#555" stroke-width="1" marker-end="url(#a2)"/>
+  <line x1="470" y1="170" x2="590" y2="155" stroke="#555" stroke-width="1" marker-end="url(#a2)"/>
+
+  <!-- Process label line -->
+  <text x="390" y="308" text-anchor="middle" font-size="9" fill="#868e96">每个 Surface 在 system_server 中有对应 WindowState，在 SurfaceFlinger 中有对应 Layer</text>
+</svg>

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 200">
+  <defs>
+    <marker id="arrow1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <!-- Title -->
+  <text x="360" y="24" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">Android 稳定性问题分类</text>
+  <!-- Boxes -->
+  <rect x="20" y="50" width="120" height="60" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="80" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#c0392b">Layer 泄漏</text>
+  <text x="80" y="93" text-anchor="middle" font-size="9" fill="#868e96">Surface/Layer 未释放</text>
+
+  <rect x="160" y="50" width="120" height="60" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1.2"/>
+  <text x="220" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#c0392b">FD 泄漏</text>
+  <text x="220" y="93" text-anchor="middle" font-size="9" fill="#868e96">文件描述符未关闭</text>
+
+  <rect x="300" y="50" width="120" height="60" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="360" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">内存泄漏</text>
+  <text x="360" y="93" text-anchor="middle" font-size="9" fill="#868e96">Java / Native 内存</text>
+
+  <rect x="440" y="50" width="120" height="60" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="500" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Native Crash</text>
+  <text x="500" y="93" text-anchor="middle" font-size="9" fill="#868e96">SIGSEGV / SIGABRT</text>
+
+  <rect x="580" y="50" width="120" height="60" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="640" y="75" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">死机重启</text>
+  <text x="640" y="93" text-anchor="middle" font-size="9" fill="#868e96">OOM / Watchdog</text>
+
+  <!-- Consequence arrows -->
+  <line x1="80" y1="110" x2="80" y2="140" stroke="#868e96" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="220" y1="110" x2="220" y2="140" stroke="#868e96" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="360" y1="110" x2="360" y2="140" stroke="#868e96" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="500" y1="110" x2="500" y2="140" stroke="#868e96" stroke-width="1" marker-end="url(#arrow1)"/>
+  <line x1="640" y1="110" x2="640" y2="140" stroke="#868e96" stroke-width="1" marker-end="url(#arrow1)"/>
+
+  <!-- Consequences -->
+  <rect x="10" y="145" width="700" height="40" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="360" y="168" text-anchor="middle" font-size="10" fill="#495057">严重后果：卡顿 → 卡死 → system_server OOM Kill → 系统重启</text>
+</svg>

@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '无焦点窗口 ANR'
-    link: '/framework/anr-no-focused'
+    text: '泄漏与Crash'
+    link: '/framework/android-stability'
 next: false
 ---
 

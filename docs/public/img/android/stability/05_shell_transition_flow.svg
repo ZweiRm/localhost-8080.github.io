@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 200">
+  <defs>
+    <marker id="arrow5" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <text x="375" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Shell Transition 生命周期</text>
+
+  <!-- Stage boxes -->
+  <rect x="15" y="45" width="90" height="45" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="60" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Trigger</text>
+  <text x="60" y="80" text-anchor="middle" font-size="8" fill="#868e96">WM 操作触发</text>
+
+  <line x1="105" y1="68" x2="125" y2="68" stroke="#555" stroke-width="1" marker-end="url(#arrow5)"/>
+
+  <rect x="125" y="45" width="90" height="45" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="170" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Collecting</text>
+  <text x="170" y="80" text-anchor="middle" font-size="8" fill="#868e96">记录参与容器</text>
+
+  <line x1="215" y1="68" x2="235" y2="68" stroke="#555" stroke-width="1" marker-end="url(#arrow5)"/>
+
+  <rect x="235" y="45" width="90" height="45" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="280" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Sync</text>
+  <text x="280" y="80" text-anchor="middle" font-size="8" fill="#868e96">等待就绪</text>
+
+  <line x1="325" y1="68" x2="345" y2="68" stroke="#555" stroke-width="1" marker-end="url(#arrow5)"/>
+
+  <rect x="345" y="45" width="110" height="45" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="400" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Ready</text>
+  <text x="400" y="80" text-anchor="middle" font-size="8" fill="#868e96">计算动画信息</text>
+
+  <line x1="455" y1="68" x2="475" y2="68" stroke="#555" stroke-width="1" marker-end="url(#arrow5)"/>
+
+  <rect x="475" y="45" width="90" height="45" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="520" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">Playing</text>
+  <text x="520" y="80" text-anchor="middle" font-size="8" fill="#868e96">执行动画</text>
+
+  <line x1="565" y1="68" x2="585" y2="68" stroke="#555" stroke-width="1" marker-end="url(#arrow5)"/>
+
+  <rect x="585" y="45" width="90" height="45" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="630" y="65" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">Finish</text>
+  <text x="630" y="80" text-anchor="middle" font-size="8" fill="#868e96">收尾清理</text>
+
+  <!-- Leak danger zone -->
+  <rect x="460" y="105" width="270" height="80" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="595" y="122" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">泄漏高危区</text>
+  <text x="595" y="138" text-anchor="middle" font-size="8.5" fill="#495057">Playing 未正常 finish → 后续 Transition 堆积</text>
+  <text x="595" y="153" text-anchor="middle" font-size="8.5" fill="#495057">Ready 阶段提前 return/merge → Layer 无法释放</text>
+  <text x="595" y="168" text-anchor="middle" font-size="8.5" fill="#495057">SYNC 回调超时 → BLASTSyncEngine 报错</text>
+  <text x="595" y="183" text-anchor="middle" font-size="8.5" fill="#868e96">最终: dma-buf 占用飙升 → OOM Kill</text>
+</svg>

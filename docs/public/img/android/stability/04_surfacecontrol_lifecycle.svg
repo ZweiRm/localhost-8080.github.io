@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 300">
+  <defs>
+    <marker id="arrow4" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#c0392b"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <text x="350" y="20" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">SurfaceControl / LayerHandle / Layer 生命周期</text>
+
+  <!-- Process boundaries -->
+  <rect x="20" y="35" width="300" height="250" rx="3" fill="none" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="170" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">客户端进程 (App / system_server)</text>
+
+  <rect x="380" y="35" width="300" height="250" rx="3" fill="none" stroke="#2e7d32" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="530" y="52" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">SurfaceFlinger 进程</text>
+
+  <!-- Client side -->
+  <rect x="40" y="70" width="130" height="35" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="105" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">SurfaceControl A</text>
+
+  <rect x="40" y="120" width="130" height="35" rx="3" fill="white" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="105" y="142" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">SurfaceControl B</text>
+  <text x="105" y="168" text-anchor="middle" font-size="8" fill="#868e96">copyFrom(A)</text>
+
+  <rect x="190" y="70" width="110" height="35" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="245" y="88" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">sp&lt;LayerHandle&gt;</text>
+  <text x="245" y="100" text-anchor="middle" font-size="8" fill="#868e96">refCount = 2</text>
+
+  <!-- Server side -->
+  <rect x="400" y="70" width="120" height="35" rx="3" fill="white" stroke="#2e7d32" stroke-width="1"/>
+  <text x="460" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">LayerHandle</text>
+
+  <rect x="540" y="70" width="120" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="600" y="92" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Layer</text>
+
+  <!-- Arrows for references -->
+  <line x1="170" y1="88" x2="190" y2="88" stroke="#555" stroke-width="1" marker-end="url(#arrow4)"/>
+  <line x1="170" y1="138" x2="190" y2="100" stroke="#555" stroke-width="1" marker-end="url(#arrow4)"/>
+  <line x1="300" y1="88" x2="400" y2="88" stroke="#555" stroke-width="1" marker-end="url(#arrow4)"/>
+  <text x="350" y="82" text-anchor="middle" font-size="8" fill="#868e96">Binder</text>
+  <line x1="520" y1="88" x2="540" y2="88" stroke="#555" stroke-width="1" marker-end="url(#arrow4)"/>
+  <text x="530" y="82" text-anchor="middle" font-size="8" fill="#868e96">sp</text>
+
+  <!-- Release flow -->
+  <text x="170" y="205" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">销毁流程</text>
+
+  <rect x="40" y="215" width="260" height="55" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="170" y="233" text-anchor="middle" font-size="9" fill="#495057">1. Transaction.remove(sc)</text>
+  <text x="170" y="247" text-anchor="middle" font-size="9" fill="#495057">  = reparent(sc, null) + sc.release()</text>
+  <text x="170" y="261" text-anchor="middle" font-size="8" fill="#868e96">LayerHandle refCount-- , Parent = null</text>
+
+  <line x1="300" y1="242" x2="400" y2="170" stroke="#c0392b" stroke-width="1" marker-end="url(#arrowRed)"/>
+
+  <rect x="400" y="140" width="260" height="60" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="530" y="158" text-anchor="middle" font-size="9" fill="#495057">2. LayerHandle refCount == 0 时析构</text>
+  <text x="530" y="173" text-anchor="middle" font-size="9" fill="#495057">  → sp&lt;Layer&gt; refCount--</text>
+  <text x="530" y="188" text-anchor="middle" font-size="9" fill="#495057">  → Layer 析构 → 销毁完成</text>
+
+  <!-- Warning box -->
+  <rect x="400" y="220" width="260" height="50" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="530" y="238" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">若仅 release() 不 reparent(null):</text>
+  <text x="530" y="255" text-anchor="middle" font-size="9" fill="#495057">Layer 成为 Offscreen Layer，不会销毁</text>
+</svg>

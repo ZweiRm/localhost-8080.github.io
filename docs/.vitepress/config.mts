@@ -345,6 +345,7 @@ export default defineConfig({
                     collapsed: false,
                     items: [
                         { text: '无焦点窗口 ANR', link: 'framework/anr-no-focused' },
+                        { text: '泄漏与Crash', link: 'framework/android-stability' },
                     ]
                 },
                 {

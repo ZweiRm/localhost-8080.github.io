@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 560">
+  <defs>
+    <marker id="a3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+  <style>
+    text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+  </style>
+  <text x="380" y="18" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">WindowContainer 实例层级结构</text>
+
+  <!-- RootWindowContainer -->
+  <circle cx="380" cy="50" r="16" fill="#4a4a4a" stroke="#333" stroke-width="1"/>
+  <text x="380" y="55" text-anchor="middle" font-size="7" fill="white" font-weight="600">Root</text>
+  <text x="470" y="55" font-size="9" fill="#495057">RootWindowContainer</text>
+
+  <!-- Lines to DisplayContent -->
+  <line x1="365" y1="66" x2="280" y2="100" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="395" y1="66" x2="480" y2="100" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <!-- DisplayContent 0 -->
+  <circle cx="280" cy="115" r="16" fill="#4a7fb5" stroke="#333" stroke-width="1"/>
+  <text x="280" y="119" text-anchor="middle" font-size="7" fill="white" font-weight="600">DC0</text>
+  <text x="310" y="110" font-size="8.5" fill="#495057">DisplayContent</text>
+
+  <!-- DisplayContent 1 -->
+  <circle cx="480" cy="115" r="16" fill="#7b68a0" stroke="#333" stroke-width="1"/>
+  <text x="480" y="119" text-anchor="middle" font-size="7" fill="white" font-weight="600">DC1</text>
+  <text x="510" y="110" font-size="8.5" fill="#868e96">DisplayContent</text>
+
+  <!-- DC0 children -->
+  <line x1="220" y1="131" x2="80" y2="175" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="250" y1="131" x2="210" y2="175" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="310" y1="131" x2="380" y2="175" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="340" y1="131" x2="560" y2="175" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <!-- DisplayArea (ABOVE_TASKS) -->
+  <circle cx="80" cy="190" r="14" fill="#4a7fb5" stroke="#333" stroke-width="1"/>
+  <text x="80" y="194" text-anchor="middle" font-size="6" fill="white" font-weight="600">DA</text>
+  <text x="80" y="218" text-anchor="middle" font-size="8" fill="#495057">DisplayArea</text>
+
+  <!-- ImeContainer -->
+  <circle cx="210" cy="190" r="14" fill="#4a7fb5" stroke="#333" stroke-width="1"/>
+  <text x="210" y="194" text-anchor="middle" font-size="6" fill="white" font-weight="600">Ime</text>
+  <text x="210" y="218" text-anchor="middle" font-size="8" fill="#495057">ImeContainer</text>
+
+  <!-- DefaultTaskDisplayArea -->
+  <circle cx="380" cy="190" r="14" fill="#4a7fb5" stroke="#333" stroke-width="1"/>
+  <text x="380" y="194" text-anchor="middle" font-size="5.5" fill="white" font-weight="600">TDA</text>
+  <text x="380" y="218" text-anchor="middle" font-size="8" fill="#495057">TaskDisplayArea</text>
+
+  <!-- DisplayArea (BELOW_TASKS) -->
+  <circle cx="560" cy="190" r="14" fill="#4a7fb5" stroke="#333" stroke-width="1"/>
+  <text x="560" y="194" text-anchor="middle" font-size="6" fill="white" font-weight="600">DA</text>
+  <text x="560" y="218" text-anchor="middle" font-size="8" fill="#495057">DisplayArea</text>
+
+  <!-- DA -> WindowTokens -->
+  <line x1="68" y1="204" x2="45" y2="248" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="92" y1="204" x2="115" y2="248" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <circle cx="45" cy="262" r="13" fill="#c0504d" stroke="#333" stroke-width="1"/>
+  <text x="45" y="266" text-anchor="middle" font-size="5.5" fill="white" font-weight="600">WT</text>
+  <text x="45" y="288" text-anchor="middle" font-size="7.5" fill="#495057">WindowToken</text>
+
+  <circle cx="115" cy="262" r="13" fill="#c0504d" stroke="#333" stroke-width="1"/>
+  <text x="115" y="266" text-anchor="middle" font-size="5.5" fill="white" font-weight="600">WT</text>
+
+  <!-- WT -> Windows -->
+  <line x1="45" y1="275" x2="45" y2="308" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="115" y1="275" x2="115" y2="308" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <circle cx="45" cy="322" r="12" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
+  <text x="45" y="326" text-anchor="middle" font-size="5.5" fill="#333" font-weight="600">Win</text>
+
+  <circle cx="115" cy="322" r="12" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
+  <text x="115" y="326" text-anchor="middle" font-size="5.5" fill="#333" font-weight="600">Win</text>
+
+  <!-- TDA -> Tasks -->
+  <line x1="360" y1="204" x2="300" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="380" y1="204" x2="380" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="400" y1="204" x2="460" y2="258" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <circle cx="300" cy="272" r="13" fill="#2e7d32" stroke="#333" stroke-width="1"/>
+  <text x="300" y="276" text-anchor="middle" font-size="6" fill="white" font-weight="600">Task</text>
+
+  <circle cx="380" cy="272" r="13" fill="#2e7d32" stroke="#333" stroke-width="1"/>
+  <text x="380" y="276" text-anchor="middle" font-size="6" fill="white" font-weight="600">Task</text>
+
+  <circle cx="460" cy="272" r="13" fill="#2e7d32" stroke="#333" stroke-width="1"/>
+  <text x="460" y="276" text-anchor="middle" font-size="6" fill="white" font-weight="600">Task</text>
+
+  <!-- Task -> sub-Task -->
+  <line x1="300" y1="285" x2="300" y2="318" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <circle cx="300" cy="332" r="13" fill="#2e7d32" stroke="#333" stroke-width="1"/>
+  <text x="300" y="336" text-anchor="middle" font-size="6" fill="white" font-weight="600">Task</text>
+
+  <!-- sub-Task -> ActivityRecords -->
+  <line x1="285" y1="345" x2="255" y2="388" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="315" y1="345" x2="345" y2="388" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <circle cx="255" cy="402" r="13" fill="#c0504d" stroke="#333" stroke-width="1"/>
+  <text x="255" y="406" text-anchor="middle" font-size="5" fill="white" font-weight="600">AR</text>
+  <text x="255" y="428" text-anchor="middle" font-size="7.5" fill="#495057">ActivityRecord</text>
+
+  <circle cx="345" cy="402" r="13" fill="#c0504d" stroke="#333" stroke-width="1"/>
+  <text x="345" y="406" text-anchor="middle" font-size="5" fill="white" font-weight="600">AR</text>
+
+  <!-- AR -> Windows -->
+  <line x1="255" y1="415" x2="255" y2="448" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <line x1="345" y1="415" x2="345" y2="448" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+
+  <circle cx="255" cy="462" r="12" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
+  <text x="255" y="466" text-anchor="middle" font-size="5.5" fill="#333" font-weight="600">Win</text>
+  <text x="255" y="488" text-anchor="middle" font-size="7.5" fill="#495057">Window</text>
+
+  <circle cx="345" cy="462" r="12" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
+  <text x="345" y="466" text-anchor="middle" font-size="5.5" fill="#333" font-weight="600">Win</text>
+
+  <!-- BELOW_TASKS -> WallpaperWindowToken -->
+  <line x1="560" y1="204" x2="560" y2="248" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <circle cx="560" cy="262" r="13" fill="#c0504d" stroke="#333" stroke-width="1"/>
+  <text x="560" y="266" text-anchor="middle" font-size="4.5" fill="white" font-weight="600">WWT</text>
+  <text x="560" y="288" text-anchor="middle" font-size="7" fill="#495057">WallpaperWindowToken</text>
+
+  <line x1="560" y1="275" x2="560" y2="308" stroke="#555" stroke-width="1" marker-end="url(#a3)"/>
+  <circle cx="560" cy="322" r="12" fill="#e0e0e0" stroke="#333" stroke-width="1"/>
+  <text x="560" y="326" text-anchor="middle" font-size="5.5" fill="#333" font-weight="600">Win</text>
+
+  <!-- Legend (inline, minimal) -->
+  <circle cx="200" cy="535" r="8" fill="#4a7fb5" stroke="#333" stroke-width="0.8"/>
+  <text x="215" y="539" font-size="8" fill="#495057">DisplayArea</text>
+  <circle cx="300" cy="535" r="8" fill="#2e7d32" stroke="#333" stroke-width="0.8"/>
+  <text x="315" y="539" font-size="8" fill="#495057">Task</text>
+  <circle cx="380" cy="535" r="8" fill="#c0504d" stroke="#333" stroke-width="0.8"/>
+  <text x="395" y="539" font-size="8" fill="#495057">WindowToken/AR</text>
+  <circle cx="500" cy="535" r="8" fill="#e0e0e0" stroke="#333" stroke-width="0.8"/>
+  <text x="515" y="539" font-size="8" fill="#495057">WindowState</text>
+</svg>

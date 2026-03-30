@@ -3,8 +3,8 @@ prev:
     text: 'Android Input 系统'
     link: '/framework/input-system'
 next:
-    text: 'Android 16 新特性'
-    link: '/framework/android16'
+    text: '泄漏与Crash'
+    link: '/framework/android-stability'
 ---
 
 # 无焦点窗口 ANR
