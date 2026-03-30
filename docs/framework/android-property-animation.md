@@ -3,8 +3,8 @@ prev:
     text: 'ShellTransition'
     link: '/framework/ShellTransition'
 next:
-    text: 'Android Input 系统'
-    link: '/framework/input-system'
+    text: '窗口动画'
+    link: '/framework/window-animation'
 ---
 
 # 属性动画原理

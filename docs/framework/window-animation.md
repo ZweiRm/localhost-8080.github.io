@@ -1,3 +1,12 @@
+---
+prev:
+    text: '属性动画'
+    link: '/framework/android-property-animation'
+next:
+    text: 'Android Input 系统'
+    link: '/framework/input-system'
+---
+
 # 窗口动画
 
 ## 定义

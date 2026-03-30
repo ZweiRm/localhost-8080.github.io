@@ -3,8 +3,8 @@ prev:
     text: 'Choreographer 与 VSync 机制'
     link: '/framework/choreographer-vsync'
 next:
-    text: '窗口绘制状态'
-    link: '/framework/window-draw-state'
+    text: '窗口大小计算'
+    link: '/framework/wms-compute-frame'
 ---
 
 # WMS 窗口布局流程 relayoutWindow
@@ -640,40 +640,12 @@ private final Consumer<WindowState> mPerformLayoutAttached = w -> {
 `layoutWindowLw` 主要做以下三件事：
 
 1. 获取 `DisplayFrames`：`DisplayContent` 新建时创建，内部数据由屏幕提供。
-2. 调用 `WindowLayout.computeFrames` 计算窗口布局大小。
+2. 调用 `WindowLayout.computeFrames` 计算窗口布局大小（frame / displayFrame / parentFrame）。
 3. 调用 `WindowState.setFrames` 将计算的布局参数赋值给当前窗口的 `windowFrames`。
 
-代码路径：`frameworks/base/services/core/java/com/android/server/wm/DisplayPolicy.java`
+`computeFrames` 内部分为五个阶段：Insets 约束 → parentFrame 确定 → DisplayCutout 裁切 → 窗口尺寸计算 → Gravity 定位与 Display 适配。
 
-```java
-public void layoutWindowLw(WindowState win, WindowState attached,
-        DisplayFrames displayFrames) {
-    if (win.skipLayout()) {
-        return;
-    }
-
-    // 1. 获取 DisplayFrames
-    displayFrames = win.getDisplayFrames(displayFrames);
-    final WindowManager.LayoutParams attrs =
-            win.mAttrs.forRotation(displayFrames.mRotation);
-    sTmpClientFrames.attachedFrame = attached != null ? attached.getFrame() : null;
-
-    final boolean trustedSize = attrs == win.mAttrs;
-    final int requestedWidth = trustedSize ? win.mRequestedWidth : UNSPECIFIED_LENGTH;
-    final int requestedHeight = trustedSize ? win.mRequestedHeight : UNSPECIFIED_LENGTH;
-
-    // 2. 调用 WindowLayout.computeFrames 计算窗口布局大小
-    mWindowLayout.computeFrames(attrs, win.getInsetsState(),
-            displayFrames.mDisplayCutoutSafe, win.getBounds(), win.getWindowingMode(),
-            requestedWidth, requestedHeight, win.getRequestedVisibleTypes(),
-            win.mGlobalScale, sTmpClientFrames);
-
-    // 3. 将计算的布局参数赋值给 windowFrames
-    win.setFrames(sTmpClientFrames, win.mRequestedWidth, win.mRequestedHeight);
-}
-```
-
-`computeFrames` 的计算逻辑较长，主要根据系统的 Inset 情况（如状态栏 StatusBar、导航栏 NavigationBar 等）来给应用窗口一个合适的 frame。
+> 该算法的完整源码分析、数据结构说明和流程图详见 [WMS 窗口大小计算流程：computeFrames](./wms-compute-frame)。
 
 ### 2.5 WindowState 策略应用（Post Layout Policy）
 

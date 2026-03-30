@@ -1,6 +1,6 @@
 ---
 prev:
-    text: 'Activity 与窗口可见性更新机制'
+    text: 'Activity 与窗口可见性更新'
     link: '/framework/visibility-management'
 next:
     text: 'WindowInsets'

@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 920">
+  <defs>
+    <marker id="arrow3" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="arrow3g" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#2e7d32"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+    </style>
+  </defs>
+
+  <!-- Title -->
+  <text x="360" y="22" font-size="13" font-weight="600" fill="#343a40" text-anchor="middle">WindowLayout.computeFrames() 内部流程</text>
+
+  <!-- Phase 1 -->
+  <rect x="30" y="42" width="660" height="100" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="50" y="60" font-size="11" font-weight="600" fill="#343a40">阶段一：计算 displayFrame（Insets 约束）</text>
+
+  <rect x="50" y="70" width="280" height="60" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="88" font-size="9.5" fill="#495057">1. InsetsState.calculateInsets()</text>
+  <text x="70" y="103" font-size="8.5" fill="#868e96">遍历所有 InsetsSource</text>
+  <text x="70" y="116" font-size="8.5" fill="#868e96">按 fitInsetsTypes + fitInsetsSides 过滤</text>
+
+  <line x1="330" y1="100" x2="360" y2="100" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <rect x="360" y="70" width="310" height="60" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="370" y="88" font-size="9.5" fill="#495057">2. displayFrame = windowBounds 收缩 insets</text>
+  <text x="380" y="103" font-size="8.5" fill="#868e96">left += insets.left (如果 fitSides 包含 LEFT)</text>
+  <text x="380" y="116" font-size="8.5" fill="#868e96">right -= insets.right, top/bottom 同理</text>
+
+  <line x1="360" y1="142" x2="360" y2="162" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Phase 2 -->
+  <rect x="30" y="162" width="660" height="128" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="50" y="180" font-size="11" font-weight="600" fill="#343a40">阶段二：确定 parentFrame</text>
+
+  <!-- Decision diamond: attachedFrame == null? -->
+  <path d="M 250,205 L 310,225 L 250,245 L 190,225 Z" fill="white" stroke="#adb5bd"/>
+  <text x="250" y="222" font-size="8.5" fill="#495057" text-anchor="middle">attachedFrame</text>
+  <text x="250" y="232" font-size="8.5" fill="#495057" text-anchor="middle">== null?</text>
+
+  <!-- Yes branch: root window -->
+  <line x1="310" y1="225" x2="380" y2="225" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="340" y="218" font-size="8" fill="#2e7d32">是（根窗口）</text>
+  <rect x="380" y="210" width="200" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="480" y="229" font-size="9.5" fill="#495057" text-anchor="middle">parentFrame = displayFrame</text>
+
+  <!-- No branch: child window -->
+  <line x1="250" y1="245" x2="250" y2="260" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="250" y="257" font-size="8" fill="#c0392b" text-anchor="middle">否（子窗口）</text>
+
+  <!-- Sub-decision: layoutInScreen? -->
+  <path d="M 250,262 L 300,277 L 250,292 L 200,277 Z" fill="white" stroke="#adb5bd"/>
+  <text x="250" y="280" font-size="7.5" fill="#495057" text-anchor="middle">layoutInScreen?</text>
+
+  <line x1="300" y1="277" x2="380" y2="277" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="338" y="270" font-size="8" fill="#2e7d32">是</text>
+  <rect x="380" y="262" width="200" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="480" y="281" font-size="9.5" fill="#495057" text-anchor="middle">parentFrame = displayFrame</text>
+
+  <line x1="200" y1="277" x2="100" y2="277" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="160" y="270" font-size="8" fill="#c0392b">否</text>
+  <rect x="50" y="262" width="50" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="75" y="281" font-size="8.5" fill="#495057" text-anchor="middle">= attached</text>
+
+  <line x1="360" y1="290" x2="360" y2="310" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Phase 3 -->
+  <rect x="30" y="310" width="660" height="210" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="50" y="328" font-size="11" font-weight="600" fill="#343a40">阶段三：DisplayCutout 裁切</text>
+
+  <!-- Cutout mode decision -->
+  <path d="M 250,355 L 330,375 L 250,395 L 170,375 Z" fill="white" stroke="#adb5bd"/>
+  <text x="250" y="379" font-size="8.5" fill="#495057" text-anchor="middle">cutoutMode?</text>
+
+  <!-- ALWAYS branch -->
+  <line x1="330" y1="375" x2="420" y2="375" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="368" y="367" font-size="8" fill="#2e7d32">ALWAYS</text>
+  <rect x="420" y="360" width="120" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="480" y="379" font-size="9.5" fill="#2e7d32" text-anchor="middle">跳过裁切</text>
+
+  <!-- SHORT_EDGES / DEFAULT branch -->
+  <line x1="250" y1="395" x2="250" y2="418" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+  <text x="250" y="413" font-size="8" fill="#495057" text-anchor="middle">SHORT_EDGES / DEFAULT</text>
+
+  <rect x="50" y="418" width="270" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="434" font-size="9" fill="#495057">SHORT_EDGES: 放开长边方向</text>
+  <text x="60" y="448" font-size="8.5" fill="#868e96">竖屏 → top/bottom = MIN_Y/MAX_Y</text>
+  <text x="60" y="460" font-size="8.5" fill="#868e96">横屏 → left/right = MIN_X/MAX_X</text>
+
+  <rect x="340" y="418" width="330" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="350" y="434" font-size="9" fill="#495057">DEFAULT + INSET_DECOR: 系统栏覆盖时放开</text>
+  <text x="360" y="448" font-size="8.5" fill="#868e96">if systemBarsInsets.left >= cutout.safeInsetLeft</text>
+  <text x="370" y="460" font-size="8.5" fill="#868e96">→ 放开 left 方向 cutout 限制</text>
+
+  <rect x="50" y="476" width="620" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="360" y="494" font-size="9.5" fill="#c0392b" text-anchor="middle">parentFrame.intersect(cutoutSafe)  +  displayFrame.intersect(cutoutSafe)</text>
+
+  <line x1="360" y1="520" x2="360" y2="540" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Phase 4 -->
+  <rect x="30" y="540" width="660" height="120" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="50" y="558" font-size="11" font-weight="600" fill="#343a40">阶段四：计算窗口尺寸 (w × h)</text>
+
+  <rect x="50" y="568" width="300" height="44" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="585" font-size="9" fill="#495057">MATCH_PARENT → w = parentFrame.width()</text>
+  <text x="60" y="600" font-size="9" fill="#495057">固定值 → w = requestedWidth × compatScale</text>
+
+  <rect x="370" y="568" width="300" height="44" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="380" y="585" font-size="9" fill="#495057">多窗口模式限制:</text>
+  <text x="380" y="600" font-size="9" fill="#495057">w = min(w, pw), h = min(h, ph)</text>
+
+  <rect x="50" y="620" width="620" height="24" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="636" font-size="9" fill="#495057" text-anchor="middle">x = attrs.x × compatScale,  y = attrs.y × compatScale</text>
+
+  <line x1="360" y1="660" x2="360" y2="680" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Phase 5 -->
+  <rect x="30" y="680" width="660" height="115" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="50" y="698" font-size="11" font-weight="600" fill="#343a40">阶段五：Gravity 定位 + Display 适配</text>
+
+  <rect x="50" y="708" width="300" height="36" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="200" y="725" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">Gravity.apply()</text>
+  <text x="200" y="738" font-size="8.5" fill="#868e96" text-anchor="middle">根据 gravity 在 parentFrame 中定位 frame</text>
+
+  <line x1="350" y1="726" x2="370" y2="726" stroke="#555" stroke-width="1.5" marker-end="url(#arrow3)"/>
+
+  <rect x="370" y="708" width="300" height="36" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="520" y="725" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">Gravity.applyDisplay()</text>
+  <text x="520" y="738" font-size="8.5" fill="#868e96" text-anchor="middle">确保 frame 不超出 displayFrame</text>
+
+  <rect x="50" y="754" width="620" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="360" y="772" font-size="9" fill="#495057" text-anchor="middle">fitToDisplay = !inMultiWindowMode || (type != BASE_APPLICATION &amp;&amp; !noLimits)</text>
+
+  <line x1="360" y1="795" x2="360" y2="820" stroke="#555" stroke-width="1" marker-end="url(#arrow3)"/>
+
+  <!-- Output -->
+  <rect x="180" y="820" width="360" height="70" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="360" y="843" font-size="11" font-weight="600" fill="#2e7d32" text-anchor="middle">计算完成</text>
+  <text x="360" y="861" font-size="9.5" fill="#495057" text-anchor="middle">outFrame = 窗口最终边界</text>
+  <text x="360" y="877" font-size="9.5" fill="#495057" text-anchor="middle">outDisplayFrame / outParentFrame 已确定</text>
+</svg>

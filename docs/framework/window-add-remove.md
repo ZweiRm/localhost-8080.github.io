@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Activity 启动流程与生命周期'
-    link: '/framework/activity-launching-process'
+    text: 'WMS 架构与运行原理分析'
+    link: '/framework/basic-with-wms'
 next:
     text: '窗口层级管理'
     link: '/framework/wms-window-hierarchy'

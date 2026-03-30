@@ -3,7 +3,7 @@ prev:
     text: 'SurfaceControl & Transaction 流程'
     link: '/framework/surfacecontrol-transaction'
 next:
-    text: '窗口布局流程 relayoutWindow'
+    text: '窗口布局流程'
     link: '/framework/relayoutWindow'
 ---
 

@@ -3,8 +3,8 @@ prev:
     text: '无焦点窗口 ANR'
     link: '/framework/anr-no-focused'
 next:
-    text: 'Android 12 容器层级'
-    link: '/framework/container'
+    text: 'Android 16 新特性'
+    link: '/framework/android16'
 ---
 
 # ViewRootImpl 中 performTraversal() 梳理

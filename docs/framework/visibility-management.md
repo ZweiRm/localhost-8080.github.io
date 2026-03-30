@@ -1,6 +1,6 @@
 ---
 prev:
-    text: '窗口显示流程'
+    text: '窗口显示全流程概览'
     link: '/framework/window-rendering-process'
 next:
     text: 'Configuration 管理'

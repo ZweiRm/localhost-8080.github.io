@@ -842,90 +842,17 @@ void addWindowLw(WindowState win, WindowManager.LayoutParams attrs) {
 
 ### 3. DisplayPolicy#layoutWindowLw → WindowLayout#computeFrames
 
-窗口属性或显示内容变更时，触发 `layoutWindowLw` 进行布局计算：
+窗口属性或显示内容变更时，触发 `layoutWindowLw` 进行布局计算。该方法调用 `WindowLayout.computeFrames()` 根据窗口的 LayoutParams、InsetsState、DisplayCutout 安全区域等计算出三个关键矩形（frame / displayFrame / parentFrame），然后通过 `WindowState.setFrames()` 写入窗口状态。
 
-```java
-// com.android.server.wm.DisplayPolicy
+`computeFrames` 内部分为五个阶段：
 
-public void layoutWindowLw(WindowState win, WindowState attached, DisplayFrames displayFrames) {
-    displayFrames = win.getDisplayFrames(displayFrames);
-    final WindowManager.LayoutParams attrs = win.mAttrs.forRotation(displayFrames.mRotation);
-    sTmpClientFrames.attachedFrame = attached != null ? attached.getFrame() : null;
+1. **Insets 约束**：根据 `fitInsetsTypes` 和 `fitInsetsSides` 调用 `InsetsState.calculateInsets()` 收缩 displayFrame
+2. **parentFrame 确定**：根窗口使用 displayFrame，子窗口使用父帧或 displayFrame
+3. **DisplayCutout 裁切**：根据 `layoutInDisplayCutoutMode` 对帧进行安全区域限制
+4. **窗口尺寸计算**：结合 MATCH_PARENT / 固定值 / compatScale 计算 w × h
+5. **Gravity 定位**：`Gravity.apply()` + `Gravity.applyDisplay()` 确定最终 frame
 
-    // 核心计算：根据 attrs、InsetsState、Cutout 等信息计算 frame
-    mWindowLayout.computeFrames(attrs, win.getInsetsState(), displayFrames.mDisplayCutoutSafe,
-            win.getBounds(), win.getWindowingMode(), requestedWidth, requestedHeight,
-            win.getRequestedVisibleTypes(), win.mGlobalScale, sTmpClientFrames);
-
-    // 将计算结果设置到 WindowState
-    win.setFrames(sTmpClientFrames, win.mRequestedWidth, win.mRequestedHeight);
-}
-```
-
-`WindowLayout.computeFrames()` 是所有窗口 frame 计算的核心方法，其关键逻辑如下：
-
-```java
-// frameworks/base/core/java/android/view/WindowLayout.java
-
-public void computeFrames(WindowManager.LayoutParams attrs, InsetsState state,
-        Rect displayCutoutSafe, Rect windowBounds, @WindowingMode int windowingMode,
-        int requestedWidth, int requestedHeight, @InsetsType int requestedVisibleTypes,
-        float compatScale, ClientWindowFrames frames) {
-
-    // 1. 根据 fitInsetsTypes 和 fitInsetsSides 计算 Insets 约束
-    final Insets insets = state.calculateInsets(windowBounds, attrs.getFitInsetsTypes(),
-            attrs.isFitInsetsIgnoringVisibility());
-    final @WindowInsets.Side.InsetsSide int sides = attrs.getFitInsetsSides();
-    final int left = (sides & WindowInsets.Side.LEFT) != 0 ? insets.left : 0;
-    final int top = (sides & WindowInsets.Side.TOP) != 0 ? insets.top : 0;
-    final int right = (sides & WindowInsets.Side.RIGHT) != 0 ? insets.right : 0;
-    final int bottom = (sides & WindowInsets.Side.BOTTOM) != 0 ? insets.bottom : 0;
-    outDisplayFrame.set(windowBounds.left + left, windowBounds.top + top,
-            windowBounds.right - right, windowBounds.bottom - bottom);
-
-    // 2. 处理 Display Cutout 避让
-    final int cutoutMode = attrs.layoutInDisplayCutoutMode;
-    final DisplayCutout cutout = state.getDisplayCutout();
-    if (cutoutMode != LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS && !cutout.isEmpty()) {
-        // SHORT_EDGES 模式：只在短边避让
-        if (cutoutMode == LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES) {
-            if (displayFrame.width() < displayFrame.height()) {
-                displayCutoutSafeExceptMaybeBars.top = MIN_Y;
-                displayCutoutSafeExceptMaybeBars.bottom = MAX_Y;
-            } else {
-                displayCutoutSafeExceptMaybeBars.left = MIN_X;
-                displayCutoutSafeExceptMaybeBars.right = MAX_X;
-            }
-        }
-        // DEFAULT/SHORT_EDGES 模式下，如果系统栏已覆盖 Cutout 区域则无需额外避让
-        if (layoutInScreen && layoutInsetDecor && ...) {
-            final Insets systemBarsInsets = state.calculateInsets(displayFrame, systemBars(), ...);
-            if (systemBarsInsets.left >= cutout.getSafeInsetLeft())
-                displayCutoutSafeExceptMaybeBars.left = MIN_X;
-            // ... 其他方向类似
-        }
-        // 将 parentFrame 和 displayFrame 限制在安全区域内
-        outParentFrame.intersectUnchecked(displayCutoutSafeExceptMaybeBars);
-        outDisplayFrame.intersectUnchecked(displayCutoutSafeExceptMaybeBars);
-    }
-
-    // 3. 处理 FLAG_LAYOUT_NO_LIMITS（允许窗口超出屏幕边界）
-    if (noLimits && type != TYPE_SYSTEM_ERROR && !inMultiWindowMode) {
-        outDisplayFrame.set(MIN_X, MIN_Y, MAX_X, MAX_Y);
-    }
-
-    // 4. 根据 Gravity 计算最终 frame
-    Gravity.apply(attrs.gravity, w, h, outParentFrame, ...  outFrame);
-    if (fitToDisplay) {
-        Gravity.applyDisplay(attrs.gravity, outDisplayFrame, outFrame);
-    }
-
-    // 5. 如果窗口需要扩展到 Cutout 区域
-    if (extendedByCutout) {
-        extendFrameByCutout(displayCutoutSafe, outDisplayFrame, outFrame, mTempRect);
-    }
-}
-```
+> 该算法的完整源码分析、数据结构说明和流程图详见 [WMS 窗口大小计算流程：computeFrames](./wms-compute-frame)。
 
 ### getFrameProvider 的计算逻辑
 

@@ -3,7 +3,7 @@ prev:
     text: '转屏机制'
     link: '/framework/screen-rotation'
 next:
-    text: 'Android 属性动画原理'
+    text: '属性动画'
     link: '/framework/android-property-animation'
 ---
 

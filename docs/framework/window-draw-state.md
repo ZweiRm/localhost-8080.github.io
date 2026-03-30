@@ -1,9 +1,9 @@
 ---
 prev:
-    text: '窗口布局流程 relayoutWindow'
-    link: '/framework/relayoutWindow'
+    text: '窗口大小计算'
+    link: '/framework/wms-compute-frame'
 next:
-    text: '窗口显示流程'
+    text: '窗口显示全流程概览'
     link: '/framework/window-rendering-process'
 ---
 
