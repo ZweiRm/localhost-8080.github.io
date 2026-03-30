@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 520">
+  <defs>
+    <marker id="ac" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+    </style>
+  </defs>
+
+  <!-- 生命线标题 -->
+  <rect x="5" y="5" width="130" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="70" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">BroadcastQueueModernImpl</text>
+
+  <rect x="220" y="5" width="130" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="285" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">ActivityManagerService</text>
+
+  <rect x="440" y="5" width="100" height="24" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="490" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">ActivityThread</text>
+
+  <rect x="620" y="5" width="130" height="24" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="685" y="21" text-anchor="middle" font-size="7" font-weight="600" fill="#343a40">ApplicationThread</text>
+
+  <!-- 生命线 -->
+  <line x1="70" y1="29" x2="70" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="285" y1="29" x2="285" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="490" y1="29" x2="490" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="685" y1="29" x2="685" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- 起始注释 -->
+  <rect x="5" y="40" width="125" height="26" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="12" y="52" font-size="7" fill="#495057">AMS handler 处理</text>
+  <text x="12" y="60" font-size="7" fill="#495057">MSG_UPDATE_RUNNING_LIST</text>
+
+  <!-- 激活块 -->
+  <rect x="64" y="72" width="12" height="120" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- updateRunningListLocked -->
+  <path d="M76,80 L92,80 L92,95 L76,95" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="98" y="91" font-size="7.5" fill="#495057">updateRunningListLocked</text>
+
+  <!-- promoteToRunningLocked -->
+  <path d="M76,105 L92,105 L92,120 L76,120" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="98" y="116" font-size="7.5" fill="#495057">promoteToRunningLocked</text>
+
+  <!-- scheduleReceiverColdLocked -->
+  <path d="M76,135 L92,135 L92,150 L76,150" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="98" y="146" font-size="7.5" fill="#495057">scheduleReceiverColdLocked</text>
+
+  <!-- shouldSkipReceiver -->
+  <rect x="95" y="155" width="130" height="16" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="102" y="167" font-size="7" fill="#c0392b">shouldSkipReceiver (skip 4)</text>
+
+  <!-- BQMI -> AMS: startProcessLocked -->
+  <line x1="76" y1="185" x2="279" y2="188" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="140" y="182" font-size="7.5" fill="#495057">startProcessLocked</text>
+
+  <!-- AMS 注释：zygote 拉起进程 -->
+  <rect x="210" y="198" width="160" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="218" y="210" font-size="7" fill="#868e96">省略 zygote 拉起进程的流程</text>
+
+  <!-- ......（省略号） -->
+  <text x="400" y="230" font-size="14" fill="#868e96">...</text>
+
+  <!-- ActivityThread: main -->
+  <path d="M496,250 L512,250 L512,265 L496,265" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="518" y="261" font-size="7.5" fill="#495057">main</text>
+
+  <!-- ActivityThread: attach -->
+  <path d="M496,275 L512,275 L512,290 L496,290" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="518" y="286" font-size="7.5" fill="#495057">attach</text>
+
+  <!-- ActivityThread -> AMS: attachApplication -->
+  <line x1="484" y1="300" x2="291" y2="303" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="350" y="298" font-size="7.5" fill="#495057">attachApplication</text>
+
+  <!-- AMS self: attachApplicationLocked -->
+  <path d="M291,315 L308,315 L308,330 L291,330" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="314" y="326" font-size="7.5" fill="#495057">attachApplicationLocked</text>
+
+  <!-- AMS -> ApplicationThread: bindApplication -->
+  <line x1="291" y1="342" x2="679" y2="345" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="440" y="339" font-size="7.5" fill="#495057">bindApplication</text>
+
+  <!-- ApplicationThread -> ActivityThread: handleBindApplication -->
+  <line x1="679" y1="360" x2="496" y2="363" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="550" y="357" font-size="7.5" fill="#495057">handleBindApplication</text>
+
+  <!-- ActivityThread -> AMS: finishAttachApplication -->
+  <line x1="484" y1="380" x2="291" y2="383" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="340" y="377" font-size="7.5" fill="#495057">finishAttachApplication</text>
+
+  <!-- AMS self: finishAttachApplicationInner -->
+  <path d="M291,395 L308,395 L308,410 L291,410" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="314" y="406" font-size="7" fill="#495057">finishAttachApplicationInner</text>
+
+  <!-- AMS -> BQMI: onApplicationAttachedLocked -->
+  <line x1="279" y1="425" x2="76" y2="428" stroke="#555" stroke-width="1" marker-end="url(#ac)"/>
+  <text x="130" y="422" font-size="7" fill="#495057">onApplicationAttachedLocked</text>
+
+  <!-- BQMI self: scheduleReceiverWarmLocked -->
+  <rect x="15" y="438" width="170" height="18" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="22" y="451" font-size="8" fill="#c0392b" font-weight="600">scheduleReceiverWarmLocked</text>
+
+  <!-- 注释 -->
+  <rect x="15" y="465" width="200" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="22" y="477" font-size="7" fill="#495057">回到 warm 路径，后续流程同场景 1</text>
+</svg>

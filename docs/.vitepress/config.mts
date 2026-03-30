@@ -272,6 +272,7 @@ export default defineConfig({
                     items: [
                         { text: 'Activity 启动流程与生命周期', link: 'framework/activity-launching-process' },
                         { text: 'AMS 进程管理', link: 'framework/ams_process_management' },
+                        { text: 'Android 广播系统', link: 'framework/android-broadcast-system' },
                     ]
                 },
                 {

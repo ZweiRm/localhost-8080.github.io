@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 580">
+  <defs>
+    <marker id="arr-c" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="diamond" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <path d="M0,3.5 L5,0 L10,3.5 L5,7 Z" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+      .cls-title { font-size: 11px; font-weight: 600; fill: #343a40; }
+      .cls-field { font-size: 9px; fill: #495057; }
+      .cls-method { font-size: 9px; fill: #495057; }
+      .cls-box { fill: white; stroke: #adb5bd; stroke-width: 1; rx: 3; }
+      .cls-header { fill: #f8f9fa; stroke: #adb5bd; stroke-width: 1; rx: 3; }
+    </style>
+  </defs>
+
+  <!-- BroadcastRecord -->
+  <rect x="10" y="180" width="230" height="380" class="cls-box"/>
+  <rect x="10" y="180" width="230" height="22" class="cls-header"/>
+  <text x="125" y="196" text-anchor="middle" class="cls-title">BroadcastRecord</text>
+  <line x1="10" y1="202" x2="240" y2="202" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="18" y="218" class="cls-field"># intent: Intent</text>
+  <text x="18" y="232" class="cls-field"># callerApp: ProcessRecord</text>
+  <text x="18" y="246" class="cls-field"># ordered: boolean</text>
+  <text x="18" y="260" class="cls-field"># sticky: boolean</text>
+  <text x="18" y="274" class="cls-field"># alarm: boolean</text>
+  <text x="18" y="288" class="cls-field"># interactive: boolean</text>
+  <text x="18" y="302" class="cls-field"># prioritized: boolean</text>
+  <text x="18" y="316" class="cls-field"># deferUntilActive: boolean</text>
+  <text x="18" y="330" class="cls-field"># urgent: boolean</text>
+  <text x="18" y="344" class="cls-field"># receivers: List&lt;Object&gt;</text>
+  <text x="18" y="358" class="cls-field"># delivery: int[]</text>
+  <text x="18" y="372" class="cls-field"># blockedUntilBeyondCount: int[]</text>
+  <text x="18" y="386" class="cls-field"># resultTo: IIntentReceiver</text>
+  <text x="18" y="400" class="cls-field"># enqueueTime: long</text>
+  <text x="18" y="414" class="cls-field"># dispatchTime: long</text>
+  <text x="18" y="428" class="cls-field"># finishTime: long</text>
+  <line x1="10" y1="434" x2="240" y2="434" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="18" y="450" class="cls-method">+ calculateUrgent(): boolean</text>
+  <text x="18" y="464" class="cls-method">+ calculateDeferUntilActive(): boolean</text>
+  <text x="18" y="478" class="cls-method">+ isPrioritized(): boolean</text>
+  <text x="18" y="492" class="cls-method">+ calculateBlockedUntilBeyondCount(): int[]</text>
+  <text x="18" y="506" class="cls-method">+ isAssumedDelivered(int): boolean</text>
+  <text x="18" y="520" class="cls-method">+ isBlocked(int): boolean</text>
+
+  <!-- SomeArgs -->
+  <rect x="100" y="30" width="140" height="80" class="cls-box"/>
+  <rect x="100" y="30" width="140" height="22" class="cls-header"/>
+  <text x="170" y="46" text-anchor="middle" class="cls-title">SomeArgs</text>
+  <line x1="100" y1="52" x2="240" y2="52" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="108" y="68" class="cls-field">+ arg1: Object</text>
+  <text x="108" y="82" class="cls-field">+ argi1: int</text>
+  <text x="108" y="96" class="cls-field">+ obtain(): SomeArgs</text>
+
+  <!-- BroadcastProcessQueue -->
+  <rect x="290" y="160" width="280" height="340" class="cls-box"/>
+  <rect x="290" y="160" width="280" height="22" class="cls-header"/>
+  <text x="430" y="176" text-anchor="middle" class="cls-title">BroadcastProcessQueue</text>
+  <line x1="290" y1="182" x2="570" y2="182" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="298" y="198" class="cls-field"># processName: String</text>
+  <text x="298" y="212" class="cls-field"># uid: int</text>
+  <text x="298" y="226" class="cls-field"># app: ProcessRecord</text>
+  <text x="298" y="240" class="cls-field">- mPending: ArrayDeque&lt;SomeArgs&gt;</text>
+  <text x="298" y="254" class="cls-field">- mPendingUrgent: ArrayDeque&lt;SomeArgs&gt;</text>
+  <text x="298" y="268" class="cls-field">- mPendingOffload: ArrayDeque&lt;SomeArgs&gt;</text>
+  <text x="298" y="282" class="cls-field">- mActive: BroadcastRecord</text>
+  <text x="298" y="296" class="cls-field">- mActiveIndex: int</text>
+  <text x="298" y="310" class="cls-field">- mRunnableAt: long</text>
+  <text x="298" y="324" class="cls-field">- mRunnableAtReason: int</text>
+  <text x="298" y="338" class="cls-field"># runnableAtNext: BroadcastProcessQueue</text>
+  <text x="298" y="352" class="cls-field"># runnableAtPrev: BroadcastProcessQueue</text>
+  <text x="298" y="366" class="cls-field">- mCountXxx: int (各类计数)</text>
+  <line x1="290" y1="375" x2="570" y2="375" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="298" y="392" class="cls-method">+ enqueueOrReplaceBroadcast(...)</text>
+  <text x="298" y="406" class="cls-method">+ updateRunnableAt()</text>
+  <text x="298" y="420" class="cls-method">+ makeActiveNextPending()</text>
+  <text x="298" y="434" class="cls-method">+ peekNextBroadcast(): SomeArgs</text>
+  <text x="298" y="448" class="cls-method">+ isRunnable(): boolean</text>
+  <text x="298" y="462" class="cls-method">+ isProcessWarm(): boolean</text>
+  <text x="298" y="476" class="cls-method">+ isActive(): boolean</text>
+
+  <!-- BroadcastQueueModernImpl -->
+  <rect x="620" y="100" width="340" height="320" class="cls-box"/>
+  <rect x="620" y="100" width="340" height="22" class="cls-header"/>
+  <text x="790" y="116" text-anchor="middle" class="cls-title">BroadcastQueueModernImpl</text>
+  <line x1="620" y1="122" x2="960" y2="122" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="628" y="138" class="cls-field">- mProcessQueues: SparseArray&lt;BPQ&gt;</text>
+  <text x="628" y="152" class="cls-field">- mRunnableHead: BroadcastProcessQueue</text>
+  <text x="628" y="166" class="cls-field">- mRunning: BroadcastProcessQueue[]</text>
+  <text x="628" y="180" class="cls-field">- mRunningColdStart: BroadcastProcessQueue</text>
+  <text x="628" y="194" class="cls-field">- mConstants: BroadcastConstants</text>
+  <text x="628" y="208" class="cls-field">- mSkipPolicy: BroadcastSkipPolicy</text>
+  <text x="628" y="222" class="cls-field">- mAnrTimer: BroadcastAnrTimer</text>
+  <text x="628" y="236" class="cls-field">- mHistory: BroadcastHistory</text>
+  <line x1="620" y1="245" x2="960" y2="245" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="628" y="262" class="cls-method">+ enqueueBroadcastLocked(BroadcastRecord)</text>
+  <text x="628" y="276" class="cls-method">- updateRunningListLocked()</text>
+  <text x="628" y="290" class="cls-method">- promoteToRunningLocked(BPQ)</text>
+  <text x="628" y="304" class="cls-method">- scheduleReceiverWarmLocked(BPQ): boolean</text>
+  <text x="628" y="318" class="cls-method">- scheduleReceiverColdLocked(BPQ): boolean</text>
+  <text x="628" y="332" class="cls-method">- dispatchReceivers(BPQ, BR, int): boolean</text>
+  <text x="628" y="346" class="cls-method">- demoteFromRunningLocked(BPQ)</text>
+  <text x="628" y="360" class="cls-method">+ finishReceiverLocked(ProcessRecord, ...): boolean</text>
+  <text x="628" y="374" class="cls-method">- shouldRetire(BPQ): boolean</text>
+  <text x="628" y="388" class="cls-method">- updateRunnableList(BPQ)</text>
+  <text x="628" y="402" class="cls-method"># getOrCreateProcessQueue(...): BPQ</text>
+
+  <!-- BroadcastConstants -->
+  <rect x="700" y="450" width="260" height="120" class="cls-box"/>
+  <rect x="700" y="450" width="260" height="22" class="cls-header"/>
+  <text x="830" y="466" text-anchor="middle" class="cls-title">BroadcastConstants</text>
+  <line x1="700" y1="472" x2="960" y2="472" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="708" y="488" class="cls-field">+ MAX_RUNNING_PROCESS_QUEUES: int (4)</text>
+  <text x="708" y="502" class="cls-field">+ EXTRA_RUNNING_URGENT_PROCESS_QUEUES: int (1)</text>
+  <text x="708" y="516" class="cls-field">+ MAX_RUNNING_ACTIVE_BROADCASTS: int (16)</text>
+  <text x="708" y="530" class="cls-field">+ MAX_PENDING_BROADCASTS: int</text>
+  <text x="708" y="544" class="cls-field">+ DELAY_NORMAL_MILLIS: int (500)</text>
+  <text x="708" y="558" class="cls-field">+ DELAY_URGENT_MILLIS: int (-120000)</text>
+
+  <!-- 关联线 -->
+  <!-- BroadcastRecord → SomeArgs (arg1) -->
+  <line x1="170" y1="180" x2="170" y2="112" stroke="#868e96" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="178" y="150" font-size="8" fill="#868e96">arg1</text>
+
+  <!-- BPQ → BroadcastQueueModernImpl -->
+  <line x1="570" y1="280" x2="618" y2="280" stroke="#555" stroke-width="1" marker-end="url(#arr-c)"/>
+
+  <!-- BroadcastQueueModernImpl → BroadcastConstants -->
+  <line x1="830" y1="420" x2="830" y2="448" stroke="#555" stroke-width="1" marker-end="url(#arr-c)"/>
+</svg>

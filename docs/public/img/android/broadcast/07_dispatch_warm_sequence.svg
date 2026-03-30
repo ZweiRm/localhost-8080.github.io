@@ -1,0 +1,131 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 520">
+  <defs>
+    <marker id="aw" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="aw-r" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <path d="M7,0 L0,2.5 L7,5" fill="#868e96"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+    </style>
+  </defs>
+
+  <!-- 起始注释 -->
+  <rect x="5" y="35" width="108" height="32" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.6"/>
+  <text x="12" y="48" font-size="7" fill="#495057">AMS handler 处理</text>
+  <text x="12" y="58" font-size="7" fill="#495057">MSG_UPDATE_RUNNING_LIST</text>
+
+  <!-- 生命线标题 -->
+  <rect x="5" y="5" width="108" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="59" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">BroadcastQueueModernImpl</text>
+
+  <rect x="180" y="5" width="80" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="220" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">BroadcastRecord</text>
+
+  <rect x="310" y="5" width="100" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="360" y="21" text-anchor="middle" font-size="7" font-weight="600" fill="#343a40">ApplicationThread</text>
+
+  <rect x="460" y="5" width="105" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="512" y="21" text-anchor="middle" font-size="7" font-weight="600" fill="#343a40">InnerReceiver</text>
+
+  <rect x="610" y="5" width="105" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="662" y="21" text-anchor="middle" font-size="7" font-weight="600" fill="#343a40">ReceiverDispatcher</text>
+
+  <rect x="760" y="5" width="90" height="24" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="805" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">BroadcastReceiver</text>
+
+  <rect x="870" y="5" width="60" height="24" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="900" y="21" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">AMS</text>
+
+  <!-- 生命线 -->
+  <line x1="59" y1="29" x2="59" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="220" y1="29" x2="220" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="360" y1="29" x2="360" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="512" y1="29" x2="512" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="662" y1="29" x2="662" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="805" y1="29" x2="805" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+  <line x1="900" y1="29" x2="900" y2="510" stroke="#adb5bd" stroke-width="0.5" stroke-dasharray="3,3"/>
+
+  <!-- 激活块 -->
+  <rect x="53" y="75" width="12" height="380" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- updateRunningListLocked -->
+  <path d="M65,85 L82,85 L82,100 L65,100" fill="none" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="88" y="96" font-size="7.5" fill="#495057">updateRunningListLocked</text>
+
+  <!-- promoteToRunningLocked -->
+  <path d="M65,115 L82,115 L82,130 L65,130" fill="none" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="88" y="126" font-size="7.5" fill="#495057">promoteToRunningLocked</text>
+
+  <!-- 注释: 记录广播派发时间 -->
+  <rect x="130" y="135" width="110" height="18" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="138" y="148" font-size="7" fill="#495057">记录广播的派发时间</text>
+
+  <!-- scheduleReceiverWarmLocked -->
+  <path d="M65,160 L82,160 L82,175 L65,175" fill="none" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="88" y="171" font-size="7.5" fill="#495057">scheduleReceiverWarmLocked</text>
+
+  <!-- shouldSkipReceiver -->
+  <rect x="120" y="180" width="130" height="20" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="128" y="194" font-size="7.5" fill="#c0392b">shouldSkipReceiver (skip 4)</text>
+
+  <!-- dispatchReceivers -->
+  <path d="M65,210 L82,210 L82,225 L65,225" fill="none" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="88" y="221" font-size="7.5" fill="#495057">dispatchReceivers</text>
+
+  <!-- 设置状态 DELIVERY_SCHEDULED -->
+  <rect x="120" y="228" width="175" height="16" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="128" y="240" font-size="7" fill="#495057">setDeliveryState → DELIVERY_SCHEDULED</text>
+
+  <!-- isAssumedDelivered -->
+  <line x1="65" y1="255" x2="214" y2="257" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="100" y="252" font-size="7" fill="#495057">isAssumedDelivered</text>
+
+  <!-- startDeliveryTimeoutLocked -->
+  <text x="88" y="278" font-size="7" fill="#868e96">非 assumeDelivered: startDeliveryTimeoutLocked</text>
+
+  <!-- scheduleRegisteredReceiver -->
+  <line x1="65" y1="292" x2="354" y2="295" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="140" y="289" font-size="7" fill="#495057">scheduleRegisteredReceiver (Binder call)</text>
+
+  <!-- 注释: 根据接收者类型 -->
+  <rect x="250" y="302" width="170" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="258" y="313" font-size="7" fill="#495057">动态注册走此方法；静态注册走 scheduleReceiver</text>
+
+  <!-- ApplicationThread -> InnerReceiver: performReceive -->
+  <line x1="366" y1="325" x2="506" y2="327" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="400" y="322" font-size="7" fill="#495057">performReceive</text>
+
+  <!-- InnerReceiver -> ReceiverDispatcher: performReceive -->
+  <line x1="518" y1="340" x2="656" y2="342" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="555" y="337" font-size="7" fill="#495057">performReceive</text>
+
+  <!-- ReceiverDispatcher: post Runnable -->
+  <rect x="600" y="348" width="140" height="16" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="608" y="360" font-size="7" fill="#495057">post runnable 到主线程 handler</text>
+
+  <!-- ReceiverDispatcher -> BroadcastReceiver: onReceive -->
+  <line x1="668" y1="375" x2="799" y2="377" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="700" y="372" font-size="7" fill="#495057">onReceive</text>
+
+  <!-- BroadcastReceiver -> BroadcastReceiver: finish -->
+  <path d="M811,392 L828,392 L828,407 L811,407" fill="none" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="833" y="402" font-size="7" fill="#495057">finish</text>
+
+  <!-- BroadcastReceiver -> AMS: sendFinished / finishReceiver -->
+  <line x1="811" y1="420" x2="894" y2="422" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="830" y="417" font-size="7" fill="#495057">sendFinished</text>
+
+  <!-- AMS -> BroadcastQueueModernImpl: finishReceiverLocked -->
+  <line x1="894" y1="440" x2="65" y2="445" stroke="#868e96" stroke-width="1" stroke-dasharray="3,3" marker-end="url(#aw-r)"/>
+  <text x="400" y="438" font-size="7" fill="#495057">finishReceiverLocked</text>
+
+  <!-- 设置状态 DELIVERY_DELIVERED -->
+  <rect x="5" y="455" width="225" height="16" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.5"/>
+  <text x="12" y="467" font-size="7" fill="#2e7d32">setDeliveryState → DELIVERY_DELIVERED, 取消 ANR 炸弹</text>
+
+  <!-- demoteFromRunningLocked -->
+  <path d="M65,480 L82,480 L82,495 L65,495" fill="none" stroke="#555" stroke-width="1" marker-end="url(#aw)"/>
+  <text x="88" y="491" font-size="7.5" fill="#495057">demoteFromRunningLocked</text>
+</svg>

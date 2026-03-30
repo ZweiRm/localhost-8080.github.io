@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 530">
+  <defs>
+    <marker id="a2" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+    </style>
+  </defs>
+
+  <!-- APP 区域 -->
+  <rect x="10" y="10" width="380" height="270" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="20" y="28" font-size="11" font-weight="600" fill="#4a7fb5">APP 进程</text>
+
+  <!-- APP 组件 -->
+  <rect x="25" y="42" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="75" y="64" text-anchor="middle" font-size="9" fill="#495057">APP 组件-Activity</text>
+
+  <rect x="140" y="42" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="190" y="64" text-anchor="middle" font-size="9" fill="#495057">APP 组件-Service</text>
+
+  <rect x="255" y="42" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="305" y="64" text-anchor="middle" font-size="9" fill="#495057">APP 组件-Activity</text>
+
+  <!-- 一次广播注册 框 -->
+  <rect x="25" y="100" width="350" height="170" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <text x="35" y="118" font-size="9" fill="#868e96">一个组件中可以多次注册广播</text>
+
+  <!-- 单次注册 -->
+  <rect x="40" y="130" width="150" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="48" y="148" font-size="9" fill="#495057">一次广播注册</text>
+  <text x="48" y="168" font-size="8" fill="#868e96">BroadcastReceiver + IntentFilter</text>
+
+  <rect x="210" y="130" width="150" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="218" y="148" font-size="9" fill="#495057">一次广播注册</text>
+  <text x="218" y="168" font-size="8" fill="#868e96">BroadcastReceiver + IntentFilter</text>
+
+  <!-- 展开单次注册 -->
+  <rect x="40" y="195" width="320" height="65" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="50" y="212" font-size="9" font-weight="600" fill="#343a40">一次广播注册的组成</text>
+
+  <ellipse cx="100" cy="240" rx="42" ry="16" fill="#eef1f5" stroke="#4a7fb5" stroke-width="0.8"/>
+  <text x="100" y="244" text-anchor="middle" font-size="8" fill="#343a40">BroadcastReceiver</text>
+
+  <rect x="165" y="224" width="180" height="32" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="0.8"/>
+  <text x="175" y="238" font-size="8" fill="#343a40">IntentFilter</text>
+  <text x="175" y="250" font-size="7.5" fill="#868e96">action1, action2, action3 ...</text>
+
+  <!-- 其他 APP 进程 -->
+  <rect x="420" y="10" width="350" height="170" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="430" y="28" font-size="11" font-weight="600" fill="#2e7d32">其他 APP 进程</text>
+
+  <rect x="435" y="42" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="485" y="64" text-anchor="middle" font-size="9" fill="#495057">APP 进程 A</text>
+
+  <rect x="550" y="42" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="600" y="64" text-anchor="middle" font-size="9" fill="#495057">APP 进程 B</text>
+
+  <rect x="435" y="100" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="485" y="122" text-anchor="middle" font-size="9" fill="#495057">APP 进程 C</text>
+
+  <rect x="550" y="100" width="100" height="36" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="600" y="122" text-anchor="middle" font-size="9" fill="#495057">APP 进程 D</text>
+
+  <!-- 注册广播箭头 -->
+  <line x1="530" y1="180" x2="530" y2="310" stroke="#555" stroke-width="1.5" marker-end="url(#a2)"/>
+  <text x="540" y="250" font-size="10" fill="#495057">注册广播</text>
+
+  <!-- SYSTEM 区域 -->
+  <rect x="10" y="320" width="760" height="200" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1" stroke-dasharray="5,3"/>
+  <text x="20" y="340" font-size="11" font-weight="600" fill="#c0392b">SYSTEM (AMS)</text>
+
+  <!-- 系统数据结构 -->
+  <rect x="25" y="355" width="340" height="70" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="35" y="375" font-size="9" font-weight="600" fill="#343a40">mRegisteredReceivers</text>
+  <text x="35" y="390" font-size="8" fill="#495057">HashMap&lt;IBinder, ReceiverList&gt;</text>
+  <text x="35" y="405" font-size="8" fill="#868e96">IIntentReceiver → ReceiverList 的一一映射</text>
+
+  <rect x="400" y="355" width="340" height="70" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="410" y="375" font-size="9" font-weight="600" fill="#343a40">mReceiverResolver</text>
+  <text x="410" y="390" font-size="8" fill="#495057">IntentResolver&lt;BroadcastFilter, BroadcastFilter&gt;</text>
+  <text x="410" y="405" font-size="8" fill="#868e96">保存所有进程的所有 BroadcastFilter</text>
+
+  <rect x="25" y="440" width="340" height="60" rx="3" fill="white" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="35" y="460" font-size="9" font-weight="600" fill="#343a40">mStickyBroadcasts</text>
+  <text x="35" y="475" font-size="8" fill="#495057">SparseArray&lt;ArrayMap&lt;String, ArrayList&lt;StickyBroadcast&gt;&gt;&gt;</text>
+  <text x="35" y="490" font-size="8" fill="#868e96">userId → (action → sticky 广播列表)</text>
+
+  <!-- 注释：1000 限制 -->
+  <rect x="400" y="450" width="280" height="40" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="410" y="468" font-size="8.5" fill="#495057">每个进程最多注册 1000 个接收者</text>
+  <text x="410" y="481" font-size="8.5" fill="#495057">每个接收者可携带多个 action</text>
+</svg>

@@ -1,0 +1,89 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <marker id="arr-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#c0392b"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+    </style>
+  </defs>
+
+  <!-- 起点 -->
+  <circle cx="30" cy="190" r="8" fill="#343a40"/>
+
+  <!-- DELIVERY_DEFERRED -->
+  <rect x="130" y="20" width="160" height="36" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="210" y="43" text-anchor="middle" font-size="10" font-weight="600" fill="#495057">DELIVERY_DEFERRED</text>
+
+  <!-- DELIVERY_PENDING -->
+  <rect x="130" y="172" width="160" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="210" y="195" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DELIVERY_PENDING</text>
+
+  <!-- DELIVERY_SCHEDULED -->
+  <rect x="430" y="172" width="170" height="36" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="515" y="195" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">DELIVERY_SCHEDULED</text>
+
+  <!-- DELIVERY_DELIVERED (终态) -->
+  <rect x="740" y="172" width="170" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="825" y="195" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">DELIVERY_DELIVERED</text>
+  <!-- 终点 -->
+  <circle cx="935" cy="190" r="8" fill="#343a40"/>
+  <circle cx="935" cy="190" r="5" fill="white"/>
+
+  <!-- DELIVERY_TIMEOUT -->
+  <rect x="540" y="60" width="160" height="36" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="620" y="83" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">DELIVERY_TIMEOUT</text>
+
+  <!-- DELIVERY_SKIPPED -->
+  <rect x="180" y="330" width="160" height="36" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="260" y="353" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">DELIVERY_SKIPPED</text>
+
+  <!-- DELIVERY_FAILURE -->
+  <rect x="470" y="330" width="160" height="36" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="550" y="353" text-anchor="middle" font-size="10" font-weight="600" fill="#c0392b">DELIVERY_FAILURE</text>
+
+  <!-- 起点 -> PENDING -->
+  <line x1="38" y1="190" x2="126" y2="190" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="80" y="182" text-anchor="middle" font-size="8" fill="#868e96">broadcastIntentLockedTraced</text>
+
+  <!-- PENDING <-> DEFERRED -->
+  <line x1="190" y1="170" x2="190" y2="58" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="118" y="100" font-size="8" fill="#868e96">app is cached</text>
+  <line x1="230" y1="58" x2="230" y2="170" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="238" y="120" font-size="8" fill="#868e96">app not cached</text>
+
+  <!-- PENDING -> SCHEDULED -->
+  <line x1="292" y1="186" x2="426" y2="186" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="360" y="178" text-anchor="middle" font-size="8" fill="#868e96">dispatchReceivers</text>
+
+  <!-- SCHEDULED -> DELIVERED -->
+  <line x1="602" y1="190" x2="736" y2="190" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="670" y="182" text-anchor="middle" font-size="8" fill="#868e96">finishReceiverActiveLocked</text>
+
+  <!-- DELIVERED -> 终点 -->
+  <line x1="912" y1="190" x2="926" y2="190" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+
+  <!-- SCHEDULED -> TIMEOUT -->
+  <line x1="530" y1="172" x2="600" y2="98" stroke="#c0392b" stroke-width="1" marker-end="url(#arr-red)"/>
+  <text x="548" y="128" font-size="8" fill="#c0392b">广播ANR</text>
+
+  <!-- PENDING -> SKIPPED -->
+  <line x1="210" y1="210" x2="250" y2="328" stroke="#c0392b" stroke-width="1" marker-end="url(#arr-red)"/>
+  <text x="195" y="270" font-size="8" fill="#868e96">shouldSkipReceiver</text>
+
+  <!-- SCHEDULED -> FAILURE -->
+  <line x1="520" y1="210" x2="545" y2="328" stroke="#c0392b" stroke-width="1" marker-end="url(#arr-red)"/>
+  <text x="555" y="280" font-size="8" fill="#868e96">RemoteException</text>
+
+  <!-- SCHEDULED -> PENDING (reEnqueue) -->
+  <path d="M440,210 Q380,260 310,210" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arr)"/>
+  <text x="370" y="250" text-anchor="middle" font-size="8" fill="#868e96">reEnqueueActiveBroadcast</text>
+
+  <!-- 说明框 -->
+  <rect x="700" y="110" width="230" height="45" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <text x="710" y="125" font-size="8.5" fill="#495057">assumeDelivered 类型: SCHEDULED→DELIVERED 极快</text>
+  <text x="710" y="140" font-size="8.5" fill="#495057">非 assumeDelivered: 需等 app 回调 finishReceiver</text>
+</svg>

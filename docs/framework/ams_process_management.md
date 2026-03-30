@@ -3,8 +3,8 @@ prev:
     text: 'Activity 启动流程与生命周期'
     link: '/framework/activity-launching-process'
 next:
-    text: 'WMS 架构与运行原理分析'
-    link: '/framework/basic-with-wms'
+    text: 'Android 广播系统'
+    link: '/framework/android-broadcast-system'
 ---
 
 # AMS 进程管理

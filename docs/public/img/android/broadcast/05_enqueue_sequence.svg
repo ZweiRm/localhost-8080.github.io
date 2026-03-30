@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560">
+  <defs>
+    <marker id="ae" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+    </style>
+  </defs>
+
+  <!-- 生命线标题 -->
+  <rect x="10" y="8" width="70" height="26" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="45" y="26" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">APP</text>
+
+  <rect x="110" y="8" width="80" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="150" y="26" text-anchor="middle" font-size="9" font-weight="600" fill="#343a40">ContextImpl</text>
+
+  <rect x="220" y="8" width="105" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="272" y="26" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">AMS</text>
+
+  <rect x="370" y="8" width="90" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="415" y="26" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">IntentResolver</text>
+
+  <rect x="490" y="8" width="100" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="540" y="26" text-anchor="middle" font-size="8" font-weight="600" fill="#343a40">BroadcastRecord</text>
+
+  <rect x="620" y="8" width="130" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="685" y="26" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">BroadcastQueueModernImpl</text>
+
+  <rect x="780" y="8" width="120" height="26" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="840" y="26" text-anchor="middle" font-size="7.5" font-weight="600" fill="#343a40">BroadcastProcessQueue</text>
+
+  <!-- 生命线 -->
+  <line x1="45" y1="34" x2="45" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <line x1="150" y1="34" x2="150" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <line x1="272" y1="34" x2="272" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <line x1="415" y1="34" x2="415" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <line x1="540" y1="34" x2="540" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <line x1="685" y1="34" x2="685" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+  <line x1="840" y1="34" x2="840" y2="550" stroke="#adb5bd" stroke-width="0.6" stroke-dasharray="3,3"/>
+
+  <!-- 激活块 -->
+  <rect x="266" y="65" width="12" height="260" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.6"/>
+  <rect x="679" y="330" width="12" height="210" fill="#fef8ee" stroke="#adb5bd" stroke-width="0.6"/>
+
+  <!-- APP -> ContextImpl: sendBroadcast -->
+  <line x1="50" y1="55" x2="145" y2="60" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="78" y="52" font-size="8" fill="#495057">sendBroadcast</text>
+
+  <!-- ContextImpl -> AMS: broadcastIntentWithFeature -->
+  <line x1="155" y1="70" x2="266" y2="75" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="170" y="67" font-size="7.5" fill="#495057">broadcastIntentWithFeature</text>
+
+  <!-- AMS self: broadcastIntentLockedTraced -->
+  <path d="M278,85 L295,85 L295,100 L278,100" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="300" y="96" font-size="7.5" fill="#495057">broadcastIntentLockedTraced</text>
+
+  <!-- AMS -> IntentResolver: collectReceiverComponents -->
+  <line x1="278" y1="115" x2="409" y2="118" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="310" y="112" font-size="7.5" fill="#495057">collectReceiverComponents</text>
+
+  <!-- AMS -> IntentResolver: queryIntent -->
+  <line x1="278" y1="140" x2="409" y2="143" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="310" y="137" font-size="7.5" fill="#495057">queryIntent</text>
+
+  <!-- 注释框：收集接收者 -->
+  <rect x="350" y="155" width="200" height="30" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="358" y="168" font-size="7.5" fill="#495057">收集静态+动态接收者，按优先级排序</text>
+  <text x="358" y="178" font-size="7.5" fill="#495057">归并排序的 merge 合并两个列表</text>
+
+  <!-- AMS -> BroadcastRecord: new BroadcastRecord -->
+  <line x1="278" y1="200" x2="534" y2="203" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="370" y="197" font-size="7.5" fill="#495057">new BroadcastRecord</text>
+
+  <!-- 注释框：计算属性 -->
+  <rect x="480" y="210" width="170" height="42" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="488" y="222" font-size="7" fill="#495057">calculateUrgent</text>
+  <text x="488" y="232" font-size="7" fill="#495057">calculateDeferUntilActive</text>
+  <text x="488" y="242" font-size="7" fill="#495057">calculateBlockedUntilBeyondCount</text>
+
+  <!-- AMS -> BroadcastQueueModernImpl: enqueueBroadcastLocked -->
+  <line x1="278" y1="280" x2="679" y2="283" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="430" y="276" font-size="7.5" fill="#495057">enqueueBroadcastLocked</text>
+
+  <!-- 注释框：第一处 skip -->
+  <rect x="580" y="295" width="180" height="22" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="588" y="310" font-size="7.5" fill="#c0392b">applyDeliveryGroupPolicy (skip 1)</text>
+
+  <!-- 循环框 -->
+  <rect x="620" y="330" width="300" height="180" rx="3" fill="none" stroke="#adb5bd" stroke-width="0.8"/>
+  <text x="628" y="345" font-size="7.5" font-weight="600" fill="#495057">for (i = 0; i &lt; receivers.size(); i++)</text>
+
+  <!-- BQMI -> BPQ: getOrCreateProcessQueue -->
+  <line x1="691" y1="360" x2="834" y2="362" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="720" y="356" font-size="7" fill="#495057">getOrCreateProcessQueue</text>
+
+  <!-- 注释框：第二处 skip -->
+  <rect x="720" y="370" width="170" height="18" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="728" y="383" font-size="7" fill="#c0392b">shouldSkipMessage (skip 2)</text>
+
+  <!-- BQMI -> BPQ: enqueueOrReplaceBroadcast -->
+  <line x1="691" y1="400" x2="834" y2="402" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="718" y="396" font-size="7" fill="#495057">enqueueOrReplaceBroadcast</text>
+
+  <!-- 注释框：第三处 skip -->
+  <rect x="720" y="410" width="185" height="18" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="0.5"/>
+  <text x="728" y="423" font-size="7" fill="#c0392b">FLAG_RECEIVER_REPLACE_PENDING (skip 3)</text>
+
+  <!-- BQMI -> BPQ: updateRunnableAt -->
+  <line x1="691" y1="445" x2="834" y2="447" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="720" y="441" font-size="7" fill="#495057">updateRunnableAt</text>
+
+  <!-- BQMI self: enqueueUpdateRunningList -->
+  <path d="M691,470 L710,470 L710,485 L691,485" fill="none" stroke="#555" stroke-width="1" marker-end="url(#ae)"/>
+  <text x="715" y="480" font-size="7" fill="#495057">enqueueUpdateRunningList</text>
+
+  <!-- 注释 -->
+  <rect x="620" y="495" width="295" height="28" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="0.5"/>
+  <text x="628" y="508" font-size="7" fill="#495057">发送 MSG_UPDATE_RUNNING_LIST</text>
+  <text x="628" y="518" font-size="7" fill="#495057">切换到 ActivityManager 线程执行广播派发</text>
+</svg>

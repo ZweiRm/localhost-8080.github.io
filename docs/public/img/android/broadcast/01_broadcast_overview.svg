@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 260">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <path d="M0,0 L7,2.5 L0,5" fill="#555"/>
+    </marker>
+    <style>
+      text { font-family: 'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif; }
+    </style>
+  </defs>
+  <!-- 广播发送端 -->
+  <ellipse cx="100" cy="130" rx="75" ry="32" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2" rx="3"/>
+  <text x="100" y="135" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">广播发送端</text>
+  <!-- AMS广播系统 -->
+  <rect x="260" y="90" width="160" height="80" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="340" y="125" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">AMS 广播系统</text>
+  <text x="340" y="145" text-anchor="middle" font-size="9" fill="#868e96">BroadcastQueueModernImpl</text>
+  <!-- 广播接收端 1 -->
+  <ellipse cx="580" cy="55" rx="75" ry="28" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="580" y="60" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">广播接收端</text>
+  <!-- 广播接收端 2 -->
+  <ellipse cx="580" cy="130" rx="75" ry="28" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="580" y="135" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">广播接收端</text>
+  <!-- 广播接收端 3 -->
+  <ellipse cx="580" cy="205" rx="75" ry="28" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="580" y="210" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">广播接收端</text>
+  <!-- 省略号 -->
+  <text x="580" y="250" text-anchor="middle" font-size="14" fill="#868e96">...</text>
+  <!-- 箭头: 发送端 -> AMS -->
+  <line x1="175" y1="130" x2="255" y2="130" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <!-- 箭头: AMS -> 接收端1 -->
+  <line x1="420" y1="110" x2="502" y2="65" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <!-- 箭头: AMS -> 接收端2 -->
+  <line x1="420" y1="130" x2="502" y2="130" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <!-- 箭头: AMS -> 接收端3 -->
+  <line x1="420" y1="150" x2="502" y2="195" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+</svg>
