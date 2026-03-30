@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 280" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 7 5" refX="7" refY="2.5" markerWidth="7" markerHeight="5" orient="auto-start-auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrow-down" viewBox="0 0 5 7" refX="2.5" refY="7" markerWidth="5" markerHeight="7" orient="auto-start-auto">
+      <polygon points="0,0 5,0 2.5,7" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Lane labels -->
+  <text x="12" y="52" font-size="11" font-weight="600" fill="#4a7fb5">Main Thread (App)</text>
+  <text x="12" y="152" font-size="11" font-weight="600" fill="#2e7d32">RenderThread (App)</text>
+  <text x="12" y="262" font-size="11" font-weight="600" fill="#6c757d">SurfaceFlinger</text>
+
+  <!-- Lane separator lines -->
+  <line x1="0" y1="100" x2="880" y2="100" stroke="#e0e0e0" stroke-width="0.8" stroke-dasharray="4,3"/>
+  <line x1="0" y1="210" x2="880" y2="210" stroke="#e0e0e0" stroke-width="0.8" stroke-dasharray="4,3"/>
+
+  <!-- ======================== Main Thread Lane ======================== -->
+  <!-- performDraw() -->
+  <rect x="20" y="62" width="108" height="30" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="74" y="81" text-anchor="middle" font-size="10" fill="#333">performDraw()</text>
+
+  <!-- Arrow -->
+  <line x1="128" y1="77" x2="146" y2="77" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- ThreadedRenderer.draw() -->
+  <rect x="148" y="62" width="148" height="30" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="222" y="81" text-anchor="middle" font-size="10" fill="#333">ThreadedRenderer.draw()</text>
+
+  <!-- Arrow -->
+  <line x1="296" y1="77" x2="314" y2="77" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- updateRootDisplayList() -->
+  <rect x="316" y="62" width="168" height="30" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="400" y="76" text-anchor="middle" font-size="10" fill="#333">updateRootDisplayList()</text>
+  <text x="400" y="88" text-anchor="middle" font-size="8.5" fill="#777">record DisplayList</text>
+
+  <!-- Arrow -->
+  <line x1="484" y1="77" x2="502" y2="77" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- syncAndDrawFrame() -->
+  <rect x="504" y="62" width="142" height="30" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="575" y="81" text-anchor="middle" font-size="10" fill="#333">syncAndDrawFrame()</text>
+
+  <!-- ======================== Handoff: Main → RenderThread ======================== -->
+  <line x1="575" y1="92" x2="575" y2="118" stroke="#555" stroke-width="1.2" stroke-dasharray="4,2" marker-end="url(#arrow)"/>
+  <text x="582" y="112" font-size="8" fill="#888" font-style="italic">post task</text>
+
+  <!-- ======================== RenderThread Lane ======================== -->
+  <!-- DrawFrameTask.drawFrame() -->
+  <rect x="20" y="130" width="168" height="30" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="104" y="149" text-anchor="middle" font-size="10" fill="#333">DrawFrameTask.drawFrame()</text>
+
+  <!-- Arrow -->
+  <line x1="188" y1="145" x2="206" y2="145" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- CanvasContext.draw() -->
+  <rect x="208" y="130" width="142" height="30" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="279" y="149" text-anchor="middle" font-size="10" fill="#333">CanvasContext.draw()</text>
+
+  <!-- Arrow -->
+  <line x1="350" y1="145" x2="368" y2="145" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- GPU render -->
+  <rect x="370" y="130" width="100" height="30" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="420" y="149" text-anchor="middle" font-size="10" fill="#333">GPU render</text>
+
+  <!-- Arrow -->
+  <line x1="470" y1="145" x2="488" y2="145" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- write to GraphicBuffer -->
+  <rect x="490" y="130" width="152" height="30" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.2"/>
+  <text x="566" y="144" text-anchor="middle" font-size="10" fill="#333">write to</text>
+  <text x="566" y="156" text-anchor="middle" font-size="10" fill="#333">GraphicBuffer</text>
+
+  <!-- ======================== BLASTBufferQueue ======================== -->
+  <rect x="680" y="163" width="148" height="36" rx="6" fill="#fff8e1" stroke="#f9a825" stroke-width="1.3"/>
+  <text x="754" y="178" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">BLASTBufferQueue</text>
+  <text x="754" y="192" text-anchor="middle" font-size="8.5" fill="#888">dequeue / queue Buffer</text>
+
+  <!-- RenderThread → BLASTBufferQueue (queueBuffer) -->
+  <path d="M642,155 L665,155 Q675,155 675,165 L675,176 L680,176" stroke="#555" stroke-width="1.2" fill="none" marker-end="url(#arrow)"/>
+  <text x="648" y="150" font-size="8" fill="#888">queueBuffer</text>
+
+  <!-- BLASTBufferQueue → SF (acquireBuffer) -->
+  <path d="M754,199 L754,236 L730,236" stroke="#555" stroke-width="1.2" fill="none" stroke-dasharray="4,2" marker-end="url(#arrow)"/>
+  <text x="760" y="222" font-size="8" fill="#888">acquireBuffer</text>
+
+  <!-- ======================== SurfaceFlinger Lane ======================== -->
+  <!-- VSYNC-sf -->
+  <rect x="20" y="240" width="88" height="30" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="64" y="259" text-anchor="middle" font-size="10" fill="#333">VSYNC-sf</text>
+
+  <!-- Arrow -->
+  <line x1="108" y1="255" x2="126" y2="255" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- commitTransactions() -->
+  <rect x="128" y="240" width="148" height="30" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="202" y="259" text-anchor="middle" font-size="10" fill="#333">commitTransactions()</text>
+
+  <!-- Arrow -->
+  <line x1="276" y1="255" x2="294" y2="255" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- composite() -->
+  <rect x="296" y="240" width="100" height="30" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="346" y="259" text-anchor="middle" font-size="10" fill="#333">composite()</text>
+
+  <!-- Arrow -->
+  <line x1="396" y1="255" x2="414" y2="255" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+  <!-- Display -->
+  <rect x="416" y="240" width="80" height="30" rx="4" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="456" y="259" text-anchor="middle" font-size="10" font-weight="600" fill="#333">Display</text>
+
+  <!-- ======================== Handoff: syncAndDrawFrame → DrawFrameTask ======================== -->
+  <!-- Dashed arrow from syncAndDrawFrame down-left to DrawFrameTask -->
+  <path d="M540,92 L540,115 Q540,125 530,125 L196,125 Q186,125 186,130" stroke="#555" stroke-width="1.2" fill="none" stroke-dasharray="4,2" marker-end="url(#arrow)"/>
+
+</svg>

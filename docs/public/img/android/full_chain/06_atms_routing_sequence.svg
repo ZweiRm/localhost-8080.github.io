@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 550" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrowHead" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrowHeadSelf" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="900" height="550" fill="#ffffff"/>
+
+  <!-- ===== Lane positions (x centers) ===== -->
+  <!-- Launcher: 90 -->
+  <!-- ATMS: 270 -->
+  <!-- ActivityStarter: 450 -->
+  <!-- TransitionController: 630 -->
+  <!-- BLASTSyncEngine: 810 -->
+
+  <!-- ===== Lane Headers ===== -->
+  <rect x="30" y="12" width="120" height="28" rx="6" fill="#fff" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="90" y="31" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Launcher</text>
+
+  <rect x="178" y="12" width="184" height="28" rx="6" fill="#fff" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="270" y="31" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ActivityTaskManagerService</text>
+
+  <rect x="388" y="12" width="124" height="28" rx="6" fill="#fff" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="450" y="31" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ActivityStarter</text>
+
+  <rect x="565" y="12" width="130" height="28" rx="6" fill="#fff" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="630" y="31" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">TransitionController</text>
+
+  <rect x="745" y="12" width="130" height="28" rx="6" fill="#fff" stroke="#adb5bd" stroke-width="1.2"/>
+  <text x="810" y="31" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">BLASTSyncEngine</text>
+
+  <!-- ===== Lifelines ===== -->
+  <line x1="90"  y1="40" x2="90"  y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="270" y1="40" x2="270" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="450" y1="40" x2="450" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="630" y1="40" x2="630" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,4"/>
+  <line x1="810" y1="40" x2="810" y2="540" stroke="#ced4da" stroke-width="1" stroke-dasharray="5,4"/>
+
+  <!-- ===== 1. Launcher -> ATMS: startActivity(caller, intent, ...) [Binder IPC] ===== -->
+  <!-- y = 65 -->
+  <line x1="90" y1="65" x2="270" y2="65" stroke="#555" stroke-width="1" marker-end="url(#arrowHead)"/>
+  <text x="180" y="60" text-anchor="middle" font-size="8.5" fill="#495057">startActivity(caller, intent, ...)</text>
+  <text x="180" y="75" text-anchor="middle" font-size="7.5" fill="#888" font-style="italic">[Binder IPC]</text>
+
+  <!-- ===== 2. ATMS internal: startActivity() -> startActivityAsUser() ===== -->
+  <!-- y = 95 (self-call on ATMS) -->
+  <path d="M270,95 L295,95 L295,110 L270,110" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrowHeadSelf)"/>
+  <text x="300" y="100" font-size="8.5" fill="#495057">startActivity()</text>
+  <text x="300" y="112" font-size="8.5" fill="#495057">  -> startActivityAsUser()</text>
+
+  <!-- ===== 3. ATMS -> ActivityStarter: ActivityStarter.execute() ===== -->
+  <!-- y = 133 -->
+  <line x1="270" y1="133" x2="450" y2="133" stroke="#555" stroke-width="1" marker-end="url(#arrowHead)"/>
+  <text x="360" y="128" text-anchor="middle" font-size="8.5" fill="#495057">ActivityStarter.execute()</text>
+
+  <!-- ===== 4. ActivityStarter internal: executeRequest() + note ===== -->
+  <!-- y = 155 -->
+  <path d="M450,155 L475,155 L475,170 L450,170" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrowHeadSelf)"/>
+  <text x="480" y="165" font-size="8.5" fill="#495057">executeRequest()</text>
+  <!-- Note box -->
+  <rect x="478" y="175" width="230" height="30" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="488" y="188" font-size="8" fill="#495057">line 1190: </text>
+  <text x="488" y="199" font-size="8" fill="#495057">校验权限, 解析 ComponentName, 创建 ActivityRecord</text>
+
+  <!-- ===== 5. ActivityStarter internal: startActivityUnchecked() + note ===== -->
+  <!-- y = 220 -->
+  <path d="M450,222 L475,222 L475,237 L450,237" fill="none" stroke="#555" stroke-width="1" marker-end="url(#arrowHeadSelf)"/>
+  <text x="480" y="232" font-size="8.5" fill="#495057">startActivityUnchecked()</text>
+  <!-- Note box -->
+  <rect x="478" y="242" width="240" height="30" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="488" y="255" font-size="8" fill="#495057">line 1951:</text>
+  <text x="488" y="266" font-size="8" fill="#495057">决定复用已有 Task 还是创建新 Task</text>
+
+  <!-- ===== 6. ActivityStarter -> TransitionController: createAndStartCollecting(TRANSIT_OPEN) ===== -->
+  <!-- y = 290 -->
+  <line x1="450" y1="290" x2="630" y2="290" stroke="#555" stroke-width="1" marker-end="url(#arrowHead)"/>
+  <text x="540" y="285" text-anchor="middle" font-size="8.5" fill="#495057">createAndStartCollecting(TRANSIT_OPEN)</text>
+
+  <!-- ===== 7. TransitionController internal: note ===== -->
+  <!-- y = 305 -->
+  <rect x="565" y="300" width="260" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="575" y="313" font-size="8" fill="#495057">创建 Transition(type=TRANSIT_OPEN),</text>
+  <text x="575" y="325" font-size="8" fill="#495057">分配 syncId, 进入 STATE_COLLECTING</text>
+
+  <!-- ===== 8. TransitionController -> BLASTSyncEngine: startSyncing(syncId, listener=Transition) ===== -->
+  <!-- y = 348 -->
+  <line x1="630" y1="348" x2="810" y2="348" stroke="#555" stroke-width="1" marker-end="url(#arrowHead)"/>
+  <text x="720" y="343" text-anchor="middle" font-size="8.5" fill="#495057">startSyncing(syncId, listener=Transition)</text>
+
+  <!-- ===== 9. BLASTSyncEngine internal: note ===== -->
+  <!-- y = 358 -->
+  <rect x="720" y="358" width="170" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="730" y="371" font-size="8" fill="#495057">创建 SyncGroup, 加入 mActiveSyncs,</text>
+  <text x="730" y="383" font-size="8" fill="#495057">启动超时计时器</text>
+
+  <!-- ===== 10. ActivityStarter -> TransitionController: collect(activityRecord) ===== -->
+  <!-- y = 410 -->
+  <line x1="450" y1="410" x2="630" y2="410" stroke="#555" stroke-width="1" marker-end="url(#arrowHead)"/>
+  <text x="540" y="405" text-anchor="middle" font-size="8.5" fill="#495057">collect(activityRecord)</text>
+
+  <!-- ===== 11. TransitionController internal: note ===== -->
+  <!-- y = 420 -->
+  <rect x="545" y="420" width="290" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="555" y="433" font-size="8" fill="#495057">snapshotStartState(AR) -> 创建 ChangeInfo 快照,</text>
+  <text x="555" y="445" font-size="8" fill="#495057">记录初始 mVisible / mWindowingMode</text>
+
+  <!-- ===== 12. TransitionController -> BLASTSyncEngine: addToSync(syncId, AR) ===== -->
+  <!-- y = 470 -->
+  <line x1="630" y1="470" x2="810" y2="470" stroke="#555" stroke-width="1" marker-end="url(#arrowHead)"/>
+  <text x="720" y="465" text-anchor="middle" font-size="8.5" fill="#495057">addToSync(syncId, AR)</text>
+
+  <!-- ===== 13. BLASTSyncEngine internal: note ===== -->
+  <!-- y = 480 -->
+  <rect x="700" y="480" width="192" height="42" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="710" y="493" font-size="8" fill="#495057">AR.prepareSync(syncId),</text>
+  <text x="710" y="504" font-size="8" fill="#495057">WindowState: mSyncState = WAITING_FOR_DRAW,</text>
+  <text x="710" y="515" font-size="8" fill="#495057">Task/AR: mSyncState = READY</text>
+</svg>

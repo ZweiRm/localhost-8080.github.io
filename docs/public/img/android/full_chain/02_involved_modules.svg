@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 420" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <style>
+    .proc-title { font-size: 12px; font-weight: 600; }
+    .sub-title { font-size: 10px; font-weight: 600; }
+    .cls-name { font-size: 9px; fill: #495057; }
+    .arrow-label { font-size: 8px; fill: #6c757d; }
+    .binder-line { stroke: #868e96; stroke-width: 1; fill: none; marker-end: url(#arrowhead); }
+    .binder-line-rev { stroke: #868e96; stroke-width: 1; fill: none; marker-end: url(#arrowhead); stroke-dasharray: 4,2; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="7" markerHeight="5" refX="6" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#868e96"/>
+    </marker>
+  </defs>
+
+  <!-- ==================== Launcher ==================== -->
+  <rect x="10" y="30" width="140" height="370" rx="3" fill="#eef1f5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="80" y="52" text-anchor="middle" class="proc-title" fill="#4a7fb5">Launcher</text>
+  <line x1="20" y1="60" x2="140" y2="60" stroke="#4a7fb5" stroke-width="0.8" opacity="0.5"/>
+
+  <text x="25" y="80" class="cls-name">Launcher (Activity)</text>
+  <text x="25" y="96" class="cls-name">ItemClickHandler</text>
+  <text x="25" y="112" class="cls-name">QuickstepTransition-</text>
+  <text x="25" y="124" class="cls-name">  Manager</text>
+  <text x="25" y="142" class="cls-name">RemoteAnimationRunner</text>
+  <text x="25" y="160" class="cls-name">LauncherAnimationRunner</text>
+
+  <!-- ==================== system_server ==================== -->
+  <rect x="195" y="30" width="310" height="370" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="350" y="52" text-anchor="middle" class="proc-title" fill="#7c6f4e">system_server</text>
+  <line x1="205" y1="60" x2="495" y2="60" stroke="#adb5bd" stroke-width="0.8" opacity="0.5"/>
+
+  <!-- AMS / ATMS subsection -->
+  <rect x="205" y="68" width="145" height="218" rx="3" fill="#fff8ef" stroke="#d4c9a8" stroke-width="0.6"/>
+  <text x="277" y="86" text-anchor="middle" class="sub-title" fill="#7c6f4e">AMS / ATMS</text>
+  <line x1="215" y1="92" x2="340" y2="92" stroke="#d4c9a8" stroke-width="0.5"/>
+
+  <text x="215" y="108" class="cls-name">ActivityTaskManager-</text>
+  <text x="215" y="120" class="cls-name">  Service</text>
+  <text x="215" y="138" class="cls-name">ActivityManagerService</text>
+  <text x="215" y="156" class="cls-name">ActivityStarter</text>
+  <text x="215" y="174" class="cls-name">ActivityTaskSupervisor</text>
+  <text x="215" y="192" class="cls-name">Task / ActivityRecord</text>
+  <text x="215" y="210" class="cls-name">ClientLifecycleManager</text>
+  <text x="215" y="228" class="cls-name">ProcessList</text>
+  <text x="215" y="246" class="cls-name">ContentProviderHelper</text>
+  <text x="215" y="264" class="cls-name">BroadcastQueueImpl</text>
+  <text x="215" y="280" class="cls-name">ActiveServices</text>
+
+  <!-- WMS / Transition subsection -->
+  <rect x="360" y="68" width="138" height="218" rx="3" fill="#fff8ef" stroke="#d4c9a8" stroke-width="0.6"/>
+  <text x="429" y="86" text-anchor="middle" class="sub-title" fill="#7c6f4e">WMS / Transition</text>
+  <line x1="370" y1="92" x2="488" y2="92" stroke="#d4c9a8" stroke-width="0.5"/>
+
+  <text x="370" y="108" class="cls-name">WindowManager-</text>
+  <text x="370" y="120" class="cls-name">  Service</text>
+  <text x="370" y="138" class="cls-name">TransitionController</text>
+  <text x="370" y="156" class="cls-name">Transition</text>
+  <text x="370" y="174" class="cls-name">TransitionTracer</text>
+  <text x="370" y="192" class="cls-name">WindowState</text>
+  <text x="370" y="210" class="cls-name">WindowContainer</text>
+  <text x="370" y="228" class="cls-name">DisplayContent</text>
+  <text x="370" y="246" class="cls-name">SurfaceAnimator</text>
+  <text x="370" y="264" class="cls-name">WindowSurfacePlacer</text>
+  <text x="370" y="280" class="cls-name">InsetsStateController</text>
+
+  <!-- shared bottom classes -->
+  <text x="215" y="308" class="cls-name">InputManagerService</text>
+  <text x="215" y="326" class="cls-name">PackageManagerService</text>
+  <text x="215" y="344" class="cls-name">PowerManagerService</text>
+  <text x="370" y="308" class="cls-name">ProcessRecord</text>
+  <text x="370" y="326" class="cls-name">ZygoteProcess</text>
+  <text x="370" y="344" class="cls-name">SurfaceControl (Txn)</text>
+
+  <!-- ==================== SystemUI ==================== -->
+  <rect x="550" y="30" width="120" height="370" rx="3" fill="#f3eef5" stroke="#adb5bd" stroke-width="1"/>
+  <text x="610" y="52" text-anchor="middle" class="proc-title" fill="#7b68a0">SystemUI</text>
+  <line x1="560" y1="60" x2="660" y2="60" stroke="#7b68a0" stroke-width="0.8" opacity="0.5"/>
+
+  <text x="560" y="80" class="cls-name">StatusBar</text>
+  <text x="560" y="96" class="cls-name">NotificationShade-</text>
+  <text x="560" y="108" class="cls-name">  WindowController</text>
+  <text x="560" y="126" class="cls-name">NavigationBar</text>
+  <text x="560" y="144" class="cls-name">TaskbarDelegate</text>
+  <text x="560" y="162" class="cls-name">SplashScreenView-</text>
+  <text x="560" y="174" class="cls-name">  Supplier</text>
+  <text x="560" y="192" class="cls-name">ShellTransitions</text>
+  <text x="560" y="210" class="cls-name">TransitionObserver</text>
+
+  <!-- ==================== App ==================== -->
+  <rect x="715" y="30" width="100" height="370" rx="3" fill="#eef5f1" stroke="#adb5bd" stroke-width="1"/>
+  <text x="765" y="52" text-anchor="middle" class="proc-title" fill="#2e7d32">App</text>
+  <line x1="725" y1="60" x2="805" y2="60" stroke="#2e7d32" stroke-width="0.8" opacity="0.5"/>
+
+  <text x="725" y="80" class="cls-name">ActivityThread</text>
+  <text x="725" y="96" class="cls-name">Instrumentation</text>
+  <text x="725" y="112" class="cls-name">Application</text>
+  <text x="725" y="128" class="cls-name">Activity</text>
+  <text x="725" y="146" class="cls-name">LoadedApk</text>
+  <text x="725" y="164" class="cls-name">ContextImpl</text>
+  <text x="725" y="182" class="cls-name">ViewRootImpl</text>
+  <text x="725" y="198" class="cls-name">Choreographer</text>
+  <text x="725" y="216" class="cls-name">ThreadedRenderer</text>
+  <text x="725" y="234" class="cls-name">ContentProvider</text>
+  <text x="725" y="252" class="cls-name">DecorView</text>
+
+  <!-- ==================== SurfaceFlinger ==================== -->
+  <rect x="860" y="30" width="50" height="370" rx="3" fill="#f8f9fa" stroke="#adb5bd" stroke-width="1"/>
+  <text x="885" y="50" text-anchor="middle" class="proc-title" fill="#adb5bd" font-size="10" transform="rotate(90,885,50)" dx="60" dy="-44">SurfaceFlinger</text>
+
+  <text x="864" y="108" class="cls-name" font-size="7.5">Surface</text>
+  <text x="864" y="124" class="cls-name" font-size="7.5">Layer</text>
+  <text x="864" y="140" class="cls-name" font-size="7.5">HWC</text>
+  <text x="864" y="156" class="cls-name" font-size="7.5">VSync</text>
+
+  <!-- ==================== Binder IPC Arrows ==================== -->
+
+  <!-- Launcher -> ATMS: startActivity -->
+  <path d="M150,90 L195,90" class="binder-line"/>
+  <text x="157" y="86" class="arrow-label">startActivity</text>
+
+  <!-- ATMS -> Launcher: scheduleTransaction (pause) -->
+  <path d="M195,150 L150,150" class="binder-line-rev"/>
+  <text x="151" y="146" class="arrow-label">pause</text>
+
+  <!-- ATMS <-> WMS: internal calls -->
+  <path d="M350,140 L360,140" class="binder-line" stroke="#d4c9a8" stroke-width="0.6"/>
+  <path d="M360,170 L350,170" class="binder-line" stroke="#d4c9a8" stroke-width="0.6"/>
+
+  <!-- system_server -> SystemUI: onTransitionReady -->
+  <path d="M498,110 L550,110" class="binder-line"/>
+  <text x="500" y="104" class="arrow-label">onTransition-</text>
+  <text x="500" y="113" class="arrow-label">Ready</text>
+
+  <!-- SystemUI -> system_server: finishTransition -->
+  <path d="M550,200 L498,200" class="binder-line-rev"/>
+  <text x="500" y="196" class="arrow-label">finishTransition</text>
+
+  <!-- system_server -> App: bindApplication / scheduleTransaction -->
+  <path d="M498,260 C570,260 570,95 715,95" class="binder-line"/>
+  <text x="580" y="252" class="arrow-label">bindApplication</text>
+
+  <path d="M498,300 C600,300 600,130 715,130" class="binder-line"/>
+  <text x="587" y="294" class="arrow-label">scheduleLaunchActivity</text>
+
+  <!-- App -> system_server: attachApplication -->
+  <path d="M715,250 C640,250 640,340 498,340" class="binder-line-rev"/>
+  <text x="590" y="348" class="arrow-label">attachApplication</text>
+
+  <!-- App -> SurfaceFlinger: queueBuffer -->
+  <path d="M815,190 L860,190" class="binder-line"/>
+  <text x="818" y="186" class="arrow-label" font-size="7">queue</text>
+  <text x="818" y="195" class="arrow-label" font-size="7">Buffer</text>
+
+  <!-- system_server -> SurfaceFlinger: SurfaceControl transactions -->
+  <path d="M498,365 L860,365" class="binder-line"/>
+  <text x="600" y="378" class="arrow-label">SurfaceControl.Transaction</text>
+
+  <!-- Title -->
+  <text x="460" y="18" text-anchor="middle" font-size="13" font-weight="600" fill="#343a40">App Cold Startup - Involved Processes &amp; Modules</text>
+</svg>

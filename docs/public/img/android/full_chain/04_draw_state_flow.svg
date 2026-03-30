@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 200" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <marker id="arrow-dash" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2e7d32"/>
+    </marker>
+    <marker id="arrow-back" markerWidth="8" markerHeight="6" refX="0" refY="3" orient="auto">
+      <path d="M8,0 L0,3 L8,6 Z" fill="#888"/>
+    </marker>
+  </defs>
+
+  <!-- ==================== STATE BOXES ==================== -->
+
+  <!-- NO_SURFACE -->
+  <rect x="16" y="70" width="108" height="40" rx="8" ry="8" fill="#fff0f0" stroke="#e07070" stroke-width="1.5"/>
+  <text x="70" y="94" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828">NO_SURFACE</text>
+
+  <!-- DRAW_PENDING -->
+  <rect x="188" y="70" width="120" height="40" rx="8" ry="8" fill="#fff" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="248" y="94" text-anchor="middle" font-size="10" font-weight="600" fill="#333">DRAW_PENDING</text>
+
+  <!-- COMMIT_DRAW_PENDING -->
+  <rect x="372" y="70" width="148" height="40" rx="8" ry="8" fill="#fff" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="446" y="94" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">COMMIT_DRAW_PENDING</text>
+
+  <!-- READY_TO_SHOW -->
+  <rect x="584" y="70" width="116" height="40" rx="8" ry="8" fill="#fff" stroke="#adb5bd" stroke-width="1.5"/>
+  <text x="642" y="94" text-anchor="middle" font-size="10" font-weight="600" fill="#333">READY_TO_SHOW</text>
+
+  <!-- HAS_DRAWN -->
+  <rect x="764" y="70" width="100" height="40" rx="8" ry="8" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="814" y="94" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">HAS_DRAWN</text>
+
+  <!-- ==================== FORWARD ARROWS ==================== -->
+
+  <!-- NO_SURFACE → DRAW_PENDING -->
+  <line x1="124" y1="90" x2="185" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="154" y="83" text-anchor="middle" font-size="8" fill="#555" font-style="italic">createSurfaceLocked()</text>
+
+  <!-- DRAW_PENDING → COMMIT_DRAW_PENDING -->
+  <line x1="308" y1="90" x2="369" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="338" y="83" text-anchor="middle" font-size="8" fill="#555" font-style="italic">finishDrawingLocked()</text>
+
+  <!-- COMMIT_DRAW_PENDING → READY_TO_SHOW -->
+  <line x1="520" y1="90" x2="581" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="550" y="83" text-anchor="middle" font-size="7.5" fill="#555" font-style="italic">commitFinishDrawingLocked()</text>
+
+  <!-- READY_TO_SHOW → HAS_DRAWN -->
+  <line x1="700" y1="90" x2="761" y2="90" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="730" y="83" text-anchor="middle" font-size="8" fill="#555" font-style="italic">performShowLocked()</text>
+
+  <!-- ==================== DOTTED ARROW: HAS_DRAWN → showRobustly ==================== -->
+
+  <!-- showRobustly box (below HAS_DRAWN) -->
+  <rect x="740" y="148" width="130" height="34" rx="6" ry="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.2" stroke-dasharray="4,2"/>
+  <text x="805" y="163" text-anchor="middle" font-size="8.5" fill="#2e7d32" font-weight="600">showRobustly()</text>
+  <text x="805" y="175" text-anchor="middle" font-size="8" fill="#2e7d32">→ t.show(SC)</text>
+
+  <!-- dotted arrow from HAS_DRAWN down to showRobustly box -->
+  <line x1="814" y1="110" x2="814" y2="145" stroke="#2e7d32" stroke-width="1.2" stroke-dasharray="4,3" marker-end="url(#arrow-dash)"/>
+
+  <!-- ==================== BACKWARD ARROWS ==================== -->
+
+  <!-- HAS_DRAWN → NO_SURFACE (destroySurfaceLocked) — arc above -->
+  <path d="M 790,70 Q 790,18 440,14 Q 70,18 50,70"
+        fill="none" stroke="#888" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="420" y="10" text-anchor="middle" font-size="8" fill="#888" font-style="italic">destroySurfaceLocked()</text>
+
+  <!-- HAS_DRAWN → DRAW_PENDING (resize / config change) — arc below -->
+  <path d="M 790,110 Q 790,168 520,170 Q 260,168 230,110"
+        fill="none" stroke="#888" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrow)"/>
+  <text x="510" y="182" text-anchor="middle" font-size="8" fill="#888" font-style="italic">resize / config change</text>
+</svg>

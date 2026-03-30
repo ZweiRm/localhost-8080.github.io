@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 950 580" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrowSolid" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Lane headers -->
+  <rect x="30" y="10" width="110" height="26" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="85" y="27" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ATMS</text>
+
+  <rect x="175" y="10" width="140" height="26" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="245" y="27" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ActivityTaskSupervisor</text>
+
+  <rect x="350" y="10" width="110" height="26" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="405" y="27" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ProcessList</text>
+
+  <rect x="495" y="10" width="110" height="26" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="550" y="27" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ZygoteProcess</text>
+
+  <rect x="640" y="10" width="110" height="26" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="695" y="27" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Zygote</text>
+
+  <rect x="790" y="10" width="120" height="26" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="850" y="27" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ActivityThread</text>
+
+  <!-- Lifelines -->
+  <line x1="85" y1="36" x2="85" y2="565" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="245" y1="36" x2="245" y2="565" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="405" y1="36" x2="405" y2="565" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="550" y1="36" x2="550" y2="565" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="695" y1="36" x2="695" y2="565" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="850" y1="36" x2="850" y2="565" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Activation boxes -->
+  <!-- ATMS activation -->
+  <rect x="80" y="48" width="10" height="30" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <!-- ATMS activation for attach -->
+  <rect x="80" y="472" width="10" height="56" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- ATS activation -->
+  <rect x="240" y="55" width="10" height="30" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- ProcessList activation -->
+  <rect x="400" y="78" width="10" height="52" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- ZygoteProcess activation -->
+  <rect x="545" y="138" width="10" height="68" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- Zygote activation -->
+  <rect x="690" y="218" width="10" height="162" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- ActivityThread activation -->
+  <rect x="845" y="388" width="10" height="100" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- 1. ATMS -> ATS -->
+  <line x1="90" y1="58" x2="240" y2="58" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="92" y="53" font-size="8.5" fill="#495057">startProcessAsync(activity, knownToBeDead, isTop, hostingType)</text>
+
+  <!-- 2. ATS -> ProcessList -->
+  <line x1="250" y1="80" x2="400" y2="80" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="252" y="75" font-size="8.5" fill="#495057">startProcessLocked(app, hostingRecord, zygotePolicyFlags, ...)</text>
+
+  <!-- 3. ProcessList note -->
+  <rect x="330" y="95" width="280" height="28" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="340" y="107" font-size="8" fill="#495057">line 2059:</text>
+  <text x="340" y="118" font-size="8" fill="#495057">准备进程参数 entryPoint=android.app.ActivityThread</text>
+
+  <!-- 4. ProcessList -> ZygoteProcess -->
+  <line x1="410" y1="140" x2="545" y2="140" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="412" y="135" font-size="8.5" fill="#495057">Process.start("android.app.ActivityThread", uid, gid, ...)</text>
+
+  <!-- 5. ZygoteProcess -> Zygote (internal call) -->
+  <line x1="555" y1="162" x2="605" y2="162" stroke="#555" stroke-width="1"/>
+  <line x1="605" y1="162" x2="605" y2="174" stroke="#555" stroke-width="1"/>
+  <line x1="555" y1="174" x2="605" y2="174" stroke="#555" stroke-width="1" marker-start="url(#arrowSolid)"/>
+  <text x="494" y="157" font-size="8.5" fill="#495057">startViaZygote(className, niceName, uid, ...)</text>
+
+  <!-- 6. ZygoteProcess note -->
+  <rect x="460" y="182" width="250" height="28" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="470" y="194" font-size="8" fill="#495057">通过 LocalSocket 向 Zygote 发送参数,</text>
+  <text x="470" y="205" font-size="8" fill="#495057">等待发送 pid 返回值</text>
+
+  <!-- 7. ZygoteProcess -> Zygote: LocalSocket -->
+  <line x1="555" y1="220" x2="690" y2="220" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="580" y="215" font-size="8.5" fill="#495057">LocalSocket 发送 fork 命令</text>
+
+  <!-- 8. Zygote internal call -->
+  <line x1="700" y1="242" x2="750" y2="242" stroke="#555" stroke-width="1"/>
+  <line x1="750" y1="242" x2="750" y2="254" stroke="#555" stroke-width="1"/>
+  <line x1="700" y1="254" x2="750" y2="254" stroke="#555" stroke-width="1" marker-start="url(#arrowSolid)"/>
+  <text x="642" y="238" font-size="8.5" fill="#495057">ZygoteConnection.processCommand(ZygoteServer, false)</text>
+
+  <!-- 9. Zygote note -->
+  <rect x="620" y="260" width="310" height="28" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="630" y="272" font-size="8" fill="#495057">line 234:</text>
+  <text x="630" y="283" font-size="8" fill="#495057">解析参数 pid = forkAndSpecialize(uid, gid, gids, runtimeFlags...)</text>
+
+  <!-- 10. Zygote note (COW) -->
+  <rect x="620" y="294" width="310" height="22" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="630" y="309" font-size="8" fill="#495057">Zygote 预加载共享内存 (Copy-On-Write), 大幅减少初始化时间</text>
+
+  <!-- 11. Zygote -> ActivityThread: fork child -->
+  <line x1="700" y1="330" x2="845" y2="330" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="702" y="325" font-size="8.5" fill="#495057">handleChildProc() → childMain() → ActivityThread.main()</text>
+
+  <!-- Zygote activation extend for fork arrow -->
+
+  <!-- 12. ActivityThread note -->
+  <rect x="762" y="338" width="178" height="22" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="772" y="353" font-size="8" fill="#495057">line 10020: Looper.prepareMainLooper(), new ActivityThread()</text>
+
+  <!-- 13. ActivityThread internal: Looper -->
+  <line x1="855" y1="370" x2="905" y2="370" stroke="#555" stroke-width="1"/>
+  <line x1="905" y1="370" x2="905" y2="382" stroke="#555" stroke-width="1"/>
+  <line x1="855" y1="382" x2="905" y2="382" stroke="#555" stroke-width="1" marker-start="url(#arrowSolid)"/>
+  <text x="792" y="366" font-size="8.5" fill="#495057">Looper.prepareMainLooper()</text>
+
+  <!-- 14. ActivityThread internal: new -->
+  <line x1="855" y1="394" x2="905" y2="394" stroke="#555" stroke-width="1"/>
+  <line x1="905" y1="394" x2="905" y2="406" stroke="#555" stroke-width="1"/>
+  <line x1="855" y1="406" x2="905" y2="406" stroke="#555" stroke-width="1" marker-start="url(#arrowSolid)"/>
+  <text x="810" y="390" font-size="8.5" fill="#495057">new ActivityThread()</text>
+
+  <!-- 15. ActivityThread -> ATMS (dashed return) -->
+  <line x1="845" y1="430" x2="90" y2="478" stroke="#555" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrowDashed)"/>
+  <text x="260" y="444" font-size="8.5" fill="#495057">thread.attach(false, startSeq) → mgr.attachApplication(mAppThread, startSeq)</text>
+  <text x="430" y="456" font-size="8" fill="#888">Binder IPC</text>
+
+  <!-- 16. ATMS note -->
+  <rect x="10" y="485" width="288" height="22" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="0.8"/>
+  <text x="20" y="500" font-size="8" fill="#495057">核对等待启动的 ActivityRecord, 触发 realStartActivityLocked</text>
+
+  <!-- 17. ATMS -> ActivityThread (dashed return) -->
+  <line x1="90" y1="520" x2="845" y2="480" stroke="#555" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrowDashed)"/>
+  <text x="200" y="514" font-size="8.5" fill="#495057">mService.getLifecycleManager().scheduleTransaction(clientTransaction)</text>
+  <text x="570" y="498" font-size="8" fill="#888">Binder IPC</text>
+</svg>

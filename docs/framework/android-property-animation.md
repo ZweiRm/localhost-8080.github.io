@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '锁屏与解锁机制'
-    link: '/framework/keyguard-lock-unlock'
+    text: 'App 冷启动全链路'
+    link: '/framework/app-cold-startup-full-chain'
 next:
     text: '窗口动画'
     link: '/framework/window-animation'

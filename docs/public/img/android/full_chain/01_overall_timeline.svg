@@ -1,0 +1,170 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 720" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="480" y="24" text-anchor="middle" font-size="14" font-weight="600" fill="#343a40">App 冷启动全链路时序图</text>
+
+  <!-- Process lanes -->
+  <line x1="120" y1="45" x2="120" y2="700" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="340" y1="45" x2="340" y2="700" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="560" y1="45" x2="560" y2="700" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="760" y1="45" x2="760" y2="700" stroke="#adb5bd" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Lane headers -->
+  <rect x="50" y="38" width="140" height="22" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="120" y="53" text-anchor="middle" font-size="10" font-weight="600" fill="#4a7fb5">Launcher 进程</text>
+
+  <rect x="260" y="38" width="160" height="22" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="53" text-anchor="middle" font-size="10" font-weight="600" fill="#495057">system_server</text>
+
+  <rect x="490" y="38" width="140" height="22" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="53" text-anchor="middle" font-size="10" font-weight="600" fill="#2e7d32">App 进程</text>
+
+  <rect x="700" y="38" width="120" height="22" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="760" y="53" text-anchor="middle" font-size="10" font-weight="600" fill="#495057">SurfaceFlinger</text>
+
+  <!-- ① Launcher → ATMS -->
+  <text x="15" y="85" font-size="9" font-weight="600" fill="#c0392b">①</text>
+  <rect x="60" y="75" width="120" height="20" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="120" y="89" text-anchor="middle" font-size="8.5" fill="#495057">startActivity()</text>
+  <line x1="180" y1="85" x2="275" y2="85" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="228" y="80" text-anchor="middle" font-size="7.5" fill="#868e96">Binder IPC</text>
+
+  <!-- ② ATMS routing -->
+  <text x="15" y="115" font-size="9" font-weight="600" fill="#c0392b">②</text>
+  <rect x="260" y="100" width="160" height="35" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="113" text-anchor="middle" font-size="8.5" fill="#495057">ATMS 路由 + 创建 Task</text>
+  <text x="340" y="125" text-anchor="middle" font-size="8" fill="#868e96">Transition(TRANSIT_OPEN)</text>
+
+  <!-- ③-A Launcher pause (parallel) -->
+  <text x="15" y="155" font-size="9" font-weight="600" fill="#c0392b">③</text>
+  <line x1="280" y1="135" x2="120" y2="150" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="50" y="150" width="140" height="20" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="120" y="164" text-anchor="middle" font-size="8.5" fill="#495057">pause (③-A)</text>
+
+  <!-- ③-B Zygote fork (parallel) -->
+  <line x1="400" y1="135" x2="500" y2="150" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="490" y="150" width="140" height="20" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="164" text-anchor="middle" font-size="8.5" fill="#495057">Zygote fork (③-B)</text>
+
+  <!-- Parallel marker -->
+  <rect x="430" y="140" width="50" height="14" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="455" y="150" text-anchor="middle" font-size="7" font-weight="600" fill="#c0392b">并行</text>
+
+  <!-- Launcher pause complete -->
+  <line x1="120" y1="170" x2="120" y2="195" stroke="#4a7fb5" stroke-width="1"/>
+  <rect x="50" y="195" width="140" height="16" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="120" y="206" text-anchor="middle" font-size="7.5" fill="#868e96">activityPaused()</text>
+  <line x1="190" y1="203" x2="275" y2="225" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- App attach -->
+  <rect x="490" y="180" width="140" height="20" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="194" text-anchor="middle" font-size="8.5" fill="#495057">ActivityThread.main()</text>
+  <line x1="560" y1="200" x2="560" y2="210" stroke="#2e7d32" stroke-width="1"/>
+  <rect x="490" y="210" width="140" height="16" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="221" text-anchor="middle" font-size="7.5" fill="#868e96">attachApplication()</text>
+  <line x1="490" y1="218" x2="420" y2="230" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- ④ realStartActivityLocked -->
+  <text x="15" y="240" font-size="9" font-weight="600" fill="#c0392b">④</text>
+  <rect x="260" y="230" width="160" height="20" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="244" text-anchor="middle" font-size="8.5" fill="#495057">realStartActivityLocked()</text>
+  <line x1="420" y1="240" x2="490" y2="260" stroke="#555" stroke-width="1.2" marker-end="url(#arrow)"/>
+  <text x="455" y="248" text-anchor="middle" font-size="7" fill="#868e96">ClientTransaction</text>
+
+  <!-- ⑤ Activity lifecycle -->
+  <text x="15" y="275" font-size="9" font-weight="600" fill="#c0392b">⑤</text>
+  <rect x="490" y="262" width="140" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="276" text-anchor="middle" font-size="8.5" fill="#495057">onCreate()</text>
+  <text x="560" y="288" text-anchor="middle" font-size="8.5" fill="#495057">onStart()</text>
+  <text x="560" y="300" text-anchor="middle" font-size="8.5" fill="#495057">onResume()</text>
+
+  <!-- ⑥ Window creation -->
+  <text x="15" y="330" font-size="9" font-weight="600" fill="#c0392b">⑥</text>
+  <rect x="490" y="318" width="140" height="20" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="332" text-anchor="middle" font-size="8.5" fill="#495057">ViewRootImpl.setView()</text>
+  <line x1="490" y1="328" x2="420" y2="340" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="455" y="332" text-anchor="middle" font-size="7" fill="#868e96">addWindow</text>
+  <rect x="260" y="340" width="160" height="20" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="354" text-anchor="middle" font-size="8.5" fill="#495057">WMS.addWindow()</text>
+  <text x="245" y="354" text-anchor="end" font-size="7" fill="#868e96">NO_SURFACE</text>
+
+  <!-- ⑦ VSync + performTraversals -->
+  <text x="15" y="380" font-size="9" font-weight="600" fill="#c0392b">⑦</text>
+  <rect x="490" y="370" width="140" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="384" text-anchor="middle" font-size="8.5" fill="#495057">performTraversals()</text>
+  <text x="560" y="396" text-anchor="middle" font-size="7.5" fill="#868e96">relayout + measure + draw</text>
+  <line x1="490" y1="380" x2="420" y2="390" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="455" y="383" text-anchor="middle" font-size="7" fill="#868e96">relayoutWindow</text>
+  <rect x="260" y="385" width="160" height="16" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="340" y="396" text-anchor="middle" font-size="7.5" fill="#495057">Surface 创建 (DRAW_PENDING)</text>
+
+  <!-- ⑧ Rendering pipeline -->
+  <text x="15" y="425" font-size="9" font-weight="600" fill="#c0392b">⑧</text>
+  <rect x="490" y="415" width="140" height="35" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="429" text-anchor="middle" font-size="8.5" fill="#495057">RenderThread</text>
+  <text x="560" y="441" text-anchor="middle" font-size="7.5" fill="#868e96">GPU → queueBuffer()</text>
+  <line x1="630" y1="435" x2="700" y2="445" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="665" y="436" text-anchor="middle" font-size="7" fill="#868e96">Buffer</text>
+
+  <!-- ⑨ finishDrawing -->
+  <text x="15" y="470" font-size="9" font-weight="600" fill="#c0392b">⑨</text>
+  <rect x="490" y="460" width="140" height="16" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="560" y="471" text-anchor="middle" font-size="7.5" fill="#495057">finishDrawing()</text>
+  <line x1="490" y1="468" x2="420" y2="480" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <rect x="260" y="478" width="160" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="491" text-anchor="middle" font-size="8" fill="#495057">DrawState → HAS_DRAWN</text>
+  <text x="340" y="502" text-anchor="middle" font-size="7.5" fill="#868e96">showRobustly()</text>
+
+  <!-- ⑩ SyncGroup + Transition -->
+  <text x="15" y="530" font-size="9" font-weight="600" fill="#c0392b">⑩</text>
+  <rect x="260" y="518" width="160" height="30" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="531" text-anchor="middle" font-size="8" fill="#495057">SyncGroup.finishNow()</text>
+  <text x="340" y="542" text-anchor="middle" font-size="7.5" fill="#868e96">onTransactionReady()</text>
+
+  <!-- Shell animation -->
+  <rect x="260" y="558" width="370" height="40" rx="3" fill="#fff0f0" stroke="#e07070" stroke-dasharray="4,3"/>
+  <text x="445" y="575" text-anchor="middle" font-size="9" font-weight="600" fill="#c0392b">Shell Transition 动画 (200~500ms)</text>
+  <text x="445" y="588" text-anchor="middle" font-size="7.5" fill="#868e96">Launcher 淡出 ← → App 滑入</text>
+
+  <!-- startT.apply -->
+  <line x1="420" y1="548" x2="700" y2="558" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arrow-red)"/>
+  <text x="560" y="553" text-anchor="middle" font-size="7" font-weight="600" fill="#c0392b">startT.apply()</text>
+
+  <!-- SF composite -->
+  <rect x="700" y="443" width="120" height="25" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="760" y="456" text-anchor="middle" font-size="8" fill="#495057">commitTransactions</text>
+  <text x="760" y="465" text-anchor="middle" font-size="7" fill="#868e96">composite()</text>
+
+  <!-- ⑪ Focus switch -->
+  <text x="15" y="620" font-size="9" font-weight="600" fill="#c0392b">⑪</text>
+  <rect x="260" y="608" width="160" height="20" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="340" y="622" text-anchor="middle" font-size="8.5" fill="#495057">焦点切换 → App</text>
+  <line x1="420" y1="618" x2="490" y2="638" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- onWindowFocusChanged -->
+  <rect x="490" y="635" width="140" height="20" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="649" text-anchor="middle" font-size="8.5" font-weight="600" fill="#2e7d32">onWindowFocusChanged ✓</text>
+
+  <!-- Finish animation -->
+  <line x1="340" y1="598" x2="340" y2="608" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Time axis labels on left -->
+  <text x="8" y="89" font-size="7" fill="#868e96">1~5ms</text>
+  <text x="8" y="165" font-size="7" fill="#868e96">10~50ms</text>
+  <text x="8" y="290" font-size="7" fill="#868e96">0~500ms</text>
+  <text x="8" y="390" font-size="7" fill="#868e96">5~50ms</text>
+  <text x="8" y="435" font-size="7" fill="#868e96">5~30ms</text>
+  <text x="8" y="580" font-size="7" fill="#868e96">200~500ms</text>
+
+  <!-- Completion marker -->
+  <rect x="490" y="665" width="140" height="18" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="560" y="678" text-anchor="middle" font-size="8.5" font-weight="600" fill="#2e7d32">启动完成</text>
+</svg>

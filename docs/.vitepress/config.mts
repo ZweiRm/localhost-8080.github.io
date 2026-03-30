@@ -320,6 +320,7 @@ export default defineConfig({
                                 { text: '锁屏与解锁机制', link: 'framework/keyguard-lock-unlock' },
                             ]
                         },
+                        { text: '总集篇 - App 冷启动全链路', link: 'framework/app-cold-startup-full-chain' },
                     ]
                 },
                 {

@@ -1,0 +1,176 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 950" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#555"/></marker>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#c0392b"/></marker>
+    <marker id="ag" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto"><polygon points="0,0 7,2.5 0,5" fill="#2e7d32"/></marker>
+  </defs>
+
+  <!-- ① Launcher startActivity -->
+  <rect x="0" y="0" width="760" height="42" fill="#eef1f5" opacity="0.3" rx="3"/>
+  <text x="28" y="27" font-size="13" font-weight="700" fill="#c0392b">①</text>
+  <rect x="50" y="8" width="310" height="28" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="60" y="22" font-size="10" font-weight="600" fill="#343a40">Launcher → startActivity(intent)</text>
+  <text x="60" y="32" font-size="7.5" fill="#868e96">Instrumentation.execStartActivity() → Binder IPC → system_server</text>
+  <text x="388" y="27" font-size="7.5" fill="#4a7fb5">Launcher 进程</text>
+  <line x1="205" y1="36" x2="205" y2="50" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ② ATMS routing -->
+  <rect x="0" y="50" width="760" height="72" fill="#fef8ee" opacity="0.2" rx="3"/>
+  <text x="28" y="73" font-size="13" font-weight="700" fill="#c0392b">②</text>
+  <rect x="50" y="55" width="500" height="60" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="70" font-size="10" font-weight="600" fill="#343a40">ATMS.startActivity() → ActivityStarter.execute()</text>
+  <text x="70" y="83" font-size="8.5" fill="#495057">├── createTransition(TRANSIT_OPEN) ← Transition + SyncGroup</text>
+  <text x="70" y="95" font-size="8.5" fill="#495057">├── startActivityUnchecked() → Task + ActivityRecord + StartingWindow</text>
+  <text x="70" y="107" font-size="8.5" fill="#495057">└── resumeTopActivity() → pauseBackTasks() ∥ startProcessAsync()</text>
+  <text x="575" y="73" font-size="7.5" fill="#8a6d3b">system_server</text>
+
+  <!-- Fork: parallel arrows -->
+  <line x1="140" y1="115" x2="140" y2="138" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#a)"/>
+  <line x1="350" y1="115" x2="350" y2="138" stroke="#2e7d32" stroke-width="1.2" marker-end="url(#ag)"/>
+
+  <!-- ③ parallel region -->
+  <rect x="0" y="130" width="760" height="80" fill="#f8f9fa" opacity="0.35" rx="3"/>
+  <rect x="580" y="133" width="42" height="14" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="601" y="143" text-anchor="middle" font-size="7" font-weight="600" fill="#c0392b">并行</text>
+
+  <text x="28" y="155" font-size="13" font-weight="700" fill="#c0392b">③</text>
+  <!-- ③-A -->
+  <rect x="50" y="140" width="195" height="42" rx="3" fill="white" stroke="#4a7fb5"/>
+  <text x="60" y="154" font-size="9" font-weight="600" fill="#4a7fb5">③-A Launcher Pause</text>
+  <text x="60" y="166" font-size="8" fill="#495057">PauseActivityItem → onPause()</text>
+  <text x="60" y="177" font-size="8" fill="#495057">→ activityPaused()</text>
+  <!-- ③-B -->
+  <rect x="270" y="140" width="270" height="55" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="280" y="154" font-size="9" font-weight="600" fill="#2e7d32">③-B Zygote Fork</text>
+  <text x="280" y="166" font-size="8" fill="#495057">ProcessList → ZygoteProcess.start() [LocalSocket]</text>
+  <text x="280" y="178" font-size="8" fill="#495057">→ ActivityThread.main()</text>
+  <text x="280" y="190" font-size="8" fill="#495057">→ AMS.attachApplication() [Binder]</text>
+
+  <!-- Converge -->
+  <line x1="147" y1="182" x2="200" y2="220" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <line x1="405" y1="195" x2="265" y2="220" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+  <text x="232" y="215" text-anchor="middle" font-size="7" fill="#868e96">两者完成</text>
+
+  <!-- ④ realStartActivityLocked -->
+  <rect x="0" y="218" width="760" height="38" fill="#fef8ee" opacity="0.15" rx="3"/>
+  <text x="28" y="241" font-size="13" font-weight="700" fill="#c0392b">④</text>
+  <rect x="50" y="225" width="420" height="26" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="240" font-size="9.5" font-weight="600" fill="#343a40">realStartActivityLocked() → ClientTransaction → Binder → App</text>
+  <text x="60" y="249" font-size="7.5" fill="#868e96">LaunchActivityItem + ResumeActivityItem</text>
+  <line x1="260" y1="251" x2="260" y2="268" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑤ Activity lifecycle -->
+  <rect x="0" y="265" width="760" height="70" fill="#eef5f1" opacity="0.15" rx="3"/>
+  <text x="28" y="290" font-size="13" font-weight="700" fill="#c0392b">⑤</text>
+  <rect x="50" y="270" width="370" height="60" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="60" y="284" font-size="10" font-weight="600" fill="#343a40">Activity 生命周期</text>
+  <text x="70" y="296" font-size="8.5" fill="#495057">├── Application.onCreate() + Activity.attach() → PhoneWindow</text>
+  <text x="70" y="308" font-size="8.5" fill="#495057">├── Activity.onCreate() → setContentView() → DecorView</text>
+  <text x="70" y="320" font-size="8.5" fill="#495057">└── onStart() → onResume()</text>
+  <text x="575" y="290" font-size="7.5" fill="#2e7d32">App 进程</text>
+  <line x1="235" y1="330" x2="235" y2="346" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑥ Window creation -->
+  <text x="28" y="366" font-size="13" font-weight="700" fill="#c0392b">⑥</text>
+  <rect x="50" y="348" width="430" height="48" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="60" y="362" font-size="10" font-weight="600" fill="#343a40">窗口创建与注册</text>
+  <text x="70" y="374" font-size="8.5" fill="#495057">wm.addView(decor) → ViewRootImpl.setView()</text>
+  <text x="70" y="386" font-size="8.5" fill="#495057">├── Session.addToDisplayAsUser() → WMS.addWindow() [DrawState=NO_SURFACE]</text>
+  <text x="70" y="398" font-size="8.5" fill="#868e96">└── requestLayout() → Choreographer 注册 VSync</text>
+  <!-- WMS side note -->
+  <rect x="510" y="370" width="150" height="18" rx="3" fill="#fef8ee" stroke="#adb5bd"/>
+  <text x="585" y="383" text-anchor="middle" font-size="7.5" fill="#495057">→ WMS: new WindowState</text>
+  <line x1="480" y1="380" x2="507" y2="380" stroke="#555" stroke-width="1" marker-end="url(#a)"/>
+
+  <line x1="265" y1="396" x2="265" y2="414" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+  <text x="275" y="410" font-size="7" fill="#868e96">VSync</text>
+
+  <!-- ⑦ performTraversals -->
+  <text x="28" y="434" font-size="13" font-weight="700" fill="#c0392b">⑦</text>
+  <rect x="50" y="416" width="440" height="48" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="60" y="430" font-size="10" font-weight="600" fill="#343a40">doFrame() → performTraversals()</text>
+  <text x="70" y="442" font-size="8.5" fill="#495057">├── relayoutWindow() → Surface 创建 [DRAW_PENDING]</text>
+  <text x="70" y="454" font-size="8.5" fill="#495057">├── measure → layout → createSyncIfNeeded()</text>
+  <text x="70" y="466" font-size="8.5" fill="#868e96">└── performDraw()</text>
+  <line x1="270" y1="464" x2="270" y2="478" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑧ Rendering -->
+  <text x="28" y="498" font-size="13" font-weight="700" fill="#c0392b">⑧</text>
+  <rect x="50" y="480" width="460" height="38" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="60" y="494" font-size="10" font-weight="600" fill="#343a40">硬件加速渲染</text>
+  <text x="70" y="506" font-size="8.5" fill="#495057">ThreadedRenderer.draw() → RenderThread → GPU → BLASTBufferQueue.queueBuffer()</text>
+  <text x="70" y="516" font-size="8" fill="#868e96">→ GraphicBuffer 提交给 SurfaceFlinger</text>
+  <!-- SF note -->
+  <rect x="540" y="490" width="120" height="18" rx="3" fill="#f8f9fa" stroke="#adb5bd"/>
+  <text x="600" y="503" text-anchor="middle" font-size="7.5" fill="#495057">SF: composite()</text>
+  <line x1="510" y1="498" x2="537" y2="498" stroke="#555" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#a)"/>
+  <line x1="280" y1="518" x2="280" y2="534" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑨ finishDrawing -->
+  <text x="28" y="554" font-size="13" font-weight="700" fill="#c0392b">⑨</text>
+  <rect x="50" y="536" width="310" height="26" rx="3" fill="white" stroke="#2e7d32"/>
+  <text x="60" y="551" font-size="10" font-weight="600" fill="#343a40">Session.finishDrawing()</text>
+  <text x="60" y="560" font-size="7.5" fill="#868e96">Binder → WMS.finishDrawingWindow()</text>
+  <line x1="205" y1="562" x2="205" y2="578" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑨.1 WMS DrawState + performSurfacePlacement -->
+  <rect x="0" y="575" width="760" height="58" fill="#fef8ee" opacity="0.2" rx="3"/>
+  <rect x="50" y="580" width="560" height="48" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="594" font-size="9.5" font-weight="600" fill="#343a40">⑨.1  WMS performSurfacePlacement 大循环 + DrawState 流转</text>
+  <text x="70" y="607" font-size="8.5" fill="#495057">DRAW_PENDING → COMMIT_DRAW_PENDING → READY_TO_SHOW → HAS_DRAWN</text>
+  <text x="70" y="619" font-size="8" fill="#868e96">commitFinishDrawingLocked() → performShowLocked() → showRobustly(t.show(SC))</text>
+  <text x="635" y="607" font-size="7.5" fill="#8a6d3b">system_server</text>
+  <line x1="330" y1="628" x2="330" y2="646" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑩ SyncGroup finish -->
+  <text x="28" y="666" font-size="13" font-weight="700" fill="#c0392b">⑩</text>
+  <rect x="50" y="648" width="530" height="40" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="663" font-size="10" font-weight="600" fill="#343a40">SyncGroup 完成 → onTransactionReady()</text>
+  <text x="70" y="675" font-size="8.5" fill="#495057">BLASTSyncEngine.tryFinish() → finishNow() → 合并 SyncTransaction</text>
+  <text x="70" y="685" font-size="8" fill="#868e96">→ Transition.onTransactionReady() → Shell.onTransitionReady(info, startT, finishT)</text>
+  <!-- SyncTx label -->
+  <rect x="610" y="655" width="110" height="28" rx="3" fill="#fff0f0" stroke="#e07070"/>
+  <text x="665" y="668" text-anchor="middle" font-size="7.5" font-weight="600" fill="#c0392b">SyncTransaction</text>
+  <text x="665" y="678" text-anchor="middle" font-size="7" fill="#868e96">Transition 原子提交</text>
+  <line x1="315" y1="688" x2="315" y2="706" stroke="#c0392b" stroke-width="1.2" marker-end="url(#ar)"/>
+
+  <!-- ⑪ Shell Transition animation -->
+  <rect x="0" y="703" width="760" height="62" fill="#f3eef5" opacity="0.15" rx="3"/>
+  <text x="28" y="728" font-size="13" font-weight="700" fill="#c0392b">⑪</text>
+  <rect x="50" y="708" width="530" height="52" rx="3" fill="white" stroke="#7b68a0"/>
+  <text x="60" y="722" font-size="10" font-weight="600" fill="#343a40">Shell Transition 动画</text>
+  <text x="70" y="734" font-size="8.5" fill="#495057">├── setupStartState() → startT.apply() ← App Layer 变为可见</text>
+  <text x="70" y="746" font-size="8.5" fill="#495057">├── ValueAnimator 逐帧: applyTransformation(t) → t.apply()</text>
+  <text x="70" y="758" font-size="8.5" fill="#495057">└── finishTransition() → finishT.apply() + cleanupTransaction</text>
+  <text x="610" y="722" font-size="7.5" fill="#7b68a0">SystemUI Shell</text>
+  <line x1="315" y1="760" x2="315" y2="778" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑫ Focus switch -->
+  <rect x="0" y="775" width="760" height="48" fill="#fef8ee" opacity="0.15" rx="3"/>
+  <text x="28" y="800" font-size="13" font-weight="700" fill="#c0392b">⑫</text>
+  <rect x="50" y="780" width="530" height="38" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="60" y="794" font-size="10" font-weight="600" fill="#343a40">焦点窗口切换</text>
+  <text x="70" y="806" font-size="8.5" fill="#495057">WMS.updateFocusedWindowLocked() → findFocusedWindow()</text>
+  <text x="70" y="816" font-size="8" fill="#868e96">→ InputMonitor → InputDispatcher → App: onWindowFocusChanged(true)</text>
+  <line x1="315" y1="818" x2="315" y2="838" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- ⑬ First frame done -->
+  <text x="28" y="856" font-size="13" font-weight="700" fill="#c0392b">⑬</text>
+  <rect x="50" y="840" width="280" height="24" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="190" y="856" text-anchor="middle" font-size="11" font-weight="600" fill="#2e7d32">首帧上屏 ✓  启动完成</text>
+
+  <!-- separator -->
+  <line x1="190" y1="864" x2="190" y2="888" stroke="#adb5bd" stroke-width="1" stroke-dasharray="3,2"/>
+  <text x="200" y="883" font-size="7" fill="#868e96">后续每帧</text>
+
+  <!-- ⑭ Post-first-frame -->
+  <text x="28" y="908" font-size="13" font-weight="700" fill="#c0392b">⑭</text>
+  <rect x="50" y="892" width="530" height="42" rx="3" fill="white" stroke="#adb5bd" stroke-dasharray="4,3"/>
+  <text x="60" y="906" font-size="9.5" font-weight="600" fill="#343a40">WindowAnimator.animate() 每帧驱动</text>
+  <text x="70" y="918" font-size="8.5" fill="#495057">prepareSurfaces() → setAlpha / setMatrix / show / hide</text>
+  <text x="70" y="930" font-size="8" fill="#868e96" style="font-style:italic">mTransaction.apply() → SurfaceFlinger（PendingTransaction 路径）</text>
+  <!-- PendingTx label -->
+  <rect x="610" y="900" width="110" height="28" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="665" y="913" text-anchor="middle" font-size="7.5" font-weight="600" fill="#2e7d32">PendingTransaction</text>
+  <text x="665" y="923" text-anchor="middle" font-size="7" fill="#868e96">每帧常规更新</text>
+</svg>

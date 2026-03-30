@@ -3,8 +3,8 @@ prev:
     text: 'Organizer 机制'
     link: '/framework/wms-organizer'
 next:
-    text: '属性动画'
-    link: '/framework/android-property-animation'
+    text: 'App 冷启动全链路'
+    link: '/framework/app-cold-startup-full-chain'
 ---
 
 # Keyguard 锁屏与解锁机制

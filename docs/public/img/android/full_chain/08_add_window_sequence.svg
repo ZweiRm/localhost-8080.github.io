@@ -1,0 +1,132 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 820" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrowSolid" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <marker id="arrowDashed" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Lane positions: x centers -->
+  <!-- ViewRootImpl=100, Session=270, WMS=440, WindowState=610, IMS=780 -->
+
+  <!-- Lane headers -->
+  <rect x="30" y="10" width="140" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="100" y="29" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">ViewRootImpl</text>
+
+  <rect x="200" y="10" width="140" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="270" y="29" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Session</text>
+
+  <rect x="370" y="10" width="140" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="440" y="29" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">WindowManagerService</text>
+
+  <rect x="540" y="10" width="140" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="610" y="29" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">WindowState</text>
+
+  <rect x="710" y="10" width="140" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="780" y="29" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">InputManagerService</text>
+
+  <!-- Lifelines -->
+  <line x1="100" y1="38" x2="100" y2="810" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="270" y1="38" x2="270" y2="810" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="440" y1="38" x2="440" y2="810" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="610" y1="38" x2="610" y2="810" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="780" y1="38" x2="780" y2="810" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Step 1: ViewRootImpl self-call: setView -->
+  <rect x="88" y="60" width="24" height="30" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="120" y="79" font-size="8" fill="#333">setView(view, attrs, panelParentView, userId)</text>
+
+  <!-- Step 2: Note on ViewRootImpl -->
+  <rect x="10" y="100" width="180" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="100" y="114" text-anchor="middle" font-size="8" fill="#555">line 2434:</text>
+  <text x="100" y="125" text-anchor="middle" font-size="8" fill="#555">检查 INPUT_FEATURE_NO_INPUT_CHANNEL 标志</text>
+
+  <!-- Step 3: ViewRootImpl -> Session: addToDisplayAsUser (Binder IPC) -->
+  <line x1="100" y1="150" x2="270" y2="150" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="185" y="145" text-anchor="middle" font-size="7.5" fill="#333">mWindowSession.addToDisplayAsUser(</text>
+  <text x="185" y="154" text-anchor="middle" font-size="7.5" fill="#333">mWindow, attrs, ..., inputChannel, ...)</text>
+  <text x="185" y="164" text-anchor="middle" font-size="7" fill="#888" font-style="italic">Binder IPC</text>
+
+  <!-- Step 4: Session -> WMS: addWindow -->
+  <rect x="258" y="170" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <line x1="270" y1="185" x2="440" y2="185" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="355" y="181" text-anchor="middle" font-size="7.5" fill="#333">addWindow(session, client, attrs, ..., outInputChannel, ...)</text>
+
+  <!-- Step 5: WMS internal note -->
+  <rect x="350" y="200" width="180" height="28" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="440" y="218" text-anchor="middle" font-size="8" fill="#555">创建 WindowState 对象, assignLayers 分层</text>
+
+  <!-- Step 6: WMS -> WindowState: new WindowState -->
+  <line x1="440" y1="245" x2="610" y2="245" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="525" y="241" text-anchor="middle" font-size="8" fill="#333">new WindowState(...)</text>
+
+  <!-- Step 7: WMS internal: openInputChannels check -->
+  <rect x="428" y="265" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="460" y="279" font-size="7.5" fill="#333">openInputChannels = outInputChannel != null &amp;&amp; !NO_INPUT_CHANNEL</text>
+
+  <!-- Step 8: WMS -> WindowState: win.openInputChannel -->
+  <line x1="440" y1="305" x2="610" y2="305" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="525" y="300" text-anchor="middle" font-size="8" fill="#333">win.openInputChannel(outInputChannel)</text>
+  <text x="525" y="316" text-anchor="middle" font-size="7" fill="#888">line 2177</text>
+
+  <!-- Step 9: WindowState -> IMS: createInputChannel -->
+  <rect x="598" y="325" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <line x1="610" y1="340" x2="780" y2="340" stroke="#555" stroke-width="1" marker-end="url(#arrowSolid)"/>
+  <text x="695" y="336" text-anchor="middle" font-size="8" fill="#333">mWmService.mInputManager.createInputChannel(name)</text>
+
+  <!-- Step 10: IMS internal note -->
+  <rect x="680" y="355" width="210" height="42" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="785" y="369" text-anchor="middle" font-size="8" fill="#555">native 层 InputDispatcher.createInputChannel():</text>
+  <text x="785" y="381" text-anchor="middle" font-size="8" fill="#555">创建 server fd + client fd</text>
+  <text x="785" y="393" text-anchor="middle" font-size="8" fill="#555">= 一对 socket</text>
+
+  <!-- Step 11: IMS returns to WindowState -->
+  <line x1="780" y1="415" x2="610" y2="415" stroke="#555" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrowDashed)"/>
+  <text x="695" y="410" text-anchor="middle" font-size="8" fill="#333">inputChannel.channel (serverFd + clientFd)</text>
+
+  <!-- Step 12: WindowState internal: mInputChannelToken -->
+  <rect x="598" y="435" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="630" y="449" font-size="8" fill="#333">mInputChannelToken = channel.getToken()</text>
+
+  <!-- Step 13: WindowState internal: setToken -->
+  <rect x="598" y="470" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="630" y="484" font-size="8" fill="#333">mInputWindowHandle.setToken(mInputChannelToken)</text>
+
+  <!-- Step 14: WindowState note: InputWindowHandle -->
+  <rect x="530" y="505" width="220" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="640" y="519" text-anchor="middle" font-size="8" fill="#555">InputWindowHandle 作 token 绑定,</text>
+  <text x="640" y="530" text-anchor="middle" font-size="8" fill="#555">InputDispatcher 据此 token 匹配焦点窗口</text>
+
+  <!-- Step 15: WMS internal: mInputToWindowMap -->
+  <rect x="428" y="555" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="460" y="569" font-size="8" fill="#333">mInputToWindowMap.put(mInputChannelToken, this)</text>
+
+  <!-- Step 16: WMS -> ViewRootImpl (return): copyTo -->
+  <line x1="440" y1="600" x2="100" y2="600" stroke="#555" stroke-width="1" stroke-dasharray="5,3" marker-end="url(#arrowDashed)"/>
+  <text x="270" y="593" text-anchor="middle" font-size="8" fill="#333">channel.copyTo(outInputChannel): client 端 fd 复制给 App</text>
+
+  <!-- Step 17: ViewRootImpl internal: return ADD_OKAY -->
+  <rect x="88" y="620" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="120" y="634" font-size="8" fill="#333">return ADD_OKAY, outInputChannel 已填充</text>
+
+  <!-- Step 18: ViewRootImpl internal: addToDisplayAsUser returns -->
+  <rect x="88" y="655" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="120" y="669" font-size="8" fill="#333">addToDisplayAsUser 返回</text>
+
+  <!-- Step 19: ViewRootImpl: new WindowInputEventReceiver -->
+  <rect x="88" y="690" width="24" height="20" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="120" y="704" font-size="8" fill="#333">new WindowInputEventReceiver(inputChannel, Looper.myLooper())</text>
+  <text x="120" y="715" font-size="7" fill="#888">line 2573</text>
+
+  <!-- Step 20: ViewRootImpl note: WindowInputEventReceiver -->
+  <rect x="10" y="730" width="250" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="135" y="744" text-anchor="middle" font-size="8" fill="#555">WindowInputEventReceiver extends InputEventReceiver:</text>
+  <text x="135" y="755" text-anchor="middle" font-size="8" fill="#555">监听 client fd 上的输入事件</text>
+
+  <!-- Step 21: ViewRootImpl note: onInputEvent -->
+  <rect x="10" y="775" width="250" height="32" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="135" y="789" text-anchor="middle" font-size="8" fill="#555">onInputEvent() 触发事件分发到</text>
+  <text x="135" y="800" text-anchor="middle" font-size="8" fill="#555">View.dispatchTouchEvent() 等</text>
+</svg>

@@ -1,0 +1,139 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 920 620" font-family="'Segoe UI','PingFang SC',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <!-- Lane headers -->
+  <rect x="20" y="10" width="140" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="90" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">BLASTSyncEngine</text>
+
+  <rect x="200" y="10" width="120" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="260" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Transition</text>
+
+  <rect x="370" y="10" width="130" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="435" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">Shell.Transitions</text>
+
+  <rect x="550" y="10" width="170" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="635" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">DefaultTransitionHandler</text>
+
+  <rect x="770" y="10" width="130" height="28" rx="3" fill="#fff" stroke="#adb5bd" stroke-width="1"/>
+  <text x="835" y="28" text-anchor="middle" font-size="10" font-weight="bold" fill="#333">SurfaceFlinger</text>
+
+  <!-- Lifelines -->
+  <line x1="90" y1="38" x2="90" y2="610" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="260" y1="38" x2="260" y2="610" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="435" y1="38" x2="435" y2="610" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="635" y1="38" x2="635" y2="610" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="835" y1="38" x2="835" y2="610" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Activation boxes -->
+  <!-- BLASTSyncEngine activation -->
+  <rect x="84" y="48" width="12" height="100" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <!-- Transition activation -->
+  <rect x="254" y="148" width="12" height="142" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <!-- Shell.Transitions activation -->
+  <rect x="429" y="290" width="12" height="40" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <!-- DefaultTransitionHandler activation -->
+  <rect x="629" y="330" width="12" height="186" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <!-- Shell.Transitions activation 2 -->
+  <rect x="429" y="530" width="12" height="50" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+
+  <!-- Step 1: onSurfacePlacement → tryFinish -->
+  <text x="20" y="60" font-size="8" fill="#555">onSurfacePlacement()</text>
+  <line x1="90" y1="64" x2="90" y2="74" stroke="#555" stroke-width="1"/>
+  <text x="20" y="82" font-size="8" fill="#555">SyncGroup.tryFinish()</text>
+
+  <!-- Step 2: Note - check conditions -->
+  <rect x="104" y="68" width="240" height="24" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="110" y="79" font-size="8" fill="#555">检查 mReady &amp;&amp; mDependencies.isEmpty()</text>
+  <text x="110" y="88" font-size="8" fill="#555">&amp;&amp; 所有 mRootMembers.isSyncFinished()</text>
+
+  <!-- Step 3: finishNow -->
+  <text x="20" y="106" font-size="8" fill="#555">finishNow()</text>
+
+  <!-- Step 4: Note - merge transactions -->
+  <rect x="104" y="98" width="240" height="16" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="110" y="109" font-size="8" fill="#555">合并所有参与者的 mSyncTransaction 为 merged Transaction</text>
+
+  <!-- Step 5: BLASTSyncEngine → Transition: onTransactionReady -->
+  <line x1="96" y1="130" x2="254" y2="130" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="100" y="126" font-size="8" fill="#555">mListener.onTransactionReady(mSyncId, merged)</text>
+
+  <!-- Step 6: Transition: onTransactionReady -->
+  <text x="268" y="158" font-size="8" fill="#555">onTransactionReady()</text>
+
+  <!-- Step 7: Transition internal -->
+  <text x="268" y="174" font-size="8" fill="#555">commitVisibleActivities(startT)</text>
+  <rect x="274" y="177" width="210" height="16" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="280" y="188" font-size="8" fill="#555">ar.commitFinishDrawing(t)</text>
+
+  <!-- Step 8: Transition internal -->
+  <text x="268" y="206" font-size="8" fill="#555">calculateTargets()</text>
+  <rect x="274" y="209" width="210" height="16" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="280" y="220" font-size="8" fill="#555">calculateTransitionInfo()</text>
+
+  <!-- Step 9: Transition internal -->
+  <text x="268" y="238" font-size="8" fill="#555">buildFinishTransaction()</text>
+  <rect x="274" y="241" width="210" height="16" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="280" y="252" font-size="8" fill="#555">构建 finishT</text>
+
+  <!-- Step 10: Transition → Shell.Transitions -->
+  <line x1="266" y1="276" x2="429" y2="276" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="274" y="272" font-size="8" fill="#555">onTransitionReady(info, startT, finishT)</text>
+  <text x="370" y="288" font-size="7" fill="#888" font-style="italic">[Binder IPC]</text>
+
+  <!-- Step 11: Shell.Transitions: dispatchReady -->
+  <text x="443" y="302" font-size="8" fill="#555">dispatchReady() → try handlers</text>
+
+  <!-- Step 12: Shell.Transitions → DefaultTransitionHandler -->
+  <line x1="441" y1="318" x2="629" y2="318" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="449" y="314" font-size="8" fill="#555">startAnimation(info, startT, finishT, ...)</text>
+
+  <!-- Step 13: DefaultTransitionHandler: setupStartState -->
+  <text x="643" y="344" font-size="8" fill="#555">setupStartState()</text>
+
+  <!-- Step 14: Note -->
+  <rect x="643" y="348" width="258" height="28" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="649" y="359" font-size="8" fill="#555">OPEN 窗口: t.show(leash), t.setAlpha(0)</text>
+  <text x="649" y="370" font-size="8" fill="#555">TO_BACK 窗口: finishT.hide(leash)</text>
+
+  <!-- Step 15: setupAnimHierarchy -->
+  <text x="643" y="392" font-size="8" fill="#555">setupAnimHierarchy()</text>
+  <rect x="700" y="395" width="200" height="16" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="706" y="406" font-size="8" fill="#555">reparent leash to rootLeash</text>
+
+  <!-- Step 16: startT.apply() → SurfaceFlinger (red dashed) -->
+  <line x1="641" y1="426" x2="829" y2="426" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-red)"/>
+  <text x="670" y="422" font-size="8" fill="#c0392b" font-weight="bold">startT.apply()</text>
+  <text x="700" y="438" font-size="7" fill="#c0392b" font-style="italic">★ App Layer 变为可见</text>
+
+  <!-- Step 17: ValueAnimator -->
+  <text x="643" y="458" font-size="8" fill="#555">ValueAnimator 逐帧</text>
+
+  <!-- Step 18: Note -->
+  <rect x="643" y="462" width="258" height="16" rx="3" fill="#fef8ee" stroke="#d4a574" stroke-width="1"/>
+  <text x="649" y="473" font-size="8" fill="#555">applyTransformation(t) → t.setMatrix/setAlpha → t.apply()</text>
+
+  <!-- Step 19: DefaultTransitionHandler → Shell.Transitions: onAnimationFinished -->
+  <line x1="629" y1="498" x2="441" y2="498" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="460" y="494" font-size="8" fill="#555">onAnimationFinished()</text>
+
+  <!-- Step 20: Shell.Transitions → SurfaceFlinger: finishT.apply (red dashed) -->
+  <line x1="441" y1="540" x2="829" y2="540" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="6,3" marker-end="url(#arrow-red)"/>
+  <text x="570" y="536" font-size="8" fill="#c0392b" font-weight="bold">finishT.apply()</text>
+  <text x="620" y="552" font-size="7" fill="#c0392b" font-style="italic">恢复窗口状态</text>
+
+  <!-- Step 21: Shell.Transitions → Transition: finishTransition -->
+  <line x1="429" y1="564" x2="266" y2="564" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <text x="280" y="560" font-size="8" fill="#555">finishTransition()</text>
+  <text x="330" y="574" font-size="7" fill="#888" font-style="italic">[Binder → system_server]</text>
+
+  <!-- Step 22: Transition: cleanup -->
+  <rect x="254" y="578" width="12" height="22" fill="#e9ecef" stroke="#adb5bd" stroke-width="0.5"/>
+  <text x="268" y="590" font-size="8" fill="#555">cleanupTransaction → 释放 leash, validateStates()</text>
+</svg>
