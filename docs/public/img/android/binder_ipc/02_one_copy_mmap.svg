@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 440" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
   <defs>
     <marker id="a1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
       <polygon points="0,0 7,2.5 0,5" fill="#555"/>
@@ -8,55 +8,65 @@
   <!-- Title -->
   <text x="350" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#343a40">Binder 一次拷贝原理（mmap 内存映射）</text>
 
+  <!-- ===== Upper section: Binder one-copy ===== -->
+
   <!-- Sender Process -->
-  <rect x="30" y="50" width="180" height="120" rx="4" fill="#eef1f5" stroke="#4a7fb5"/>
+  <rect x="30" y="50" width="180" height="130" rx="4" fill="#eef1f5" stroke="#4a7fb5"/>
   <text x="120" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">发送方进程</text>
   <rect x="50" y="85" width="140" height="30" rx="3" fill="white" stroke="#adb5bd"/>
   <text x="120" y="105" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">用户空间数据</text>
-  <rect x="50" y="125" width="140" height="30" rx="3" fill="#fff8e1" stroke="#f9a825"/>
-  <text x="120" y="145" text-anchor="middle" font-size="10" font-weight="600" fill="#f57f17">数据缓冲区 (data)</text>
+  <rect x="50" y="125" width="140" height="40" rx="3" fill="#fff8e1" stroke="#f9a825"/>
+  <text x="120" y="150" text-anchor="middle" font-size="10" font-weight="600" fill="#f57f17">数据缓冲区 (data)</text>
 
-  <!-- Kernel -->
-  <rect x="250" y="50" width="200" height="300" rx="4" fill="#fce4ec" stroke="#c62828" stroke-width="1.5"/>
-  <text x="350" y="72" text-anchor="middle" font-size="12" font-weight="700" fill="#b71c1c">内核空间</text>
-  <rect x="275" y="140" width="150" height="40" rx="3" fill="#ffcdd2" stroke="#c62828"/>
-  <text x="350" y="165" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c">Binder 内核缓冲区</text>
-  <text x="350" y="105" text-anchor="middle" font-size="10" fill="#868e96">Binder 驱动</text>
+  <!-- Kernel (center, compact) -->
+  <rect x="250" y="90" width="200" height="100" rx="4" fill="#fce4ec" stroke="#c62828" stroke-width="1.5"/>
+  <text x="350" y="112" text-anchor="middle" font-size="12" font-weight="700" fill="#b71c1c">内核空间</text>
+  <text x="350" y="128" text-anchor="middle" font-size="10" fill="#868e96">Binder 驱动</text>
+  <rect x="275" y="140" width="150" height="36" rx="3" fill="#ffcdd2" stroke="#c62828"/>
+  <text x="350" y="163" text-anchor="middle" font-size="11" font-weight="600" fill="#b71c1c">Binder 内核缓冲区</text>
 
   <!-- Receiver Process -->
-  <rect x="490" y="50" width="180" height="120" rx="4" fill="#eef5f1" stroke="#2e7d32"/>
+  <rect x="490" y="50" width="180" height="130" rx="4" fill="#eef5f1" stroke="#2e7d32"/>
   <text x="580" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">接收方进程</text>
   <rect x="510" y="85" width="140" height="30" rx="3" fill="white" stroke="#adb5bd"/>
   <text x="580" y="105" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">用户空间地址</text>
-  <rect x="510" y="125" width="140" height="30" rx="3" fill="#e8f5e9" stroke="#2e7d32"/>
-  <text x="580" y="145" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">mmap 映射区域</text>
+  <rect x="510" y="125" width="140" height="40" rx="3" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="580" y="150" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">mmap 映射区域</text>
 
   <!-- copy_from_user arrow -->
-  <line x1="210" y1="140" x2="275" y2="155" stroke="#555" stroke-width="1.2" marker-end="url(#a1)"/>
-  <text x="220" y="132" font-size="10" font-weight="600" fill="#e65100">copy_from_user</text>
-  <text x="230" y="178" font-size="9" fill="#868e96">唯一一次数据拷贝</text>
+  <line x1="190" y1="145" x2="275" y2="155" stroke="#555" stroke-width="1.2" marker-end="url(#a1)"/>
+  <text x="195" y="137" font-size="10" font-weight="600" fill="#e65100">copy_from_user</text>
 
   <!-- mmap arrow (no copy) -->
-  <path d="M425,155 Q460,155 460,140 L490,140" stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a1)"/>
-  <text x="432" y="132" font-size="10" font-weight="600" fill="#2e7d32">mmap 映射</text>
-  <text x="440" y="178" font-size="9" fill="#868e96">无需拷贝</text>
+  <line x1="425" y1="155" x2="510" y2="145" stroke="#2e7d32" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a1)"/>
+  <text x="438" y="137" font-size="10" font-weight="600" fill="#2e7d32">mmap 映射</text>
 
-  <!-- Traditional IPC comparison -->
-  <rect x="30" y="230" width="640" height="120" rx="4" fill="#f5f5f5" stroke="#bdbdbd" stroke-dasharray="4,2"/>
-  <text x="350" y="255" text-anchor="middle" font-size="11" font-weight="600" fill="#616161">对比：传统 IPC（如 Socket/Pipe）需要两次拷贝</text>
+  <!-- Annotations -->
+  <text x="230" y="205" font-size="9" fill="#e65100">唯一一次数据拷贝</text>
+  <text x="440" y="205" font-size="9" fill="#2e7d32">无需拷贝，共享物理内存</text>
 
-  <rect x="60" y="270" width="120" height="30" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
-  <text x="120" y="290" text-anchor="middle" font-size="10" fill="#343a40">发送方用户空间</text>
-  <line x1="180" y1="285" x2="250" y2="285" stroke="#999" stroke-width="1" marker-end="url(#a1)"/>
-  <text x="215" y="278" font-size="9" fill="#999">第一次拷贝</text>
+  <!-- ===== Lower section: Traditional IPC comparison ===== -->
 
-  <rect x="250" y="270" width="120" height="30" rx="3" fill="#ffcdd2" stroke="#c62828"/>
-  <text x="310" y="290" text-anchor="middle" font-size="10" fill="#b71c1c">内核缓冲区</text>
-  <line x1="370" y1="285" x2="440" y2="285" stroke="#999" stroke-width="1" marker-end="url(#a1)"/>
-  <text x="405" y="278" font-size="9" fill="#999">第二次拷贝</text>
+  <rect x="30" y="240" width="640" height="185" rx="4" fill="#f5f5f5" stroke="#bdbdbd" stroke-dasharray="4,2"/>
+  <text x="350" y="265" text-anchor="middle" font-size="11" font-weight="600" fill="#616161">对比：传统 IPC（如 Socket / Pipe）需要两次拷贝</text>
 
-  <rect x="440" y="270" width="120" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
-  <text x="500" y="290" text-anchor="middle" font-size="10" fill="#343a40">接收方用户空间</text>
+  <rect x="60" y="290" width="150" height="36" rx="3" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="135" y="313" text-anchor="middle" font-size="10" fill="#343a40">发送方用户空间</text>
 
-  <text x="350" y="330" text-anchor="middle" font-size="10" fill="#868e96">Binder 通过 mmap 将内核缓冲区直接映射到接收方用户空间，省去第二次拷贝</text>
+  <line x1="210" y1="308" x2="270" y2="308" stroke="#999" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="240" y="298" font-size="9" fill="#999">第一次拷贝</text>
+
+  <rect x="270" y="290" width="150" height="36" rx="3" fill="#ffcdd2" stroke="#c62828"/>
+  <text x="345" y="313" text-anchor="middle" font-size="10" fill="#b71c1c">内核缓冲区</text>
+
+  <line x1="420" y1="308" x2="480" y2="308" stroke="#999" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="450" y="298" font-size="9" fill="#999">第二次拷贝</text>
+
+  <rect x="480" y="290" width="150" height="36" rx="3" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="555" y="313" text-anchor="middle" font-size="10" fill="#343a40">接收方用户空间</text>
+
+  <text x="350" y="355" text-anchor="middle" font-size="10" fill="#616161">copy_from_user (发送方 → 内核) + copy_to_user (内核 → 接收方)</text>
+
+  <text x="350" y="385" text-anchor="middle" font-size="10" fill="#868e96">Binder 通过 mmap 将内核缓冲区直接映射到接收方用户空间</text>
+  <text x="350" y="402" text-anchor="middle" font-size="10" fill="#868e96">省去第二次 copy_to_user，实现一次拷贝</text>
 </svg>
