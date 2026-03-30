@@ -3,8 +3,8 @@ prev:
     text: 'WindowInsets'
     link: '/framework/windowInsets'
 next:
-    text: '焦点窗口切换'
-    link: '/framework/focus-window-switching'
+    text: '转屏机制'
+    link: '/framework/screen-rotation'
 ---
 # StartingWindow
 
@@ -506,6 +506,8 @@ StartingSurface createSplashScreenStartingSurface(ActivityRecord activity, int t
 ```
 
 #### 两种类型的汇合点：TaskOrganizerController#addStartingWindow
+
+> `TaskOrganizerController` 是 WMS Organizer 框架的一部分，负责 Task 级别的窗口委托管理。关于其注册机制、回调分发和整体架构，参见 [WMS Organizer 机制](./wms-organizer.md)。
 
 无论是 Snapshot 还是 Splash Screen 类型，最终都会调用到 `TaskOrganizerController.addStartingWindow()`，通过 Binder 跨进程调用到 SystemUI（WmShell）：
 

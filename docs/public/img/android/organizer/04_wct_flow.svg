@@ -1,0 +1,116 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 620" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="ar" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="350" y="22" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">WindowContainerTransaction 处理流程</text>
+
+  <!-- Entry -->
+  <rect x="230" y="38" width="240" height="35" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.2"/>
+  <text x="350" y="60" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">applyTransaction(WCT, syncId, transition)</text>
+
+  <line x1="350" y1="73" x2="350" y2="90" stroke="#555" stroke-width="1" marker-end="url(#ar)"/>
+
+  <!-- Phase 0: defer -->
+  <rect x="180" y="93" width="340" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="350" y="110" font-size="9.5" fill="#495057" text-anchor="middle">deferWindowLayout() + setDeferRootVisibilityUpdate(true)</text>
+  <text x="350" y="125" font-size="8" fill="#868e96" text-anchor="middle">暂停布局计算，确保所有变更原子化应用</text>
+
+  <line x1="350" y1="133" x2="350" y2="150" stroke="#555" stroke-width="1" marker-end="url(#ar)"/>
+
+  <!-- Phase 1: Changes -->
+  <rect x="30" y="153" width="300" height="150" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="180" y="172" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">阶段 1：应用 Configuration 变更</text>
+
+  <rect x="45" y="182" width="270" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="180" y="199" font-size="8.5" fill="#495057" text-anchor="middle">遍历 t.getChanges() 的每个 (token, Change)</text>
+
+  <rect x="45" y="215" width="130" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="110" y="232" font-size="8.5" fill="#495057" text-anchor="middle">addToSyncSet()</text>
+  <text x="110" y="247" font-size="8" fill="#868e96" text-anchor="middle">收集同步参与者</text>
+
+  <rect x="185" y="215" width="130" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="250" y="232" font-size="8.5" fill="#495057" text-anchor="middle">transition.collect()</text>
+  <text x="250" y="247" font-size="8" fill="#868e96" text-anchor="middle">收集 transition 参与者</text>
+
+  <rect x="45" y="263" width="270" height="30" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="180" y="282" font-size="9" fill="#2e7d32" text-anchor="middle">applyWindowContainerChange(wc, change)</text>
+
+  <!-- Phase 1 dispatch -->
+  <rect x="370" y="153" width="300" height="150" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="520" y="172" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">Change 分发路径</text>
+
+  <rect x="385" y="185" width="130" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="450" y="202" font-size="8.5" fill="#495057" text-anchor="middle">applyTaskChanges()</text>
+
+  <rect x="525" y="185" width="130" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="590" y="202" font-size="8.5" fill="#495057" text-anchor="middle">applyDisplayAreaChanges()</text>
+
+  <rect x="385" y="220" width="130" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="450" y="237" font-size="8.5" fill="#495057" text-anchor="middle">applyTaskFragment</text>
+  <text x="450" y="247" font-size="8.5" fill="#495057" text-anchor="middle">Changes()</text>
+
+  <rect x="525" y="220" width="130" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="590" y="237" font-size="8.5" fill="#495057" text-anchor="middle">applyChanges()</text>
+  <text x="590" y="247" font-size="8" fill="#868e96" text-anchor="middle">(base 通用)</text>
+
+  <text x="520" y="275" font-size="8" fill="#868e96" text-anchor="middle">设置: bounds / windowingMode / focusable / hidden / forceTranslucent 等</text>
+  <text x="520" y="290" font-size="8" fill="#868e96" text-anchor="middle">返回 TRANSACT_EFFECTS_LIFECYCLE 或 CLIENT_CONFIG</text>
+
+  <line x1="330" y1="278" x2="370" y2="230" stroke="#555" stroke-width="1" marker-end="url(#ar)"/>
+
+  <!-- Phase 2: HierarchyOps -->
+  <line x1="350" y1="303" x2="350" y2="320" stroke="#555" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="80" y="323" width="540" height="100" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="350" y="342" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">阶段 2：应用 HierarchyOp (层级操作)</text>
+
+  <rect x="95" y="352" width="120" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="155" y="369" font-size="8" fill="#495057" text-anchor="middle">REPARENT / REORDER</text>
+
+  <rect x="225" y="352" width="120" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="285" y="369" font-size="8" fill="#495057" text-anchor="middle">REMOVE_TASK</text>
+
+  <rect x="355" y="352" width="120" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="415" y="369" font-size="8" fill="#495057" text-anchor="middle">LAUNCH_TASK</text>
+
+  <rect x="485" y="352" width="125" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="547" y="369" font-size="8" fill="#495057" text-anchor="middle">SET_LAUNCH_ROOT</text>
+
+  <rect x="95" y="387" width="120" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="155" y="404" font-size="8" fill="#495057" text-anchor="middle">PENDING_INTENT</text>
+
+  <rect x="225" y="387" width="120" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="285" y="404" font-size="8" fill="#495057" text-anchor="middle">FINISH_ACTIVITY</text>
+
+  <rect x="355" y="387" width="120" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="415" y="404" font-size="8" fill="#495057" text-anchor="middle">TASKFRAG_OP</text>
+
+  <rect x="485" y="387" width="125" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="547" y="404" font-size="8" fill="#495057" text-anchor="middle">MOVE_PIP ...</text>
+
+  <!-- Phase 3: Effects -->
+  <line x1="350" y1="423" x2="350" y2="445" stroke="#555" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="130" y="448" width="440" height="65" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="350" y="467" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">阶段 3：根据 Effects 标志更新生命周期</text>
+
+  <rect x="150" y="478" width="190" height="25" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="245" y="495" font-size="8.5" fill="#2e7d32" text-anchor="middle">LIFECYCLE → ensureActivitiesVisible()</text>
+
+  <rect x="360" y="478" width="195" height="25" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="458" y="495" font-size="8.5" fill="#2e7d32" text-anchor="middle">CLIENT_CONFIG → ensureActivityConfig()</text>
+
+  <!-- Phase 4: continue -->
+  <line x1="350" y1="513" x2="350" y2="535" stroke="#555" stroke-width="1" marker-end="url(#ar)"/>
+
+  <rect x="140" y="538" width="420" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="350" y="555" font-size="9.5" fill="#495057" text-anchor="middle">continueWindowLayout() + setDeferRootVisibilityUpdate(false)</text>
+  <text x="350" y="570" font-size="8" fill="#868e96" text-anchor="middle">恢复布局计算，触发 requestTraversal() 刷新窗口</text>
+
+  <!-- Sync note -->
+  <rect x="140" y="585" width="420" height="25" rx="3" fill="white" stroke="#ced4da" stroke-width="1"/>
+  <text x="350" y="602" font-size="8.5" fill="#495057" text-anchor="middle">如果是 applySyncTransaction：BLASTSyncEngine 收集 SurfaceControl.Transaction → 通过回调返回给调用方</text>
+</svg>

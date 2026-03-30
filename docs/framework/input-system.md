@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '窗口动画'
-    link: '/framework/window-animation'
+    text: 'ShellTransition'
+    link: '/framework/ShellTransition'
 next:
     text: '无焦点窗口 ANR'
     link: '/framework/anr-no-focused'

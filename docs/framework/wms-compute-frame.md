@@ -3,8 +3,8 @@ prev:
     text: '窗口布局流程'
     link: '/framework/relayoutWindow'
 next:
-    text: '窗口绘制状态'
-    link: '/framework/window-draw-state'
+    text: 'performTraversal'
+    link: '/framework/performTraversal'
 ---
 
 # 窗口大小计算 computeFrame

@@ -3,8 +3,8 @@ prev:
     text: 'Android Input 系统'
     link: '/framework/input-system'
 next:
-    text: 'performTraversal'
-    link: '/framework/performTraversal'
+    text: 'Android 16 新特性'
+    link: '/framework/android16'
 ---
 
 # 无焦点窗口 ANR

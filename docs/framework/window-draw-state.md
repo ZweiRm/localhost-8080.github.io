@@ -1,7 +1,7 @@
 ---
 prev:
-    text: '窗口大小计算'
-    link: '/framework/wms-compute-frame'
+    text: 'Choreographer 与 VSync 机制'
+    link: '/framework/choreographer-vsync'
 next:
     text: '窗口显示全流程概览'
     link: '/framework/window-rendering-process'

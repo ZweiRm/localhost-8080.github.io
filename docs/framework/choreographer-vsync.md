@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'SurfaceControl & Transaction 流程'
-    link: '/framework/surfacecontrol-transaction'
+    text: 'performTraversal'
+    link: '/framework/performTraversal'
 next:
-    text: '窗口布局流程'
-    link: '/framework/relayoutWindow'
+    text: '窗口绘制状态'
+    link: '/framework/window-draw-state'
 ---
 
 # Choreographer 与 VSync 机制

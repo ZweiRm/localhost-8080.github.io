@@ -278,30 +278,56 @@ export default defineConfig({
                     text: 'Window Mng Svc',
                     collapsed: false,
                     items: [
-                        { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
-                        { text: '窗口添加和移除', link: 'framework/window-add-remove' },
-                        { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
-                        { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
-                        { text: 'Choreographer 与 VSync 机制', link: 'framework/choreographer-vsync' },
-                        { text: '窗口布局流程', link: 'framework/relayoutWindow' },
-                        { text: '窗口大小计算', link: 'framework/wms-compute-frame' },
-                        { text: '窗口绘制状态', link: 'framework/window-draw-state' },
-                        { text: '窗口显示全流程概览', link: 'framework/window-rendering-process' },
-                        { text: 'Activity 与窗口可见性更新', link: 'framework/visibility-management' },
-                        { text: 'Configuration 管理', link: 'framework/configuration-management' },
-                        { text: 'WindowInsets', link: 'framework/windowInsets' },
-                        { text: 'StartingWindow', link: 'framework/StartingWindow' },
-                        { text: '焦点窗口切换', link: 'framework/focus-window-switching' },
-                        { text: '转屏机制', link: 'framework/screen-rotation' },
+                        {
+                            text: '架构与窗口生命周期',
+                            collapsed: false,
+                            items: [
+                                { text: 'WMS 架构与运行原理分析', link: 'framework/basic-with-wms' },
+                                { text: '窗口添加和移除', link: 'framework/window-add-remove' },
+                                { text: '窗口层级管理', link: 'framework/wms-window-hierarchy' },
+                            ]
+                        },
+                        {
+                            text: '布局 → 绘制 → 上屏',
+                            collapsed: false,
+                            items: [
+                                { text: '窗口布局流程', link: 'framework/relayoutWindow' },
+                                { text: '窗口大小计算', link: 'framework/wms-compute-frame' },
+                                { text: 'performTraversal', link: 'framework/performTraversal' },
+                                { text: 'Choreographer 与 VSync 机制', link: 'framework/choreographer-vsync' },
+                                { text: '窗口绘制状态', link: 'framework/window-draw-state' },
+                                { text: '窗口显示全流程概览', link: 'framework/window-rendering-process' },
+                            ]
+                        },
+                        {
+                            text: '窗口属性与系统机制',
+                            collapsed: false,
+                            items: [
+                                { text: 'Activity 与窗口可见性更新', link: 'framework/visibility-management' },
+                                { text: '焦点窗口切换', link: 'framework/focus-window-switching' },
+                                { text: 'Configuration 管理', link: 'framework/configuration-management' },
+                                { text: 'WindowInsets', link: 'framework/windowInsets' },
+                                { text: 'StartingWindow', link: 'framework/StartingWindow' },
+                                { text: '转屏机制', link: 'framework/screen-rotation' },
+                            ]
+                        },
+                        {
+                            text: '高级机制',
+                            collapsed: false,
+                            items: [
+                                { text: 'SurfaceControl & Transaction 流程', link: 'framework/surfacecontrol-transaction' },
+                                { text: 'Organizer 机制', link: 'framework/wms-organizer' },
+                            ]
+                        },
                     ]
                 },
                 {
                     text: '动画',
                     collapsed: false,
                     items: [
-                        { text: 'ShellTransition', link: 'framework/ShellTransition' },
                         { text: '属性动画', link: 'framework/android-property-animation' },
                         { text: '窗口动画', link: 'framework/window-animation' },
+                        { text: 'ShellTransition', link: 'framework/ShellTransition' },
                     ]
                 },
                 {
@@ -322,7 +348,6 @@ export default defineConfig({
                     text: '新特性与其他',
                     collapsed: false,
                     items: [
-                        { text: 'performTraversal', link: 'framework/performTraversal' },
                         { text: 'Android 16 新特性', link: 'framework/android16' },
                     ]
                 },

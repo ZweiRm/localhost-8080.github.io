@@ -3,8 +3,8 @@ prev:
     text: '窗口添加和移除'
     link: '/framework/window-add-remove'
 next:
-    text: 'SurfaceControl & Transaction 流程'
-    link: '/framework/surfacecontrol-transaction'
+    text: '窗口布局流程'
+    link: '/framework/relayoutWindow'
 ---
 
 # WMS 窗口层级管理
@@ -675,94 +675,19 @@ ROOT
 
 以 `DefaultTaskDisplayArea` 为例：其父节点链为 `FullscreenMagnification:0:12` → `OneHanded:0:14` → `HideDisplayCutout:0:14` → `WindowedMagnification:0:31` → `DisplayContent`。这意味着该节点下的所有子窗口都支持 FullscreenMagnification、OneHanded、HideDisplayCutout、WindowedMagnification 四种功能特性。
 
-## 6. DisplayAreaOrganizer 框架
+## 6. Organizer 框架
 
-`DisplayAreaOrganizer` 是 Framework 层提供给应用层（主要是 SystemUI 等系统级应用）的接口类，用于让应用层组织和控制各种 Feature 对应的 `DisplayArea`。
+WMS 通过 Organizer 机制将窗口容器的管理权委托给外部进程（主要是 SystemUI 的 Shell 模块）。针对不同层级的窗口容器，提供了三种 Organizer：
 
-![DisplayAreaOrganizer 框架](/img/android/window_hierarchy/06_organizer_framework.svg)
+| Organizer | 管理对象 | 典型场景 |
+|-----------|---------|---------|
+| `DisplayAreaOrganizer` | DisplayArea | 单手模式、放大镜、隐藏 Display Cutout |
+| `TaskOrganizer` | Task | 分屏、画中画、自由窗口 |
+| `TaskFragmentOrganizer` | TaskFragment | Activity Embedding |
 
-### 6.1 接口层次
+核心思想：Organizer 注册后获取目标容器的 `SurfaceControl` leash，控制该 leash 即等同于控制容器及其所有子窗口。例如单手模式只需对 `FEATURE_ONE_HANDED` DisplayArea 的 leash 施加平移变换，就能整体下移所有窗口。
 
-**AIDL 接口：**
-
-| 接口 | 功能 |
-|------|------|
-| `IWindowOrganizerController` | 窗口容器组织器的控制接口，提供获取 `IDisplayAreaOrganizerController` 的入口 |
-| `IDisplayAreaOrganizerController` | DisplayArea 组织器的注册/反注册接口 |
-| `IDisplayAreaOrganizer` | 接收指定 FeatureId 的 DisplayArea 状态变化（出现、消失、更新） |
-
-**API 层：**
-
-| 类 | 说明 |
-|------|------|
-| `WindowOrganizer` | 封装 `IWindowOrganizerController`，提供给应用层 |
-| `DisplayAreaOrganizer` | 继承 `WindowOrganizer`，封装 DisplayArea 组织器的使用 |
-| `DisplayAreaAppearedInfo` | 包含 `DisplayAreaInfo`（FeatureId、DisplayId）和对应的 `SurfaceControl` |
-
-**服务层：**
-
-`WindowOrganizerController` 和 `DisplayAreaOrganizerController` 是对应 AIDL 接口的具体实现，依托于 ATMS 服务。
-
-### 6.2 应用示例：单手模式
-
-WM Shell 中实现的单手模式使用了 `DisplayAreaOrganizer`。`OneHandedDisplayAreaOrganizer` 注册监听 `FEATURE_ONE_HANDED` 类型的 `DisplayArea`：
-
-```java
-// OneHandedController.java
-private void updateOneHandedEnabled() {
-    if (mDisplayAreaOrganizer.getDisplayAreaTokenMap().isEmpty()) {
-        mDisplayAreaOrganizer.registerOrganizer(
-                OneHandedDisplayAreaOrganizer.FEATURE_ONE_HANDED);
-    }
-}
-```
-
-通过获取到的 `SurfaceControl`（即 `leash`），`OneHandedDisplayAreaOrganizer` 对所有 `FEATURE_ONE_HANDED` 类型的 `DisplayArea` 施加平移动画，实现窗口整体下移的效果：
-
-```java
-// OneHandedDisplayAreaOrganizer.java
-public class OneHandedDisplayAreaOrganizer extends DisplayAreaOrganizer {
-    private ArrayMap<WindowContainerToken, SurfaceControl>
-            mDisplayAreaTokenMap = new ArrayMap();
-
-    public void onDisplayAreaAppeared(DisplayAreaInfo displayAreaInfo,
-            SurfaceControl leash) {
-        // 保存所有 FEATURE_ONE_HANDED 类型 DisplayArea 的 Surface
-        mDisplayAreaTokenMap.put(displayAreaInfo.token, leash);
-    }
-
-    public void scheduleOffset(int xOffset, int yOffset) {
-        // 对 map 中所有 Surface 执行平移动画
-        mDisplayAreaTokenMap.forEach((token, leash) -> {
-            animateWindows(token, leash, fromPos, yOffset, direction,
-                    mEnterExitAnimationDurationMs);
-        });
-    }
-
-    private void animateWindows(WindowContainerToken token,
-            SurfaceControl leash, ...) {
-        // 创建 ValueAnimator 对 Surface 施加动画效果
-        final OneHandedAnimationController.OneHandedTransitionAnimator animator =
-                mAnimationController.getAnimator(token, leash, fromPos, toPos,
-                        mLastVisualDisplayBounds);
-        ...
-    }
-}
-
-// OneHandedAnimationController.java
-public abstract static class OneHandedTransitionAnimator extends ValueAnimator {
-    private final SurfaceControl mLeash;
-
-    public void onAnimationUpdate(ValueAnimator animation) {
-        // 每一帧对 Surface 应用平移变换
-        applySurfaceControlTransaction(mLeash, tx, animation.getAnimatedFraction());
-    }
-}
-```
-
-控制 `DisplayArea` 的 `SurfaceControl` 就等同于控制该 `DisplayArea` 及其容纳的所有窗口容器——这是 `DisplayAreaOrganizer` 框架的核心思想。
-
-通过这套框架，WMS 将某一类 Feature 窗口的组织管理权委托给了应用层，应用层可以对特定类别的窗口应用独特的功能特性。类似的框架还有 `TaskOrganizer`，用于管理 Task 层级的窗口容器。
+> Organizer 机制的完整解析（注册流程、回调分发、WindowContainerTransaction 处理等）参见 [WMS Organizer 机制](./wms-organizer.md)。
 
 ## 7. 应用层级的添加与移除
 

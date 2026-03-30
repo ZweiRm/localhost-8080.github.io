@@ -1,10 +1,10 @@
 ---
 prev:
-    text: '焦点窗口切换'
-    link: '/framework/focus-window-switching'
+    text: 'StartingWindow'
+    link: '/framework/StartingWindow'
 next:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'SurfaceControl & Transaction 流程'
+    link: '/framework/surfacecontrol-transaction'
 ---
 
 # 转屏机制

@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'ShellTransition'
-    link: '/framework/ShellTransition'
+    text: 'Organizer 机制'
+    link: '/framework/wms-organizer'
 next:
     text: '窗口动画'
     link: '/framework/window-animation'

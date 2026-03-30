@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'performTraversal'
-    link: '/framework/performTraversal'
+    text: '无焦点窗口 ANR'
+    link: '/framework/anr-no-focused'
 next: false
 ---
 

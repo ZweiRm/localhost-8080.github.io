@@ -1,0 +1,83 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 600" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arr" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="arr-r" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <text x="390" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">TaskOrganizer 注册流程</text>
+
+  <!-- Swimlane labels -->
+  <text x="120" y="50" font-size="10" font-weight="600" fill="#4a7fb5" text-anchor="middle">Client (Shell)</text>
+  <text x="390" y="50" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">TaskOrganizerController</text>
+  <text x="640" y="50" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">Task</text>
+
+  <!-- Lifelines -->
+  <line x1="120" y1="60" x2="120" y2="580" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="390" y1="60" x2="390" y2="580" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+  <line x1="640" y1="60" x2="640" y2="580" stroke="#ced4da" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- Step 1: register -->
+  <line x1="120" y1="80" x2="380" y2="80" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="250" y="74" font-size="9" fill="#495057" text-anchor="middle">registerTaskOrganizer(ITaskOrganizer)</text>
+
+  <!-- Step 2: permission check -->
+  <rect x="310" y="95" width="160" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="112" font-size="8.5" fill="#495057" text-anchor="middle">enforceTaskPermission()</text>
+
+  <!-- Step 3: create state -->
+  <rect x="310" y="130" width="160" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="147" font-size="8.5" fill="#495057" text-anchor="middle">mTaskOrganizers.add(org)</text>
+  <text x="390" y="162" font-size="8.5" fill="#495057" text-anchor="middle">new TaskOrganizerState(org)</text>
+
+  <!-- Step 4: linkToDeath -->
+  <rect x="310" y="180" width="160" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="197" font-size="8.5" fill="#495057" text-anchor="middle">linkToDeath(DeathRecipient)</text>
+
+  <!-- Step 5: forAllTasks -->
+  <line x1="390" y1="220" x2="630" y2="220" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="510" y="214" font-size="9" fill="#495057" text-anchor="middle">forAllTasks(callback)</text>
+
+  <!-- Step 5a: updateTaskOrganizerState -->
+  <rect x="560" y="235" width="160" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="252" font-size="8.5" fill="#495057" text-anchor="middle">updateTaskOrganizerState()</text>
+  <text x="640" y="267" font-size="8.5" fill="#495057" text-anchor="middle">→ canBeOrganized()?</text>
+
+  <!-- Step 5b: get organizer -->
+  <rect x="560" y="285" width="160" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="302" font-size="8.5" fill="#495057" text-anchor="middle">getTaskOrganizer()</text>
+  <text x="640" y="317" font-size="8" fill="#868e96" text-anchor="middle">= mTaskOrganizers.peekLast()</text>
+
+  <!-- Step 5c: setTaskOrganizer -->
+  <rect x="560" y="335" width="160" height="25" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="640" y="352" font-size="8.5" fill="#495057" text-anchor="middle">setTaskOrganizer(org, skip=true)</text>
+
+  <!-- Step 6: addTaskWithoutCallback -->
+  <line x1="630" y1="375" x2="400" y2="375" stroke="#555" stroke-width="1.2" marker-end="url(#arr)"/>
+  <text x="515" y="369" font-size="9" fill="#495057" text-anchor="middle">isOrganized() → return task</text>
+
+  <rect x="310" y="390" width="160" height="40" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="407" font-size="8.5" fill="#495057" text-anchor="middle">addTaskWithoutCallback(task)</text>
+  <text x="390" y="422" font-size="8" fill="#868e96" text-anchor="middle">mTaskAppearedSent = true</text>
+
+  <!-- Step 7: prepareLeash -->
+  <rect x="310" y="440" width="160" height="25" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="457" font-size="8.5" fill="#495057" text-anchor="middle">prepareLeash(task) → SurfaceControl</text>
+
+  <!-- Step 8: collect TaskAppearedInfo -->
+  <rect x="310" y="475" width="160" height="35" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="390" y="492" font-size="8.5" fill="#495057" text-anchor="middle">收集 TaskAppearedInfo</text>
+  <text x="390" y="505" font-size="8" fill="#868e96" text-anchor="middle">(RunningTaskInfo + Leash)</text>
+
+  <!-- Step 9: return -->
+  <line x1="380" y1="530" x2="130" y2="530" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arr-r)"/>
+  <text x="250" y="524" font-size="9" fill="#c0392b" text-anchor="middle">返回 ParceledListSlice&lt;TaskAppearedInfo&gt;</text>
+
+  <!-- Note -->
+  <rect x="30" y="545" width="380" height="35" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="40" y="562" font-size="8.5" fill="#c0392b">注意：注册时已存在的 Task 通过返回值传递给 Client，</text>
+  <text x="40" y="575" font-size="8.5" fill="#c0392b">不会触发 onTaskAppeared 回调。后续新出现的 Task 才通过回调通知。</text>
+</svg>

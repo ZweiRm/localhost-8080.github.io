@@ -1,10 +1,10 @@
 ---
 prev:
-    text: '无焦点窗口 ANR'
-    link: '/framework/anr-no-focused'
+    text: '窗口大小计算'
+    link: '/framework/wms-compute-frame'
 next:
-    text: 'Android 16 新特性'
-    link: '/framework/android16'
+    text: 'Choreographer 与 VSync 机制'
+    link: '/framework/choreographer-vsync'
 ---
 
 # ViewRootImpl 中 performTraversal() 梳理

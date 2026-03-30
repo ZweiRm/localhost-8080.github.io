@@ -1,0 +1,130 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#4a7fb5"/>
+    </marker>
+  </defs>
+
+  <!-- Client Process -->
+  <rect x="10" y="10" width="390" height="500" rx="3" fill="none" stroke="#bbb" stroke-dasharray="5,3" stroke-width="1.2"/>
+  <text x="20" y="30" font-size="11" font-weight="600" fill="#343a40">Client Process (SystemUI / Launcher)</text>
+
+  <!-- WindowOrganizer base -->
+  <rect x="30" y="50" width="350" height="50" rx="3" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1"/>
+  <text x="205" y="72" font-size="11" font-weight="600" fill="#343a40" text-anchor="middle">WindowOrganizer</text>
+  <text x="205" y="87" font-size="9" fill="#495057" text-anchor="middle">applyTransaction() / applySyncTransaction()</text>
+
+  <!-- Three organizer clients -->
+  <rect x="30" y="120" width="160" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="110" y="140" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">TaskOrganizer</text>
+  <text x="110" y="155" font-size="8.5" fill="#495057" text-anchor="middle">extends WindowOrganizer</text>
+  <text x="110" y="167" font-size="8" fill="#868e96" text-anchor="middle">onTaskAppeared / Vanished</text>
+
+  <rect x="220" y="120" width="160" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="300" y="140" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">TaskFragmentOrganizer</text>
+  <text x="300" y="155" font-size="8.5" fill="#495057" text-anchor="middle">extends WindowOrganizer</text>
+  <text x="300" y="167" font-size="8" fill="#868e96" text-anchor="middle">onTransactionReady</text>
+
+  <rect x="100" y="195" width="200" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="200" y="215" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">DisplayAreaOrganizer</text>
+  <text x="200" y="230" font-size="8.5" fill="#495057" text-anchor="middle">extends WindowOrganizer</text>
+  <text x="200" y="242" font-size="8" fill="#868e96" text-anchor="middle">onDisplayAreaAppeared / Vanished</text>
+
+  <!-- WCT box -->
+  <rect x="70" y="270" width="270" height="45" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="205" y="290" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">WindowContainerTransaction</text>
+  <text x="205" y="305" font-size="8.5" fill="#495057" text-anchor="middle">Change (配置变更) + HierarchyOp (层级操作)</text>
+
+  <!-- AIDL interfaces -->
+  <rect x="50" y="340" width="310" height="60" rx="3" fill="white" stroke="#ced4da" stroke-width="1"/>
+  <text x="205" y="358" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">AIDL Binder 接口</text>
+  <text x="205" y="373" font-size="8.5" fill="#495057" text-anchor="middle">IWindowOrganizerController / ITaskOrganizer(oneway)</text>
+  <text x="205" y="386" font-size="8.5" fill="#495057" text-anchor="middle">ITaskFragmentOrganizer(oneway) / IDisplayAreaOrganizer(oneway)</text>
+
+  <!-- Arrows from organizers to WCT -->
+  <line x1="110" y1="175" x2="155" y2="270" stroke="#868e96" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="300" y1="175" x2="255" y2="270" stroke="#868e96" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="200" y1="250" x2="205" y2="268" stroke="#868e96" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Arrow from WCT to AIDL -->
+  <line x1="205" y1="315" x2="205" y2="338" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Binder divider -->
+  <line x1="405" y1="30" x2="405" y2="490" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="405" y="498" font-size="8" fill="#c0392b" text-anchor="middle">Binder IPC</text>
+
+  <!-- Server Process -->
+  <rect x="420" y="10" width="390" height="500" rx="3" fill="none" stroke="#bbb" stroke-dasharray="5,3" stroke-width="1.2"/>
+  <text x="430" y="30" font-size="11" font-weight="600" fill="#343a40">system_server (WMS)</text>
+
+  <!-- WindowOrganizerController -->
+  <rect x="440" y="50" width="350" height="70" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="615" y="72" font-size="11" font-weight="600" fill="#343a40" text-anchor="middle">WindowOrganizerController</text>
+  <text x="615" y="87" font-size="8.5" fill="#495057" text-anchor="middle">implements IWindowOrganizerController.Stub</text>
+  <text x="615" y="100" font-size="8.5" fill="#495057" text-anchor="middle">applyTransaction() → 分发 Change + HierarchyOp</text>
+
+  <!-- Three sub controllers -->
+  <rect x="440" y="140" width="160" height="60" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="520" y="158" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">TaskOrganizer</text>
+  <text x="520" y="170" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">Controller</text>
+  <text x="520" y="185" font-size="8" fill="#868e96" text-anchor="middle">mTaskOrganizers (ArrayDeque)</text>
+  <text x="520" y="195" font-size="8" fill="#868e96" text-anchor="middle">mTaskOrganizerStates</text>
+
+  <rect x="630" y="140" width="160" height="60" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="710" y="158" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">TaskFragment</text>
+  <text x="710" y="170" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">OrganizerController</text>
+  <text x="710" y="185" font-size="8" fill="#868e96" text-anchor="middle">mTaskFragmentOrganizerState</text>
+  <text x="710" y="195" font-size="8" fill="#868e96" text-anchor="middle">mPendingTaskFragmentEvents</text>
+
+  <rect x="530" y="220" width="180" height="50" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="620" y="240" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">DisplayAreaOrganizerController</text>
+  <text x="620" y="255" font-size="8" fill="#868e96" text-anchor="middle">mOrganizersByFeatureIds (HashMap)</text>
+
+  <!-- Arrows from WOC to sub controllers -->
+  <line x1="540" y1="120" x2="520" y2="138" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="690" y1="120" x2="710" y2="138" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+  <line x1="615" y1="120" x2="620" y2="218" stroke="#555" stroke-width="1" marker-end="url(#arrow)"/>
+
+  <!-- Window hierarchy -->
+  <rect x="440" y="290" width="350" height="130" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="450" y="308" font-size="10" font-weight="600" fill="#343a40">窗口层级树 (WindowContainer Hierarchy)</text>
+
+  <rect x="460" y="315" width="100" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="510" y="334" font-size="9" fill="#495057" text-anchor="middle">DisplayArea</text>
+
+  <rect x="580" y="315" width="80" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="620" y="334" font-size="9" fill="#495057" text-anchor="middle">Task</text>
+
+  <rect x="680" y="315" width="90" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="725" y="334" font-size="9" fill="#495057" text-anchor="middle">TaskFragment</text>
+
+  <rect x="490" y="365" width="120" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="550" y="384" font-size="9" fill="#495057" text-anchor="middle">ActivityRecord</text>
+
+  <rect x="630" y="365" width="120" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="690" y="384" font-size="9" fill="#495057" text-anchor="middle">WindowState</text>
+
+  <line x1="510" y1="345" x2="550" y2="363" stroke="#868e96" stroke-width="1"/>
+  <line x1="620" y1="345" x2="550" y2="363" stroke="#868e96" stroke-width="1"/>
+  <line x1="725" y1="345" x2="690" y2="363" stroke="#868e96" stroke-width="1"/>
+
+  <!-- BLASTSyncEngine -->
+  <rect x="440" y="440" width="170" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="525" y="460" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">BLASTSyncEngine</text>
+  <text x="525" y="475" font-size="8" fill="#495057" text-anchor="middle">同步 Transaction 到 SurfaceFlinger</text>
+
+  <!-- TransitionController -->
+  <rect x="630" y="440" width="160" height="50" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="710" y="460" font-size="9.5" font-weight="600" fill="#343a40" text-anchor="middle">TransitionController</text>
+  <text x="710" y="475" font-size="8" fill="#495057" text-anchor="middle">Shell Transition 动画协调</text>
+
+  <!-- Arrows Binder crossing -->
+  <line x1="360" y1="370" x2="438" y2="80" stroke="#4a7fb5" stroke-width="1.2" marker-end="url(#arrow-blue)"/>
+  <text x="396" y="220" font-size="8" fill="#4a7fb5" transform="rotate(-62,396,220)">applyTransaction</text>
+
+  <line x1="438" y1="160" x2="360" y2="360" stroke="#c0392b" stroke-width="1" stroke-dasharray="3,2" marker-end="url(#arrow)"/>
+  <text x="383" y="290" font-size="8" fill="#c0392b" transform="rotate(62,383,290)">callbacks</text>
+</svg>

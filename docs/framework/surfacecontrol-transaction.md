@@ -1,10 +1,10 @@
 ---
 prev:
-    text: '窗口层级管理'
-    link: '/framework/wms-window-hierarchy'
+    text: '转屏机制'
+    link: '/framework/screen-rotation'
 next:
-    text: 'Choreographer 与 VSync 机制'
-    link: '/framework/choreographer-vsync'
+    text: 'Organizer 机制'
+    link: '/framework/wms-organizer'
 ---
 
 # SurfaceControl & Transaction 流程

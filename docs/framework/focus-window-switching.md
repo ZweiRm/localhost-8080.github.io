@@ -1,10 +1,10 @@
 ---
 prev:
-    text: 'StartingWindow'
-    link: '/framework/StartingWindow'
+    text: 'Activity 与窗口可见性更新'
+    link: '/framework/visibility-management'
 next:
-    text: '转屏机制'
-    link: '/framework/screen-rotation'
+    text: 'Configuration 管理'
+    link: '/framework/configuration-management'
 ---
 
 # 焦点窗口切换

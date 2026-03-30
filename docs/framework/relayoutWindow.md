@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Choreographer 与 VSync 机制'
-    link: '/framework/choreographer-vsync'
+    text: '窗口层级管理'
+    link: '/framework/wms-window-hierarchy'
 next:
     text: '窗口大小计算'
     link: '/framework/wms-compute-frame'

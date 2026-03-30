@@ -1,7 +1,7 @@
 ---
 prev:
-    text: 'Activity 与窗口可见性更新'
-    link: '/framework/visibility-management'
+    text: '焦点窗口切换'
+    link: '/framework/focus-window-switching'
 next:
     text: 'WindowInsets'
     link: '/framework/windowInsets'

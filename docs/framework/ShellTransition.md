@@ -1,10 +1,10 @@
 ---
 prev:
-    text: '转屏机制'
-    link: '/framework/screen-rotation'
+    text: '窗口动画'
+    link: '/framework/window-animation'
 next:
-    text: '属性动画'
-    link: '/framework/android-property-animation'
+    text: 'Android Input 系统'
+    link: '/framework/input-system'
 ---
 
 # Shell Transition 机制
@@ -59,7 +59,7 @@ Shell Transition 的生命周期分为三大阶段：
 Transition 的触发来自两侧：
 
 - **Core 侧**：`startActivity()`、`finishActivity()`、`moveTaskToFront()`、configuration change、rotation change 等 WM 操作
-- **Shell 侧**：通过 `WindowContainerTransaction`（WCT）发起，如 PIP 进入/退出、分屏操作等
+- **Shell 侧**：通过 `WindowContainerTransaction`（WCT）发起，如 PIP 进入/退出、分屏操作等。WCT 的结构和处理流程参见 [WMS Organizer 机制](./wms-organizer.md)
 
 以启动 Activity 为例，在 `ActivityStarter.startActivityUnchecked()` 中创建 Transition：
 

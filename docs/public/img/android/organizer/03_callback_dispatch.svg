@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 750 480" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0 0, 7 2.5, 0 5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <text x="375" y="20" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">TaskOrganizer 回调分发流程 (Pending Events 机制)</text>
+
+  <!-- Phase boxes -->
+  <!-- 1. Event generation -->
+  <rect x="20" y="40" width="220" height="160" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="130" y="58" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">1. 事件产生</text>
+
+  <rect x="35" y="70" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="89" font-size="9" fill="#495057" text-anchor="middle">Task 状态变化</text>
+
+  <rect x="35" y="110" width="190" height="35" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="127" font-size="8.5" fill="#495057" text-anchor="middle">sendTaskAppeared()</text>
+  <text x="130" y="140" font-size="8.5" fill="#495057" text-anchor="middle">onTaskInfoChanged() / sendTaskVanished()</text>
+
+  <rect x="35" y="155" width="190" height="30" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="174" font-size="8.5" fill="#495057" text-anchor="middle">→ TaskOrganizerController</text>
+
+  <!-- Arrow -->
+  <line x1="240" y1="120" x2="270" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 2. Event queue -->
+  <rect x="275" y="40" width="220" height="160" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="385" y="58" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">2. 事件入队</text>
+
+  <rect x="290" y="70" width="190" height="55" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="87" font-size="9" font-weight="600" fill="#495057" text-anchor="middle">PendingEventsQueue</text>
+  <text x="385" y="102" font-size="8" fill="#868e96" text-anchor="middle">EVENT_APPEARED = 0</text>
+  <text x="385" y="114" font-size="8" fill="#868e96" text-anchor="middle">EVENT_VANISHED = 1</text>
+  <text x="385" y="126" font-size="8" fill="#868e96" text-anchor="middle">EVENT_INFO_CHANGED = 2</text>
+
+  <rect x="290" y="135" width="190" height="55" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="152" font-size="8.5" fill="#495057" text-anchor="middle">去重逻辑：</text>
+  <text x="385" y="165" font-size="8" fill="#868e96" text-anchor="middle">APPEARED 未发送时收到 VANISHED</text>
+  <text x="385" y="178" font-size="8" fill="#868e96" text-anchor="middle">→ 取消 APPEARED，不发送 VANISHED</text>
+
+  <!-- Arrow -->
+  <line x1="495" y1="120" x2="525" y2="120" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <!-- 3. Dispatch -->
+  <rect x="530" y="40" width="200" height="160" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="630" y="58" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">3. 批量分发</text>
+
+  <rect x="545" y="70" width="170" height="40" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="630" y="87" font-size="8.5" fill="#495057" text-anchor="middle">dispatchPendingEvents()</text>
+  <text x="630" y="100" font-size="8" fill="#868e96" text-anchor="middle">在 Layout 完成后触发</text>
+
+  <rect x="545" y="120" width="170" height="70" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="630" y="138" font-size="8.5" fill="#495057" text-anchor="middle">逐事件回调 ITaskOrganizer：</text>
+  <text x="630" y="153" font-size="8" fill="#2e7d32" text-anchor="middle">onTaskAppeared(info, leash)</text>
+  <text x="630" y="166" font-size="8" fill="#2e7d32" text-anchor="middle">onTaskVanished(info)</text>
+  <text x="630" y="179" font-size="8" fill="#2e7d32" text-anchor="middle">onTaskInfoChanged(info)</text>
+
+  <!-- TaskFragment section -->
+  <text x="375" y="230" font-size="12" font-weight="600" fill="#343a40" text-anchor="middle">TaskFragmentOrganizer 回调分发 (Transaction 批量机制)</text>
+
+  <rect x="20" y="250" width="220" height="120" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="130" y="268" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">1. 事件产生</text>
+  <rect x="35" y="280" width="190" height="75" rx="3" fill="white" stroke="#adb5bd" stroke-width="1"/>
+  <text x="130" y="297" font-size="8.5" fill="#495057" text-anchor="middle">onTaskFragmentAppeared()</text>
+  <text x="130" y="312" font-size="8.5" fill="#495057" text-anchor="middle">onTaskFragmentInfoChanged()</text>
+  <text x="130" y="327" font-size="8.5" fill="#495057" text-anchor="middle">onTaskFragmentVanished()</text>
+  <text x="130" y="342" font-size="8.5" fill="#495057" text-anchor="middle">onTaskFragmentParentInfoChanged()</text>
+
+  <line x1="240" y1="310" x2="270" y2="310" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="275" y="250" width="220" height="120" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="385" y="268" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">2. 事件入队 + 延迟</text>
+  <rect x="290" y="280" width="190" height="75" rx="3" fill="#fef8ee" stroke="#adb5bd" stroke-width="1"/>
+  <text x="385" y="297" font-size="8.5" fill="#495057" text-anchor="middle">PendingTaskFragmentEvent</text>
+  <text x="385" y="312" font-size="8" fill="#868e96" text-anchor="middle">后台 Task 延迟分发</text>
+  <text x="385" y="327" font-size="8" fill="#868e96" text-anchor="middle">(shouldDeferPendingEvents)</text>
+  <text x="385" y="342" font-size="8" fill="#868e96" text-anchor="middle">Delta 检测: 仅发送变化部分</text>
+
+  <line x1="495" y1="310" x2="525" y2="310" stroke="#555" stroke-width="1.2" marker-end="url(#a)"/>
+
+  <rect x="530" y="250" width="200" height="120" rx="3" fill="#f8f9fa" stroke="#ced4da" stroke-width="1"/>
+  <text x="630" y="268" font-size="10" font-weight="600" fill="#343a40" text-anchor="middle">3. 批量 Transaction</text>
+  <rect x="545" y="280" width="170" height="75" rx="3" fill="#eef5f1" stroke="#2e7d32" stroke-width="1"/>
+  <text x="630" y="297" font-size="8.5" fill="#495057" text-anchor="middle">组装 TaskFragmentTransaction</text>
+  <text x="630" y="312" font-size="8" fill="#2e7d32" text-anchor="middle">多个 Change 打包为一个 Transaction</text>
+  <text x="630" y="327" font-size="8" fill="#2e7d32" text-anchor="middle">onTransactionReady(transaction)</text>
+  <text x="630" y="342" font-size="8" fill="#868e96" text-anchor="middle">→ Organizer 处理后调用</text>
+  <text x="630" y="355" font-size="8" fill="#868e96" text-anchor="middle">onTransactionHandled()</text>
+
+  <!-- Key difference note -->
+  <rect x="80" y="395" width="590" height="75" rx="3" fill="#fff0f0" stroke="#e07070" stroke-width="1"/>
+  <text x="375" y="415" font-size="10" font-weight="600" fill="#c0392b" text-anchor="middle">关键差异</text>
+  <text x="100" y="435" font-size="9" fill="#495057">TaskOrganizer：每个事件独立回调 (onTaskAppeared / onTaskVanished / onTaskInfoChanged)</text>
+  <text x="100" y="452" font-size="9" fill="#495057">TaskFragmentOrganizer：多个事件打包为一个 TaskFragmentTransaction 批量下发</text>
+  <text x="100" y="464" font-size="9" fill="#868e96">    → 支持 Transition 延迟 (deferTransitionReady)，等待 Organizer 处理完毕后继续</text>
+</svg>

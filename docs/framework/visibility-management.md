@@ -3,8 +3,8 @@ prev:
     text: '窗口显示全流程概览'
     link: '/framework/window-rendering-process'
 next:
-    text: 'Configuration 管理'
-    link: '/framework/configuration-management'
+    text: '焦点窗口切换'
+    link: '/framework/focus-window-switching'
 ---
 
 # Activity 与窗口可见性更新
