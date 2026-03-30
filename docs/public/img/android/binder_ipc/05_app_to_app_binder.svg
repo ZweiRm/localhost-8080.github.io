@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="350" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#343a40">应用间 Binder 通信（bindService + AIDL）</text>
+
+  <!-- Client App -->
+  <rect x="30" y="50" width="240" height="200" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="150" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#4a7fb5">Client App 进程</text>
+
+  <rect x="50" y="85" width="200" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="150" y="107" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Activity / Fragment</text>
+
+  <rect x="50" y="130" width="200" height="35" rx="3" fill="#e8eaf6" stroke="#3f51b5"/>
+  <text x="150" y="152" text-anchor="middle" font-size="10" font-weight="600" fill="#283593">ServiceConnection</text>
+
+  <rect x="50" y="175" width="200" height="35" rx="3" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="150" y="197" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">IMyService.Stub.Proxy</text>
+
+  <rect x="50" y="218" width="200" height="22" rx="3" fill="#f5f5f5" stroke="#bdbdbd"/>
+  <text x="150" y="233" text-anchor="middle" font-size="9" fill="#868e96">bindService(intent)</text>
+
+  <!-- Server App -->
+  <rect x="430" y="50" width="240" height="200" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="550" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#2e7d32">Server App 进程</text>
+
+  <rect x="450" y="85" width="200" height="35" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="550" y="107" text-anchor="middle" font-size="11" font-weight="700" fill="#e65100">MyService extends Service</text>
+
+  <rect x="450" y="130" width="200" height="35" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="550" y="148" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">onBind() → IBinder</text>
+
+  <rect x="450" y="175" width="200" height="55" rx="3" fill="#fff8e1" stroke="#f9a825"/>
+  <text x="550" y="195" text-anchor="middle" font-size="10" font-weight="600" fill="#f57f17">IMyService.Stub 实现</text>
+  <text x="550" y="212" text-anchor="middle" font-size="9" fill="#868e96">实际业务逻辑</text>
+  <text x="550" y="225" text-anchor="middle" font-size="9" fill="#868e96">onTransact() 分发到具体方法</text>
+
+  <!-- AMS in middle -->
+  <rect x="280" y="95" width="140" height="50" rx="3" fill="#f3e5f5" stroke="#7b1fa2"/>
+  <text x="350" y="115" text-anchor="middle" font-size="10" font-weight="600" fill="#4a148c">AMS</text>
+  <text x="350" y="132" text-anchor="middle" font-size="9" fill="#868e96">管理 Service 生命周期</text>
+
+  <!-- Arrows -->
+  <path d="M250,235 Q280,260 280,120 L280,120" stroke="#555" stroke-width="1" fill="none" marker-end="url(#a1)"/>
+  <text x="248" y="270" font-size="9" fill="#7b1fa2">1. bindService()</text>
+
+  <line x1="420" y1="115" x2="430" y2="115" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <text x="425" y="80" font-size="9" fill="#7b1fa2">2. onCreate + onBind()</text>
+
+  <path d="M420,130 Q430,155 270,155 L270,165" stroke="#555" stroke-width="1" fill="none" marker-end="url(#a1)"/>
+  <text x="348" y="168" text-anchor="middle" font-size="9" fill="#7b1fa2">3. 返回 IBinder</text>
+
+  <!-- Binder IPC arrow -->
+  <line x1="250" y1="192" x2="450" y2="200" stroke="#c62828" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#a1)"/>
+  <text x="350" y="188" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828">4. Binder IPC 调用</text>
+
+  <!-- Flow description -->
+  <rect x="30" y="280" width="640" height="85" rx="4" fill="#f5f5f5" stroke="#bdbdbd" stroke-dasharray="4,2"/>
+  <text x="350" y="300" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">完整流程</text>
+  <text x="350" y="318" text-anchor="middle" font-size="10" fill="#343a40">1. Client 调用 bindService()，AMS 查找或启动目标 Service</text>
+  <text x="350" y="334" text-anchor="middle" font-size="10" fill="#343a40">2. Server 的 onBind() 返回 IMyService.Stub 实现（IBinder 对象）</text>
+  <text x="350" y="350" text-anchor="middle" font-size="10" fill="#343a40">3. AMS 将 IBinder 通过 ServiceConnection.onServiceConnected() 回调给 Client</text>
+  <text x="350" y="366" text-anchor="middle" font-size="10" fill="#343a40">4. Client 通过 Proxy 直接发起跨进程调用，不再经过 AMS</text>
+</svg>

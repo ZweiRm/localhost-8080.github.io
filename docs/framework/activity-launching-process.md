@@ -1,5 +1,7 @@
 ---
-prev: false
+prev:
+    text: 'Binder IPC 机制'
+    link: '/framework/binder-ipc'
 next:
     text: 'AMS 进程管理'
     link: '/framework/ams_process_management'

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 420" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="380" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#343a40">Binder 调用全链路（以 startActivity 为例）</text>
+
+  <!-- Client side -->
+  <rect x="20" y="45" width="310" height="360" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="175" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#4a7fb5">App 进程 (Client)</text>
+
+  <!-- Java layer -->
+  <rect x="40" y="78" width="270" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="175" y="100" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Activity.startActivity(intent)</text>
+
+  <rect x="40" y="123" width="270" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="175" y="145" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Instrumentation.execStartActivity()</text>
+
+  <rect x="40" y="168" width="270" height="35" rx="3" fill="#e8eaf6" stroke="#3f51b5"/>
+  <text x="175" y="190" text-anchor="middle" font-size="11" font-weight="600" fill="#283593">ATMS.Stub.Proxy.startActivity()</text>
+
+  <!-- Binder Java -->
+  <rect x="40" y="213" width="270" height="30" rx="3" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="175" y="233" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">BinderProxy.transact()</text>
+
+  <!-- JNI -->
+  <rect x="40" y="253" width="270" height="25" rx="3" fill="#fff8e1" stroke="#f9a825"/>
+  <text x="175" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#f57f17">android_util_Binder.cpp (JNI)</text>
+
+  <!-- Native -->
+  <rect x="40" y="288" width="270" height="30" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="175" y="308" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">BpBinder::transact()</text>
+
+  <!-- IPCThreadState -->
+  <rect x="40" y="328" width="270" height="30" rx="3" fill="#ffcdd2" stroke="#c62828"/>
+  <text x="175" y="348" text-anchor="middle" font-size="10" font-weight="600" fill="#b71c1c">IPCThreadState::transact()</text>
+
+  <!-- ioctl -->
+  <rect x="40" y="368" width="270" height="25" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="175" y="385" text-anchor="middle" font-size="10" font-weight="600" fill="#b71c1c">ioctl(BINDER_WRITE_READ)</text>
+
+  <!-- Arrows down on client side -->
+  <line x1="175" y1="113" x2="175" y2="123" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="175" y1="158" x2="175" y2="168" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="175" y1="203" x2="175" y2="213" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="175" y1="243" x2="175" y2="253" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="175" y1="278" x2="175" y2="288" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="175" y1="318" x2="175" y2="328" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="175" y1="358" x2="175" y2="368" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- Server side -->
+  <rect x="430" y="45" width="310" height="360" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="585" y="65" text-anchor="middle" font-size="12" font-weight="600" fill="#2e7d32">system_server 进程 (Server)</text>
+
+  <!-- Server stack (bottom up) -->
+  <rect x="450" y="368" width="270" height="25" rx="3" fill="#fce4ec" stroke="#c62828"/>
+  <text x="585" y="385" text-anchor="middle" font-size="10" font-weight="600" fill="#b71c1c">ioctl(BINDER_WRITE_READ)</text>
+
+  <rect x="450" y="328" width="270" height="30" rx="3" fill="#ffcdd2" stroke="#c62828"/>
+  <text x="585" y="348" text-anchor="middle" font-size="10" font-weight="600" fill="#b71c1c">IPCThreadState::executeCommand()</text>
+
+  <rect x="450" y="288" width="270" height="30" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="585" y="308" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">BBinder::transact()</text>
+
+  <rect x="450" y="253" width="270" height="25" rx="3" fill="#fff8e1" stroke="#f9a825"/>
+  <text x="585" y="270" text-anchor="middle" font-size="10" font-weight="600" fill="#f57f17">android_util_Binder.cpp (JNI)</text>
+
+  <rect x="450" y="213" width="270" height="30" rx="3" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="585" y="233" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">Binder.execTransact()</text>
+
+  <rect x="450" y="168" width="270" height="35" rx="3" fill="#e8eaf6" stroke="#3f51b5"/>
+  <text x="585" y="190" text-anchor="middle" font-size="11" font-weight="600" fill="#283593">ATMS.Stub.onTransact()</text>
+
+  <rect x="450" y="123" width="270" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="585" y="145" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">ATMS.startActivity()</text>
+
+  <rect x="450" y="78" width="270" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="585" y="100" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">实际业务逻辑处理</text>
+
+  <!-- Arrows up on server side -->
+  <line x1="585" y1="368" x2="585" y2="358" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="585" y1="328" x2="585" y2="318" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="585" y1="288" x2="585" y2="278" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="585" y1="253" x2="585" y2="243" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="585" y1="213" x2="585" y2="203" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="585" y1="168" x2="585" y2="158" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="585" y1="123" x2="585" y2="113" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- Binder driver connection -->
+  <line x1="310" y1="380" x2="450" y2="380" stroke="#c62828" stroke-width="2" marker-end="url(#a1)"/>
+  <text x="380" y="400" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828">Binder 驱动转发</text>
+
+  <!-- Layer labels -->
+  <text x="10" y="92" font-size="8" fill="#868e96" writing-mode="tb">Java</text>
+  <text x="10" y="265" font-size="8" fill="#868e96" writing-mode="tb">Native</text>
+  <text x="10" y="375" font-size="8" fill="#868e96" writing-mode="tb">Kernel</text>
+</svg>

@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a2" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7,0 0,2.5 7,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="380" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#343a40">系统服务的 Manager-Service 模式</text>
+
+  <!-- App Process -->
+  <rect x="30" y="50" width="300" height="280" rx="4" fill="#eef1f5" stroke="#4a7fb5" stroke-width="1.5"/>
+  <text x="180" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#4a7fb5">App 进程</text>
+
+  <!-- App code -->
+  <rect x="55" y="85" width="250" height="35" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="180" y="107" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">应用代码</text>
+
+  <!-- Manager -->
+  <rect x="55" y="135" width="250" height="70" rx="3" fill="#e8eaf6" stroke="#3f51b5"/>
+  <text x="180" y="155" text-anchor="middle" font-size="11" font-weight="700" fill="#283593">XxxManager</text>
+  <text x="180" y="172" text-anchor="middle" font-size="9" fill="#868e96">如 ActivityManager / WindowManager</text>
+  <text x="180" y="188" text-anchor="middle" font-size="9" fill="#868e96">封装 Binder 调用，提供友好 API</text>
+
+  <!-- IXxxService.Stub.Proxy -->
+  <rect x="55" y="220" width="250" height="45" rx="3" fill="#e8f5e9" stroke="#2e7d32"/>
+  <text x="180" y="240" text-anchor="middle" font-size="10" font-weight="600" fill="#1b5e20">IXxxService.Stub.Proxy</text>
+  <text x="180" y="255" text-anchor="middle" font-size="9" fill="#868e96">AIDL 生成的客户端代理</text>
+
+  <!-- ServiceManager cache -->
+  <rect x="55" y="278" width="250" height="35" rx="3" fill="#f3e5f5" stroke="#7b1fa2"/>
+  <text x="180" y="300" text-anchor="middle" font-size="10" font-weight="600" fill="#4a148c">ServiceManager.getService("xxx")</text>
+
+  <!-- system_server Process -->
+  <rect x="430" y="50" width="300" height="280" rx="4" fill="#eef5f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="580" y="72" text-anchor="middle" font-size="12" font-weight="600" fill="#2e7d32">system_server 进程</text>
+
+  <!-- XxxService -->
+  <rect x="455" y="85" width="250" height="70" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="580" y="105" text-anchor="middle" font-size="11" font-weight="700" fill="#e65100">XxxManagerService</text>
+  <text x="580" y="122" text-anchor="middle" font-size="9" fill="#868e96">如 ActivityManagerService</text>
+  <text x="580" y="138" text-anchor="middle" font-size="9" fill="#868e96">真正的业务逻辑实现</text>
+
+  <!-- IXxxService.Stub -->
+  <rect x="455" y="170" width="250" height="45" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="580" y="190" text-anchor="middle" font-size="10" font-weight="600" fill="#e65100">extends IXxxService.Stub</text>
+  <text x="580" y="205" text-anchor="middle" font-size="9" fill="#868e96">AIDL 生成的服务端骨架</text>
+
+  <!-- addService -->
+  <rect x="455" y="230" width="250" height="35" rx="3" fill="#f3e5f5" stroke="#7b1fa2"/>
+  <text x="580" y="252" text-anchor="middle" font-size="10" font-weight="600" fill="#4a148c">ServiceManager.addService("xxx")</text>
+
+  <!-- Binder arrows -->
+  <line x1="305" y1="242" x2="455" y2="192" stroke="#c62828" stroke-width="1.5" marker-end="url(#a1)"/>
+  <text x="380" y="205" text-anchor="middle" font-size="10" font-weight="600" fill="#c62828">Binder IPC</text>
+
+  <!-- Internal arrows -->
+  <line x1="180" y1="120" x2="180" y2="135" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="180" y1="205" x2="180" y2="220" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+  <line x1="580" y1="155" x2="580" y2="170" stroke="#555" stroke-width="1" marker-end="url(#a1)"/>
+
+  <!-- Example table -->
+  <rect x="30" y="360" width="700" height="145" rx="4" fill="#f5f5f5" stroke="#bdbdbd"/>
+  <text x="380" y="382" text-anchor="middle" font-size="11" font-weight="700" fill="#343a40">常见的 Manager — Service 对应关系</text>
+
+  <!-- Table header -->
+  <rect x="50" y="395" width="200" height="25" rx="0" fill="#e0e0e0" stroke="#bdbdbd"/>
+  <text x="150" y="412" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Manager (App 侧)</text>
+  <rect x="250" y="395" width="230" height="25" rx="0" fill="#e0e0e0" stroke="#bdbdbd"/>
+  <text x="365" y="412" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">Service (system_server 侧)</text>
+  <rect x="480" y="395" width="230" height="25" rx="0" fill="#e0e0e0" stroke="#bdbdbd"/>
+  <text x="595" y="412" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">AIDL 接口</text>
+
+  <!-- Row 1 -->
+  <text x="150" y="438" text-anchor="middle" font-size="10" fill="#343a40">ActivityManager</text>
+  <text x="365" y="438" text-anchor="middle" font-size="10" fill="#343a40">ActivityManagerService</text>
+  <text x="595" y="438" text-anchor="middle" font-size="10" fill="#343a40">IActivityManager</text>
+
+  <!-- Row 2 -->
+  <text x="150" y="458" text-anchor="middle" font-size="10" fill="#343a40">WindowManager</text>
+  <text x="365" y="458" text-anchor="middle" font-size="10" fill="#343a40">WindowManagerService</text>
+  <text x="595" y="458" text-anchor="middle" font-size="10" fill="#343a40">IWindowManager</text>
+
+  <!-- Row 3 -->
+  <text x="150" y="478" text-anchor="middle" font-size="10" fill="#343a40">PackageManager</text>
+  <text x="365" y="478" text-anchor="middle" font-size="10" fill="#343a40">PackageManagerService</text>
+  <text x="595" y="478" text-anchor="middle" font-size="10" fill="#343a40">IPackageManager</text>
+
+  <!-- Row 4 -->
+  <text x="150" y="498" text-anchor="middle" font-size="10" fill="#343a40">InputMethodManager</text>
+  <text x="365" y="498" text-anchor="middle" font-size="10" fill="#343a40">InputMethodManagerService</text>
+  <text x="595" y="498" text-anchor="middle" font-size="10" fill="#343a40">IInputMethodManager</text>
+</svg>

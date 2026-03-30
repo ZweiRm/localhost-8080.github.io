@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 520" font-family="'Segoe UI','PingFang SC','Microsoft YaHei',sans-serif">
+  <defs>
+    <marker id="a1" markerWidth="7" markerHeight="5" refX="7" refY="2.5" orient="auto">
+      <polygon points="0,0 7,2.5 0,5" fill="#555"/>
+    </marker>
+    <marker id="a2" markerWidth="7" markerHeight="5" refX="0" refY="2.5" orient="auto">
+      <polygon points="7,0 0,2.5 7,5" fill="#555"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="340" y="24" text-anchor="middle" font-size="14" font-weight="700" fill="#343a40">Binder IPC 整体架构</text>
+
+  <!-- User Space -->
+  <rect x="20" y="40" width="640" height="310" rx="4" fill="none" stroke="#4a90d9" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="35" y="58" font-size="11" font-weight="600" fill="#4a90d9">用户空间 (User Space)</text>
+
+  <!-- Client Process -->
+  <rect x="40" y="72" width="200" height="120" rx="4" fill="#eef1f5" stroke="#4a7fb5"/>
+  <text x="140" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Client 进程</text>
+  <rect x="60" y="102" width="160" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="140" y="122" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Client (调用方)</text>
+  <rect x="60" y="142" width="160" height="30" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="140" y="162" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">BinderProxy / BpBinder</text>
+
+  <!-- Server Process -->
+  <rect x="440" y="72" width="200" height="120" rx="4" fill="#eef5f1" stroke="#2e7d32"/>
+  <text x="540" y="92" text-anchor="middle" font-size="12" font-weight="600" fill="#343a40">Server 进程</text>
+  <rect x="460" y="102" width="160" height="30" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="540" y="122" text-anchor="middle" font-size="11" font-weight="600" fill="#343a40">Server (服务方)</text>
+  <rect x="460" y="142" width="160" height="30" rx="3" fill="#fff3e0" stroke="#f57c00"/>
+  <text x="540" y="162" text-anchor="middle" font-size="11" font-weight="600" fill="#e65100">Binder / BBinder</text>
+
+  <!-- ServiceManager -->
+  <rect x="230" y="220" width="220" height="110" rx="4" fill="#f3e5f5" stroke="#7b1fa2"/>
+  <text x="340" y="244" text-anchor="middle" font-size="12" font-weight="700" fill="#4a148c">ServiceManager</text>
+  <text x="340" y="264" text-anchor="middle" font-size="10" fill="#868e96">系统服务的"电话簿"</text>
+  <rect x="250" y="278" width="85" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="292" y="297" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">addService()</text>
+  <rect x="345" y="278" width="85" height="28" rx="3" fill="white" stroke="#adb5bd"/>
+  <text x="387" y="297" text-anchor="middle" font-size="10" font-weight="600" fill="#343a40">getService()</text>
+
+  <!-- Kernel Space -->
+  <rect x="20" y="370" width="640" height="130" rx="4" fill="none" stroke="#c62828" stroke-width="1.5" stroke-dasharray="6,3"/>
+  <text x="35" y="388" font-size="11" font-weight="600" fill="#c62828">内核空间 (Kernel Space)</text>
+
+  <!-- Binder Driver -->
+  <rect x="140" y="400" width="400" height="80" rx="4" fill="#fce4ec" stroke="#c62828"/>
+  <text x="340" y="430" text-anchor="middle" font-size="13" font-weight="700" fill="#b71c1c">Binder 驱动 (/dev/binder)</text>
+  <text x="340" y="452" text-anchor="middle" font-size="10" fill="#868e96">mmap 内存映射 · copy_from_user · copy_to_user</text>
+  <text x="340" y="468" text-anchor="middle" font-size="10" fill="#868e96">ioctl(BINDER_WRITE_READ) 进行数据传输</text>
+
+  <!-- Arrows: Client ↔ Binder Driver -->
+  <line x1="120" y1="192" x2="120" y2="400" stroke="#555" stroke-width="1.2" marker-end="url(#a1)"/>
+  <text x="80" y="300" font-size="9" fill="#868e96" transform="rotate(-90,80,300)">transact()</text>
+
+  <!-- Arrows: Server ↔ Binder Driver -->
+  <line x1="560" y1="400" x2="560" y2="192" stroke="#555" stroke-width="1.2" marker-end="url(#a1)"/>
+  <text x="600" y="300" font-size="9" fill="#868e96" transform="rotate(-90,600,300)">onTransact()</text>
+
+  <!-- Arrows: Client → ServiceManager (getService) -->
+  <path d="M220,192 L220,220 Q220,240 240,240 L230,240" stroke="#555" stroke-width="1" fill="none" marker-end="url(#a1)"/>
+  <text x="183" y="216" font-size="9" fill="#7b1fa2">getService()</text>
+
+  <!-- Arrows: Server → ServiceManager (addService) -->
+  <path d="M460,192 L460,220 Q460,240 450,240 L450,240" stroke="#555" stroke-width="1" fill="none" marker-end="url(#a2)"/>
+  <text x="462" y="216" font-size="9" fill="#7b1fa2">addService()</text>
+
+  <!-- Arrows: ServiceManager ↔ Binder Driver -->
+  <line x1="340" y1="330" x2="340" y2="400" stroke="#555" stroke-width="1" stroke-dasharray="4,2" marker-end="url(#a1)"/>
+
+  <!-- Legend -->
+  <text x="140" y="162" text-anchor="middle" font-size="10" fill="#868e96"></text>
+</svg>

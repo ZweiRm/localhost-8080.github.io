@@ -35,6 +35,7 @@ export default defineConfig({
                     { text: 'JVM', link: '/java/jvm' },
                 ]},
                 { text: 'Android Frameworks', items: [
+                    { text: '基础', link: '/framework/binder-ipc'},
                     { text: 'Activity Mng Svc', link: '/framework/activity-launching-process'},
                     { text: 'Window Mng Svc', link: '/framework/basic-with-wms'},
                     { text: '动画', link: '/framework/ShellTransition'},
@@ -258,6 +259,13 @@ export default defineConfig({
         '/framework/':[{
             text: 'Android Frameworks', link: 'framework/index',
             items: [
+                {
+                    text: '基础',
+                    collapsed: false,
+                    items: [
+                        { text: 'Binder IPC 机制', link: 'framework/binder-ipc' },
+                    ]
+                },
                 {
                     text: 'Activity Mng Svc',
                     collapsed: false,
