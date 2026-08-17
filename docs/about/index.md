@@ -63,12 +63,7 @@ Hi! I'm Duo Huang, a Software R&D Engineer specializing in Android platform inte
 
 I earned my Master of Science in Data Analysis and Artificial Intelligence from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5%).
 
-My research interests center on **system software for emerging computing platforms**. As mobile devices evolve from standalone smartphones into hubs that coordinate wearables, extended reality (XR) headsets, vehicle infotainment, and industrial IoT endpoints, the OS and framework layers must manage increasingly heterogeneous hardware, real-time constraints, and cross-device state under tight resource budgets. I am interested in understanding and improving how these system-level mechanisms shape end-to-end user experience across new form factors. Specific areas I hope to explore include:
-+ Cross-device system architecture for wearable and XR platforms, where phone-tethered designs create new demands on display management, process scheduling, and real-time communication
-+ Context-aware interaction and body-centric interfaces for spatial computing, bridging OS-level sensing with adaptive user experiences
-+ Software quality and evolution of large-scale mobile platforms, including automated defect detection, compatibility analysis, and reliability engineering at scale
-+ System-level support for intelligent user experience, such as adaptive notification routing, context-sensitive display management, and ML-driven optimization for resource-constrained environments
-+ Transfer of large-scale mobile system methodologies (real-time coordination, fault detection, cross-device orchestration) to cyber-physical and industrial contexts
+My research interests center on **system software for emerging computing platforms**. As mobile devices evolve from standalone smartphones into hubs that coordinate wearables, extended reality (XR) headsets, vehicle infotainment, and industrial IoT endpoints, the OS and framework layers must manage increasingly heterogeneous hardware, real-time constraints, and cross-device state under tight resource budgets. I am interested in understanding and improving how these system-level mechanisms shape end-to-end user experience across new form factors.
 
 I am currently the project lead of a Xiaomi Open-Competition Research Program (200,000+ CNY funding), an industry-academia collaboration initiative focused on advancing intelligent system architecture. With 19 patents spanning ML-systems integration and HCI innovation, I remain committed to bridging rigorous research with impactful engineering.
 
