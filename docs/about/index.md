@@ -59,13 +59,13 @@ onMounted(() => {
 
 <VPTeamMembers size="medium" :members="members" />
 
-Hi! I'm Duo Huang, a Software R&D Engineer specializing in Android platform internals (Window Management, Display Pipeline, Activity Management) with a focus on ML-driven system optimization at Xiaomi Inc. I am the technical owner of Xiaomi's dual-screen interaction system (Rear Display+) shipped on the Xiaomi 17 series, and a contributor to the Android Open Source Project (AOSP) with merged changes deployed to 1.5+ billion active devices.
+Hi! I'm Duo Huang, a Software R&D Engineer working on Android platform internals (window and display management, activity and process management, rendering) at Xiaomi Inc., based in Beijing. I lead SubScreenCenter, the rear-display (secondary-screen) launcher shipped on the Xiaomi 17 series, and I contribute to the Android Open Source Project (AOSP), where merged Window Manager and xTS changes reach 1.5+ billion active devices.
 
-I earned my Master of Science in Data Analysis and Artificial Intelligence from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5%).
+I earned my Master of Science in Advanced Information Systems (the program is now named MSc in Data Analysis and Artificial Intelligence) from Hong Kong Baptist University (Merit Scholarship) and hold a BEng in Software Engineering from Shanxi Agricultural University (top 5% in program).
 
-My research interests center on **system software for emerging computing platforms**. As mobile devices evolve from standalone smartphones into hubs that coordinate wearables, extended reality (XR) headsets, vehicle infotainment, and industrial IoT endpoints, the OS and framework layers must manage increasingly heterogeneous hardware, real-time constraints, and cross-device state under tight resource budgets. I am interested in understanding and improving how these system-level mechanisms shape end-to-end user experience across new form factors.
+My research interests center on **system software for emerging computing platforms**, and increasingly on **LLM agents and on-device generative UI as OS-level concerns**. As mobile devices evolve from standalone smartphones into hubs that coordinate wearables, extended reality (XR) headsets, vehicle infotainment, and industrial IoT endpoints, the OS and framework layers must manage increasingly heterogeneous hardware, real-time constraints, and cross-device state under tight resource budgets. I am interested in understanding and improving how these system-level mechanisms shape end-to-end user experience across new form factors, and in how agentic AI and generated interfaces can be hosted safely and predictably by the system itself.
 
-I am currently the project lead of a Xiaomi Open-Competition Research Program (200,000+ CNY funding), an industry-academia collaboration initiative focused on advancing intelligent system architecture. With 19 patents spanning ML-systems integration and HCI innovation, I remain committed to bridging rigorous research with impactful engineering.
+I originated and lead CausalAdapt, a project under the Xiaomi Open-Competition Research Program ("Jiebang Guashuai", 200,000+ CNY funding), an industry-academia collaboration with a team at South China University of Technology (SCUT). Across systems, HCI, and ML I have 21 inventions: 18 filed patent applications (13 as first inventor) plus 3 under review by Xiaomi's IPR. I remain committed to bridging rigorous research with impactful engineering.
 
 ## Education
 
@@ -75,19 +75,26 @@ I am currently the project lead of a Xiaomi Open-Competition Research Program (2
 
 ## Research Experience
 
-### Multi-Armed Bandit Algorithms for Preference Learning in Recommendation Systems
+### Multi-Armed Bandit Research for Food Recommendation
 Beijing, 12/2023 - 03/2024 | Supervisor: Prof. Osman Yagan, Carnegie Mellon University
 
-Investigated the exploration-exploitation trade-off in food recommendation scenarios with limited user interactions. Developed and validated a novel Upper Confidence Bound (UCB) algorithm variant that balances preference learning efficiency against recommendation accuracy. Designed and implemented a WeChat-based experimental framework for real-world data collection, enabling controlled experiments with human subjects to validate the algorithm's performance against baseline approaches. This work resulted in an IEEE conference publication.
+Investigated the exploration-exploitation trade-off in food recommendation scenarios with limited user interactions. Developed and validated an Upper Confidence Bound (UCB) algorithm variant, building mathematical models that balance preference learning efficiency against recommendation accuracy. Implemented a WeChat-based experimental framework for real-world data collection, enabling controlled experiments with human subjects to compare the variant against baseline approaches.
+
+*Note: this project was not externally published. The ICICML 2024 paper listed below is a separate, independently authored survey of multi-armed bandit algorithms.*
+
+## Research Project
 
 ### CausalAdapt -- Xiaomi Open-Competition Research Program ("Jiebang Guashuai" Research Initiative)
-2025 | Project Lead | Competitive Research Grant: 200,000+ CNY
+2025 - Present | Project Lead | Competitive research grant: 200,000+ CNY
 
-Leading a competitive research initiative on automated UI adaptation for heterogeneous screen form factors (tablets, foldables, flip phones, etc.). Developing a deep learning and causal inference framework to replace manual developer adaptation with intelligent zero-code decision-making, in collaboration with university partners. Targeting CCF-A venue publication (AAAI-IAAI/UbiComp/CHI).
+I originated CausalAdapt, the idea of applying causal inference and machine learning to automated UI adaptation across heterogeneous screen form factors (tablets, foldables, flip phones, and others), replacing manual developer adaptation with zero-code decision-making. I own the problem framing, the production datasets, and the deployment evaluation, while collaborators at South China University of Technology (SCUT) implement the causal-inference algorithm and model architecture.
+
+The project addresses a real deployment challenge: the combinatorial explosion of UI layouts across 4+ screen form factors in production Android apps, which demands systematic adaptation at the OS level. It also raises an HCI question I find genuinely open, namely the user-perceived quality gap between manual developer adaptation and automated ML-driven adaptation, and what makes an automatic UI transformation "acceptable".
 
 ## Publication
 
-+ D. Huang, "The Development and Future Challenges of the Multi-armed Bandit Algorithm," *2024 International Conference on Image Processing, Computer Vision and Machine Learning (ICICML)*, Shenzhen, China, 2024, pp. 1922-1930. [DOI: 10.1109/ICICML63543.2024.10957859](https://doi.org/10.1109/ICICML63543.2024.10957859)
++ D. Huang, "The Development and Future Challenges of the Multi-armed Bandit Algorithm," *2024 International Conference on Image Processing, Computer Vision and Machine Learning (ICICML)*, Shenzhen, China, 2024, pp. 1922-1930 (single-author survey). [DOI: 10.1109/ICICML63543.2024.10957859](https://doi.org/10.1109/ICICML63543.2024.10957859)
++ Manuscript in preparation: *CausalAdapt: causal inference and machine learning for automated UI adaptation across form factors*, with the SCUT team; planned co-first authorship, target submission 2027.
 
 ### Software Registration
 + D. Huang, et al., "Design and Implementation of Health Management Platform for Special Groups", Registration No. 2018SR796507
@@ -95,7 +102,7 @@ Leading a competitive research initiative on automated UI adaptation for heterog
 
 ## Patents
 
-19 patents in System/HCI and/with ML.
+21 inventions in systems, HCI, and ML: 18 filed applications (13 as first inventor, 2 as second inventor; one invention extended to CNIPA, EPO, and USPTO via the Paris Convention) plus 3 under review by Xiaomi's IPR. A further 4 invention disclosures are in drafting, with filing to CNIPA pending.
 
 ### Selected Patents -- Machine Learning with Systems
 
@@ -108,13 +115,13 @@ Leading a competitive research initiative on automated UI adaptation for heterog
 
 ### Selected Patents -- Machine Learning and/with Human-Computer Interaction
 
++ **Deep Learning-based Notification Fatigue Prediction and Privacy-adaptive Distribution for Dual-screen** -- A deep learning model predicting user notification fatigue and adaptively distributing notifications across dual-screen terminals under privacy-aware policies. Application No.: 202610590435, filed with CNIPA
 + **Unified Authentication Engine with Multimodal Biometric Fusion and Continuous Confidence Scoring** *(Under review by Xiaomi's IPR)*
-+ **Deep Learning-based Notification Fatigue Prediction and Privacy-adaptive Distribution for Dual-screen** -- Developed a deep learning model to predict user notification fatigue and adaptively distribute notifications across dual-screen terminals with privacy-aware policies. *(Under review by Xiaomi's IPR)*
 + **AI Assistant-powered Cross-screen Sticky Notes for Dual-screen Terminals** -- application No.: 2025113509677, preliminary review approved by CNIPA
 + **Intelligent Notification Privacy Management Based on Contextual Awareness** -- application No.: 2025113506310, preliminary review approved by CNIPA
 + **Device Posture-aware Ringing Notification and Intelligent Management for Dual-screen** -- application No.: 2025113675821, preliminary review approved by CNIPA
 + **Multi-layer Spatial Management and Intelligent Display for Dual-screen Notifications** -- application No.: 2025113520869, preliminary review approved by CNIPA
-+ **Safe Interaction and Persistence Management for Car Control on Secondary Screen** -- application No.: 2025113509520, preliminary review approved by CNIPA; also filed at EPO and USPTO via Paris Convention
++ **Safe Interaction and Persistence Management for Car Control on Secondary Screen** -- application No.: 2025113509520, preliminary review approved by CNIPA; also filed at EPO and USPTO via the Paris Convention
 + **Application Permission Management Control Framework for Dual-screen Devices** -- application No.: 2025113861990, preliminary review approved by CNIPA
 + **Information Display on Backlit Screen When Screen is Off** -- application No.: 2025113506414, preliminary review approved by CNIPA
 + **Low-Memory Solution for Loading Circular Lists** -- application No.: 2025113506240, preliminary review approved by CNIPA
@@ -126,7 +133,7 @@ Leading a competitive research initiative on automated UI adaptation for heterog
 
 ### Android Open Source Project (AOSP), Google
 
-Merged into AOSP main branch, deployed to 1.5+ billion active Android devices worldwide.
+Five merged CLs across four framework issues (three as sole or first author), merged into the AOSP main branch and estimated to affect more than 1.5 billion active Android devices.
 
 + Redesigned display spatial logic to dynamically integrate widget/camera cutouts, eliminating layout misalignments in multi-cutout environments
   [CL 3026725](https://android-review.googlesource.com/c/platform/cts/+/3026725)
@@ -141,27 +148,41 @@ Merged into AOSP main branch, deployed to 1.5+ billion active Android devices wo
 
 **Xiaomi Group**, Beijing -- Software R&D Engineer (Android Framework Kernel), 06/2022 - Present
 
+### Rear Display+ x Miclaw (LLM Agents x OS Integration)
+Led exploration of integrating LLM agents into the dual-screen system, investigating AI-driven notification processing, cross-screen information routing, and phone/IoT/vehicle quick-control as new AI x OS interaction scenarios. Built the rear-display integration that brings the LLM agent onto the secondary screen as an AI companion, plus the `manage_pin` tool bridging agent tool calls to real Android system APIs, with code merged into the osbot/miclaw main branch. Prototyped an agent-embodied virtual pet on the rear screen as an alternative to chat-based interaction, and designed context-aware prompt orchestration and tool-selection logic for agents operating under OS-level constraints (permission boundaries, display lifecycle, power management).
+
 ### Rear Display+ (Xiaomi 17 Series Dual-Screen Interaction System)
-Pioneered an independent rear-screen system and software ecosystem for the Xiaomi 17 series, driving smartphone form-factor and interaction innovation. Architected a secondary display Launcher based on Android SECONDARY_HOME with deep Framework customization. Delivered three critical components: *interaction framework adaptation* (dual-screen synchronization, keep-alive, auto-start mechanisms), *intelligent Service Assistant* (SystemUI notification transformation engine supporting 14 scenario-specific cards including music, navigation, and fitness), and *cross-screen sticky notes* (AI assistant integration with pioneering transition animations). Generated 10+ HCI/system patents, establishing industry-leading standards for dual-screen interaction paradigms. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Second Prize).
+Lead of SubScreenCenter, the rear-display launcher for the Xiaomi 17 series, built on Android's `SECONDARY_HOME` model. Defined and implemented interaction paradigms for a novel display surface where no prior conventions existed, designing context-aware content routing between two opposing displays that users cannot view simultaneously, and addressing how windows, notifications, and authentication should work across physically separated screens. Delivered the core feature modules: the SmartAssistant service panel with its notification transformation engine (initially 14 scenario-specific card types, since extended with LiveUpdate, sports, and template cards), the cross-screen sticky-note (Pin) information-residence system, the AI companion, and contributions to the MiClaw/AppFunction agent-to-OS tool interface. Also designed the permission and authentication model for dual-screen scenarios: which content surfaces on which screen, under what biometric verification, with what temporal constraints. Generated 10+ HCI/system patents. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Second Prize).
+
+### AI-Native Development Infrastructure (GenAI x R&D Workflow)
+Designed and deployed an enterprise-scale agentic AI toolchain augmenting the full software development lifecycle (requirement decomposition, coding, code review, testing, bug repair, maintenance). Built a Skill-Library + MCP-Integration + Prompt-Orchestration architecture in a unified workspace repository, so new engineers inherit the full AI capability set on first clone, and architected the integration layer between agent tool calls and OS-level APIs (file system, process management, build system), addressing latency, isolation, and idempotency in production CI/CD pipelines. Delivered 7 skill workflows, 6 MCP integrations, and 2 specialized agents now in production use across the SubScreenCenter team, which surfaced open research questions in context-aware AI assistance and human-AI collaboration in technical workflows.
 
 ### Large-screen Application Casting (EV Infotainment & Cross-device Handoff)
-Developed the Android Framework window management layer for Xiaomi's cross-device application casting system, enabling apps to be cast from smartphones to car infotainment screens, tablets, and PCs. Core work involved window lifecycle management, display configuration adaptation, and multi-window scheduling for cast sessions across heterogeneous target devices. Filed multiple patents applying ML to casting fault detection, security/privacy analysis, and intelligent navigation blocking. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Finalist Prize).
+Developed the Android Framework window management layer for Xiaomi's cross-device application casting system, enabling apps to be cast from smartphones to car infotainment screens, tablets, and PCs. Core work involved window lifecycle management, display configuration adaptation, and fault detection and recovery across heterogeneous target devices, together with the cross-device interaction flow: when a user moves from phone to car, which app state transfers, what visual feedback confirms the handoff, and how to degrade gracefully under connectivity loss. Filed multiple patents applying ML to casting fault detection, security and privacy analysis, and intelligent navigation blocking. Recognized with Xiaomi's Ten-Million-Dollar Technology Award (Finalist Prize).
 
 ### Dynamic Application Adaptation -- Rule-Based Transformation Framework
-Developed a rule-based transformation engine achieving 100% compatibility across heterogeneous display environments. Conducted systematic experiments across 1,000+ device configurations to create a structured taxonomy of adaptation patterns, establishing a new methodological framework for multi-terminal display interactions.
+Developed a rule-based transformation engine achieving 100% compatibility across heterogeneous display environments. Conducted systematic experiments across 1,000+ device configurations to create a structured taxonomy of adaptation patterns, establishing a new methodological framework for multi-terminal display interactions. The limits of this approach, namely that manual rule authoring does not scale to N form factors, are what motivated the CausalAdapt research project.
 
 ### xTS Compliance & Android Ecosystem Standardization
-Led xTS compliance initiative, resolving 150+ critical Window Management System issues across multiple Android releases. Contributed merged code to AOSP affecting 1.5+ billion devices globally, advancing Android ecosystem standards.
+Led the xTS compliance initiative, resolving 150+ critical Window Management System issues across multiple Android releases. Contributed merged code to AOSP affecting 1.5+ billion devices globally, advancing Android ecosystem standards.
 
 ### Technical Impact & Mentorship
-Technical owner of multiple Android Framework subsystems across Xiaomi's main Gerrit-managed and GitLab repositories, with all changes passing rigorous expert code reviews and comprehensive testing verification. Designed and implemented a structured technical onboarding program for junior engineers (2023-2025), developing a progressive curriculum covering systems architecture and Android Framework internals that enabled recent graduates to achieve technical independence and contribute to production-level code within 6 months.
+Contributed 141,339 lines of production code (111,795 to Xiaomi's main Gerrit, 29,544 to GitLab) through rigorous peer and expert review; Gerrit output rose from 45,150 to 111,795 lines after adopting the AI-native development workflow above. Designed and implemented a structured technical onboarding program for junior engineers (2023-2025), with a progressive curriculum covering systems architecture and Android Framework internals that enabled recent graduates to reach technical independence and contribute production-level code within 6 months.
+
+## Technical Skills
+
++ **Systems**: Android Framework (window and display management, activity and process management, rendering), AOSP, AIDL/Binder IPC, cross-device window and display coordination
++ **AI/ML**: multi-armed bandits (single-author survey), causal-inference framing for UI adaptation (idea origination; algorithm implemented by SCUT collaborators), applied LLM agent tool-use
++ **Data Analytics**: Tableau, Power BI, Weka
++ **Full-Stack**: Vue, Spring, MySQL, Redis, Git
 
 ## Honors & Awards
 
-+ **Xiaomi Ten-Million-Dollar Technology Award -- Second Prize** (2025) -- Xiaomi 17 Pro Rear Display+. Xiaomi's highest engineering award recognizing top innovative technology projects of the year.
-+ **Outstanding Patent Project Award** (2025) -- Intelligent Rear Sub-Screen Delivery. 7 patents as 1st/2nd inventor, 6 as co-inventor.
-+ **Xiaomi Role Model Award** (2025 Q4)
-+ **Xiaomi Ten-Million-Dollar Technology Award -- Finalist Prize** (2024) -- Human x Car x Home Handoff (Large-Screen Casting)
++ **Sci-Tech Innovation Rising Star Award** (2026) -- Xiaomi Group, one of 33 recipients group-wide in a company of roughly 60,000 people (self-nominated, group-reviewed)
++ **Xiaomi Ten-Million-Dollar Technology Award -- Second Prize** (2025) -- Xiaomi 17 Pro Series Rear Display+. Xiaomi's highest engineering award, recognizing the top innovative technology projects of the year (team award; role: core framework R&D developer)
++ **Outstanding Patent Project Award** (2025) -- Intelligent Rear Sub-Screen Delivery, Rear Display+ project (team award; 7 patents as 1st/2nd inventor, 6 as co-inventor)
++ **Xiaomi Role Model Award** (2025 Q4) -- team award
++ **Xiaomi Ten-Million-Dollar Technology Award -- Finalist Prize** (2024) -- Human x Car x Home Handoff (Large-Screen Casting) (team award; role: core framework R&D developer)
 + **Software Division Accelerated Leadership Program** -- First Cohort (2024)
 + **Xiaomi Emerging Engineers Program Candidate** with RSU promotion (2024)
 + **Xiaomi Star Award** -- M-Series Pad Project (2023)
