@@ -73,15 +73,6 @@ I originated and lead CausalAdapt, a project under the Xiaomi Open-Competition R
   *(Program currently named MSc in Data Analysis and Artificial Intelligence)*
 + **Shanxi Agricultural University (SXAU)**, Shanxi -- BEng in Software Engineering, 09/2014 - 07/2018
 
-## Research Experience
-
-### Multi-Armed Bandit Research for Food Recommendation
-Beijing, 12/2023 - 03/2024 | Supervisor: Prof. Osman Yagan, Carnegie Mellon University
-
-Investigated the exploration-exploitation trade-off in food recommendation scenarios with limited user interactions. Developed and validated an Upper Confidence Bound (UCB) algorithm variant, building mathematical models that balance preference learning efficiency against recommendation accuracy. Implemented a WeChat-based experimental framework for real-world data collection, enabling controlled experiments with human subjects to compare the variant against baseline approaches.
-
-*Note: this project was not externally published. The ICICML 2024 paper listed below is a separate, independently authored survey of multi-armed bandit algorithms.*
-
 ## Research Project
 
 ### CausalAdapt -- Xiaomi Open-Competition Research Program ("Jiebang Guashuai" Research Initiative)
