@@ -75,9 +75,9 @@ I started CausalAdapt under Xiaomi's Open-Competition Research Program ("Jiebang
 ## Research Project
 
 ### CausalAdapt, Xiaomi Open-Competition Research Program ("Jiebang Guashuai")
-2025 - Present | Project Lead | Competitive research grant: 200,000+ CNY
+2026 - 2027 | Project Lead | Competitive research grant: 200,000+ CNY
 
-I originated CausalAdapt. App developers maintain only portrait phone layouts while form factors (tablets, foldables, flip phones, and others) multiply, so hand-written adaptation rules cannot keep up. The project treats choosing an adaptation strategy as a causal question linking device, strategy and user experience. I am responsible for the problem framing, the production datasets, and the deployment evaluation, while collaborators at South China University of Technology (SCUT) implement the algorithm.
+I originated CausalAdapt. App developers maintain only portrait phone layouts while new form factors (tablets, foldables, flip phones, and others) keep appearing, so hand-written adaptation rules cannot cover them. The project treats choosing an adaptation strategy as a causal question linking device, strategy and user experience. I am responsible for the problem framing, the production datasets, and the deployment evaluation, while collaborators at South China University of Technology (SCUT) implement the algorithm.
 
 The project also raises an HCI question about the quality gap users perceive between manual developer adaptation and automated adaptation, and about what makes an automatic UI change acceptable to them.
 
@@ -92,9 +92,9 @@ The project also raises an HCI question about the quality gap users perceive bet
 
 ## Patents
 
-I am named on 23 inventions in systems, HCI and ML. 20 are filed patent applications and 3 are under Xiaomi's internal patent review. Of the 23, I am first inventor on 14, second inventor on 3 and a later co-inventor on 6.
+Of my 23 inventions, 20 are filed patent applications and 3 are under Xiaomi's internal patent review. I am first inventor on 14, second inventor on 3 and a later co-inventor on 6.
 
-### Rear Display 2.0
+### Rear Display+ 2.0
 
 + **Rear-display AI companion**, first inventor, CNIPA application No. 2026114508869
 + **Message Notification Method, Apparatus, Device, Medium and Program Product**, on LLM-driven cross-device notification routing with wearable human-factor signals, second inventor, CNIPA application No. 2026114959168, filed September 2026
@@ -110,7 +110,7 @@ I am named on 23 inventions in systems, HCI and ML. 20 are filed patent applicat
 
 ### Machine Learning and Human-Computer Interaction
 
-+ **Deep-Learning-based Notification Fatigue Prediction and Privacy-adaptive Distribution for Dual-screen Terminals**, CNIPA application No. 202610590435
++ **Deep-Learning-based Notification Fatigue Prediction and Privacy-adaptive Distribution for Dual-screen Terminals**, CNIPA application No. 2026105904359
 + **Unified Authentication Engine with Multimodal Biometric Fusion and Continuous Confidence Scoring**, under Xiaomi's internal patent review
 + **AI-Assistant-powered Cross-screen Sticky-note Information Residence for Dual-screen Terminals**, CNIPA application No. 2025113509677
 + **Context-aware Notification Privacy Management for Dual-screen Terminals**, CNIPA application No. 2025113506310
@@ -127,16 +127,16 @@ I am named on 23 inventions in systems, HCI and ML. 20 are filed patent applicat
 
 ### Android Open Source Project (AOSP), Google
 
-Five merged changelists (CLs) across four framework issues, three of them as sole or first author, in the AOSP main branch, which ships on more than 1.5 billion devices.
+Three changelists (CLs) I wrote, and two from a fix I worked on with colleagues, are merged in the AOSP main branch, which ships on more than 1.5 billion devices.
 
-+ Rewrote the display spatial logic so widget and camera cutouts are accounted for together
++ Changed the CTS display point calculation so the x coordinate accounts for a widget cutout, as the y coordinate already did for the camera cutout
   [CL 3026725](https://android-review.googlesource.com/c/platform/cts/+/3026725)
 + Replaced an exact equality check with tolerance-based validation where the compared value came out of a rounding step
   [CL 3309476](https://android-review.googlesource.com/c/platform/cts/+/3309476)
-+ Removed the coupling in WindowManagerAnimation cutout calculations with a one-way data flow
++ Removed a second subtraction of the display cutout in testMinimalSizeDocked. The parent frame already excludes the cutout, and the old code assumed it was on the left side of the screen
   [CL 3505814](https://android-review.googlesource.com/c/platform/cts/+/3505814)
-+ Wrote a dynamic screen size calculation for system UI insets in notched display areas (collaborated), and restructured the status bar height calculation
-  [CL 3559567](https://android-review.googlesource.com/c/platform/frameworks/base/+/3559567), [CL 3554263](https://android-review.googlesource.com/c/platform/frameworks/base/+/3554263)
++ Worked with two colleagues on a SystemUI bug that miscalculated the side cutout when the screen rotated from portrait to landscape. We investigated it and designed the fix together, and they submitted it
+  [CL 3554263](https://android-review.googlesource.com/c/platform/frameworks/base/+/3554263), [CL 3559567](https://android-review.googlesource.com/c/platform/frameworks/base/+/3559567)
 
 ### VuePress, Vue
 
@@ -154,34 +154,35 @@ Five merged changelists (CLs) across four framework issues, three of them as sol
 
 ### Rear Display+ (Xiaomi 17 Pro Series)
 
-+ Lead SubScreenCenter, the rear-display launcher, and built its system-side usage instrumentation. Every rear-display interface is adapted for TalkBack, Android's screen reader
-+ Built the SmartAssistant service panel and its 15 card types, including their TalkBack adaptation. One card shows notifications that any app posts through Android's Live Updates API, and another controls a Xiaomi electric car, for which I am first inventor on the patent application. When the phone lies face down, a call, alarm or timer turns the rear display on, while other notifications stay on the always-on display. Xiaomi reports 138 million SmartAssistant uses in a single month on the 17 Pro generation
++ Lead SubScreenCenter, the rear-display launcher, and built its system-side usage instrumentation
++ Built the SmartAssistant service panel and its 15 card types, including their TalkBack adaptation. One card shows notifications that any app posts through Android's Live Updates API. Notifications on the rear display adapt to the phone's posture. Xiaomi reports 138 million SmartAssistant uses in a single month on the 17 Pro generation
++ Built a SmartAssistant card that shows a Xiaomi electric car's charge and range and unlocks the car without unlocking the phone. I am first inventor on its patent application
 + Built the sticky-note (Pin) system, which pins any text or image circled on the main screen with the XiaoAI assistant to the rear display, and its agent tool. A pinned ticket QR code opens with one double-tap instead of six steps
 + Designed the dual-screen permission and authentication model, which decides what content is shown on which screen and under what biometric verification, for a second screen that faces outward and is visible to people near the user
-+ Designed the rear display for quick tasks, between a full launcher and a clock-only screen, and defined its interaction design, which had no earlier conventions to follow, including content routing between two screens a user cannot see at the same time
-+ Only the Xiaomi 17 Pro and 18 Pro series have such a screen. Beyond practical use, users can show their own photos on it as moving wallpapers made by AI, so no two phones look the same from the back. I maintain the rear-display interface that applies these wallpapers, which the theme service generates
++ Designed the rear display for quick tasks, between a full launcher and a clock-only screen, and defined its interaction design, which had no earlier conventions to follow, including how calls, alarms and other live content appear in Xiaomi HyperIsland at the top of the main screen, on the rear display or on both
++ Co-designed and implemented the rear-display watch face system, which sets the clock style and wallpaper and can show a user's own photos as moving wallpapers generated by AI
 
-### Rear Display 2.0 (Xiaomi 18 Pro Series, launched September 2026)
+### Rear Display+ 2.0 (Xiaomi 18 Pro Series, launched September 2026)
 
-+ Prototyped AI app cards, where a user's prompt generates a runnable app that is validated automatically before it runs. I took part in the design, built the demo and ran the prototype validation, and I am a co-inventor on the generation-pipeline disclosure
-+ Prototyped the rear-display light-app launcher, which runs light apps written in MAML (MIUI Application Markup Language) and AI-generated apps under one lifecycle
++ Prototyped AI app cards, where a user's prompt generates a runnable app that is validated automatically before it runs. I took part in the design and I am a co-inventor on the generation-pipeline disclosure
++ Co-designed the rear-display launcher panel, which hosts light apps generated by AI from natural-language prompts. Some come preset, such as an egg timer and a vocabulary card, and users can generate their own. Built its demo and prototype validation, and now maintain and extend it in production
 + Designed the rear-display AI companion, an on-screen character that talks with the user and carries out spoken requests, such as switching off a light. Its conversation is provided by Super XiaoAI Expert Mode
 
-### AI-Native Development Infrastructure
+### Agent Tooling for the Development Team
 
-+ Built agent tooling for the team across the development lifecycle. It includes project-level skills, a Model Context Protocol (MCP) integration layer, read-only reviewer and researcher agents with enforced tool allowlists, and a setup script the team can reproduce
++ Built agent tooling for the team, including project-level skills, a Model Context Protocol (MCP) integration layer, read-only reviewer and researcher agents with enforced tool allowlists, and a setup script that lets each teammate reproduce the same setup
 + Wrote a permission policy, stored in the repository, that denies irreversible operations
 
 ### Defect Triage Tooling for Production Issues
 
 + Built a batch triage tool that checks whether an application-not-responding (ANR) ticket originates in the display driver rather than the application, writes its evidence onto the ticket and routes it to the owning team. It has handled 153 tickets, 140 of them in one driver-level root-cause cluster, and routed about 128
-+ Designed the write path for tickets owned by other engineers. Writing is off by default and stops after the first write, and each write is confirmed by re-checking the expected state on the ticket instead of trusting the exit code
-+ Built a second tool for triaging user feedback in the first month after a product goes on sale, with an LLM judgement step and a human confirmation gate
++ Designed the write path for tickets owned by other engineers. Writing is off by default and stops after the first write, and each write is confirmed by re-checking the expected state on the ticket instead of relying on the exit code
++ Built a second tool for triaging user feedback in the first month after a product goes on sale, with an LLM judgement step, after which a person confirms each result
 
 ### Large-screen Application Casting (EV Infotainment and Cross-device Handoff)
 
 + Developed Android framework window-management code for casting apps from phones to tablets and car displays, covering window lifecycle, display configuration adaptation, and fault detection and recovery
-+ Designed the interaction flow for a user moving from phone to car. It decides which app state transfers, what feedback confirms the handoff and how the system degrades when the connection drops
++ Designed the interaction flow for a user moving from phone to car. It decides which app state transfers, and how the phone shows where the app runs and brings it back in one tap
 + Filed patents applying machine learning to casting fault detection, security and privacy screening, and navigation blocking
 
 ### Dynamic Application Adaptation (Rule-Based Transformation Framework)
@@ -193,7 +194,7 @@ Five merged changelists (CLs) across four framework issues, three of them as sol
 
 + Led the xTS (Android compatibility test suite) compliance effort and resolved more than 150 critical Window Management System issues
 
-### Technical Impact and Mentorship
+### Code Contributions and Mentorship
 
 + Contributed 221,032 lines of production code to the Android framework window-management layer, xTS compliance and the rear-display feature modules
 + Designed an onboarding curriculum on systems architecture and the Android framework for new graduate engineers (2023-2025). Two recent graduates I mentored were working independently on production framework code within six months
